@@ -17,13 +17,13 @@
       <div style="width: 20%"></div>
 
         <div class="bar-menu" style="float: left; width: 10%; height: 50px;">
-          <v-btn style="color: black" icon>
+          <v-btn style="color: black" icon @click="loginBtn">
             <span class="btn-text">로그인</span>
           </v-btn>
         </div>
 
         <div class="bar-menu" style="float: left; width: 10%; height: 50px;">
-          <v-btn icon>
+          <v-btn icon @click="register">
             <span class="btn-text">회원가입</span>
           </v-btn>
         </div>
@@ -33,7 +33,15 @@
 
 <script>
 export default {
-  name: "HomeView"
+  name: "HomeView",
+  methods: {
+    loginBtn() {
+      this.$router.push({name: 'LoginPage'})
+    },
+    register(){
+      this.$router.push({name: 'registerMemberPage'})
+    }
+  }
 }
 </script>
 
