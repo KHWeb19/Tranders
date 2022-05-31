@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -27,5 +29,12 @@ public class MemberServiceImpl implements MemberService {
         Member memberEntity = member.memberSetting(member);
 
         memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public Boolean checkIdDuplicate(String id) {
+        Optional<Member> check = memberRepository.checkDubById(id);
+        System.out.println("check : " + check.isEmpty());
+        return check.isEmpty();
     }
 }

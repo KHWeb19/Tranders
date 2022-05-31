@@ -5,4 +5,6 @@ import com.example.marketback.request.MemberRegisterRequest;
 
 public interface MemberService {
     void register(Member member);
+
+    Boolean checkIdDuplicate(String id);
 }

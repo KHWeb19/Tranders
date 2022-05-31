@@ -21,13 +21,13 @@
             <v-text-field v-model="id" :rules="rules" solo style="width: 100%" placeholder="ID"> </v-text-field>
           </v-col>
           <v-col cols="3" class="pt-5">
-            <v-btn style="width: 100%" id="checkDub" outlined>중복 확인</v-btn>
+            <v-btn style="width: 100%" id="checkDub" @click="checkDub" outlined>중복 확인</v-btn>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field v-model="pw"
+            <v-text-field v-model="password"
                           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                           :rules="[pwRules.required, pwRules.min, pwRules.max]"
                           :type="show ? 'text' : 'password'"
@@ -44,13 +44,13 @@
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field solo v-model="phoneNum" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
+            <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px">
           <v-col cols="10">
-            <v-text-field solo style="width: 100%" placeholder="ADDRESS" v-model="region" readonly> </v-text-field>
+            <v-text-field solo style="width: 100%" placeholder="ADDRESS" v-model="region"> </v-text-field>
           </v-col>
 
           <v-col cols="2" class="pt-5">
@@ -60,7 +60,7 @@
 
         <v-row style="height: 70px; margin-top: 35px">
           <v-col>
-            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">오이 마켓 시작하기</v-btn>
+            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="checkDoubleId === true">오이 마켓 시작하기</v-btn>
           </v-col>
         </v-row>
 
@@ -74,14 +74,15 @@ import axios from "axios";
 
 export default {
   name: "ordinaryRegisterView",
+  props: ['checkDoubleId'],
   data(){
     return {
       isIndividual: true,
       isManager: false,
       id: '',
-      pw: '',
+      password: '',
       name: '',
-      phoneNum: '',
+      phoneNumber: '',
       region: '',
       rules: [v => v.length <= 12 || '12자리 이하 입력', v => v.length >= 8 || '8자리 이상 입력'],
       show: false,
@@ -143,9 +144,13 @@ export default {
         auth = 1;
       }
 
-      const {id, pw, name, phoneNum, region} = this;
+      const {id, password, name, phoneNumber, region} = this;
 
-      this.$emit('register', {id, pw, name, phoneNum, region, auth})
+      this.$emit('register', {id, password, name, phoneNumber, region, auth})
+    },
+    checkDub(){
+      const {id} = this;
+      this.$emit('check', {id});
     }
   }
 }

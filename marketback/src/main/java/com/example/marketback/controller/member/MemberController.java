@@ -6,6 +6,7 @@ import com.example.marketback.request.MemberRegisterRequest;
 import com.example.marketback.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -16,12 +17,6 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @PostMapping("/login")
-    public void login(@RequestBody MemberLoginRequest memberLoginRequest){
-        log.info("login : " + memberLoginRequest.getId());
-        //Spring security가 시도함!
-    }
-
     @PostMapping("/register")
     public void registerMember(@RequestBody Member member){
         log.info("registerMember() : " + member.getId()+", " + member.getPassword());
@@ -29,14 +24,10 @@ public class MemberController {
         memberService.register(member);
     }
 
-    @GetMapping("/home")
-    public String home(){
+    @GetMapping("/register/{id}")
+    public ResponseEntity<Boolean> checkId(@PathVariable String id){
+        log.info("checkId(): "+id);
 
-        return "<h2>Test</h2>";
-    }
-
-    @PostMapping("/token")
-    public String token(){
-        return "<h2>token</h2>";
+        return ResponseEntity.ok(memberService.checkIdDuplicate(id));
     }
 }
