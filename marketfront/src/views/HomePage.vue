@@ -5,13 +5,11 @@
 </template>
 
 <script>
-
 import HomeView from "@/components/home/HomeView";
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   components: {
-    HomeView
-
-  }
-}
+    HomeView,
+  },
+};
 </script>
