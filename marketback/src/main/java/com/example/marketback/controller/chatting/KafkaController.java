@@ -1,14 +1,15 @@
 package com.example.marketback.controller.chatting;
 
 import com.example.marketback.service.chatting.KafkaProducer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
-@RequestMapping(value = "/kafka")
+@RequestMapping("/kafka")
+@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class KafkaController {
     private final KafkaProducer producer;
 
@@ -17,8 +18,8 @@ public class KafkaController {
         this.producer = producer;
     }
 
-    @PostMapping
-    public String sendMessage(@RequestParam("message") String message) {
+    @PostMapping("/sendMessage")
+    public String sendMessage(@RequestBody String message) {
         this.producer.sendMessage(message);
 
         return "success";
