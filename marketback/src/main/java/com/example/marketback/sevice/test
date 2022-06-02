@@ -1,0 +1,7 @@
+public interface ProductService {
+    public void productRegister (ProductBoard productBoard);
+    public List<productBoard> productList ();
+    public productBoard productRead (Integer productNo);
+    public void productModify (ProductBoard productBoard);
+    public void productDelete (Integer productNo);
+}
