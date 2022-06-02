@@ -1,9 +1,9 @@
 import {
-    FETCH_MESSAGE
+    FETCH_MESSAGE_LIST
 } from './mutation-types'
 
 export default {
-    [FETCH_MESSAGE] (state, message) {
-        state.message = message
+    [FETCH_MESSAGE_LIST] (state, messages) {
+        state.messages = messages
     }
 }

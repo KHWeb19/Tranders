@@ -39,7 +39,10 @@
               <div>가격</div>
             </div>
           </div>
-          <div id='skyblue'>메시지 목록</div>
+          <div id='skyblue'>
+            <div v-for="msg in messages" :key="msg.messageNo">{{msg.message}}{{msg.regDate}}</div>
+          </div>
+
           <div id='orange'>
             <textarea v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
             <v-btn type="submit">전송</v-btn>
@@ -58,6 +61,11 @@ export default {
       message: ''
     }
   },
+  props: {
+        messages: {
+            type: Array
+        }
+    },
   methods: {
     onSubmit() {
       const { message } = this

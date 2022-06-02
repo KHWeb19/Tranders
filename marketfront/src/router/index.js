@@ -23,7 +23,10 @@ const routes = [
   {
     path: '/chatting',
     name: 'ChattingPage',
-    component: ChattingPage
+    component: ChattingPage,
+    props: {
+      default: true
+    }
   },
   // {
   //   path: '/login',

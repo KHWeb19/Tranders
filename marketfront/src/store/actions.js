@@ -1,14 +1,14 @@
 import {
-    FETCH_MESSAGE,
+    FETCH_MESSAGE_LIST,
 } from './mutation-types'
 
 import axios from 'axios'
 
 export default {
-    fetchMessage ({ commit }) {
-        return axios.get(`http://localhost:7777/kafka/sendMessage`)
+    fetchMessageList ({ commit }) {
+        return axios.get(`http://localhost:7777/kafka/list`)
                 .then((res) => {
-                    commit(FETCH_MESSAGE, res.data)
+                    commit(FETCH_MESSAGE_LIST, res.data)
                 })
     }
 }
