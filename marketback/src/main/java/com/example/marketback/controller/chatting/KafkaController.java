@@ -16,19 +16,23 @@ import java.util.List;
 @RequestMapping("/kafka")
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class KafkaController {
+    private final KafkaProducer producer;
 
     @Autowired
-    private KafkaProducer producer;
+    KafkaController(KafkaProducer producer) {
+        this.producer = producer;
+    }
 
     @Autowired
     private MessageService messageService;
 
     @PostMapping("/sendMessage")
-//    public String sendMessage(@RequestParam("message") String message) {
     public String sendMessage(@RequestBody String message) {
-        producer.sendMessage(message);
-        return message;
+        this.producer.sendMessage(message);
+
+        return "success";
     }
+
 
     @PostMapping("/register")
     public void messageRegister(@Validated @RequestBody Message message) {
@@ -39,8 +43,9 @@ public class KafkaController {
 
     @GetMapping("/list")
     public List<Message> messageList() {
-        log.info("boardList()");
+        log.info("messageList()");
 
         return messageService.list();
     }
 }
+

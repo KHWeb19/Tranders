@@ -40,7 +40,13 @@
             </div>
           </div>
           <div id='skyblue'>
-            <div v-for="msg in messages" :key="msg.messageNo">{{msg.message}}{{msg.regDate}}</div>
+            <div v-if="!messages || (Array.isArray(messages) && messages.length === 0)">
+                <div colspan="4">
+                    채팅 기록이 없습니다!
+                </div>
+            </div>
+            <div v-else v-for="msg in messages" :key="msg.messageNo">{{msg.message}}{{msg.regDate}}</div>
+            <div v-for="msg in sendMessage" :key="msg.messageNo">{{msg}}</div>
           </div>
 
           <div id='orange'>
@@ -56,20 +62,22 @@
 <script>
 export default {
   name: "ChattingView",
-  data() {
-    return {
-      message: ''
+  props: {
+    messages: {
+        type: Array
     }
   },
-  props: {
-        messages: {
-            type: Array
-        }
-    },
+  data() {
+    return {
+      message: '',
+      sendMessage: [],
+    }
+  },
   methods: {
     onSubmit() {
       const { message } = this
       this.$emit('submit', { message })
+      this.sendMessage.push(message)
     }
   }
 }

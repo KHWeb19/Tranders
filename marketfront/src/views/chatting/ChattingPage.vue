@@ -18,23 +18,18 @@ export default {
   computed: {
         ...mapState(['messages'])
     },
-    created() {
-        this.fetchMessageList()
-    },
-    mounted () {
-        // this.fetchMessageList()
-    },
+  mounted () {
+      this.fetchMessageList()
+  },
   methods: {
     ...mapActions(['fetchMessageList']),
     onSubmit(payload) {
       console.log(payload)
       const { message } = payload
-      axios.post(`http://localhost:7777/kafka/sendMessage`, { message })
+      axios.post('http://localhost:7777/kafka/sendMessage', { message })
         
       axios.post('http://localhost:7777/kafka/register', { message })
-          .then(() => {
-            this.fetchMessageList()
-          })
+
     }    
   }
 }
