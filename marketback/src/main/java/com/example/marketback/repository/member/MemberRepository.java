@@ -13,4 +13,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.id = :id")
     Optional<Member> checkDubById(String id);
+
+    @Query("select m from Member m where m.name = :name and m.phoneNumber = :phoneNumber")
+    Optional<Member> checkMember(String name, String phoneNumber);
+
+    @Query("select m from Member m where m.id = :id and m.name = :name and m.phoneNumber = :phoneNumber")
+    Optional<Member> findPwById(String id, String name, String phoneNumber);
 }

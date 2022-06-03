@@ -2,8 +2,10 @@ package com.example.marketback.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +43,10 @@ public class Member {
 
     //------
     private String roles;
-    
+
+    @CreationTimestamp
+    private Timestamp createDate;
+
 
     // --- 제일 처음 Member가 생성이 될때 설정할 것.
     public Member() {
