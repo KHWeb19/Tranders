@@ -3,7 +3,7 @@ import {
 } from './mutation-types'
 
 export default {
-    [FETCH_MESSAGE_LIST] (state, massages) {
-        state.massages = massages
+    [FETCH_MESSAGE_LIST] (state, messages) {
+        state.messages = messages
     }
 }

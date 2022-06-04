@@ -22,5 +22,5 @@ public class Message {
     private String message;
 
     @CreatedDate
-    private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH : mm"));
+    private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
 }

@@ -40,13 +40,20 @@
             </div>
           </div>
           <div id='skyblue'>
+            <!-- <message-list :messages="messages"/> -->
             <div v-if="!messages || (Array.isArray(messages) && messages.length === 0)">
                 <div colspan="4">
-                    채팅 기록이 없습니다!
+                    채팅방에 입장하였습니다.
                 </div>
             </div>
-            <div v-else v-for="msg in messages" :key="msg.messageNo">{{msg.message}}{{msg.regDate}}</div>
-            <div v-for="msg in sendMessage" :key="msg.messageNo">{{msg}}</div>
+            <div style="padding: 4px; display: flex; justify-content: flex-end;" v-else v-for="msg in messages" :key="msg.messageNo">
+              <div id='message-date'>{{msg.regDate}}</div>
+              <p id='message-box'>{{msg.message}}</p>
+            </div>
+            <div style="padding: 4px; display: flex; justify-content: flex-end;" v-for="msg in sendMessage" :key="msg.messageNo">
+              <div id='message-date'>{{('0' + time.getHours()).slice(-2)}}&nbsp;:&nbsp;{{('0' + time.getMinutes()).slice(-2)}}</div>
+              <p id='message-box'>{{msg}}</p>
+            </div>
           </div>
 
           <div id='orange'>
@@ -60,7 +67,9 @@
 </template>
 
 <script>
+// import MessageList from './MessageList.vue'
 export default {
+  // components: { MessageList },
   name: "ChattingView",
   props: {
     messages: {
@@ -71,6 +80,7 @@ export default {
     return {
       message: '',
       sendMessage: [],
+      time: new Date(),
     }
   },
   methods: {
@@ -149,10 +159,35 @@ export default {
 	height: 625px;
   border: 1px solid #bcbcbc;
   border-bottom-style: none;
+  overflow-y:auto; 
+  overflow-x:hidden; 
 }
 #orange{
 	width: 810px;
 	height: 125px;
   border: 1px solid #bcbcbc;
+}
+#message-box{
+	height: 40px;
+  color: white;
+  background-color: #ff7E36;
+  border-radius: 20px 2px 20px 20px;
+  display: inline-flex;
+  margin: 0px;
+  padding: 10px 14px;
+  max-width: 484px;
+  white-space: pre-wrap;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+}
+#message-date{
+  color: #868b94;
+  font-size: 12px;
+  /* line-height: 150%; */
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0px 4px;
 }
 </style>

@@ -5,6 +5,6 @@ import com.example.marketback.entity.chatting.Message;
 import java.util.List;
 
 public interface MessageService {
-    public void register (Message message);
+    public void consume (Message message);
     public List<Message> list ();
 }

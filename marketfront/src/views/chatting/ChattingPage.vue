@@ -4,6 +4,7 @@
     상단바 자리
     <!-- 채팅방 -->
     <chatting-view :messages="messages" @submit="onSubmit"/>
+    <!-- <message-list :messages="messages"/> -->
   </div>
 </template>
 

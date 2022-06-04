@@ -38,7 +38,7 @@ public class KafkaController {
     public void messageRegister(@Validated @RequestBody Message message) {
         log.info("messageRegister()");
 
-        messageService.register(message);
+        messageService.consume(message);
     }
 
     @GetMapping("/list")

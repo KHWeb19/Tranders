@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import MemberPage from "@/views/member/MemberPage";
 import ChattingPage from '@/views/chatting/ChattingPage'
+
 // import LoginPage from "@/views/member/LoginPage";
 // import registerMemberPage from "@/views/member/RegisterMemberPage";
 // import ordinaryRegisterPage from "@/views/member/OrdinaryRegisterPage";
@@ -28,6 +29,7 @@ const routes = [
       default: true
     }
   },
+
   // {
   //   path: '/login',
   //   name: 'LoginPage',
