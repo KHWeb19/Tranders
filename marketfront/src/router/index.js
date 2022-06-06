@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import MemberPage from "@/views/member/MemberPage";
 import ChattingPage from '@/views/chatting/ChattingPage'
+import PythonTest from '@/views/chatting/PythonTest'
 
 // import LoginPage from "@/views/member/LoginPage";
 // import registerMemberPage from "@/views/member/RegisterMemberPage";
@@ -28,6 +29,11 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {
+    path: '/python',
+    name: 'PythonTest',
+    component: PythonTest
   },
 
   // {
