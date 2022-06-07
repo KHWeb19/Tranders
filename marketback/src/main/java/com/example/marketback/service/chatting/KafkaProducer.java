@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class KafkaProducer {
-    private static final String TOPIC = "test";
+    private static final String TOPIC = "test3";
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired

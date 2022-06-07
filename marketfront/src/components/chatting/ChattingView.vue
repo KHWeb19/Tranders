@@ -40,21 +40,20 @@
             </div>
           </div>
           <div id='skyblue'>
-            <!-- <message-list :messages="messages"/> -->
-            <div v-if="!messages || (Array.isArray(messages) && messages.length === 0)">
+            <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
                     채팅방에 입장하였습니다.
                 </div>
             </div>
-            <div style="padding: 4px; display: flex; justify-content: flex-end;" v-else v-for="msg in messages" :key="msg.messageNo">
-              <div id='message-date'>{{msg.regDate}}</div>
-              <p id='message-box'>{{msg.message}}</p>
+            <div style="padding: 4px; display: flex; justify-content: flex-end;" v-else v-for="msg in new_data" :key="msg.messageNo">
+              <!-- <div id='message-date'>{{msg.regDate}}</div> -->
+              <p id='message-box'>{{msg.content.message}}</p>
             </div>
-            <div style="padding: 4px; display: flex; justify-content: flex-end;" v-for="msg in sendMessage" :key="msg.messageNo">
+            <!-- <div style="padding: 4px; display: flex; justify-content: flex-end;" v-for="msg in sendMessage" :key="msg.messageNo">
               <div id='message-date'>{{('0' + time.getHours()).slice(-2)}}&nbsp;:&nbsp;{{('0' + time.getMinutes()).slice(-2)}}</div>
               <p id='message-box'>{{msg}}</p>
-            </div>
-          </div>
+            </div> -->
+          </div> 
 
           <div id='orange'>
             <textarea v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
@@ -67,29 +66,37 @@
 </template>
 
 <script>
-// import MessageList from './MessageList.vue'
+import axios from 'axios'
 export default {
-  // components: { MessageList },
   name: "ChattingView",
-  props: {
-    messages: {
-        type: Array
-    }
-  },
   data() {
     return {
       message: '',
-      sendMessage: [],
+      // sendMessage: [],
       time: new Date(),
+      new_data: [],
     }
   },
   methods: {
+    getNewData() {
+                axios.get('http://127.0.0.1:5000/kafka-data')
+                  .then((res) => {
+                    console.log(res.data)
+                      this.new_data = res.data;
+                  }).catch((error) => {
+                      console.error(error);
+                  });
+            },
     onSubmit() {
       const { message } = this
       this.$emit('submit', { message })
-      this.sendMessage.push(message)
+      this.getNewData();
+      // this.sendMessage.push(message)
     }
-  }
+  },
+          created() {
+            this.getNewData();
+        }
 }
 </script>
 

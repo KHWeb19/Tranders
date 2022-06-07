@@ -29,35 +29,12 @@ public class KafkaController {
     }
 
     @PostMapping
-    public String sendMessage(@RequestParam("message") String message) {
+//    public String sendMessage(@RequestParam("message") String message) {
+    public String sendMessage(@RequestBody String message) {
         this.producer.sendMessage(message);
 
+
         return "success";
-    }
-
-    @GetMapping("/kafka2python-data")
-    public ModelAndView kafka2pythonData(Model model) {
-        log.info("kafka2pythonData");
-
-        List<HttpMessageConverter<?>> converters = new ArrayList<>();
-
-        converters.add(new FormHttpMessageConverter());
-        converters.add(new StringHttpMessageConverter());
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setMessageConverters(converters);
-
-        String result = restTemplate.getForObject(
-                "http://localhost:5000/kafka-data",
-                String.class
-        );
-        log.info("result =" + result);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("python/pyResult");
-
-        model.addAttribute("resultMsg", result);
-        return modelAndView;
     }
 }
 

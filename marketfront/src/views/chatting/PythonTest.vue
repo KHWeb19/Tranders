@@ -1,6 +1,7 @@
 <template>
-  <div>
-    {{new_data}}
+<div>
+  <div v-for="msg in new_data" :key="msg.messageNo">
+    {{msg}}
     <table :data="new_data">
       <template slot-scope="{row}">
                         <th >
@@ -10,6 +11,7 @@
                     </template>
     </table>
   </div>
+</div>
 </template>
 
 <script>
@@ -24,18 +26,16 @@ import axios from "axios";
         },
         methods: {
             getNewData() {
-                let path = 'http://127.0.0.1:5000/kafka-data';
-                axios.get(path).then((res) => {
-                  console.log(res.data)
-                    this.new_data = res.data;
-                }).catch((error) => {
-                  
-                    console.error(error);
-                });
+                axios.get('http://127.0.0.1:5000/kafka-data')
+                  .then((res) => {
+                      this.new_data = res.data;
+                  }).catch((error) => {
+                      console.error(error);
+                  });
             },
         },
-        created() {
-            this.getNewData();
-        }
+        // created() {
+        //     this.getNewData();
+        // }
     };
 </script>
