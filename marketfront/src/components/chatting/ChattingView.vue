@@ -49,10 +49,6 @@
               <!-- <div id='message-date'>{{msg.regDate}}</div> -->
               <p id='message-box'>{{msg.content.message}}</p>
             </div>
-            <!-- <div style="padding: 4px; display: flex; justify-content: flex-end;" v-for="msg in sendMessage" :key="msg.messageNo">
-              <div id='message-date'>{{('0' + time.getHours()).slice(-2)}}&nbsp;:&nbsp;{{('0' + time.getMinutes()).slice(-2)}}</div>
-              <p id='message-box'>{{msg}}</p>
-            </div> -->
           </div> 
 
           <div id='orange'>
@@ -72,7 +68,6 @@ export default {
   data() {
     return {
       message: '',
-      // sendMessage: [],
       time: new Date(),
       new_data: [],
     }
@@ -91,12 +86,16 @@ export default {
       const { message } = this
       this.$emit('submit', { message })
       this.getNewData();
-      // this.sendMessage.push(message)
     }
   },
-          created() {
-            this.getNewData();
-        }
+  created() {
+    this.getNewData();
+  },
+  // beforeUpdate() {
+  //   console.log('beforeUpdate');
+  //   this.getNewData();
+  // }
+
 }
 </script>
 
