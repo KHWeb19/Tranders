@@ -18,7 +18,7 @@
 import axios from "axios";
 
     export default {
-        name: 'my-little-div',
+        name: 'PythonTest',
         data() {
             return {
                 new_data: [],
@@ -34,8 +34,8 @@ import axios from "axios";
                   });
             },
         },
-        // created() {
-        //     this.getNewData();
-        // }
+        created() {
+            this.getNewData();
+        }
     };
 </script>

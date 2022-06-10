@@ -13,7 +13,12 @@
         
         <div id='center'>
           <div id='blue'>회원 이름</div>
-          <div id='green'>채팅방 목록</div>
+          <div id='chatList'>
+            <div v-for="chatroom in chatrooms" :key="chatroom.roomNo">
+              <v-btn text @click="goChatroom(chatroom.roomNo)">채팅방{{chatroom.roomNo}}</v-btn>
+            </div>
+          </div>
+
           <div id='yellow'>기타</div>
         </div>
         
@@ -65,11 +70,17 @@
 import axios from 'axios'
 export default {
   name: "ChattingView",
+    props: {
+      chatrooms: {
+          type: Array
+      }
+  },
   data() {
     return {
       message: '',
       time: new Date(),
       new_data: [],
+      memberNo: 1,
     }
   },
   methods: {
@@ -82,6 +93,10 @@ export default {
                       console.error(error);
                   });
             },
+    goChatroom(roomNo) {
+      this.$router.push(`/chat/room/${roomNo}`)
+      history.go(0);
+    },
     onSubmit() {
       const { message } = this
       this.$emit('submit', { message })
@@ -129,7 +144,7 @@ export default {
   border-bottom-style: none;
   border-right-style: none;
 }
-#green{
+#chatList{
 	width: 310px;
 	height: 750px;
   border: 1px solid #bcbcbc;

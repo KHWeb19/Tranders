@@ -1,13 +1,9 @@
 import {
-    FETCH_MESSAGE_LIST,
-    FETCH_MESSAGE
+    FETCH_CHATROOM_LIST,
 } from './mutation-types'
 
 export default {
-    [FETCH_MESSAGE_LIST] (state, messages) {
-        state.messages = messages
+    [FETCH_CHATROOM_LIST] (state, chatrooms) {
+        state.chatrooms = chatrooms
     },
-    [FETCH_MESSAGE] (state, message) {
-        state.message = message
-    }
 }

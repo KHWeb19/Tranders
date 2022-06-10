@@ -2,12 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import MemberPage from "@/views/member/MemberPage";
-import ChattingPage from '@/views/chatting/ChattingPage'
-import PythonTest from '@/views/chatting/PythonTest'
 
-// import LoginPage from "@/views/member/LoginPage";
-// import registerMemberPage from "@/views/member/RegisterMemberPage";
-// import ordinaryRegisterPage from "@/views/member/OrdinaryRegisterPage";
+import ChattingListPage from '@/views/chatting/ChattingListPage'
+import ChattingPage from '@/views/chatting/ChattingPage'
+import HomeTestPage from '@/views/chatting/HomeTestPage'
+import BoardTestPage from '@/views/chatting/BoardTestPage'
+import PythonTest from '@/views/chatting/PythonTest'
 
 Vue.use(VueRouter)
 
@@ -23,9 +23,33 @@ const routes = [
     component: MemberPage
   },
   {
-    path: '/chatting',
+    path: '/chat',
+    name: 'ChattingListPage',
+    component: ChattingListPage,
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/chat/room/:roomNo',
     name: 'ChattingPage',
     component: ChattingPage,
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/homeTest',
+    name: 'HomeTestPage',
+    component: HomeTestPage,
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/boardTest',
+    name: 'BoardTestPage',
+    component: BoardTestPage,
     props: {
       default: true
     }
@@ -35,22 +59,6 @@ const routes = [
     name: 'PythonTest',
     component: PythonTest
   },
-
-  // {
-  //   path: '/login',
-  //   name: 'LoginPage',
-  //   component: LoginPage
-  // },
-  // {
-  //   path: '/registerMember',
-  //   name: 'registerMemberPage',
-  //   component: registerMemberPage
-  // },
-  // {
-  //   path: '/ordinaryRegister',
-  //   name: 'ordinaryRegisterPage',
-  //   component: ordinaryRegisterPage
-  // }
 ]
 
 const router = new VueRouter({

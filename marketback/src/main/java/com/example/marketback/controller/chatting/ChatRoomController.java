@@ -20,7 +20,7 @@ public class ChatRoomController {
 
     @PostMapping("/register")
     public void chatRoomRegister(@Validated @RequestBody ChatRoom chatRoom) {
-        log.info("chatRoomRegister()" + chatRoom);
+        log.info("chatRoomRegister()");
 
         chatRoomService.register(chatRoom);
     }

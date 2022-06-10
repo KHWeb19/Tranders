@@ -1,4 +1,3 @@
 export default {
-    messages: [],
-    message: null
+    chatrooms: [],
 }
