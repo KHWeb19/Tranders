@@ -6,6 +6,7 @@
 
 <script>
 import HomeView from "@/components/home/HomeView";
+
 export default {
   name: "HomePage",
   components: {
@@ -13,3 +14,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

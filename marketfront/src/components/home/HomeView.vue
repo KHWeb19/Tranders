@@ -29,12 +29,6 @@
           <span class="btn-text">회원가입</span>
         </v-btn>
       </div>
-
-      <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-        <v-btn icon @click="payment">
-          <span class="btn-text">결제</span>
-        </v-btn>
-      </div>
     </div>
   </header>
 </template>
@@ -47,10 +41,7 @@ export default {
       this.$router.push({ name: "LoginPage" });
     },
     register() {
-      this.$router.push({ name: "registerMemberPage" });
-    },
-    payment() {
-      this.$router.push({ name: "PaymentPage" });
+      this.$router.push({ name: "RegisterMemberPage" });
     },
   },
 };

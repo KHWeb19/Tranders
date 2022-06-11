@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
-import MemberPage from "@/views/member/MemberPage";
-import LoginPage from "@/views/member/LoginPage";
-import registerMemberPage from "@/views/member/RegisterMemberPage";
-import ordinaryRegisterPage from "@/views/member/OrdinaryRegisterPage";
+import MemberPage from '@/views/member/MemberPage';
+
+import ProductListPage from '@/views/productBoard/ProductListPage'
+import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
+import ProductReadPage from '@/views/productBoard/ProductReadPage'
+
 
 Vue.use(VueRouter)
 
@@ -20,20 +22,20 @@ const routes = [
     component: MemberPage
   },
   {
-    path: '/login',
-    name: 'LoginPage',
-    component: LoginPage
+    path: '/productList',
+    name: 'ProductListPage',
+    component: ProductListPage
   },
   {
-    path: '/registerMember',
-    name: 'registerMemberPage',
-    component: registerMemberPage
+    path: '/productRegister',
+    name: 'ProductRegisterPage',
+    component: ProductRegisterPage
   },
   {
-    path: '/ordinaryRegister',
-    name: 'ordinaryRegisterPage',
-    component: ordinaryRegisterPage
-  }
+    path: '/productRead/:productNo',
+    name: 'ProductReadPage',
+    component: ProductReadPage
+  },
 ]
 
 const router = new VueRouter({
