@@ -9,6 +9,7 @@ import IdSearchPage from "@/views/member/search/IdSearchPage";
 import PwSearchPage from "@/views/member/search/PwSearchPage";
 import ResultPage from "@/views/member/search/ResultPage";
 import ChangePwPage from "@/views/member/search/ChangePwPage";
+import myPage from "@/views/myPage/MyPage";
 
 Vue.use(VueRouter)
 
@@ -59,13 +60,28 @@ const routes = [
     name: 'ChangePwPage',
     component: ChangePwPage,
     props: true
+  },
+  {
+    path: '/myPage',
+    name: 'myPage',
+    component: myPage
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  //base: process.env.BASE_URL,
   routes
 })
+
+/*router.beforeEach(async (to, from, next) => {
+  if(cookies.get("access_token")===null && cookies.get("refresh_token") !== null){
+    await store.dispatch('refreshToken')
+  }
+  if (cookies.get('access_token')){
+    return next;
+  }
+  return next;
+})*/
 
 export default router
