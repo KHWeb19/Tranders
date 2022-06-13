@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter @Setter
@@ -62,6 +63,4 @@ public class Member {
 
         return member;
     }
-
-
 }
