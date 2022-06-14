@@ -1,5 +1,6 @@
 import {
 // <<<<<<< main
+// <<<<<<< main
 //     FETCH_PRODUCT,
 //     FETCH_PRODUCT_LIST,
 // } from './mutation-types'
@@ -27,4 +28,13 @@ import {
 //         localStorage.setItem("refresh_token", token.refreshToken);
 // >>>>>>> main
     }
+// =======
+//     FETCH_CHATROOM_LIST,
+// } from './mutation-types'
+
+// export default {
+//     [FETCH_CHATROOM_LIST] (state, chatrooms) {
+//         state.chatrooms = chatrooms
+//     },
+// >>>>>>> main
 }

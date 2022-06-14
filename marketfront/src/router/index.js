@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 // <<<<<<< main
+// <<<<<<< main
 // import MemberPage from '@/views/member/MemberPage';
 
 // import ProductListPage from '@/views/productBoard/ProductListPage'
@@ -19,6 +20,15 @@ import HomePage from '../views/HomePage.vue'
 // import ChangePwPage from "@/views/member/search/ChangePwPage";
 // import myPage from "@/views/myPage/MyPage";
 // >>>>>>> main
+// =======
+// import MemberPage from "@/views/member/MemberPage";
+
+// import ChattingListPage from '@/views/chatting/ChattingListPage'
+// import ChattingPage from '@/views/chatting/ChattingPage'
+// import HomeTestPage from '@/views/chatting/HomeTestPage'
+// import BoardTestPage from '@/views/chatting/BoardTestPage'
+// import PythonTest from '@/views/chatting/PythonTest'
+// >>>>>>> main
 
 Vue.use(VueRouter)
 
@@ -34,16 +44,17 @@ const routes = [
     component: MemberPage
   },
   {
-    path: '/productList',
-    name: 'ProductListPage',
-    component: ProductListPage
-  },
-  {
-    path: '/productRegister',
-    name: 'ProductRegisterPage',
-    component: ProductRegisterPage
-  },
-  {
+// <<<<<<< main
+//     path: '/productList',
+//     name: 'ProductListPage',
+//     component: ProductListPage
+//   },
+//   {
+//     path: '/productRegister',
+//     name: 'ProductRegisterPage',
+//     component: ProductRegisterPage
+//   },
+//   {
 // <<<<<<< main
 //     path: '/productRead/:productNo',
 //     name: 'ProductReadPage',
@@ -81,6 +92,44 @@ const routes = [
 //     name: 'myPage',
 //     component: myPage
 //   }
+// >>>>>>> main
+// =======
+//     path: '/chat',
+//     name: 'ChattingListPage',
+//     component: ChattingListPage,
+//     props: {
+//       default: true
+//     }
+//   },
+//   {
+//     path: '/chat/room/:roomNo',
+//     name: 'ChattingPage',
+//     component: ChattingPage,
+//     props: {
+//       default: true
+//     }
+//   },
+//   {
+//     path: '/homeTest',
+//     name: 'HomeTestPage',
+//     component: HomeTestPage,
+//     props: {
+//       default: true
+//     }
+//   },
+//   {
+//     path: '/boardTest',
+//     name: 'BoardTestPage',
+//     component: BoardTestPage,
+//     props: {
+//       default: true
+//     }
+//   },
+//   {
+//     path: '/python',
+//     name: 'PythonTest',
+//     component: PythonTest
+//   },
 // >>>>>>> main
 ]
 
