@@ -1,4 +1,9 @@
 export default {
-    product: null,
-    products: [],
+// <<<<<<< main
+//     product: null,
+//     products: [],
+// =======
+//     accessToken: null,
+//     refreshToken: null,
+// >>>>>>> main
 }
