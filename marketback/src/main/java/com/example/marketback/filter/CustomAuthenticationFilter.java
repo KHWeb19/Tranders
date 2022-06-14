@@ -7,6 +7,7 @@ import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -82,6 +83,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("access_token",access_token);
         tokens.put("refresh_token",refresh_token);
 
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refresh_token)
+                        .maxAge(7 * 24 * 60 * 60)
+                                .build();
+
+        response.setHeader("Set-Cookie", cookie.toString());
+        //response.addCookie(cookie);
         response.setContentType(APPLICATION_JSON_VALUE);
 
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);

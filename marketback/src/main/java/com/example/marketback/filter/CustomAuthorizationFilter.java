@@ -39,13 +39,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("인증이나 권한이 필요한 주소 요청이 됨 ");
         System.out.println(request.getRequestURI());
-        System.out.println(request.getServletPath());
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if(request.getServletPath().equals("/member/login") || request.getServletPath().equals("/member/refreshToken") || request.getRequestURI().equals("/member/auth/kakao/callback/**")){
+        if(request.getServletPath().equals("/member/login") || request.getServletPath().equals("/member/refreshToken") || request.getServletPath().equals("/login/oauth2/code/**")){
             filterChain.doFilter(request, response);
         }else {
             System.out.println("doFilterInternal");
+
+            String authorizationHeader = request.getHeader(AUTHORIZATION);
 
             if(authorizationHeader != null && authorizationHeader.startsWith(JwtProperties.TOKEN_PREFIX)){
                 try {
