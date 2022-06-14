@@ -67,7 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/member/kakao/login").permitAll()
                 .antMatchers("/member/test1/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_BOSS')")
                 .antMatchers("/member/test2").access("hasRole('ROLE_MANAGER')")
-                .anyRequest().authenticated();
+//                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         /*http
                 .oauth2Login()

@@ -1,17 +1,17 @@
 <template>
   <div>
-    <chatting-view :chatrooms="chatrooms" @submit="onSubmit"/>
+    <chatting-list :chatrooms="chatrooms" @submit="onSubmit"/>
   </div>
 </template>
 
 <script>
-import ChattingView from '@/components/chatting/ChattingView.vue'
+import ChattingList from '@/components/chatting/ChattingList.vue'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
-  components: { ChattingView },
-  name: "ChattingPage",
+  components: { ChattingList },
+  name: "ChattingListPage",
   computed: {
     ...mapState(['chatrooms'])
   },
@@ -22,8 +22,8 @@ export default {
     ...mapActions(['fetchChatroomList']),
     onSubmit(payload) {
       console.log(payload)
-      const { roomNo, message } = payload
-      axios.post('http://localhost:7777/kafka', { roomNo, message })
+      const { message } = payload
+      axios.post('http://localhost:7777/kafka', { message })
 
     }    
   }
