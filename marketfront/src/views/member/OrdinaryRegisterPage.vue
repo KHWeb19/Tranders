@@ -18,9 +18,9 @@ export default {
   },
   methods: {
     register(payload){
-      const {id, password, name, phoneNumber, region} = payload;
+      const {id, password, name, phoneNumber, region, roles} = payload;
 
-      axios.post('http://localhost:7777/member/register', {id, password, name, phoneNumber, region})
+      axios.post('http://localhost:7777/member/register', {id, password, name, phoneNumber, region, roles})
         .catch((res) => {
           alert(res)
         })
