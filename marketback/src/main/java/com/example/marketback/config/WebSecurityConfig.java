@@ -3,10 +3,10 @@ package com.example.marketback.config;
 //import com.example.marketback.config.jwt.JwtAuthenticationFilter;
 //import com.example.marketback.config.jwt.JwtAuthorizationFilter;
 //import com.example.marketback.config.auth.PrincipalOauth2UserService;
-import com.example.marketback.config.auth.PrincipalOauth2UserService;
+///import com.example.marketback.config.auth.PrincipalOauth2UserService;
 import com.example.marketback.filter.CustomAuthenticationFilter;
 import com.example.marketback.filter.CustomAuthorizationFilter;
-import com.example.marketback.oauth2.OAuth2AuthenticationSuccessHandler;
+//import com.example.marketback.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.example.marketback.repository.member.MemberRepository;
 //import com.example.marketback.service.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberRepository memberRepository;
 
     private final UserDetailsService userDetailsService;
-    @Autowired
-    private PrincipalOauth2UserService principalOauth2UserService;
+    //@Autowired
+    //private PrincipalOauth2UserService principalOauth2UserService;
 
     //private final CustomOAuth2UserService customOAuth2UserService;
 
-    @Autowired
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    //@Autowired
+    //private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 //
 //    @Autowired
 //    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
@@ -88,7 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated();
                 .anyRequest().permitAll();
 
-        http
+        /*http
                 .oauth2Login()
 //                .authorizationEndpoint()
 //                .baseUri("/oauth2/authorize")
@@ -98,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler);
                 // oauth2 로그인에 성공하면, 유저 데이터를 가지고 우리가 생성한 principalOauth2UserService 에서 처리하겠다.
-                // 그 후 login-success 로 이동해라
+                // 그 후 login-success 로 이동해라*/
 
     }
 

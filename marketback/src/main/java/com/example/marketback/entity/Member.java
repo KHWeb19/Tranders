@@ -45,17 +45,20 @@ public class Member {
     private Boolean bossAuth;
 
     //------
-    private String roles;
+    //private String roles;
+
+    @Enumerated(EnumType.STRING)
+    private MemberRole roles;
 
     @CreationTimestamp
     private Timestamp createDate;
 
-    public List<String> getRoleList() {
+/*    public List<String> getRoleList() {
         if(this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));
         }
         return new ArrayList<>();
-    }
+    }*/
 
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);

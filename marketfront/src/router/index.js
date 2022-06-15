@@ -7,8 +7,8 @@ import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
 import MemberPage from "@/views/member/MemberPage";
-// import LoginPage from "@/views/member/LoginPage";
-// import registerMemberPage from "@/views/member/RegisterMemberPage";
+import LoginPage from "@/views/member/LoginPage";
+import RegisterMemberPage from "@/views/member/RegisterMemberPage";
 import ordinaryRegisterPage from "@/views/member/OrdinaryRegisterPage";
 import IdSearchPage from "@/views/member/search/IdSearchPage";
 import PwSearchPage from "@/views/member/search/PwSearchPage";
@@ -35,6 +35,16 @@ const routes = [
     path: '/member',
     name: 'MemberPage',
     component: MemberPage
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage
+  },
+  {
+    path: '/register',
+    name: 'RegisterMemberPage',
+    component: RegisterMemberPage
   },
   {
     path: '/productList',

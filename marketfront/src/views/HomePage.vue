@@ -18,20 +18,6 @@ import axios from "axios";
 import cookies from "vue-cookies";
 export default {
   name: 'HomePage',
-  methods: {
-    test1(){
-      axios.get('http://localhost:7777/member/test1/test',{
-        headers: {
-          'Authorization': 'Bearer '+cookies.get('access_token'),
-          'Accept' : 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .catch(() => {
-        alert('권한 없음')
-
-export default {
-  name: 'HomePage',
   components: {
     HomeView,
     AfterLoginView
@@ -52,13 +38,9 @@ export default {
           'Content-Type': 'application/json'
         }
       })
-          .catch(() => {
-            alert('권한 없음')
-
           .catch((res) => {
-            alert(res +"에러")
+            console.log(res);
           })
-         
     },
     test3(){
       axios.post('http://localhost:7777/member/info')
@@ -66,11 +48,6 @@ export default {
             console.log(res);
           })
     }
-  },
-  components: {
-    AfterLoginView,
-    HomeView
-
   }
-}
+};
 </script>
