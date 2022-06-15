@@ -6,8 +6,7 @@
 <script>
 import LoginView from "@/components/member/LoginView";
 import axios from "axios";
-import {FETCH_LOGIN_TOKEN} from "@/store/mutation-types";
-import cookies from "core-js/internals/queue";
+import cookies from "vue-cookies";
 
 export default {
   name: "LoginPage",
@@ -35,8 +34,10 @@ export default {
               console.log(res)
               let accessToken = res.data.access_token;
               let refreshToken = res.data.refresh_token;
-              this.$store.commit(FETCH_LOGIN_TOKEN, res.data)
-              localStorage.setItem('refresh_token', refreshToken)
+
+              console.log(accessToken);
+              /*this.$store.commit(FETCH_LOGIN_TOKEN, res.data)
+              localStorage.setItem('refresh_token', refreshToken)*/
               cookies.set("access_token", accessToken, 60 * 10); // 10분
               cookies.set("refresh_token", refreshToken, 60 * 60 * 3); // 3시간
               this.$router.push({name: "HomePage"})

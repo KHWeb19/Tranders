@@ -2,6 +2,7 @@ package com.example.marketback.controller.member;
 
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.entity.Member;
+import com.example.marketback.entity.MemberRole;
 import com.example.marketback.util.kakao.KakaoProfile;
 import com.example.marketback.util.kakao.OAuthToken;
 import com.example.marketback.service.member.MemberService;
@@ -118,7 +119,7 @@ public class MemberOauth2Controller {
                 .name(kakaoProfile.getProperties().getNickname())
                 .phoneNumber("kakaoMember")
                 .region("kakaoMember")
-                .roles("ROLE_USER")
+                .roles(MemberRole.ROLE_USER)
                 .build();
 
         Member member = memberService.registerMember(memberEntity.getId());

@@ -136,17 +136,17 @@ export default {
           })
     },
     registerBtn() {
-      let auth;
+      let roles;
 
       if (this.isManager) {
-        auth = 0;
+        roles = 0;
       } else {
-        auth = 1;
+        roles = 1;
       }
 
       const {id, password, name, phoneNumber, region} = this;
 
-      this.$emit('register', {id, password, name, phoneNumber, region, auth})
+      this.$emit('register', {id, password, name, phoneNumber, region, roles})
     },
     checkDub(){
       const {id} = this;
