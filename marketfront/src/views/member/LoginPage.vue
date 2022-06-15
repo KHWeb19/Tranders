@@ -8,6 +8,7 @@ import LoginView from "@/components/member/LoginView";
 import axios from "axios";
 import {FETCH_LOGIN_TOKEN} from "@/store/mutation-types";
 import cookies from "core-js/internals/queue";
+
 export default {
   name: "LoginPage",
   components: {LoginView},
