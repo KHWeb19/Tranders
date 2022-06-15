@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit" >
     <div id='top'>
-      <div id='logo'>
-      오이마켓
-      </div>
+      <after-login-view/>
     </div>
       <div id='full'>
         <div id='left'>
@@ -118,7 +116,9 @@
 
 <script>
 import axios from 'axios'
+import AfterLoginView from '../home/AfterLoginView.vue';
 export default {
+  components: { AfterLoginView },
   name: "ChattingView",
     props: {
       chatrooms: {
@@ -172,9 +172,9 @@ export default {
 
 <style scoped>
 #top{
-  height: 70px;
+  /* height: 70px;
   display: flex;
-  justify-content: center;
+  justify-content: center; */
   border: 1px solid #bcbcbc;
   border-top-style: none;
   border-left-style: none;
