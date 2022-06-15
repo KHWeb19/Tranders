@@ -14,6 +14,7 @@
 import HomeView from "@/components/home/HomeView";
 import AfterLoginView from "@/components/home/AfterLoginView";
 import axios from "axios";
+
 import cookies from "vue-cookies";
 export default {
   name: 'HomePage',
@@ -28,23 +29,36 @@ export default {
       })
       .catch(() => {
         alert('권한 없음')
+
+export default {
+  name: 'HomePage',
+  components: {
+    HomeView,
+    AfterLoginView
+  },
+  methods: {
+    test1(){
+      axios.get('http://localhost:7777/member/test1/test')
+      .catch((res) => {
+        alert(res +"에러")
       })
     },
     test2(){
       axios.get('http://localhost:7777/member/test2',{
         headers: {
           'Authorization': 'Bearer '+cookies.get('access_token'),
+
           'Accept' : 'application/json',
           'Content-Type': 'application/json'
         }
       })
           .catch(() => {
             alert('권한 없음')
+
+          .catch((res) => {
+            alert(res +"에러")
           })
-          .then((res) => {
-            console.log(res);
-            // return  response;
-          })
+         
     },
     test3(){
       axios.post('http://localhost:7777/member/info')
@@ -52,7 +66,6 @@ export default {
             console.log(res);
           })
     }
-
   },
   components: {
     AfterLoginView,

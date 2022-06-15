@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/chatting")
-@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class ChatRoomController {
 
     @Autowired
