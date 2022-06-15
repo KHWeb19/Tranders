@@ -1,7 +1,6 @@
 <template>
   <header class="fixed-bar-box-shadow">
-    <div id="header" style="height: 64px;">
-
+    <div id="header" style="height: 70px;">
       <div id="header-title">
         <span id="title">
           오이마켓
@@ -9,42 +8,42 @@
       </div>
 
       <div id="searchBar">
-        <input type="text" placeholder="동네 이름, 상품 검색" style="width: 88%">
-        <v-btn icon style="width: 12%">
+        <input type="text" placeholder="물품이나 동네를 검색해보세요">
+        <!-- <v-btn icon style="width: 12%">
           <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+        </v-btn> -->
       </div>
 
       <div style="margin-left: auto;">
-        <v-btn text class="black--text">
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
             중고거래
-          </router-link>
-        </v-btn>
+          </v-btn>
+        </router-link>
 
-        <v-btn text>
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            동내생활
-          </router-link>
-        </v-btn>
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
+            동네생활
+          </v-btn>
+        </router-link>
 
-        <v-btn text>
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
             내 근처
-          </router-link>
-        </v-btn>
+          </v-btn>
+        </router-link>
 
-        <v-btn text>
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
             채팅
-          </router-link>
-        </v-btn>
+          </v-btn>
+        </router-link>
 
-        <v-btn text>
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            나의 당근 
-          </router-link>
-        </v-btn>
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
+            나의 당근
+          </v-btn>
+        </router-link>
 
       </div>
     </div>
@@ -91,7 +90,7 @@ export default {
 }
 #searchBar{
   position: relative;
-  width: 300px;
+  width: 295px;
   padding-top: 2px;
   padding-left: 10px;
   padding-right: 10px;
@@ -110,6 +109,9 @@ input {
   justify-content: center;
   align-items: center;
 } */
+.btn-text {
+  color: black;
+}
 /* v-btn{
   border-radius: 8px;
   border: solid 1px black;
