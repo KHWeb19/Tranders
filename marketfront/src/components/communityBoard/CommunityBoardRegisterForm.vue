@@ -4,7 +4,7 @@
             <v-form enctype="multipart/form-data" @submit.prevent="onBoardSubmit">
                 <table>
                     <v-col cols="12">
-                            <v-chip color="black" @click="selectedCondition(item)" class="condition" v-model="usedCondition" v-for="(item, i) in condition" :key="i" >
+                            <v-chip color="light green accent-2" @click="selectedSubject(item)" class="subject" v-model="usedSubject" v-for="(item, i) in subject" :key="i" >
                                 {{item}}
                             </v-chip>                           
                     </v-col>
@@ -14,50 +14,50 @@
                         <v-col>
                             <v-combobox
                             class="titleFloat"
-                                v-model="selectCondition"
+                                v-model="selectSubject"
                                 :items="items"
                                 label="말머리"
                                 filled
-                                style="width:140px; zoom:1"
+                                style="width:150px; zoom:1"
                                 outlined
                                 dense
-                                color="red darken-3"
+                                color="indigo darken-4"
                                 ></v-combobox>
-                            <v-text-field class="titleFloat" style="width:470px" color="red darken-3" v-model="title"/>
+                            <v-text-field class="titleFloat" style="width:460px" color="indigo darken-4" placeholder=" 제목을 작성하세요." v-model="title"/>
                         </v-col>
                     </v-row>
                     <v-row  justify="center">
                         <v-col cols="2" class="label" style="font-size:20pt">내용</v-col>
                         <v-col cols="12">
                             <v-textarea style="white-space:pre-line" cols="75" rows="7" 
-                            outlined color="red darken-3" placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
+                            outlined color="indigo darken-4" placeholder=" 우리 동네 관련된 질문이나 이야기를 해보세요."
                             v-model="content">
                             </v-textarea>
                         </v-col>                       
                     </v-row>
                     <v-row  wrap justify="center">
-                        <v-carousel cycle="true" :interval="1000" :show-arrows="false" hide-delimiter-background height="auto">
+                        <v-carousel hide-delimiters height="auto">    
                             <v-carousel-item 
-                            v-for="(file, index) in files" :key="index" :src="files.src" style="text-align:center">
+                            v-for="(file, index) in files" :key="index" style="text-align:center">
                             <img :src=file.preview class="preview"/>
                             </v-carousel-item>
                         </v-carousel>
-                        &nbsp;&nbsp;
+                    </v-row><br>                   
                         <v-icon large>mdi-image-outline</v-icon>
-                        <input multiple="multiple" type="file" id="files" ref="files"  dense style="width:200px"
-                                v-on:change="handleFileUpload()"/>
-                                <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityRegister/PlaceSearch'" @click="initmap" color="blue-grey" text>
+                        <input type="file" id="files" ref="files"  dense style="width:193px"
+                                multiple v-on:change="handleFileUpload()"/>
+                                <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityRegister/PlaceSearch'" color="blue-grey" text>
                                     <v-icon large>mdi-map-marker-outline
                                     </v-icon>
                                 </v-btn>                                    
-                    </v-row><br>
+                    <br>
                     <div align="left">
                     <span style="color:red; font-size:12pt">최대 10개의 이미지 등록 가능({{files.length}}/10)</span>
                     </div>
                     <br>
                     <v-row wrap>
-                        <v-btn onclick="location.href='http://localhost:8080/Tranders/communityList'" class="writeBtn" color="black" dark><v-icon>mdi-close-circle-outline</v-icon></v-btn>
-                        <v-btn type="submit" class="writeBtn2" color="red darken-3" dark><v-icon> mdi-send</v-icon></v-btn>
+                        <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityList'" class="writeBtn" color="red accent-4" dark><v-icon>mdi-close-circle-outline</v-icon></v-btn>
+                        <v-btn type="submit" class="writeBtn2" color="light green accent-4" dark><v-icon> mdi-send</v-icon></v-btn>
                     </v-row>
                 </table>
             </v-form>
@@ -72,21 +72,20 @@ export default {
             image :'',
             title:'',
             content:'',
-            brackets: [],
-            items: [
-            ],
-            files:'',
+            items: [],
+            files:[],
             filesPreview:[],
             response: '',
-            usedCondition:[],
-            condition: [
+            usedSubject:[],
+            subject: [
                 '함께해요','동네질문', '동네맛집', '동네소식', '취미생활',  '분실/실종센터', '해주세요', '일상'
             ],
-            selectCondition:[],
+            selectSubject:[],
         }
     },
     created () {
-        this.writer = this.$store.state.userInfo.nickname
+        // this.writer = this.$store.state.userInfo.nickname
+        this.writer = ''
     },
     methods: {
         handleFileUpload () {
@@ -111,35 +110,33 @@ export default {
             }
         },
         onBoardSubmit () {
-            const { title, content,writer, brackets} = this
-            const file =  this.$refs.files.files[0]
+            const { title, content, writer, usedSubject} = this
+            let formData = new FormData();
+
+            for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
+                  formData.append('file',this.$refs.files.files[idx])
+            }
+
+            formData.append('title',title)
+            formData.append('content', content)
+            formData.append('writer', writer)
+            formData.append('usedSubject', usedSubject)
             
-            this.$emit('submit', { title, content,writer, brackets, file })
-            console.log(title,content,writer,brackets,file)
+            this.$emit('submit', {formData})
+            console.log(formData)            
         },
-        selectedCondition (item) {
-            if(this.usedCondition.length >0 && this.usedCondition != item ){
+        selectedSubject (item) {
+            if(this.usedSubject.length >0 && this.usedSubject != item ){
                 alert("게시글의 주제는 하나만 선택 가능합니다.")
                 return false
             } 
-                const el = this.selectCondition.findIndex(el => el === item);
-                el < 0 ? this.selectCondition.push(item) : this.selectCondition.splice(el, 1);
-                const el2 = this.usedCondition.findIndex(el2 => el2 === item);
-                el2 < 0 ? this.usedCondition.push(item) : this.usedCondition.splice(el2,1) 
-                console.log(this.usedCondition)
+                const el = this.selectSubject.findIndex(el => el === item);
+                el < 0 ? this.selectSubject.push(item) : this.selectSubject.splice(el, 1);
+                const el2 = this.usedSubject.findIndex(el2 => el2 === item);
+                el2 < 0 ? this.usedSubject.push(item) : this.usedSubject.splice(el2,1) 
+                console.log(this.usedSubject)
             
         },
-},
-    mounted() {
-  if (window.kakao && window.kakao.maps) {
-    this.initMap();
-  } else {
-    const script = document.createElement('script');
-    script.onload = () => kakao.maps.load(this.initMap);
-    script.src =
-      'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0359ebeacf8f8cc381eb35e5034b0b6c';
-    document.head.appendChild(script);
-  }
 },
 }
 </script>
@@ -155,6 +152,7 @@ export default {
 table{
     position: relative;
     background-color: rgb(191, 246, 201);
+    /* rgb(185, 255, 75) (210, 255, 140) */
     padding-left: 5%;
     padding-right: 5%;
     padding-top: 0.5%;
@@ -185,7 +183,7 @@ table{
     margin-top:-1%;
     margin-right:3%;
 }
-.condition {
+.subject {
     font-family: 'Noto Sans KR', sans-serif;
     margin-right:1.5%;
     zoom:110%;
