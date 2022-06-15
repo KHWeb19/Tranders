@@ -2,7 +2,7 @@
   <header class="fixed-bar-box-shadow">
     <div id="header" style="height: 80px">
       <div id="header-title">
-        <span id="title"> 오이 마켓 </span>
+        <span id="title"> 오이마켓 </span>
       </div>
 
       <div id="searchBar" style="float: left; width: 45%; height: 50px">

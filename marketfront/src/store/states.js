@@ -1,13 +1,8 @@
 export default {
-// <<<<<<< main
-// <<<<<<< main
-//     product: null,
-//     products: [],
-// =======
-//     accessToken: null,
-//     refreshToken: null,
-// >>>>>>> main
-// =======
-//     chatrooms: [],
-// >>>>>>> main
+    product: null,
+    products: [],
+    accessToken: null,
+    refreshToken: null,
+    chatrooms: [],
+    roomNo: JSON.parse(localStorage.getItem('roomNo')),
 }

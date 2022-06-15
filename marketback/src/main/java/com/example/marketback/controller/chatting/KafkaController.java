@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "/kafka")
-@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class KafkaController {
     private final KafkaProducer producer;
 
