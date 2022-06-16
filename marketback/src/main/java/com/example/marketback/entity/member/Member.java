@@ -1,14 +1,10 @@
-package com.example.marketback.entity;
+package com.example.marketback.entity.member;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Getter @Setter
@@ -39,26 +35,16 @@ public class Member {
 
     private Float temperature;
 
-    //@Enumerated(EnumType.STRING)
-    //private MemberRole managerAuth;
-
     private Boolean bossAuth;
-
-    //------
-    //private String roles;
 
     @Enumerated(EnumType.STRING)
     private MemberRole roles;
 
+    @Enumerated(EnumType.STRING)
+    private ProviderType providerType;
+
     @CreationTimestamp
     private Timestamp createDate;
-
-/*    public List<String> getRoleList() {
-        if(this.roles.length() > 0) {
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
-    }*/
 
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);

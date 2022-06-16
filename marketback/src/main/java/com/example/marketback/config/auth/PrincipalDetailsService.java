@@ -1,6 +1,6 @@
 package com.example.marketback.config.auth;
 
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Member member = memberRepository.findByMemberName(id);
+        Member member = memberRepository.findByMemberId(id);
 
         if(member == null){
             log.error("NONE MEMBER");

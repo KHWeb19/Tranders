@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
@@ -16,7 +16,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -83,11 +82,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("access_token",access_token);
         tokens.put("refresh_token",refresh_token);
 
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refresh_token)
+        /*ResponseCookie cookie = ResponseCookie.from("refreshToken", refresh_token)
                         .maxAge(7 * 24 * 60 * 60)
                                 .build();
 
-        response.setHeader("Set-Cookie", cookie.toString());
+        response.setHeader("Set-Cookie", cookie.toString());*/
         //response.addCookie(cookie);
         response.setContentType(APPLICATION_JSON_VALUE);
 
