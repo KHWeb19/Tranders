@@ -1,6 +1,6 @@
 <template>
   <div>
-    <chatting-view :chatrooms="chatrooms" @submit="onSubmit"/>
+    <chatting-view :chatrooms="chatrooms" @submit="onSubmit" @click="onAppoint"/>
   </div>
 </template>
 
@@ -25,7 +25,13 @@ export default {
       const { roomNo, message } = payload
       axios.post('http://localhost:7777/kafka', { roomNo, message })
 
-    }    
+    },
+    onAppoint(payload) {
+      // console.log(payload)
+      const { memberName, boardName, date, time } = payload
+      console.log(memberName, boardName, date, time)
+      axios.post('http://127.0.0.1:5000/kakao-message', {memberName, boardName, date, time})
+    }
   }
 }
 </script>

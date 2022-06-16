@@ -10,11 +10,9 @@
 </template>
 
 <script>
-
 import HomeView from "@/components/home/HomeView";
 import AfterLoginView from "@/components/home/AfterLoginView";
 import axios from "axios";
-
 import cookies from "vue-cookies";
 export default {
   name: 'HomePage',
@@ -33,7 +31,6 @@ export default {
       axios.get('http://localhost:7777/member/test2',{
         headers: {
           'Authorization': 'Bearer '+cookies.get('access_token'),
-
           'Accept' : 'application/json',
           'Content-Type': 'application/json'
         }

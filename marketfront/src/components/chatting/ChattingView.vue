@@ -59,15 +59,83 @@
                               약속 설정
                           </v-card-title>
                           <v-card-text>
-                              약속 시간
+                              <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :return-value.sync="date"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                              >
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-text-field
+                                    v-model="date"
+                                    label="날짜 선택"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                  v-model="date"
+                                  no-title
+                                  scrollable
+                                >
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.menu.save(date)"
+                                  >
+                                    선택
+                                  </v-btn>
+                                  <v-btn
+                                    text
+                                    color="primary"
+                                    @click="menu = false"
+                                  >
+                                    닫기
+                                  </v-btn>
+                                </v-date-picker>
+                              </v-menu>
+                              <v-menu
+                                ref="menu2"
+                                v-model="menu2"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="time"
+                                transition="scale-transition"
+                                offset-y
+                                max-width="290px"
+                                min-width="290px"
+                              >
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-text-field
+                                    v-model="time"
+                                    label="시간 선택"
+                                    prepend-icon="mdi-clock-time-four-outline"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-time-picker
+                                  v-if="menu2"
+                                  v-model="time"
+                                  full-width
+                                  @click:minute="$refs.menu2.save(time)"
+                                ></v-time-picker>
+                              </v-menu>
                           </v-card-text>
                           <v-card-actions>
                               <v-spacer></v-spacer>
-                              <v-btn color="red" text @click.native="onDelete($event)">
+                              <v-btn color="red" text @click.native="onAppoint($event)">
                                   완료
                               </v-btn>
                               <v-btn text @click="dialog.value=false">
-                                  취소
+                                  닫기
                               </v-btn>
                           </v-card-actions>
                       </v-card>
@@ -128,11 +196,18 @@ export default {
   data() {
     return {
       message: '',
-      time: new Date(),
+      // time: new Date(),
       new_data: [],
       newMessage: [],
       memberNo: 1,
+      memberName: '지은',
+      boardName: '물품이름',
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false,
+      time: null,
+      menu2: false,
       roomNo: JSON.parse(localStorage.getItem('roomNo')),
+
     }
   },
   methods: {
@@ -157,6 +232,10 @@ export default {
       // this.$emit('submit', { roomNo, message })
       this.newMessage.push(message)
       // this.getNewData();
+    },
+    onAppoint() {
+      // console.log({date: this.date, time: this.time})
+      this.$emit('click', {memberName: this.memberName, boardName: this.boardName, date: this.date, time: this.time})
     }
   },
   created() {
