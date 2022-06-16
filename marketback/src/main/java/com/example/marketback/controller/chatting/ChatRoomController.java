@@ -31,4 +31,16 @@ public class ChatRoomController {
 
         return chatRoomService.list();
     }
+
+    @PutMapping("/{roomNo}")
+    public ChatRoomRequest chatRoomModify (
+            @PathVariable("roomNo") Long roomNo,
+            @RequestBody ChatRoomRequest chatRoomRequest) {
+        log.info("chatRoomModify(): " + chatRoomRequest);
+
+        chatRoomRequest.setRoomNo(Long.valueOf(roomNo));
+        chatRoomService.modify(chatRoomRequest);
+
+        return chatRoomRequest;
+    }
 }

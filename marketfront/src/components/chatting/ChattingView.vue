@@ -24,7 +24,7 @@
                         params: {roomNo: chatroom.roomNo.toString()}}">
                         채팅방
                     </router-link> -->
-                <v-btn style="width: 310px; height: 72px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
+                <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
                   <div>
                     <div style="border-radius: 50%; overflow: hidden;">
                         <v-img width="40" height="40" src="@/assets/profile.jpg"/>
@@ -51,7 +51,7 @@
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn text block style="height: 52px;" v-on="on">약속 잡기</v-btn>
+                      <v-btn v-on="on">약속 잡기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                       <v-card>
@@ -156,6 +156,12 @@
               <div>가격</div>
             </div>
           </div>
+          <div id='notice'>
+            <div id='notice-box'>
+              <span style="font-weight: 700; margin-right: 4px;">알림</span>
+              <span>{{}}</span>
+            </div>
+          </div>
           <div id='chatView'>
             <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
@@ -234,8 +240,9 @@ export default {
       // this.getNewData();
     },
     onAppoint() {
-      // console.log({date: this.date, time: this.time})
-      this.$emit('click', {memberName: this.memberName, boardName: this.boardName, date: this.date, time: this.time})
+      console.log({date: this.date, time: this.time})
+      const { roomNo, date, time } = this
+      this.$emit('click', { roomNo, date, time })
     }
   },
   created() {
@@ -328,12 +335,32 @@ export default {
 	height: 72px;
   display: flex;
   border: 1px solid #bcbcbc;
+}
+#notice{
+  display: flex;
+      -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+
+      border: 1px solid #bcbcbc;
+        border-top-style: none;
   border-bottom-style: none;
+}
+#notice-box{
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  margin: 8px 0px;
+  background-color: #fff7e6;
+  color: #ba5e02;
 }
 #chatView{
 	width: 810px;
 	height: 625px;
   border: 1px solid #bcbcbc;
+  border-top-style: none;
   border-bottom-style: none;
   overflow-y:auto; 
   overflow-x:hidden; 

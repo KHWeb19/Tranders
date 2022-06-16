@@ -28,9 +28,10 @@ export default {
     },
     onAppoint(payload) {
       // console.log(payload)
-      const { memberName, boardName, date, time } = payload
-      console.log(memberName, boardName, date, time)
-      axios.post('http://127.0.0.1:5000/kakao-message', {memberName, boardName, date, time})
+      const { roomNo, memberName, boardName, date, time } = payload
+      console.log(roomNo, memberName, boardName, date, time)
+      // axios.post('http://127.0.0.1:5000/kakao-message', {memberName, boardName, date, time})
+      axios.put(`http://localhost:7777/chatting/${roomNo}`, {appointTime: date})
     }
   }
 }
