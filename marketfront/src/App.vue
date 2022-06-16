@@ -15,14 +15,14 @@ export default {
     //
   }),
   created() {
-    // let token = this.$store.getters.getToken;
+     let token = this.$store.getters.getToken;
 
     // if(token.accessToken === null && token.refreshToken === null){
     //   this.$router.push({name: 'LoginPage'})
     // }
-    // if(token.accessToken === null && token.refreshToken !== null){
-    //   this.$store.dispatch("refreshToken");
-    // }
+     if(token.accessToken === null && token.refreshToken !== null){
+       this.$store.dispatch("refreshToken");
+    }
 
   }
 

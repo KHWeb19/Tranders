@@ -19,7 +19,7 @@ export default {
   mounted() {
     this.isLogin = !!(cookies.get('access_token') === null && cookies.get('refresh_token'));
 
-    alert(this.isLogin)
+    //alert(this.isLogin)
   },
   methods: {
     login(payload){
@@ -36,8 +36,6 @@ export default {
               let refreshToken = res.data.refresh_token;
 
               console.log(accessToken);
-              /*this.$store.commit(FETCH_LOGIN_TOKEN, res.data)
-              localStorage.setItem('refresh_token', refreshToken)*/
               cookies.set("access_token", accessToken, 60 * 10); // 10분
               cookies.set("refresh_token", refreshToken, 60 * 60 * 3); // 3시간
               this.$router.push({name: "HomePage"})

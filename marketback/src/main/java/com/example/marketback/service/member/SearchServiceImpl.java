@@ -1,6 +1,6 @@
 package com.example.marketback.service.member;
 
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.MemberLoginRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public void changePw(MemberLoginRequest memberLoginRequest) {
-        Member member = memberRepository.findByMemberName(memberLoginRequest.getId());
+        Member member = memberRepository.findByMemberId(memberLoginRequest.getId());
 
         String encodePassword = passwordEncoder.encode(memberLoginRequest.getPassword());
         member.setPassword(encodePassword);

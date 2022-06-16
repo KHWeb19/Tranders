@@ -1,6 +1,6 @@
 package com.example.marketback.service.member;
 
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +39,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMember(String id) {
-        return memberRepository.findByMemberName(id);
+        return memberRepository.findByMemberId(id);
     }
 
     @Override
     public Member registerMember(String email) {
-        return memberRepository.findByEmail(email);
+        return memberRepository.findByMemberId(email);
     }
 }
