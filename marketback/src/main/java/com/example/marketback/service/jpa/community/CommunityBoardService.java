@@ -10,6 +10,6 @@ public interface CommunityBoardService {
     public void register (CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception;
     public List<CommunityBoard> list ();
     public CommunityBoard read (Integer boardNo);
-    public void modify (CommunityBoard board);
-    public void remove (Integer boardNo);
+    public void modify (CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception;
+    public void remove (Integer boardNo) throws Exception;
 }

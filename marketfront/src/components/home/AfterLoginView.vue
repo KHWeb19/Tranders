@@ -21,7 +21,7 @@
           </v-btn>
         </router-link>
 
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+        <router-link style="text-decoration: none;" :to="{name: 'CommunityBoardListPage'}">
           <v-btn text>
             동네생활
           </v-btn>

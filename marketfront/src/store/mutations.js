@@ -3,6 +3,8 @@ import {
     FETCH_PRODUCT_LIST,
     FETCH_CHATROOM_LIST,
     FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN,
+    FETCH_COMMUNITY_BOARD_LIST,
+    FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 
 export default {
@@ -26,6 +28,12 @@ export default {
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
+    },
+    [FETCH_COMMUNITY_BOARD_LIST] (state, communityBoards) {
+        state.communityBoards = communityBoards
+    },
+    [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
+        state.communityBoard = communityBoard
     },
 }
 

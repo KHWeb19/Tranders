@@ -8,6 +8,9 @@ spring:
     password: eddi@123
     driver-class-name: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL8Dialect
+  output:
+    ansi:
+      enabled: ALWAYS
 
   jpa:
     open-in-view: false

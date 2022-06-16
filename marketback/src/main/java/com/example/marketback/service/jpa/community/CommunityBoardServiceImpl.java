@@ -89,12 +89,51 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     }
 
     @Override
-    public void modify(CommunityBoard board) {
+    public void modify(CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+
+        try {
+            if (file != null) {
+                for (MultipartFile multipartFile : file) {
+                    UUID uuid = UUID.randomUUID();
+                    String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
+
+                    saveFile.write(multipartFile.getBytes());
+                    saveFile.close();
+
+                    if (multipartFile == file.get(0)) {
+                        board.setFileName1(fileName);
+                    } else if ( multipartFile == file.get(1)){
+                        board.setFileName2(fileName);
+                    } else if (multipartFile == file.get(2)) {
+                        board.setFileName3(fileName);
+                    } else if (multipartFile == file.get(3)) {
+                        board.setFileName4(fileName);
+                    } else if (multipartFile == file.get(4)) {
+                        board.setFileName5(fileName);
+                    } else if (multipartFile == file.get(5)) {
+                        board.setFileName6(fileName);
+                    } else if (multipartFile == file.get(6)) {
+                        board.setFileName7(fileName);
+                    } else if ( multipartFile == file.get(7)){
+                        board.setFileName8(fileName);
+                    } else if (multipartFile == file.get(8)) {
+                        board.setFileName9(fileName);
+                    } else {
+                        board.setFileName10(fileName);
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            log.info("Upload Fail!!!");
+        }
         repository.save(board);
     }
 
     @Override
-    public void remove(Integer boardNo) {
+    public void remove(Integer boardNo) throws Exception  {
         repository.deleteById(Long.valueOf(boardNo));
     }
+
 }
