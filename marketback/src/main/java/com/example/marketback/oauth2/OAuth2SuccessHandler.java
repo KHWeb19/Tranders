@@ -53,6 +53,7 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
                 .withSubject(member.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME_ACCESS ))
                 .withIssuer(request.getRequestURI())
+                .withClaim("name", member.getName())
                 .withClaim("roles", member.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
