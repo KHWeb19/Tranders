@@ -22,7 +22,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
         if(member == null){
             log.error("NONE MEMBER");
-            throw new UsernameNotFoundException("NONE");
+            throw new UsernameNotFoundException(id);
         } else {
             log.info("MEMBER : {}", id);
         }

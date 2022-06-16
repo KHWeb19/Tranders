@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -52,11 +54,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private Member createUser(OAuth2UserInfo userInfo, ProviderType providerType) {
-
+        UUID tempPassword = UUID.randomUUID();
         Member member = Member.builder()
                             .name(userInfo.getName())
                             .id(userInfo.getEmail())
-                            .password("")
+                            .password(String.valueOf(tempPassword))
                             .roles(MemberRole.ROLE_USER)
                             .phoneNumber(providerType.name())
                             .region(providerType.name())

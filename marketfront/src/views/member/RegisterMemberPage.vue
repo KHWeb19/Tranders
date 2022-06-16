@@ -24,11 +24,17 @@
 </template>
 
 <script>
+import {KAKAO_AUTH_URL} from "@/constant/login";
+import {ParsingInfo} from "@/views/Util/LoginUtil";
+import cookies from "vue-cookies";
+
 export default {
   name: "RegisterMemberPage",
   methods: {
     kakaoLogin(){
-      window.open("https://www.naver.com")
+
+      location.href=KAKAO_AUTH_URL;
+      ParsingInfo(cookies.get('access_token'));
     },
     ordinaryRegister(){
       this.$router.push({name: 'ordinaryRegisterPage'})

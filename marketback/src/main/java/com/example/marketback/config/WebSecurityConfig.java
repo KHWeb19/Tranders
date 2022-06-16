@@ -27,18 +27,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.CorsFilter;
 
 
-@EnableWebSecurity
 @Configuration
-@RequiredArgsConstructor
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CorsFilter corsFilter;
-
-    private final MemberRepository memberRepository;
-
-    private final UserDetailsService userDetailsService;
-
-    private final CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    private CorsFilter corsFilter;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     private OAuth2SuccessHandler oAuth2AuthenticationSuccessHandler;

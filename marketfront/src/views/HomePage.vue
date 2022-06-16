@@ -14,6 +14,15 @@ import HomeView from "@/components/home/HomeView";
 import axios from "axios";
 
 import cookies from "vue-cookies";
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer '+ cookies.get('oauth2_auth_request'),
+    'Accept' : 'application/json',
+    'Content-Type': 'application/json'
+  }
+};
+
 export default {
   name: 'HomePage',
   components: {
@@ -30,13 +39,7 @@ export default {
           })
     },
     test2(){
-      axios.get('http://localhost:7777/member/test2',{
-        headers: {
-          'Authorization': 'Bearer '+ cookies.get('oauth2_auth_request'),
-          'Accept' : 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axios.get('http://localhost:7777/member/test2', config)
           .catch((res) => {
             console.log(res);
           })

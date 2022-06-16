@@ -50,6 +50,10 @@
 </template>
 
 <script>
+import {ParsingInfo} from "@/views/Util/LoginUtil";
+import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL} from "@/constant/login";
+import cookies from "vue-cookies";
+
 export default {
   name: "LoginView",
   data() {
@@ -64,10 +68,13 @@ export default {
       this.$emit("login", {id, password});
     },
     kakaoLogin(){
-     location.href = 'http://localhost:7777/oauth2/authorization/kakao?redirect_uri=http://localhost:8080/oauth2/redirect'
+      //loginProcess("", "kakao")
+      location.href=KAKAO_AUTH_URL;
+      ParsingInfo(cookies.get('access_token'));
     },
     googleLogin(){
-      location.href = 'http://localhost:7777/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect'
+      location.href=GOOGLE_AUTH_URL;
+      ParsingInfo(cookies.get('access_token'));
     },
     searchId(){
       this.$router.push({name: "IdSearchPage"});
