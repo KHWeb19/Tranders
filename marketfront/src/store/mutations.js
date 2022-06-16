@@ -6,6 +6,7 @@ import {
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
+import cookies from "vue-cookies";
 
 export default {
     [FETCH_PRODUCT](state, product) {
@@ -19,11 +20,11 @@ export default {
         state.refreshToken = token.refreshToken;
     },
     [FETCH_REFRESH_TOKEN] (state, token){
-        state.accessToken = token.accessToken;
-        state.refreshToken = token.refreshToken;
+        /*state.accessToken = token.accessToken;
+        state.refreshToken = token.refreshToken;*/
 
-        localStorage.setItem("access_token", token.accessToken);
-        localStorage.setItem("refresh_token", token.refreshToken);
+        cookies.set("access_token", token.access_token);
+        cookies.set("refresh_token", token.refresh_token);
 
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {

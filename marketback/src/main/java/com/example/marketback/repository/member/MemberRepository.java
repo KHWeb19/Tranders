@@ -1,6 +1,6 @@
 package com.example.marketback.repository.member;
 
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.id = :id")
-    Member findByMemberName(String id);
+    Member findByMemberId(String id);
 
     @Query("select m from Member m where m.id = :id")
     Optional<Member> checkDubById(String id);
@@ -21,6 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findPwById(String id, String name, String phoneNumber);
 
     @Query("select m from Member m where m.id = :email")
-    Member findByEmail(String email);
+    Optional<Member> findByEmail(String email);
 
 }

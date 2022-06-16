@@ -28,7 +28,6 @@ import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
 
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -178,5 +177,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router
