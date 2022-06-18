@@ -23,6 +23,9 @@ public class ChatRoom {
     private String sender;
 
     @Column(length = 32)
+    private String appointDate;
+
+    @Column(length = 32)
     private String appointTime;
 //
 //    @Column(length = 32)
@@ -31,8 +34,9 @@ public class ChatRoom {
 //    @UpdateTimestamp
 //    private Date updDate;
 
-    public ChatRoom(Long roomNo, String appointTime){
+    public ChatRoom(Long roomNo, String appointDate, String appointTime){
         this.roomNo = roomNo;
+        this.appointDate = appointDate;
         this.appointTime = appointTime;
     }
 }

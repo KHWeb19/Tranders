@@ -9,5 +9,6 @@ import java.util.List;
 public interface ChatRoomService {
     public void register (ChatRoom chatRoom);
     public List<ChatRoom> list ();
+    public ChatRoom read (Integer roomNo);
     public void modify (ChatRoomRequest chatRoomRequest);
 }

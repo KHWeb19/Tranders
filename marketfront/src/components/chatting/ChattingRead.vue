@@ -14,30 +14,27 @@
           </div>
         </div>
         
-        <!-- <div id='center' v-for="chatroom in chatrooms" :key="chatroom.roomNo"> -->
         <div id='center'>
           <div id='name'>회원 이름</div>
-          <div id='chatList'>
-            <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-                <!-- <router-link style="text-decoration: none;" :key="$route.fullPath" :to="{
-                        name: 'ChattingPage',
-                        params: {roomNo: chatroom.roomNo.toString()}}">
-                        채팅방
-                    </router-link> -->
-                <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
-                  <div>
-                    <div style="border-radius: 50%; overflow: hidden;">
-                        <v-img width="40" height="40" src="@/assets/profile.jpg"/>
-                    </div>
+            <div id='chatList'>
+              <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
+                <router-link :to="{
+                          name: 'ChattingReadView',
+                          params: {roomNo: chatroom.roomNo.toString()}}">
+                      {{ chatroom.roomNo }}입장
+                  </router-link>
+                  <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
+                <div>
+                  <div style="border-radius: 50%; overflow: hidden;">
+                      <v-img width="40" height="40" src="@/assets/profile.jpg"/>
                   </div>
-                  회원이름
-                  <br/>
-                  roomNo: {{chatroom.roomNo}}
-                </v-btn>
-
+                </div>
+                회원이름
+                <br/>
+                roomNo: {{chatroom.roomNo}}
+              </v-btn>
             </div>
           </div>
-
         </div>
         
         <div id='right'>
@@ -159,18 +156,18 @@
           <div id='notice'>
             <div id='notice-box'>
               <span style="font-weight: 700; margin-right: 4px;">알림</span>
-              <span>{{}}</span>
+              <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}}</span>
             </div>
           </div>
           <div id='chatView'>
             <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
-                    {{roomNo}} 채팅방에 입장하였습니다. 
+                    {{chatroom.roomNo}} 채팅방에 입장하였습니다. 
                 </div>
             </div>
             <div v-else>
               <div style="display: flex; justify-content: flex-end;"  v-for="msg in new_data" :key="msg.messageNo">
-                <p id='message-box' v-if="roomNo==msg.content.roomNo">{{msg.content.message}}</p>
+                <p id='message-box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</p>
               </div>
               <div style="display: flex; justify-content: flex-end;"  v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message-box'>{{msg}}</div>
@@ -189,16 +186,21 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import AfterLoginView from '../home/AfterLoginView.vue';
+
 export default {
   components: { AfterLoginView },
-  name: "ChattingView",
-    props: {
+  name: "ChattingRead",
+  props: {
+      chatroom: {
+          type: Object,
+          require: true
+      },
       chatrooms: {
           type: Array
       }
-  },
+    },
   data() {
     return {
       message: '',
@@ -212,42 +214,42 @@ export default {
       menu: false,
       time: null,
       menu2: false,
-      roomNo: JSON.parse(localStorage.getItem('roomNo')),
 
     }
   },
-  methods: {
-    getNewData() {
-                axios.get('http://127.0.0.1:5000/kafka-data')
-                  .then((res) => {
-                    console.log(res.data)
-                      this.new_data = res.data;
-                  }).catch((error) => {
-                      console.error(error);
-                  });
-            },
-    goChatroom(roomNo) {
-      localStorage.setItem("roomNo", JSON.stringify(roomNo))
-      this.$router.push(`/chat/room/${roomNo}`)
-      history.go(0);
-    },
-    onSubmit() {
-      console.log(this.roomNo)
-      const { roomNo, message } = this
-      console.log({ roomNo, message })
-      // this.$emit('submit', { roomNo, message })
-      this.newMessage.push(message)
+
+  created() {
       // this.getNewData();
+  },
+  methods: {
+    // getNewData() {
+    //             axios.get('http://127.0.0.1:5000/kafka-data')
+    //               .then((res) => {
+    //                 console.log(res.data)
+    //                   this.new_data = res.data;
+    //               }).catch((error) => {
+    //                   console.error(error);
+    //               });
+    //         },
+    goChatroom(roomNo) {
+      this.$router.push({name: 'ChattingReadView',
+                          params: {roomNo: roomNo.toString()}})
     },
+    // onSubmit() {
+    //   console.log(this.roomNo)
+    //   const { roomNo, message } = this
+    //   console.log({ roomNo, message })
+    //   // this.$emit('submit', { roomNo, message })
+    //   this.newMessage.push(message)
+    //   // this.getNewData();
+    // },
     onAppoint() {
-      console.log({date: this.date, time: this.time})
-      const { roomNo, date, time } = this
-      this.$emit('click', { roomNo, date, time })
+      const { date, time } = this
+      this.$emit('click', { roomNo: this.chatroom.roomNo, date, time })
+      history.go(0);
     }
   },
-  created() {
-    this.getNewData();
-  },
+
   // beforeUpdate() {
   //   console.log('beforeUpdate');
   //   this.getNewData();
@@ -358,7 +360,7 @@ export default {
 }
 #chatView{
 	width: 810px;
-	height: 625px;
+	height: 555px;
   border: 1px solid #bcbcbc;
   border-top-style: none;
   border-bottom-style: none;

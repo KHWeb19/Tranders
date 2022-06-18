@@ -27,10 +27,21 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return chatRoomRepository.findAll(Sort.by(Sort.Direction.DESC, "roomNo"));
     }
 
+    public ChatRoom read(Integer roomNo) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
+
+        if (maybeChatRoom.equals(Optional.empty())) {
+            return null;
+        }
+
+        return maybeChatRoom.get();
+    }
+
     @Override
     public void modify(ChatRoomRequest chatRoomRequest) {
         ChatRoom chatRoomEntity = new ChatRoom(
                 chatRoomRequest.getRoomNo(),
+                chatRoomRequest.getAppointDate(),
                 chatRoomRequest.getAppointTime()
         );
         chatRoomRepository.save(chatRoomEntity);

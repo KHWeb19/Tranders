@@ -17,7 +17,8 @@ import ChangePwPage from "@/views/member/search/ChangePwPage";
 // import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-import ChattingPage from '@/views/chatting/ChattingPage'
+// import ChattingPage from '@/views/chatting/ChattingPage'
+import ChattingReadView from '@/views/chatting/ChattingReadView'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
@@ -94,17 +95,21 @@ const routes = [
   //   component: myPage
   // },
   {
-    path: '/chat',
+    path: '/chatting',
     name: 'ChattingListPage',
-    component: ChattingListPage,
+    components:{
+      default: ChattingListPage
+    },
     props: {
       default: true
     }
   },
   {
-    path: '/chat/room/:roomNo',
-    name: 'ChattingPage',
-    component: ChattingPage,
+    path: '/chatting/:roomNo',
+    name: 'ChattingReadView',
+    components: {
+      default: ChattingReadView
+    },
     props: {
       default: true
     }
@@ -130,6 +135,7 @@ const routes = [
     name: 'PythonTest',
     component: PythonTest
   },
+
 ]
 
 const router = new VueRouter({
