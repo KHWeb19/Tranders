@@ -46,4 +46,10 @@ public class MemberServiceImpl implements MemberService {
     public Member registerMember(String email) {
         return memberRepository.findByMemberId(email);
     }
+
+    @Override
+    public String getMemberProfile(String id) {
+        Member member = memberRepository.findByMemberId(id);
+        return member.getProfileImg();
+    }
 }

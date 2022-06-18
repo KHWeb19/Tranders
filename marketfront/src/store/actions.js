@@ -2,7 +2,7 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
-    FETCH_CHATROOM_LIST,
+    FETCH_CHATROOM_LIST, FETCH_MEMBER_PROFILE,
 } from './mutation-types'
 
 import axios from 'axios'
@@ -40,4 +40,16 @@ export default {
                 commit(FETCH_CHATROOM_LIST, res.data)
             })
     },
+    fetchMemberProfile ({commit}, id) {
+        return axios.get(`http://localhost:7777/member/profile/${id}`, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_MEMBER_PROFILE, res.data)
+            })
+    }
 }

@@ -50,7 +50,7 @@
 
         <v-row style="height: 70px">
           <v-col cols="10">
-            <v-text-field solo style="width: 100%" placeholder="ADDRESS" v-model="region"> </v-text-field>
+            <v-text-field solo style="width: 100%" placeholder="ADDRESS" v-model="region" readonly> </v-text-field>
           </v-col>
 
           <v-col cols="2" class="pt-5">
@@ -107,26 +107,17 @@ export default {
       }
     },
     whereami() {
-      let options = {
-        enableHighAccuracy: true,
-        maximumAge: 3000,
-        timeout: 15000
-      }
-
-      if (navigator.geolocation)
-        navigator.geolocation.getCurrentPosition(this.success, this.error, options);
-      else
-        alert('지원 안함')
+      navigator.geolocation.getCurrentPosition(this.showYourLocation, this.showErrorMsg);
     },
-    error() {
-      alert('에러발생')
-    },
-    success(pos) {
-      console.log(pos);
+    showYourLocation(position) {  // 성공했을때 실행
+      let y = position.coords.latitude;
+      let x = position.coords.longitude;
 
-      let y = pos.coords.latitude;
-      let x = pos.coords.longitude;
-      axios.post('http://localhost:5000/test-address', {x, y})
+      console.log(x);
+      console.log(y);
+
+
+      axios.post('http://127.0.0.1:5000/address-region', {x, y})
           .catch((res) => {
             console.log(res)
           })
@@ -134,6 +125,22 @@ export default {
             console.log(res)
             this.region = res.data;
           })
+    },
+    showErrorMsg(error) {
+      alert('에러발생')
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          alert("이 문장은 사용자가 Geolocation API의 사용 요청을 거부했을 때 나타납니다!")
+          break;
+
+        case error.POSITION_UNAVAILABLE:
+          alert("이 문장은 가져온 위치 정보를 사용할 수 없을 때 나타납니다!")
+          break;
+
+        case error.TIMEOUT:
+          alert("이 문장은 위치 정보를 가져오기 위한 요청이 허용 시간을 초과했을 때 나타납니다!")
+          break;
+      }
     },
     registerBtn() {
       let roles;

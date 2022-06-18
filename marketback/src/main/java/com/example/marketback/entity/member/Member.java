@@ -1,5 +1,6 @@
 package com.example.marketback.entity.member;
 
+import com.example.marketback.entity.boss.Boss;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_NO")
     private Long memberNo;
 
     @Column(nullable = false)
@@ -36,6 +38,8 @@ public class Member {
     private Float temperature;
 
     private Boolean bossAuth;
+
+    private String profileImg;
 
     @Enumerated(EnumType.STRING)
     private MemberRole roles;

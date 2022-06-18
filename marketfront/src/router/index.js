@@ -21,6 +21,10 @@ import ChattingPage from '@/views/chatting/ChattingPage'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
+import MyPageProfile from "@/views/myPage/MyPageProfile";
+import MyInfoPage from "@/views/myPage/MyInfoPage";
+import BossRegisterPage from "@/views/boss/BossRegisterPage";
+import BossPage from "@/views/boss/BossPage";
 
 Vue.use(VueRouter)
 
@@ -87,11 +91,6 @@ const routes = [
     component: ChangePwPage,
     props: true
   },
-  // {
-  //   path: '/myPage',
-  //   name: 'myPage',
-  //   component: myPage
-  // },
   {
     path: '/chat',
     name: 'ChattingListPage',
@@ -129,6 +128,27 @@ const routes = [
     name: 'PythonTest',
     component: PythonTest
   },
+  {
+    path: '/myPageInfo',
+    name: 'MyInfoPage',
+    component: MyInfoPage,
+    props: true
+  },
+  {
+    path: '/myPage/profile',
+    name: 'MyPageProfile',
+    component: MyPageProfile
+  },
+  {
+    path: '/bossRegister',
+    name: 'BossRegisterPage',
+    component: BossRegisterPage
+  },
+  {
+    path: '/bossPage',
+    name: 'BossPage',
+    component: BossPage
+  }
 ]
 
 const router = new VueRouter({
