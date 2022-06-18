@@ -1,7 +1,7 @@
 <template>
   <div>
     <home-view></home-view>
-
+    <after-login-view></after-login-view>
     <v-btn @click="test1()">test1</v-btn>
     <v-btn @click="test2()">test2</v-btn>
     <v-btn @click="test3()">test3</v-btn>
@@ -12,10 +12,12 @@
 import HomeView from "@/components/home/HomeView";
 import axios from "axios";
 import cookies from "vue-cookies";
+import HomeView from "@/components/home/HomeView";
+import AfterLoginView from "@/components/home/AfterLoginView";
 
 const config = {
   headers: {
-    'Authorization': 'Bearer '+ cookies.get('oauth2_auth_request'),
+    'Authorization': 'Bearer '+ cookies.get('access_token'),
     'Accept' : 'application/json',
     'Content-Type': 'application/json'
   }
@@ -24,7 +26,8 @@ const config = {
 export default {
   name: 'HomePage',
   components: {
-    HomeView,
+    AfterLoginView,
+    HomeView
   },
   methods: {
     test1(){

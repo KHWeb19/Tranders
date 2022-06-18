@@ -114,4 +114,11 @@ public class MemberController {
         log.info("test2");
         return "<h2>test2</h2>";
     }
+
+    @GetMapping("/profile/{id}")
+    public String profileImg(@PathVariable(value = "id") String id){
+        log.info(id);
+
+        return memberService.getMemberProfile(id);
+    }
 }

@@ -7,4 +7,5 @@ public interface MemberService {
     Boolean checkIdDuplicate(String id);
     Member getMember(String id);
     Member registerMember(String email);
+    String getMemberProfile(String id);
 }
