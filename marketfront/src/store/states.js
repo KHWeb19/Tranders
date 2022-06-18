@@ -4,6 +4,6 @@ export default {
     accessToken: null,
     refreshToken: null,
     chatrooms: [],
-    roomNo: JSON.parse(localStorage.getItem('roomNo')),
+    //roomNo: JSON.parse(localStorage.getItem('roomNo')),
     profileImg: null,
 }

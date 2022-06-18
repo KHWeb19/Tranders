@@ -13,6 +13,7 @@ function ParsingInfo(token){
     let userId = result.sub;
     let roles = result.roles;
     let name = result.name;
+    let memberNo = result.memberNo;
 
     alert('token parser')
     console.log(userId);
@@ -29,6 +30,7 @@ function ParsingInfo(token){
         //alert('@ 가 없어요')
         cookies.set('id', userId, SAVE_COOKIE_ACCESS);
     }
+    cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
     cookies.set('name', name, SAVE_COOKIE_ACCESS);
     cookies.set('roles', roles, SAVE_COOKIE_ACCESS);
 }

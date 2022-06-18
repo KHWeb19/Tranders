@@ -7,7 +7,7 @@
       <div style=" top: 25px; padding-left: 5px; position: absolute">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div style="top: 25px; position: absolute; background-color: yellow; left: 88%">
+      <div style="top: 25px; position: absolute; left: 88%">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
 <!--      <div style="position: absolute; left: 10px; bottom: 10px">
@@ -20,7 +20,7 @@
         <v-img src="@/assets/profile.jpg" height="200px" width="200px" style="border-radius: 70%"></v-img>
       </div>
       <div>
-        dkfjasd
+        <v-text-field v-model="name" solo style="width: 100%" readonly> </v-text-field>
       </div>
     </div>
 
@@ -32,7 +32,7 @@ export default {
   name: "BossPageView",
   data(){
     return {
-
+      name: ''
     }
   },
   methods: {
