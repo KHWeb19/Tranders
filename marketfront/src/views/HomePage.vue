@@ -9,8 +9,8 @@
 </template>
 
 <script>
+import HomeView from "@/components/home/HomeView";
 import axios from "axios";
-
 import cookies from "vue-cookies";
 import HomeView from "@/components/home/HomeView";
 import AfterLoginView from "@/components/home/AfterLoginView";
@@ -40,6 +40,13 @@ export default {
           })
     },
     test2(){
+      axios.get('http://localhost:7777/member/test2',{
+        headers: {
+          'Authorization': 'Bearer '+cookies.get('access_token'),
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
       axios.get('http://localhost:7777/member/test2', config)
           .catch((res) => {
             console.log(res);

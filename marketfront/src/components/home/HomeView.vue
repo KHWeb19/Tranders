@@ -1,6 +1,6 @@
 <template>
   <header class="fixed-bar-box-shadow">
-    <div id="header" style="height: 80px">
+    <div id="header" style="height: 70px">
       <div id="header-title">
         <span id="title"> 오이마켓 </span>
       </div>
@@ -8,12 +8,11 @@
       <div id="searchBar" style="float: left; width: 45%; height: 50px">
         <input
           type="text"
-          placeholder="동네 이름, 상품 검색"
-          style="width: 88%"
+          placeholder="물품이나 동네를 검색해보세요"
         />
-        <v-btn icon style="width: 12%">
+        <!-- <v-btn icon style="width: 12%">
           <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+        </v-btn> -->
       </div>
 
       <div style="width: 20%"></div>
@@ -59,23 +58,25 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 1024px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 16px 0;
 }
 #searchBar {
+  position: relative;
+  width: 295px;
   padding-top: 8px;
   padding-left: 10px;
   padding-right: 10px;
 }
 #header-title {
   display: inline-block;
-  margin-right: 32px;
+  margin-right: 16px;
 }
 #title {
   color: green;
   font-family: ONE-Mobile-POP, serif;
-  font-size: 30px;
+  font-size: 26px;
 }
 input {
   width: 100%;
@@ -83,10 +84,6 @@ input {
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 14px;
-}
-#searchBar {
-  position: relative;
-  width: 300px;
 }
 .bar-menu {
   display: inline-flex;

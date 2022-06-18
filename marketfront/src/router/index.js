@@ -6,6 +6,12 @@ import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import KakaoMap from '@/views/KakaoMap.vue'
+
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
 import RegisterMemberPage from "@/views/member/RegisterMemberPage";
@@ -17,7 +23,8 @@ import ChangePwPage from "@/views/member/search/ChangePwPage";
 // import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-import ChattingPage from '@/views/chatting/ChattingPage'
+// import ChattingPage from '@/views/chatting/ChattingPage'
+import ChattingReadView from '@/views/chatting/ChattingReadView'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
@@ -92,17 +99,21 @@ const routes = [
     props: true
   },
   {
-    path: '/chat',
+    path: '/chatting',
     name: 'ChattingListPage',
-    component: ChattingListPage,
+    components:{
+      default: ChattingListPage
+    },
     props: {
       default: true
     }
   },
   {
-    path: '/chat/room/:roomNo',
-    name: 'ChattingPage',
-    component: ChattingPage,
+    path: '/chatting/:roomNo',
+    name: 'ChattingReadView',
+    components: {
+      default: ChattingReadView
+    },
     props: {
       default: true
     }
@@ -148,6 +159,41 @@ const routes = [
     path: '/bossPage',
     name: 'BossPage',
     component: BossPage
+  },
+  {
+    path: '/Tranders/CommunityList',
+    name: 'CommunityBoardListPage',
+    component: CommunityBoardListPage
+  },
+  {
+    path: '/Tranders/CommunityRegister',
+    name: 'CommunityBoardRegisterPage',
+    component: CommunityBoardRegisterPage
+  },
+  {
+    path: '/Tranders/CommunityRegister/PlaceSearch',
+    name: 'KakaoMap',
+    component: KakaoMap
+  },
+  {
+    path: '/Tranders/CommunityRead/:boardNo',
+    name: 'CommunityBoardReadPage',
+    components: {
+      default: CommunityBoardReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/Tranders/CommunityModify/:boardNo',
+    name: 'CommunityBoardModifyPage',
+    components: {
+      default: CommunityBoardModifyPage
+    },
+    props: {
+      default: true
+    }
   }
 ]
 

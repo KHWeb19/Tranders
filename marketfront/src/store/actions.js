@@ -2,7 +2,11 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
-    FETCH_CHATROOM_LIST, FETCH_MEMBER_PROFILE,
+    FETCH_MEMBER_PROFILE,
+    FETCH_CHATROOM,
+    FETCH_CHATROOM_LIST,
+    FETCH_COMMUNITY_BOARD_LIST,
+    FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 
 import axios from 'axios'
@@ -34,6 +38,12 @@ export default {
                 console.log('refresh Token')
             })
     },
+    fetchChatroom ({ commit }, roomNo) {
+        return axios.get(`http://localhost:7777/chatting/${roomNo}`)
+                .then((res) => {
+                    commit(FETCH_CHATROOM, res.data)
+                })
+    },
     fetchChatroomList ({ commit }) {
         return axios.get('http://localhost:7777/chatting/list')
             .then((res) => {
@@ -51,5 +61,17 @@ export default {
             .then((res) => {
                 commit(FETCH_MEMBER_PROFILE, res.data)
             })
-    }
+    },
+    fetchCommunityBoardList ({ commit }) {
+        return axios.get('http://localhost:7777/communityboard/list')
+            .then((res) => {
+                commit(FETCH_COMMUNITY_BOARD_LIST, res.data)
+            })
+    },
+    fetchCommunityBoard ({ commit }, boardNo) {
+        return axios.get(`http://localhost:7777/communityboard/${boardNo}`)
+            .then((res) => {
+                commit(FETCH_COMMUNITY_BOARD, res.data)
+            })
+    },
 }

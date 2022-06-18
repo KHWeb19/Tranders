@@ -22,12 +22,21 @@ public class ChatRoom {
     @Column(length = 32)
     private String sender;
 
-//    @Column(length = 32)
-//    private String appointTime;
+    @Column(length = 32)
+    private String appointDate;
+
+    @Column(length = 32)
+    private String appointTime;
 //
 //    @Column(length = 32)
 //    private String reminderTime;
 
 //    @UpdateTimestamp
 //    private Date updDate;
+
+    public ChatRoom(Long roomNo, String appointDate, String appointTime){
+        this.roomNo = roomNo;
+        this.appointDate = appointDate;
+        this.appointTime = appointTime;
+    }
 }

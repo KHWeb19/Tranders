@@ -31,4 +31,25 @@ public class ChatRoomController {
 
         return chatRoomService.list();
     }
+
+    @GetMapping("/{roomNo}")
+    public ChatRoom chatRoomRead(@PathVariable("roomNo") Integer roomNo) {
+        log.info("chatRoomRead()");
+
+        return chatRoomService.read(roomNo);
+    }
+
+    @PutMapping("/{roomNo}")
+    public ChatRoomRequest chatRoomModify (
+            @PathVariable("roomNo") Integer roomNo,
+            @RequestBody ChatRoomRequest chatRoomRequest) {
+        log.info("chatRoomModify(): " + chatRoomRequest);
+
+        chatRoomRequest.setRoomNo(Long.valueOf(roomNo));
+        chatRoomService.modify(chatRoomRequest);
+
+        return chatRoomRequest;
+    }
+
+
 }

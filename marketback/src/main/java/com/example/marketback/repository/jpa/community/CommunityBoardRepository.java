@@ -8,3 +8,4 @@ import java.util.List;
 
 public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, Long> {
 }
+

@@ -1,8 +1,12 @@
 import {
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
+    FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
-    FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN, FETCH_MEMBER_PROFILE,
+    FETCH_MEMBER_PROFILE,
+    FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN,
+    FETCH_COMMUNITY_BOARD_LIST,
+    FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 import cookies from "vue-cookies";
 
@@ -25,12 +29,21 @@ export default {
         cookies.set("refresh_token", token.refresh_token);
 
     },
+    [FETCH_CHATROOM] (state, chatroom) {
+        state.chatroom = chatroom
+    },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
     },
     [FETCH_MEMBER_PROFILE] (state, profileImg) {
         console.log(profileImg);
         state.profileImg = profileImg;
-    }
+    },
+    [FETCH_COMMUNITY_BOARD_LIST] (state, communityBoards) {
+        state.communityBoards = communityBoards
+    },
+    [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
+        state.communityBoard = communityBoard
+    },
 }
 
