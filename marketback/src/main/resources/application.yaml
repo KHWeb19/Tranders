@@ -8,6 +8,11 @@ spring:
     password: eddi@123
     driver-class-name: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL8Dialect
+  output:
+    ansi:
+      enabled: ALWAYS
+  main:
+    allow-circular-references: true
 
   jpa:
     open-in-view: false
@@ -28,13 +33,21 @@ spring:
         registration:
           kakao:
             client-id: 1f6ab7138670a91099012c0341d8fe60
-            redirect-uri: "http://localhost:7777/login/oauth2/code/kakao"
+            redirect-uri: http://localhost:7777/oauth2/callback/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope:
-              - profile
+              - profile_nickname
               - account_email
             client-name: Kakao
+
+          google:
+            client-id: 224711642600-k3gonf7fbvjj9m3rb7ffk0f7rlj74vla.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - email
+            redirect-uri: http://localhost:7777/oauth2/callback/google
 
         provider:
           kakao:
@@ -42,6 +55,8 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+
 #   kafka:
 #     consumer:
 #       bootstrap-servers: localhost:9092

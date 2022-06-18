@@ -5,4 +5,6 @@ export default {
     refreshToken: null,
     chatroom: null,
     chatrooms: [],
+    communityBoards:[],
+    communityBoard: null,
 }

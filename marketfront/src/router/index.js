@@ -6,6 +6,12 @@ import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import KakaoMap from '@/views/KakaoMap.vue'
+
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
 import RegisterMemberPage from "@/views/member/RegisterMemberPage";
@@ -22,7 +28,6 @@ import ChattingReadView from '@/views/chatting/ChattingReadView'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
-
 
 Vue.use(VueRouter)
 
@@ -135,7 +140,41 @@ const routes = [
     name: 'PythonTest',
     component: PythonTest
   },
-
+  {
+    path: '/Tranders/CommunityList',
+    name: 'CommunityBoardListPage',
+    component: CommunityBoardListPage
+  },
+  {
+    path: '/Tranders/CommunityRegister',
+    name: 'CommunityBoardRegisterPage',
+    component: CommunityBoardRegisterPage
+  },
+  {
+    path: '/Tranders/CommunityRegister/PlaceSearch',
+    name: 'KakaoMap',
+    component: KakaoMap
+  },
+  {
+    path: '/Tranders/CommunityRead/:boardNo',
+    name: 'CommunityBoardReadPage',
+    components: {
+      default: CommunityBoardReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/Tranders/CommunityModify/:boardNo',
+    name: 'CommunityBoardModifyPage',
+    components: {
+      default: CommunityBoardModifyPage
+    },
+    props: {
+      default: true
+    }
+  }
 ]
 
 const router = new VueRouter({
@@ -143,5 +182,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router

@@ -1,4 +1,4 @@
-package com.example.marketback.entity;
+package com.example.marketback.entity.member;
 
 public enum MemberRole {
     ROLE_USER,

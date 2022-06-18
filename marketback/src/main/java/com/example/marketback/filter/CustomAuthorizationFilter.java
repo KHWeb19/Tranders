@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         System.out.println("인증이나 권한이 필요한 주소 요청이 됨 ");
         System.out.println(request.getRequestURI());
 
-        if(request.getServletPath().equals("/member/login") || request.getServletPath().equals("/member/refreshToken") || request.getServletPath().equals("/login/oauth2/code/**")){
+        if(request.getServletPath().equals("/member/login") || request.getServletPath().equals("/member/refreshToken") || request.getServletPath().equals("/oauth2/code/**")){
             filterChain.doFilter(request, response);
         }else {
             System.out.println("doFilterInternal");
@@ -58,11 +58,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     String id = decodedJWT.getSubject();
                     log.info("id: "+id);
 
-                    Member memberEntity = memberRepository.findByMemberName(id);
-                    //log.info("=====2=====");
+                    Member memberEntity = memberRepository.findByMemberId(id);
                     PrincipalDetails principalDetails = new PrincipalDetails(memberEntity);
 
-                    //log.info("=====1===== ,"+principalDetails.getAuthorities());
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, principalDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);

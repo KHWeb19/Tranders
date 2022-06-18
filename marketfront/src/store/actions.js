@@ -4,9 +4,12 @@ import {
     FETCH_PRODUCT_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_COMMUNITY_BOARD_LIST,
+    FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 
 import axios from 'axios'
+import cookies from "vue-cookies";
 
 export default {
     fetchProduct({ commit }) {
@@ -24,7 +27,7 @@ export default {
     refreshToken ({commit}) {
         return axios.get('http://localhost:7777/member/refreshToken',{
             headers: {
-                'Authorization': 'Bearer '+localStorage.getItem('refresh_token'),
+                'Authorization': 'Bearer '+cookies.get('refresh_token'),
                 'Accept' : 'application/json',
                 'Content-Type': 'application/json'
             }
@@ -44,6 +47,18 @@ export default {
         return axios.get('http://localhost:7777/chatting/list')
             .then((res) => {
                 commit(FETCH_CHATROOM_LIST, res.data)
+            })
+    },
+    fetchCommunityBoardList ({ commit }) {
+        return axios.get('http://localhost:7777/communityboard/list')
+            .then((res) => {
+                commit(FETCH_COMMUNITY_BOARD_LIST, res.data)
+            })
+    },
+    fetchCommunityBoard ({ commit }, boardNo) {
+        return axios.get(`http://localhost:7777/communityboard/${boardNo}`)
+            .then((res) => {
+                commit(FETCH_COMMUNITY_BOARD, res.data)
             })
     },
 }

@@ -1,6 +1,6 @@
 package com.example.marketback.config.auth;
 
-import com.example.marketback.entity.Member;
+import com.example.marketback.entity.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,9 +31,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        /*member.getRoleList().forEach(r -> {
-            authorities.add(() -> r);
-        });*/
+
+        System.out.println(member.getRoles().name());
 
         authorities.add(new SimpleGrantedAuthority(member.getRoles().name()));
 
@@ -77,6 +76,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return null;
+        return member.getName();
     }
 }

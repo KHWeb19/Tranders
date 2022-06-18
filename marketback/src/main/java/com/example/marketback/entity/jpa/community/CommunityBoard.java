@@ -92,10 +92,10 @@ public class CommunityBoard {
         this.viewCnt++;
     }
 
-//    public CommunityBoard(String fileName1, String fileName2){
-//        this.fileName1 = fileName1;
-//        this.fileName2 = fileName2;
-//    }
+    public CommunityBoard(String fileName1, String fileName2){
+        this.fileName1 = fileName1;
+        this.fileName2 = fileName2;
+    }
 
 //    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 //    private List<CommunityComment> comments;

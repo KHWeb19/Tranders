@@ -24,16 +24,25 @@
           </v-col>
         </v-row>
 
-        <v-row >
-          <v-col>
-            <v-img style="border-radius: 12px; height: 46px; width: 436px" src="@/assets/login/kakao_login_medium_wide.png" @click="kakaoLogin"></v-img>
-          </v-col>
-        </v-row>
-
         <v-row justify="center">
           <v-col cols="4" @click="searchId">ID 찾기</v-col>
           <v-col cols="1">|</v-col>
           <v-col cols="4" @click="searchPw">비밀번호 찾기</v-col>
+        </v-row>
+
+        <v-row>
+          <v-col><hr></v-col>
+          <v-col style="margin-top: 23px; opacity: 0.5; font-size: 14px">간편 로그인</v-col>
+          <v-col><hr></v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="6">
+            <v-img style="border-radius: 12px; height: 46px;" src="@/assets/login/kakao_login.png" @click="kakaoLogin"></v-img>
+          </v-col>
+          <v-col cols="6">
+            <v-img style="width: 436px" src="@/assets/login/google_login.png" @click="googleLogin"></v-img>
+          </v-col>
         </v-row>
       </v-container>
     </div>
@@ -41,6 +50,10 @@
 </template>
 
 <script>
+import {ParsingInfo} from "@/views/Util/LoginUtil";
+import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL} from "@/constant/login";
+import cookies from "vue-cookies";
+
 export default {
   name: "LoginView",
   data() {
@@ -55,7 +68,13 @@ export default {
       this.$emit("login", {id, password});
     },
     kakaoLogin(){
-      window.open("https://kauth.kakao.com/oauth/authorize?client_id=1f6ab7138670a91099012c0341d8fe60&redirect_uri=http://localhost:7777/member/auth/kakao/callback&response_type=code")
+      //loginProcess("", "kakao")
+      location.href=KAKAO_AUTH_URL;
+      ParsingInfo(cookies.get('access_token'));
+    },
+    googleLogin(){
+      location.href=GOOGLE_AUTH_URL;
+      ParsingInfo(cookies.get('access_token'));
     },
     searchId(){
       this.$router.push({name: "IdSearchPage"});
@@ -89,4 +108,13 @@ export default {
   font-family: ONE-Mobile-POP, serif;
   font-size: 18px;
 }
+
+hr {
+  margin-top: 35px;
+  border: none;
+  height: 1px;
+  background-color: black;
+  opacity: 0.2;
+}
+
 </style>
