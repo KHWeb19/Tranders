@@ -10,8 +10,8 @@ import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
-  components: { ChattingList },
   name: "ChattingListPage",
+    components: { ChattingList },
   computed: {
     ...mapState(['chatrooms'])
   },

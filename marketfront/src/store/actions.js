@@ -2,6 +2,7 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
+    FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
@@ -35,6 +36,12 @@ export default {
                 commit(FETCH_REFRESH_TOKEN, res.data)
                 console.log('refresh Token')
             })
+    },
+    fetchChatroom ({ commit }, roomNo) {
+        return axios.get(`http://localhost:7777/chatting/${roomNo}`)
+                .then((res) => {
+                    commit(FETCH_CHATROOM, res.data)
+                })
     },
     fetchChatroomList ({ commit }) {
         return axios.get('http://localhost:7777/chatting/list')

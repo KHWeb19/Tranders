@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit" >
     <div id='top'>
-      <div id='logo'>
-      오이마켓
-      </div>
+      <after-login-view/>
     </div>
       <div id='full'>
         <div id='left'>
@@ -16,100 +14,31 @@
           </div>
         </div>
         
-        <!-- <div id='center' v-for="chatroom in chatrooms" :key="chatroom.roomNo"> -->
         <div id='center'>
           <div id='name'>회원 이름</div>
-          <div id='chatList'>
-            <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-                <!-- <router-link style="text-decoration: none;" :key="$route.fullPath" :to="{
-                        name: 'ChattingPage',
-                        params: {roomNo: chatroom.roomNo.toString()}}">
-                        채팅방
-                    </router-link> -->
-                <v-btn style="width: 310px; height: 72px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
-                  <div>
-                    <div style="border-radius: 50%; overflow: hidden;">
-                        <v-img width="40" height="40" src="@/assets/profile.jpg"/>
-                    </div>
+            <div id='chatList'>
+              <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
+                <router-link :to="{
+                          name: 'ChattingReadView',
+                          params: {roomNo: chatroom.roomNo.toString()}}">
+                      {{ chatroom.roomNo }}입장
+                  </router-link>
+                  <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
+                <div>
+                  <div style="border-radius: 50%; overflow: hidden;">
+                      <v-img width="40" height="40" src="@/assets/profile.jpg"/>
                   </div>
-                  회원이름
-                  <br/>
-                  roomNo: {{chatroom.roomNo}}
-                </v-btn>
-
+                </div>
+                회원이름
+                <br/>
+                roomNo: {{chatroom.roomNo}}
+              </v-btn>
             </div>
           </div>
-
         </div>
         
         <div id='right'>
-          <div id='lightgreen'>
-            <div>
-                <div style="border-radius: 50%; overflow: hidden;">
-                    <v-img width="40" height="40" src="@/assets/profile.jpg"/>
-                </div>
-            </div>
-            상대 이름
-            <v-layout>
-              <v-dialog persisten max-width="400">
-                  <template v-slot:activator="{ on }">
-                      <v-btn text block style="height: 52px;" v-on="on">약속 잡기</v-btn>
-                  </template>
-                  <template v-slot:default="dialog">
-                      <v-card>
-                          <v-card-title class="headline">
-                              약속 설정
-                          </v-card-title>
-                          <v-card-text>
-                              약속 시간
-                          </v-card-text>
-                          <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="red" text @click.native="onDelete($event)">
-                                  완료
-                              </v-btn>
-                              <v-btn text @click="dialog.value=false">
-                                  취소
-                              </v-btn>
-                          </v-card-actions>
-                      </v-card>
-                  </template>
-              </v-dialog>
-          </v-layout>
-          </div>
-          <div id='product'>
-            <div >
-              <div style="display: flex;">
-                  <div style="border-radius: 10%; overflow: hidden;">
-                      <v-img width="40" height="40" src="@/assets/profile.jpg"/>
-                  </div>
-              </div>
-            </div>
-            <div>
-              <div>게시글 제목 </div>
-              <div>가격</div>
-            </div>
-          </div>
-          <div id='chatView'>
-            <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
-                <div colspan="4">
-                    {{roomNo}} 채팅방에 입장하였습니다. 
-                </div>
-            </div>
-            <div v-else>
-              <div style="display: flex; justify-content: flex-end;"  v-for="msg in new_data" :key="msg.messageNo">
-                <p id='message-box' v-if="roomNo==msg.content.roomNo">{{msg.content.message}}</p>
-              </div>
-              <div style="display: flex; justify-content: flex-end;"  v-for="msg in newMessage" :key="msg.messageNo">
-                <div id='message-box'>{{msg}}</div>
-              </div>
-            </div>
-          </div> 
-
-          <div id='submit'>
-            <textarea v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
-            <v-btn type="submit">전송</v-btn>
-          </div>
+          
         </div>
       </div>
   </form>
@@ -118,24 +47,40 @@
 
 <script>
 import axios from 'axios'
+import AfterLoginView from '../home/AfterLoginView.vue';
+// import ChattingRead from './ChattingRead.vue';
+
 export default {
+  components: { AfterLoginView,  },
   name: "ChattingList",
     props: {
+      // roomNo: {
+      //     type: String,
+      //     required: true
+      // },
       chatrooms: {
           type: Array
       }
   },
   data() {
     return {
-      message: '',
-      time: new Date(),
-      new_data: [],
-      newMessage: [],
-      memberNo: 1,
-      roomNo: JSON.parse(localStorage.getItem('roomNo')),
+      // message: '',
+      // // time: new Date(),
+      // new_data: [],
+      // newMessage: [],
+      // memberNo: 1,
+      // memberName: '지은',
+      // boardName: '물품이름',
+      // date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      // menu: false,
+      // time: null,
+      // menu2: false,
+
     }
   },
+
   methods: {
+
     getNewData() {
                 axios.get('http://127.0.0.1:5000/kafka-data')
                   .then((res) => {
@@ -146,35 +91,36 @@ export default {
                   });
             },
     goChatroom(roomNo) {
-      localStorage.setItem("roomNo", JSON.stringify(roomNo))
-      this.$router.push(`/chat/room/${roomNo}`)
-      history.go(0);
+      this.$router.push(`/chatting/${roomNo}`)
     },
-    onSubmit() {
-      console.log(this.roomNo)
-      const { roomNo, message } = this
-      console.log({ roomNo, message })
-      // this.$emit('submit', { roomNo, message })
-      this.newMessage.push(message)
-      // this.getNewData();
-    }
+    // onSubmit() {
+    //   console.log(this.roomNo)
+    //   const { roomNo, message } = this
+    //   console.log({ roomNo, message })
+    //   // this.$emit('submit', { roomNo, message })
+    //   this.newMessage.push(message)
+    //   // this.getNewData();
+    // },
+    // onAppoint() {
+    //   console.log({date: this.date, time: this.time})
+    //   const { roomNo, date, time } = this
+    //   this.$emit('click', { roomNo, date, time })
+    // }
   },
-  created() {
-    this.getNewData();
-  },
-  // beforeUpdate() {
-  //   console.log('beforeUpdate');
-  //   this.getNewData();
-  // }
+
+  beforeUpdate() {
+    console.log('check: ' + this.chatrooms)
+    // this.getNewData();
+  }
 
 }
 </script>
 
 <style scoped>
 #top{
-  height: 70px;
+  /* height: 70px;
   display: flex;
-  justify-content: center;
+  justify-content: center; */
   border: 1px solid #bcbcbc;
   border-top-style: none;
   border-left-style: none;
@@ -234,7 +180,10 @@ export default {
 }
 #right{
 	width: 810px;
+  height: 894px;
 	float: left;
+  border: 1px solid #bcbcbc;
+  border-top-style: none;
 }
 #lightgreen{
 	width: 810px;
@@ -249,12 +198,33 @@ export default {
 	height: 72px;
   display: flex;
   border: 1px solid #bcbcbc;
+}
+#notice{
+  display: flex;
+      -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+
+      border: 1px solid #bcbcbc;
+        border-top-style: none;
   border-bottom-style: none;
+}
+#notice-box{
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  margin: 8px 0px;
+  background-color: #fff7e6;
+  color: #ba5e02;
 }
 #chatView{
 	width: 810px;
-	height: 625px;
+	max-height: 625px;
+  min-height: 553px;
   border: 1px solid #bcbcbc;
+  border-top-style: none;
   border-bottom-style: none;
   overflow-y:auto; 
   overflow-x:hidden; 

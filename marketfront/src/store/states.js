@@ -3,8 +3,8 @@ export default {
     products: [],
     accessToken: null,
     refreshToken: null,
+    chatroom: null,
     chatrooms: [],
-    roomNo: JSON.parse(localStorage.getItem('roomNo')),
     communityBoards:[],
     communityBoard: null,
 }

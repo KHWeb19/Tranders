@@ -1,6 +1,7 @@
 import {
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
+    FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN,
     FETCH_COMMUNITY_BOARD_LIST,
@@ -26,6 +27,9 @@ export default {
         cookies.set("access_token", token.access_token);
         cookies.set("refresh_token", token.refresh_token);
 
+    },
+    [FETCH_CHATROOM] (state, chatroom) {
+        state.chatroom = chatroom
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
