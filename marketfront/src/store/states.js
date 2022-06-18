@@ -5,6 +5,8 @@ export default {
     refreshToken: null,
     chatroom: null,
     chatrooms: [],
+    roomNo: JSON.parse(localStorage.getItem('roomNo')),
+    profileImg: null,
     communityBoards:[],
     communityBoard: null,
 }

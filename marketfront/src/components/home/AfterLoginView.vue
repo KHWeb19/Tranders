@@ -1,6 +1,8 @@
 <template>
-  <header class="fixed-bar-box-shadow">
-    <div id="header" style="height: 70px;">
+
+  <header>
+    <div id="header" style="height: 64px;">
+
       <div id="header-title">
         <span id="title">
           오이마켓
@@ -8,11 +10,19 @@
       </div>
 
       <div id="searchBar">
+        <!-- <input type="text" placeholder="동네 이름, 상품 검색" style=" width: 88%">
+        <v-btn icon style="width: 12%"> -->
+
         <input type="text" placeholder="물품이나 동네를 검색해보세요">
         <!-- <v-btn icon style="width: 12%">
           <v-icon>mdi-magnify</v-icon>
         </v-btn> -->
       </div>
+
+
+      <div id="itemList" style="margin-left: auto;">
+        <!-- <v-btn text class="black--text">
+          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}"> -->
 
       <div style="margin-left: auto;">
         <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
@@ -39,27 +49,49 @@
           </v-btn>
         </router-link>
 
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text>
-            나의 당근
-          </v-btn>
-        </router-link>
+        <v-btn text>
+          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+            나의 당근 
+          </router-link>
+        </v-btn>
+      </div>
 
+      <div style="">
+        <v-btn fab @click="myPage" v-if="profileImg === null">
+          <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+        </v-btn>
+
+        <v-btn fab @click="myPage" v-else>
+          <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+        </v-btn>
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+import cookies from "vue-cookies";
+
 export default {
   name: "AfterLoginView",
   data(){
     return{
-
+      id: ""
     }
   },
   methods: {
-
+    ...mapActions(['fetchMemberProfile']),
+    myPage(){
+      this.$router.push({name: 'MyPageProfile'})
+    }
+  },
+  computed: {
+    ...mapState(['profileImg'])
+  },
+  mounted() {
+    this.id = cookies.get('id');
+    this.fetchMemberProfile(this.id)
   }
 }
 </script>
@@ -116,5 +148,7 @@ input {
   border-radius: 8px;
   border: solid 1px black;
 } */
-
+v-img{
+  height: 20px;
+}
 </style>

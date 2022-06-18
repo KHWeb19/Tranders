@@ -2,6 +2,7 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
+    FETCH_MEMBER_PROFILE,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_COMMUNITY_BOARD_LIST,
@@ -47,6 +48,18 @@ export default {
         return axios.get('http://localhost:7777/chatting/list')
             .then((res) => {
                 commit(FETCH_CHATROOM_LIST, res.data)
+            })
+    },
+    fetchMemberProfile ({commit}, id) {
+        return axios.get(`http://localhost:7777/member/profile/${id}`, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_MEMBER_PROFILE, res.data)
             })
     },
     fetchCommunityBoardList ({ commit }) {

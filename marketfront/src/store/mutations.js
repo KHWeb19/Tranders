@@ -3,6 +3,7 @@ import {
     FETCH_PRODUCT_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_MEMBER_PROFILE,
     FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
@@ -33,6 +34,10 @@ export default {
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
+    },
+    [FETCH_MEMBER_PROFILE] (state, profileImg) {
+        console.log(profileImg);
+        state.profileImg = profileImg;
     },
     [FETCH_COMMUNITY_BOARD_LIST] (state, communityBoards) {
         state.communityBoards = communityBoards
