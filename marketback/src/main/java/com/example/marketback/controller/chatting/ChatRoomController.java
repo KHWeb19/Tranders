@@ -18,11 +18,11 @@ public class ChatRoomController {
     @Autowired
     private ChatRoomService chatRoomService;
 
-    @PostMapping("/register")
-    public void chatRoomRegister(@Validated @RequestBody ChatRoom chatRoom) {
+    @PostMapping("/register/{memberNo}")
+    public void chatRoomRegister(@PathVariable("memberNo") Long memberNo, @Validated @RequestBody ChatRoom chatRoom) {
         log.info("chatRoomRegister()");
 
-        chatRoomService.register(chatRoom);
+        chatRoomService.register(chatRoom, memberNo);
     }
 
     @GetMapping("/list")

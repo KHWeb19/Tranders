@@ -15,7 +15,7 @@
         </div>
         
         <div id='center'>
-          <div id='name'>회원 이름</div>
+          <div id='name'>{{this.login.name}}</div>
             <div id='chatList'>
               <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
                 <router-link :to="{
@@ -29,7 +29,7 @@
                       <v-img width="40" height="40" src="@/assets/profile.jpg"/>
                   </div>
                 </div>
-                회원이름
+                게시글 작성자
                 <br/>
                 roomNo: {{chatroom.roomNo}}
               </v-btn>
@@ -44,7 +44,7 @@
                     <v-img width="40" height="40" src="@/assets/profile.jpg"/>
                 </div>
             </div>
-            상대 이름
+            게시글 작성자
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
@@ -188,6 +188,9 @@
 <script>
 // import axios from 'axios'
 import AfterLoginView from '../home/AfterLoginView.vue';
+import Vue from 'vue'
+import cookies from "vue-cookies";
+Vue.use(cookies)
 
 export default {
   components: { AfterLoginView },
@@ -203,6 +206,13 @@ export default {
     },
   data() {
     return {
+      login: {
+        id: cookies.get('id'),
+        name: cookies.get('name'),
+        access_token: cookies.get('access_token'),
+      },
+
+      
       message: '',
       // time: new Date(),
       new_data: [],
@@ -217,7 +227,9 @@ export default {
 
     }
   },
-
+  mounted() {
+    // this.login.access_token = this.$store.getters.getToken
+  },
   created() {
       // this.getNewData();
   },

@@ -15,17 +15,24 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import cookies from "vue-cookies";
+Vue.use(cookies)
 export default {
     name: 'BoardTestView',
     data() {
         return {
-            sender: '지은'
+            login: {
+                id: cookies.get('id'),
+                name: cookies.get('name'),
+                access_token: cookies.get('access_token'),
+      },
         }
     },
     methods: {
         onSubmit() {
             // this.$emit('submit', {sender: this.loginMember.memberNo, receiver: this.board.memberNo})
-            this.$emit('submit', {sender: this.sender})
+            this.$emit('submit', {memberNo: this.login.memberNo})
         }
     }
 }
