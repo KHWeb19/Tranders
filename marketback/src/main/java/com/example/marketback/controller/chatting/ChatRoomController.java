@@ -25,15 +25,15 @@ public class ChatRoomController {
         chatRoomService.register(chatRoom, memberNo);
     }
 
-    @GetMapping("/list")
-    public List<ChatRoom> chatRoomList() {
+    @GetMapping("/list/{memberNo}")
+    public List<ChatRoom> chatRoomList(@PathVariable("memberNo") Long memberNo) {
         log.info("chatRoomList()");
 
-        return chatRoomService.list();
+        return chatRoomService.list(memberNo);
     }
 
     @GetMapping("/{roomNo}")
-    public ChatRoom chatRoomRead(@PathVariable("roomNo") Integer roomNo) {
+    public ChatRoom chatRoomRead(@PathVariable("roomNo") Long roomNo) {
         log.info("chatRoomRead()");
 
         return chatRoomService.read(roomNo);
@@ -41,12 +41,11 @@ public class ChatRoomController {
 
     @PutMapping("/{roomNo}")
     public ChatRoomRequest chatRoomModify (
-            @PathVariable("roomNo") Integer roomNo,
+            @PathVariable("roomNo") Long roomNo,
             @RequestBody ChatRoomRequest chatRoomRequest) {
         log.info("chatRoomModify(): " + chatRoomRequest);
 
-        chatRoomRequest.setRoomNo(Long.valueOf(roomNo));
-        chatRoomService.modify(chatRoomRequest);
+        chatRoomService.modify(chatRoomRequest, roomNo);
 
         return chatRoomRequest;
     }

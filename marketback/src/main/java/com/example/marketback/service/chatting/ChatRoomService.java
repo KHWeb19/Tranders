@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ChatRoomService {
     public void register (ChatRoom chatRoom, Long memberNo);
-    public List<ChatRoom> list ();
-    public ChatRoom read (Integer roomNo);
-    public void modify (ChatRoomRequest chatRoomRequest);
+    public List<ChatRoom> list (Long memberNo);
+    public ChatRoom read (Long roomNo);
+    public void modify (ChatRoomRequest chatRoomRequest, Long roomNo);
 }

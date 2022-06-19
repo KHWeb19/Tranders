@@ -30,11 +30,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public List<ChatRoom> list() {
-        return chatRoomRepository.findAll(Sort.by(Sort.Direction.DESC, "roomNo"));
+    public List<ChatRoom> list(Long memberNo) {
+        return chatRoomRepository.findChatRoomByMemberNo(Long.valueOf(memberNo));
     }
 
-    public ChatRoom read(Integer roomNo) {
+    public ChatRoom read(Long roomNo) {
         Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
 
         if (maybeChatRoom.equals(Optional.empty())) {
@@ -45,9 +45,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public void modify(ChatRoomRequest chatRoomRequest) {
+    public void modify(ChatRoomRequest chatRoomRequest, Long roomNo) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
         ChatRoom chatRoomEntity = new ChatRoom(
-                chatRoomRequest.getRoomNo(),
+                roomNo,
+                maybeChatRoom.get().getMember1(),
                 chatRoomRequest.getAppointDate(),
                 chatRoomRequest.getAppointTime()
         );

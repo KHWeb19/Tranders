@@ -66,6 +66,7 @@
         </v-btn>
       </div>
     </div>
+    </div>
   </header>
 </template>
 

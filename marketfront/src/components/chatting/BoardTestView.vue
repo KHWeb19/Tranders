@@ -23,6 +23,7 @@ export default {
     data() {
         return {
             login: {
+                memberNo: cookies.get('memberNo'),
                 id: cookies.get('id'),
                 name: cookies.get('name'),
                 access_token: cookies.get('access_token'),
