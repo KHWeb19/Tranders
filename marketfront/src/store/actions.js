@@ -2,15 +2,27 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT,
     FETCH_PRODUCT_LIST,
-    FETCH_MEMBER_PROFILE,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_MEMBER_PROFILE,
+    FETCH_BOSS_PAGE,
+    FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 
 import axios from 'axios'
 import cookies from "vue-cookies";
+
+import {API_BASE_URL} from "@/constant/login";
+
+const config = {
+    headers: {
+        'Authorization': 'Bearer '+ cookies.get('access_token'),
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }
+};
 
 export default {
     fetchProduct({ commit }) {
@@ -40,9 +52,9 @@ export default {
     },
     fetchChatroom ({ commit }, roomNo) {
         return axios.get(`http://localhost:7777/chatting/${roomNo}`)
-                .then((res) => {
-                    commit(FETCH_CHATROOM, res.data)
-                })
+            .then((res) => {
+                commit(FETCH_CHATROOM, res.data)
+            })
     },
     fetchChatroomList ({ commit }) {
         return axios.get('http://localhost:7777/chatting/list')
@@ -74,4 +86,16 @@ export default {
                 commit(FETCH_COMMUNITY_BOARD, res.data)
             })
     },
+    fetchBossPage ({commit}, memberNo) {
+        return axios.post(API_BASE_URL+'/boss/pageView', {memberNo}, config)
+            .then((res) => {
+                commit(FETCH_BOSS_PAGE, res.data)
+            })
+    },
+    fetchMyPage ({commit}, id) {
+        return axios.post(API_BASE_URL+'/member/userInfo', {id}, config)
+            .then((res) => {
+                commit(FETCH_MY_PAGE, res.data)
+            })
+    }
 }

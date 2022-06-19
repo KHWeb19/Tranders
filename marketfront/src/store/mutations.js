@@ -3,12 +3,16 @@ import {
     FETCH_PRODUCT_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_LOGIN_TOKEN,
+    FETCH_REFRESH_TOKEN,
     FETCH_MEMBER_PROFILE,
-    FETCH_LOGIN_TOKEN, FETCH_REFRESH_TOKEN,
+    FETCH_BOSS_PAGE,
+    FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
 import cookies from "vue-cookies";
+import {ParsingInfo} from "@/views/Util/LoginUtil";
 
 export default {
     [FETCH_PRODUCT](state, product) {
@@ -28,6 +32,7 @@ export default {
         cookies.set("access_token", token.access_token);
         cookies.set("refresh_token", token.refresh_token);
 
+        ParsingInfo(token.access_token);
     },
     [FETCH_CHATROOM] (state, chatroom) {
         state.chatroom = chatroom
@@ -45,5 +50,11 @@ export default {
     [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
         state.communityBoard = communityBoard
     },
+    [FETCH_BOSS_PAGE] (state, boss){
+        state.boss = boss;
+    },
+    [FETCH_MY_PAGE] (state, userInfo) {
+        state.userInfo = userInfo;
+    }
 }
 
