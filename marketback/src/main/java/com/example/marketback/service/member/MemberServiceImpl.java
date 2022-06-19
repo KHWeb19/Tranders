@@ -2,6 +2,7 @@ package com.example.marketback.service.member;
 
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
+import com.example.marketback.request.MemberLoginRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,4 +53,40 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByMemberId(id);
         return member.getProfileImg();
     }
+
+    @Override
+    public Boolean myPageCheck(MemberLoginRequest memberLoginRequest) {
+        Member member = memberRepository.findByMemberId(memberLoginRequest.getId());
+
+        if(!passwordEncoder.matches(memberLoginRequest.getPassword(), member.getPassword())){
+            log.info("Wrong password!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public void modify(Member member) {
+        Member memberEntity = memberRepository.findByMemberId(member.getId());
+
+        if(member.getPassword() != null){
+            String encodePassword = passwordEncoder.encode(member.getPassword());
+            memberEntity.setPassword(encodePassword);
+        }
+
+        memberEntity.setName(member.getName());
+        memberEntity.setPhoneNumber(member.getPhoneNumber());
+
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void modifyProfileImg(String fileSrc, String id) {
+        Member memberEntity = memberRepository.findByMemberId(id);
+
+        memberEntity.setProfileImg(fileSrc);
+        memberRepository.save(memberEntity);
+    }
+
 }

@@ -9,17 +9,21 @@ import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
 //import com.example.marketback.util.OAuthToken;
+import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.service.member.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
@@ -120,5 +124,51 @@ public class MemberController {
         log.info(id);
 
         return memberService.getMemberProfile(id);
+    }
+
+    @PostMapping("/userInfo")
+    public Member memberInfo(@RequestBody Map<String, String> map){
+        log.info("memberInfo" + map.get("id"));
+
+        return memberService.getMember(map.get("id"));
+    }
+
+    @PostMapping("/myPageCheck")
+    public ResponseEntity<Boolean> myPageCheck(@RequestBody MemberLoginRequest memberLoginRequest){
+        log.info("myPageCheck"+ memberLoginRequest.getId()+", "+memberLoginRequest.getPassword());
+
+        return new ResponseEntity<>(memberService.myPageCheck(memberLoginRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/modify")
+    public void memberModify(@RequestBody Member member){
+        log.info("memberModify" + member.getPassword());
+
+        memberService.modify(member);
+    }
+
+    @PostMapping("/modifyProfileImg")
+    public ResponseEntity<Boolean> modifyProfileImg(@RequestParam("imgFile") MultipartFile imgFile,
+                                 @RequestParam("id") String id){
+        log.info("modifyProfileImg");
+
+
+        try{
+            log.info("requestUploadFile() - Make file: " + imgFile.getOriginalFilename());
+
+            FileOutputStream file = new FileOutputStream("../marketfront/src/assets/profile/" + id + "_" + imgFile.getOriginalFilename());
+
+            String fileSrc = id + "_" + imgFile.getOriginalFilename();
+
+            System.out.println(fileSrc+", "+id);
+            file.write(imgFile.getBytes());
+            file.close();
+
+            memberService.modifyProfileImg(fileSrc, id);
+        } catch (Exception e){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }
