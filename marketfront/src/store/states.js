@@ -9,4 +9,6 @@ export default {
     profileImg: null,
     communityBoards:[],
     communityBoard: null,
+    boss: null,
+    userInfo: null, // myPage
 }
