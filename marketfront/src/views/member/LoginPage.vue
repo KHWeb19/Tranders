@@ -24,10 +24,10 @@ export default {
     alert(this.isLogin)
   },
   methods: {
-    login(payload){
+    async login(payload){
       if(!this.isLogin) {
         const {id, password} = payload;
-        axios.post("http://localhost:7777/member/login", {id, password})
+        await axios.post("http://localhost:7777/member/login", {id, password})
             .catch((res) => {
               alert(res + "에러 발생")
             })

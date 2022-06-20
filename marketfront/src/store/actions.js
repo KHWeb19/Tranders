@@ -92,8 +92,8 @@ export default {
                 commit(FETCH_MY_PAGE, res.data)
             })
     },
-    fetchMyRegion({commit}, id) {
-        return axios.post(API_BASE_URL+'/member/region', {id}, config)
+    async fetchMyRegion({commit}, id) {
+        return await axios.post(API_BASE_URL+'/member/region', {id}, config)
             .then((res) => {
                 commit(FETCH_MY_REGION, res.data)
             })
