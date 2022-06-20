@@ -10,7 +10,8 @@
 
         <v-col cols="8">
           <div v-if="userInfo === null"> <v-btn>죄송합니다 다시 부탁드려요</v-btn></div>
-          <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @saveProfileImg="saveProfileImg"></my-info-view>
+          <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @saveProfileImg="saveProfileImg" @checkPhoneNum="checkPhoneNum"
+                        @certification="certification" :ifCheck="ifCheck"></my-info-view>
         </v-col>
 
         <v-col>
@@ -44,7 +45,9 @@ export default {
   data(){
     return{
       index: 0,
-      id: cookies.get("id")
+      id: cookies.get("id"),
+      randomNum: '',
+      ifCheck: false,
     }
   },
   methods: {
@@ -84,6 +87,36 @@ export default {
             alert('에러')
           })
 
+    },
+    checkPhoneNum(payload){
+      const {phoneNumber} = payload;
+      console.log(phoneNumber)
+      axios.post(API_BASE_URL+'/member/register/check/sendSMS', {phoneNumber})
+          .then((res) => {
+            console.log(res);
+
+            if(res.data === 'error'){
+              alert('다른 번호를 입력해주세요!')
+            } else {
+              this.ifCheck = true;
+              this.randomNum = res.data;
+            }
+          })
+          .catch(() => {
+            alert('에러발생')
+          })
+    },
+    certification(payload){
+      const {num} = payload;
+      console.log(num)
+      console.log(this.randomNum)
+      if(num === this.randomNum){
+        alert('ok!')
+        this.checkDoublePhoneNum = true;
+      } else {
+        alert('error!')
+        this.checkDoublePhoneNum = false;
+      }
     }
   },
   computed: {

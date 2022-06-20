@@ -18,9 +18,15 @@
           </div>
         </v-row>
 
-        <v-row justify="center">
+        <v-row justify="center" v-if="!isCheck">
           <v-card-text style="font-size: 25px;width: auto">
             내가 설정한 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{options.region}}</span> 입니다.
+          </v-card-text>
+        </v-row>
+
+        <v-row justify="center" v-if="isCheck">
+          <v-card-text style="font-size: 25px;width: auto">
+            변경된 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{this.region}}</span> 입니다.
           </v-card-text>
         </v-row>
 
@@ -47,6 +53,7 @@ export default {
       region: '',
       mapInstance: null,
       markInstance: null,
+      isCheck: false
     }
   },
   methods: {
@@ -75,6 +82,7 @@ export default {
           .then((res) => {
             console.log(res)
             this.region = res.data;
+            this.isCheck = true;
           })
     },
     showErrorMsg(error) {
@@ -99,7 +107,7 @@ export default {
 
     this.mapInstance = new kakao.maps.Map(container, {
       center: new kakao.maps.LatLng(this.options.lat, this.options.lng),
-      level: 2,
+      level: 10,
     });
 
     this.markInstance = new kakao.maps.Marker({
