@@ -1,17 +1,30 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <div>
+                    <!-- 상대방과의 채팅방이 있으면 이동, 없으면 생성하고 이동 -->
+            <!-- roomNo로 이동, params: 내No/상대방No/게시물no -->
+                        <!-- <router-link id='' :to="{
+                name: 'ChattingReadView',
+                params: {
+                    member1: login.memberNo.toString(), 
+                    member2: '10'.toString(),
+                    boardNo: '테스트게시물1'
+                }}">
+                채팅
+            </router-link> -->
         <div>           
-            <!-- 상대방과의 채팅방이 있으면 이동, 없으면 생성하고 이동 -->
-            <!-- params: 내No/상대방No 으로 이동 -->
-            <!-- <router-link :to="{
-                        name: 'ChattingListPage',
-                        
-                        }"> -->
-                <!-- <v-btn>채팅하기</v-btn> -->
-                <v-btn type="submit">채팅생성</v-btn>
-            <!-- </router-link> -->
+            1번게시물 10번판매자
+            <v-btn @click="onChat">채팅</v-btn>
         </div>
-    </form>
+        <div>           
+            2번게시물 10번판매자
+            <v-btn @click="onChat">채팅</v-btn>
+        </div>
+        <div>           
+            3번게시물 11번판매자
+            <v-btn @click="onChat">채팅</v-btn>
+        </div>
+        <!-- <v-btn @click="onChat">채팅생성</v-btn> -->
+    </div>
 </template>
 
 <script>
@@ -31,9 +44,18 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
-            // this.$emit('submit', {sender: this.loginMember.memberNo, receiver: this.board.memberNo})
-            this.$emit('submit', {memberNo: this.login.memberNo})
+        onChat() {
+            //채팅방생성하고 해당채팅방정보 받아서 이동해야함
+            this.$router.push({ name: "ChattingListPage", 
+            //params: {
+            //     member1No: this.login.memberNo.toString(), 
+            //     member2: '10'.toString(),
+            //     boardNo: '테스트게시물1',
+            //     }
+            });
+
+            this.$emit('onChat', {member1No: this.login.memberNo, member2: '10'.toString()})
+            // this.$emit('onChat', {member2: 10})
         }
     }
 }

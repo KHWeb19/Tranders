@@ -1,6 +1,7 @@
 package com.example.marketback.controller.chatting;
 
 import com.example.marketback.entity.chatting.ChatRoom;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.service.chatting.ChatRoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ public class ChatRoomController {
     @Autowired
     private ChatRoomService chatRoomService;
 
-    @PostMapping("/register/{memberNo}")
-    public void chatRoomRegister(@PathVariable("memberNo") Long memberNo, @Validated @RequestBody ChatRoom chatRoom) {
-        log.info("chatRoomRegister()");
+    @PostMapping("/register/{member1No}/{member2}")
+//    public void chatRoomRegister(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2, @Validated @RequestBody ChatRoom chatRoom) {
+    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2") Long member2) {
+        log.info("chatRoomRegister()"+chatRoom+member2);
 
-        chatRoomService.register(chatRoom, memberNo);
+        chatRoomService.register(chatRoom, member1No);
     }
 
     @GetMapping("/list/{memberNo}")
@@ -37,6 +39,13 @@ public class ChatRoomController {
         log.info("chatRoomRead()");
 
         return chatRoomService.read(roomNo);
+    }
+
+    @GetMapping("/{member1}/{member2}")
+    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
+        log.info("chatRoomRead()");
+
+        return chatRoomService.move(member1, member2);
     }
 
     @PutMapping("/{roomNo}")

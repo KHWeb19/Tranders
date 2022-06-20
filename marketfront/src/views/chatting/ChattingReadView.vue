@@ -61,8 +61,8 @@ export default {
         },
         onReminder(payload){
             console.log(payload)
-            // const { name, date, time } = payload
-            // axios.post('http://127.0.0.1:5000/kakao-message', {memberName: name, date, time})
+            const { access_token, date, time } = payload
+            axios.post('http://127.0.0.1:5000/kakao-message', {access_token, date, time})
         }
     } 
 }

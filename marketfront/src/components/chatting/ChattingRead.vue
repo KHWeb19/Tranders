@@ -17,13 +17,31 @@
         <div id='center'>
           <div id='name'>
             <div id='name_value'>{{this.login.name}}</div>
-            </div>
-            <div id='chatList'>
-              <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-                <router-link id='chatroom_link' :to="{
-                          name: 'ChattingReadView',
-                          params: {roomNo: chatroom.roomNo.toString()}}">
-                      {{ chatroom.roomNo }}입장
+          </div>
+          <div id='chatList'>
+            <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
+              <router-link id='chatroom_link' :to="{
+                        name: 'ChattingReadView',
+                        params: {roomNo: chatroom.roomNo.toString()}}">
+                <div>
+                    <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
+                        <v-img src="@/assets/profile.jpg"/>
+                    </div>
+                </div>
+                <div>
+                  <div style="display: flex;
+                  align-items: center;
+                  height: 20px;
+                  
+                  ">
+                  <span style="font-weight: bold; font-size: 13px;">{{ chatroom.member2 }}</span>&nbsp;<span style="font-size: 12px;">00동</span></div>
+                    <div style="display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 20px;
+    font-size: 13px;
+    color: var(--seed-scale-color-gray-700);">{{lastMessage}}</div>
+                  </div>
                 </router-link>
                 <!-- <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
                   <div>
@@ -41,15 +59,15 @@
         
         <div id='right'>
           <div id='right1'>
-            <div>
-              <div style="width:40px">
-                  <div style="border-radius: 50%; overflow: hidden;">
-                      <v-img width="40" height="40" src="@/assets/profile.jpg"/>
+
+              <div>
+                  <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
+                      <v-img src="@/assets/profile.jpg"/>
                   </div>
               </div>
-              게시글 작성자
-            </div>
-            <div id="appoint">
+              {{chatroom.member2}} 온도
+
+            <div id="right_button">
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
@@ -148,45 +166,60 @@
           </div>
           </div>
           <div id='product'>
-            <div >
-              <div style="display: flex;">
-                  <div style="border-radius: 10%; overflow: hidden;">
-                      <v-img width="40" height="40" src="@/assets/profile.jpg"/>
-                  </div>
-              </div>
-            </div>
             <div>
-              <div>게시글 제목 </div>
-              <div>가격</div>
+              <v-img style="margin-right: 12px;
+              border: 1px solid var(--profile-image-border);
+              border-radius: 4px;
+              width: 40px;
+              height: 40px;
+              object-fit: cover;" src="@/assets/profile.jpg"/>
             </div>
+            <div style="flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;">
+              <div>게시글 제목 </div>
+              <div style="font-weight: bold;">가격</div>
+            </div>
+            <div>거래 상황</div>
           </div>
           <div v-if="chatroom.appointDate" id='notice'>
             <div id='notice_box'>
+              <div>
               <span style="font-weight: 700; margin-right: 4px;">알림</span>
-              <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}}</span>
-              <v-btn >알림 받기</v-btn> 
+              <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}} 거래 약속을 만들었어요.</span>
+              </div>
+              <v-btn @click="onReminder()">알림 받기</v-btn> 
               <!-- 카톡 로그인 유저만 알림 받을 수 있도록 -->
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:533px': 'height:625px'">
-            <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
+          <div id='chatView' :style="chatroom.appointDate ? 'height:529px': 'height:625px'">
+            <!-- <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
                     {{chatroom.roomNo}} 채팅방에 입장하였습니다. 
                 </div>
-            </div>
-            <div v-else>
+            </div> -->
+            <!-- <div v-else> -->
+            <div>
               <div style="display: flex; justify-content: flex-end;"  v-for="msg in new_data" :key="msg.messageNo">
                 <p id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</p>
               </div>
               <div style="display: flex; justify-content: flex-end;"  v-for="msg in newMessage" :key="msg.messageNo">
-                <div id='message_box'>{{msg}}</div>
+                <div id='message_date'>{{msg.now}}</div>
+                <div id='message_box'>{{msg.message}}</div>
               </div>
             </div>
           </div> 
 
           <div id='submit'>
-            <textarea v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
-            <v-btn type="submit">전송</v-btn>
+            <div id='submit_form'>
+              <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
+              <div style="display: flex; justify-content: flex-end; margin: 8px 10px"><v-btn type="submit">전송</v-btn></div>
+            </div>
           </div>
         </div>
       </div>
@@ -223,7 +256,8 @@ export default {
 
       
       message: '',
-      // time: new Date(),
+      lastMessage: '',
+      now: ('0' + (new Date()).getHours()).slice(-2) +':'+('0' + (new Date()).getMinutes()).slice(-2),
       new_data: [],
       newMessage: [],
       memberNo: 1,
@@ -253,22 +287,27 @@ export default {
       this.$router.push({name: 'ChattingReadView',
                           params: {roomNo: roomNo.toString()}})
     },
-    // onSubmit() {
-    //   console.log(this.roomNo)
-    //   const { roomNo, message } = this
-    //   console.log({ roomNo, message })
-    //   // this.$emit('submit', { roomNo, message })
-    //   this.newMessage.push(message)
-    //   // this.getNewData();
-    // },
+    onSubmit() {
+      // const { roomNo } = this.chatroom
+      const { message, now } = this
+      // console.log({ roomNo, message, now })
+      // this.$emit('submit', { roomNo, message })
+      this.newMessage.push({message, now})
+      console.log(this.newMessage)
+      this.lastMessage = message
+      this.message = ''
+      // this.getNewData();
+    
+    },
     onAppoint() {
       const { date, time } = this
       this.$emit('onAppoint', { roomNo: this.chatroom.roomNo, date, time })
       history.go(0);
     },
     onReminder() {
-      // const { name, date, time } = this
-      // this.$emit('onReminder', { name, date, time })
+      const { access_token } = this.login
+      const { date, time } = this
+      this.$emit('onReminder', { access_token, date, time })
     }
   },
 
@@ -285,10 +324,7 @@ export default {
   /* height: 70px;
   display: flex;
   justify-content: center; */
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;
+  border-bottom: 1px solid #bcbcbc;
 }
 #logo{
   display: flex;
@@ -310,7 +346,7 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 894px;
+	height: 938px;
   display: flex; 
   justify-content: center;
   border: 1px solid #bcbcbc;
@@ -321,18 +357,10 @@ export default {
 	width: 310px;
 	float: left;
   border: 1px solid #bcbcbc;
-          border-top-style: none;
-                  border-left-style: none;
+  border-top-style: none;
 }
 #name{
-	width: 310px;
-	/* height: 72px; */
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-bottom-style: none;
-  border-right-style: none;
-}
-#name_value{
+    border-bottom: 1px solid #bcbcbc;
     position: relative;
     display: flex;
     height: 72px;
@@ -341,25 +369,29 @@ export default {
     /* -webkit-box-align: center; */
     align-items: center;
 }
+#name_value{
+font-weight: bold;
+    font-size: 16px;
+    line-height: 150%;
+}
 #chatList{
 	width: 310px;
-	height: 822px;
-  border: 1px solid #bcbcbc;
-  border-right-style: none;
+	height: 865px;
 }
 #chatroom{
   /* display: flex;    */
+  
 }
 #chatroom_link{
   display: flex;
     padding: 16px;
     height: 72px;
     border-bottom: 1px solid #bcbcbc;
-    /* -webkit-box-align: center; */
+    -webkit-box-align: center;
     align-items: center;
     position: relative;
     overflow: hidden;
-    /* background-position: center center; */
+    background-position: center center;
     contain: content;
     color: inherit;
     cursor: pointer;
@@ -379,15 +411,16 @@ export default {
   display: flex; 
   border-bottom: 1px solid #bcbcbc;
     /* -webkit-box-pack: justify; */
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* -webkit-box-align: center; */
     align-items: center;
     /* height: 64px; */
     /* min-height: 64px; */
     padding: 0px 20px;
 }
-#appoint{
+#right_button{
   display: inline-flex;
+  margin-left: auto;
     /* -webkit-box-pack: center;
     justify-content: center;
     -webkit-box-align: center;
@@ -395,10 +428,16 @@ export default {
     border-radius: 4px; */
 }
 #product{
-	width: 810px;
+
 	height: 72px;
   display: flex;
-  border: 1px solid #bcbcbc;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #bcbcbc;
 }
 #notice{
   display: flex;
@@ -406,33 +445,48 @@ export default {
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+      padding: 20px 20px 0px 20px;
+    
 
-      border: 1px solid #bcbcbc;
-        border-top-style: none;
-  border-bottom-style: none;
 }
 #notice_box{
+    display: flex;
   padding: 20px;
   border-radius: 10px;
   font-size: 14px;
   letter-spacing: -0.02em;
-  margin: 8px 0px;
+  /* margin: 8px 0px; */
   background-color: #fff7e6;
   color: #ba5e02;
+  width: 100%;
+      align-items: center;
+    justify-content: space-between;
+
 }
 #chatView{
 	width: 810px;
 	/* height: 555px; */
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-bottom-style: none;
   overflow-y:auto; 
-  overflow-x:hidden; 
+  /* overflow-x:hidden;  */
+  /* overflow: hidden auto; */
+  padding: 20px 20px 0px 20px;
+      border-bottom: 1px solid #bcbcbc;
 }
 #submit{
-	width: 810px;
-	height: 125px;
-  border: 1px solid #bcbcbc;
+	/* height: 125px; */
+
+
+}
+#submit_form{
+
+  /* display: flex; */
+    /* flex-direction: column; */
+    /* position: relative; */
+    margin: 16px;
+    border: 1px solid #212124;;
+    border-radius: 8px;
+    /* -webkit-box-pack: justify; */
+    /* justify-content: space-between; */
 }
 #message_box{
 	height: 40px;
@@ -462,11 +516,12 @@ textarea{
   margin: 12px 12px 0px;
   width: calc(100% - 24px);
   height: 63px;
-  line-height: 150%;
+  /* line-height: 150%; */
   padding: 0px;
-  resize: none;
+  /* resize: none; */
   font-size: 14px;
   border: none;
   outline: none;
+
 }
 </style>
