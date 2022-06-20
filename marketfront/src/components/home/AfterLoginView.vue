@@ -57,13 +57,32 @@
       </div>
 
       <div style="">
-        <v-btn fab @click="myPage" v-if="profileImg === null">
+        <v-menu offset-y>
+          <template v-slot:activator="{on}">
+        <v-btn fab  v-if="profileImg === null" v-on="on">
           <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
         </v-btn>
 
-        <v-btn fab @click="myPage" v-else>
+        <v-btn fab v-else v-on="on">
           <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
         </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item link @click="logout">
+              <v-list-item-title>
+                로그아웃
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item link @click="myPage">
+              <v-list-item-title>
+                My Page
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+
+        </v-menu>
       </div>
     </div>
   </header>
@@ -72,18 +91,23 @@
 <script>
 import {mapActions, mapState} from "vuex";
 import cookies from "vue-cookies";
+import {logout} from "@/views/Util/LoginUtil";
 
 export default {
   name: "AfterLoginView",
   data(){
     return{
-      id: ""
+      id: "",
     }
   },
   methods: {
     ...mapActions(['fetchMemberProfile']),
     myPage(){
       this.$router.push({name: 'MyPageProfile'})
+    },
+    logout(){
+      logout();
+      this.$router.push({name: 'HomePage'})
     }
   },
   computed: {

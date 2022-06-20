@@ -35,6 +35,17 @@ function ParsingInfo(token){
     cookies.set('roles', roles, SAVE_COOKIE_ACCESS);
 }
 
+function logout(){
+    cookies.remove('id');
+    cookies.remove('memberNo');
+    cookies.remove('name');
+    cookies.remove('roles');
+    cookies.remove('access_token');
+    cookies.remove('refresh_token');
+
+}
+
 export {
-    ParsingInfo
+    ParsingInfo,
+    logout
 }
