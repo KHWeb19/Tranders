@@ -3,6 +3,7 @@ package com.example.marketback.service.member;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.response.MemberRegionResponse;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 public interface MemberService {
     void register(Member member);
@@ -20,4 +21,6 @@ public interface MemberService {
     MemberRegionResponse getRegion(String id);
 
     void modifyRegion(MemberRegionResponse memberRegionResponse, String id);
+
+    //String phoneNumCheck(String phoneNumber) throws CoolsmsException;
 }

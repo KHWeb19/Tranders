@@ -1,6 +1,5 @@
 package com.example.marketback.controller.member;
 
-//import com.example.marketback.util.KakaoProfile;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -8,19 +7,18 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
-//import com.example.marketback.util.OAuthToken;
 import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.response.MemberRegionResponse;
 import com.example.marketback.service.member.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -186,4 +184,12 @@ public class MemberController {
 
         memberService.modifyRegion(memberRegionResponse, id);
     }
+
+    /*@PostMapping("/register/check/sendSMS")
+    public String sendSMS(@RequestBody Map<String, String> map) throws CoolsmsException {
+        log.info("sendSMS"+ map.get("phoneNumber"));
+
+        return memberService.phoneNumCheck(map.get("phoneNumber"));
+        //return null;
+    }*/
 }
