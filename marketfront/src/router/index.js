@@ -6,10 +6,10 @@ import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
-import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
-import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
-import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
-import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue'
 import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
@@ -32,6 +32,7 @@ import MyPageProfile from "@/views/myPage/MyPageProfile";
 import MyInfoPage from "@/views/myPage/MyInfoPage";
 import BossRegisterPage from "@/views/boss/BossRegisterPage";
 import BossPage from "@/views/boss/BossPage";
+import MyVillageProof from "@/views/myPage/MyVillageProof";
 
 Vue.use(VueRouter)
 
@@ -159,6 +160,16 @@ const routes = [
     path: '/bossPage',
     name: 'BossPage',
     component: BossPage
+  },
+  {
+    path: '/villageProof',
+    name: 'MyVillageProof',
+    components: {
+      default: MyVillageProof,
+    },
+    props: {
+      default: true
+    },
   },
   {
     path: '/Tranders/CommunityList',

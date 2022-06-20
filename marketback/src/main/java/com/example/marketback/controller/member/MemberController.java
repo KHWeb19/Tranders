@@ -10,6 +10,7 @@ import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
 //import com.example.marketback.util.OAuthToken;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.MemberRegionResponse;
 import com.example.marketback.service.member.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -170,5 +171,19 @@ public class MemberController {
         }
 
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("/region")
+    public MemberRegionResponse memberRegion(@RequestBody Map<String, String> map){
+        log.info("memberRegion");
+
+        return memberService.getRegion(map.get("id"));
+    }
+
+    @PostMapping("/modifyRegion/{id}")
+    public void modifyRegion (@PathVariable String id, @RequestBody MemberRegionResponse memberRegionResponse){
+        log.info("modifyRegion" + id);
+
+        memberService.modifyRegion(memberRegionResponse, id);
     }
 }

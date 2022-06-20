@@ -3,6 +3,7 @@ package com.example.marketback.service.member;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.MemberRegionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -86,6 +87,24 @@ public class MemberServiceImpl implements MemberService {
         Member memberEntity = memberRepository.findByMemberId(id);
 
         memberEntity.setProfileImg(fileSrc);
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public MemberRegionResponse getRegion(String id) {
+        Member memberEntity = memberRepository.findByMemberId(id);
+
+        return new MemberRegionResponse(memberEntity.getLat(), memberEntity.getLng(), memberEntity.getRegion());
+    }
+
+    @Override
+    public void modifyRegion(MemberRegionResponse memberRegionResponse, String id) {
+        Member memberEntity = memberRepository.findByMemberId(id);
+
+        memberEntity.setRegion(memberRegionResponse.getRegion());
+        memberEntity.setLat(memberRegionResponse.getLat());
+        memberEntity.setLng(memberRegionResponse.getLng());
+
         memberRepository.save(memberEntity);
     }
 

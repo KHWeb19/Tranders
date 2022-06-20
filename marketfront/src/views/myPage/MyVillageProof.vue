@@ -9,7 +9,7 @@
         </v-col>
 
         <v-col cols="8">
-          <my-page-view></my-page-view>
+          <my-village-proof-view :options="mapOption" @modifyLocation="modifyLocation"></my-village-proof-view>
         </v-col>
       </v-row>
     </div>
@@ -20,15 +20,51 @@
 
 import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
-import MyPageView from "@/components/myPage/MyProfileView";
+import MyVillageProofView from "@/components/myPage/MyVillageProofView";
+import {mapActions, mapState} from "vuex";
+import cookies from "vue-cookies";
+import axios from "axios";
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer '+ cookies.get('access_token'),
+    'Accept' : 'application/json',
+    'Content-Type': 'application/json'
+  }
+};
 
 export default {
-  components: {MyPageView, MyProfileBar, AfterLoginView},
+  components: {MyVillageProofView, MyProfileBar, AfterLoginView},
   name: "MyVillageProof",
+  props: {
+
+  },
   data(){
     return{
-      index: 2
+      index: 2,
+      id: cookies.get("id"),
     }
+  },
+  methods: {
+    ...mapActions(['fetchMyRegion']),
+    modifyLocation(payload) {
+      const {lat, lng, region} = payload;
+      let id = this.id
+
+      axios.post(`http://localhost:7777/member/modifyRegion/${id}`, {lat, lng, region}, config)
+          .then((res) => {
+            console.log(res);
+          })
+    }
+  },
+  created() {
+
+  },
+  computed: {
+    ...mapState(['mapOption'])
+  },
+  mounted() {
+    this.fetchMyRegion(this.id)
   }
 };
 </script>

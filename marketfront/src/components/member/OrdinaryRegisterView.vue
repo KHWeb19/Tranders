@@ -84,6 +84,8 @@ export default {
       name: '',
       phoneNumber: '',
       region: '',
+      lat: 0,
+      lng: 0,
       rules: [v => v.length <= 12 || '12자리 이하 입력', v => v.length >= 8 || '8자리 이상 입력'],
       show: false,
       pwRules: {
@@ -116,6 +118,8 @@ export default {
       console.log(x);
       console.log(y);
 
+      this.lat = y;
+      this.lng = x;
 
       axios.post('http://127.0.0.1:5000/address-region', {x, y})
           .catch((res) => {
@@ -151,9 +155,9 @@ export default {
         roles = 1;
       }
 
-      const {id, password, name, phoneNumber, region} = this;
+      const {id, password, name, phoneNumber, region, lat, lng} = this;
 
-      this.$emit('register', {id, password, name, phoneNumber, region, roles})
+      this.$emit('register', {id, password, name, phoneNumber, region, roles, lat, lng})
     },
     checkDub(){
       const {id} = this;

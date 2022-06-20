@@ -2,6 +2,7 @@ package com.example.marketback.service.member;
 
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.MemberRegionResponse;
 
 public interface MemberService {
     void register(Member member);
@@ -15,4 +16,8 @@ public interface MemberService {
     void modify(Member member);
 
     void modifyProfileImg(String fileSrc, String id);
+
+    MemberRegionResponse getRegion(String id);
+
+    void modifyRegion(MemberRegionResponse memberRegionResponse, String id);
 }

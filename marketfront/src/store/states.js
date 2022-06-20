@@ -11,4 +11,5 @@ export default {
     communityBoard: null,
     boss: null,
     userInfo: null, // myPage
+    mapOption: null, // lat, lng
 }

@@ -2,6 +2,7 @@ package com.example.marketback.entity.member;
 
 import com.example.marketback.entity.boss.Boss;
 import lombok.*;
+import org.apache.kafka.common.protocol.types.Field;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -32,6 +33,12 @@ public class Member {
 
     @Column(nullable = false)
     private String region;
+
+    @Column(nullable = false)
+    private String lat;
+
+    @Column(nullable = false)
+    private String lng;
 
     private String address;
 

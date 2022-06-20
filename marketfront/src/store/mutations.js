@@ -8,6 +8,7 @@ import {
     FETCH_MEMBER_PROFILE,
     FETCH_BOSS_PAGE,
     FETCH_MY_PAGE,
+    FETCH_MY_REGION,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
 } from './mutation-types'
@@ -33,6 +34,7 @@ export default {
         cookies.set("refresh_token", token.refresh_token);
 
         ParsingInfo(token.access_token);
+
     },
     [FETCH_CHATROOM] (state, chatroom) {
         state.chatroom = chatroom
@@ -55,6 +57,9 @@ export default {
     },
     [FETCH_MY_PAGE] (state, userInfo) {
         state.userInfo = userInfo;
+    },
+    [FETCH_MY_REGION] (state, mapOption){
+        state.mapOption = mapOption;
     }
 }
 

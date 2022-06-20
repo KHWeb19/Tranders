@@ -18,10 +18,10 @@ export default {
   },
   methods: {
     register(payload){
-      const {id, password, name, phoneNumber, region, roles} = payload;
+      const {id, password, name, phoneNumber, region, roles, lat, lng} = payload;
 
       let profileImg = 'Tranders_base_profile_img.png';
-      axios.post('http://localhost:7777/member/register', {id, password, name, phoneNumber, region, roles, profileImg})
+      axios.post('http://localhost:7777/member/register', {id, password, name, phoneNumber, region, roles, profileImg, lat, lng})
         .catch((res) => {
           alert(res)
         })
