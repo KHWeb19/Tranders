@@ -40,4 +40,9 @@ public class BossServiceImpl implements BossService{
 
         bossRepository.save(boss);
     }
+
+    @Override
+    public Boss getPage(Long memberNo) {
+        return bossRepository.findByMemberNo(memberNo);
+    }
 }

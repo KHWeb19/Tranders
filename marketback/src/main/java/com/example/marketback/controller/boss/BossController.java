@@ -1,5 +1,6 @@
 package com.example.marketback.controller.boss;
 
+import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.service.member.BossService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class BossController {
 
             FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/" + id + "_" + imgFile.getOriginalFilename());
 
-            String fileSrc = name + "_" + imgFile.getOriginalFilename();
+            String fileSrc = id + "_" + imgFile.getOriginalFilename();
 
             System.out.println(fileSrc+", "+name+", "+region);
             file.write(imgFile.getBytes());
@@ -53,6 +54,14 @@ public class BossController {
         }
 
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("/pageView")
+    public Boss bossView(@RequestBody Map<String, Long> memberNo){
+        log.info("bossView");
+        log.info(memberNo.get("memberNo")+"");
+
+        return bossService.getPage(memberNo.get("memberNo"));
     }
 
 }
