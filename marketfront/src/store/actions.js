@@ -56,8 +56,8 @@ export default {
                 commit(FETCH_CHATROOM, res.data)
             })
     },
-    fetchChatroomList ({ commit }) {
-        return axios.get('http://localhost:7777/chatting/list')
+    fetchChatroomList ({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/chatting/list/${memberNo}`)
             .then((res) => {
                 commit(FETCH_CHATROOM_LIST, res.data)
             })
