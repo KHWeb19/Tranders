@@ -11,7 +11,12 @@ import axios from 'axios'
 
 export default {
   name: "ChattingListPage",
-    components: { ChattingList },
+  components: { ChattingList },
+  data() {
+    return {
+      
+    }
+  },
   computed: {
     ...mapState(['chatrooms'])
   },

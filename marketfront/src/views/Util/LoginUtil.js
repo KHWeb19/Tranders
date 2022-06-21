@@ -17,6 +17,7 @@ function ParsingInfo(token){
     let memberNo = result.memberNo;
     let providerType = result.providerType;
 
+
     //alert('token parser')
     console.log(userId);
 
@@ -39,6 +40,7 @@ function logout(){
     cookies.remove('access_token');
     cookies.remove('refresh_token');
 
+    // cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
 }
 
 export {

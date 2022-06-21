@@ -13,8 +13,8 @@ export default {
     name: 'BoardTestPage',
     methods: {
         onSubmit(payload) {
-            const {sender} = payload
-            axios.post('http://localhost:7777/chatting/register', {sender})
+            const {memberNo} = payload
+            axios.post(`http://localhost:7777/chatting/register/${memberNo}`, {memberNo})
                 .then(() => {
                     alert('게시물 등록 성공!')
 

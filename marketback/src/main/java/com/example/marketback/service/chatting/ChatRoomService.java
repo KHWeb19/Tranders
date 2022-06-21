@@ -7,7 +7,7 @@ import com.example.marketback.entity.chatting.ChatRoom;
 import java.util.List;
 
 public interface ChatRoomService {
-    public void register (ChatRoom chatRoom);
+    public void register (ChatRoom chatRoom, Long memberNo);
     public List<ChatRoom> list ();
     public ChatRoom read (Integer roomNo);
     public void modify (ChatRoomRequest chatRoomRequest);
