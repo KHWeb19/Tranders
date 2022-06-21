@@ -62,6 +62,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                             .roles(MemberRole.ROLE_USER)
                             .phoneNumber(providerType.name())
                             .region(providerType.name())
+                            .lat("0").lng("0")
+                            .registerStatus(Boolean.FALSE)
                             .profileImg("Tranders_base_profile_img.png")
                             .providerType(providerType).build();
 

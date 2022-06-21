@@ -98,6 +98,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberRegionResponse getRegion(String id) {
         Member memberEntity = memberRepository.findByMemberId(id);
 
+        log.info(memberEntity.getLat()+", "+ memberEntity.getLng()+"!!!!");
         return new MemberRegionResponse(memberEntity.getLat(), memberEntity.getLng(), memberEntity.getRegion());
     }
 
@@ -108,6 +109,19 @@ public class MemberServiceImpl implements MemberService {
         memberEntity.setRegion(memberRegionResponse.getRegion());
         memberEntity.setLat(memberRegionResponse.getLat());
         memberEntity.setLng(memberRegionResponse.getLng());
+
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void snsRegister(Member member) {
+        Member memberEntity = memberRepository.findByMemberId(member.getId());
+
+        memberEntity.setName(member.getName());
+        memberEntity.setRegion(member.getRegion());
+        memberEntity.setLat(member.getLat());
+        memberEntity.setLng(member.getLng());
+        memberEntity.setRegisterStatus(Boolean.TRUE);
 
         memberRepository.save(memberEntity);
     }

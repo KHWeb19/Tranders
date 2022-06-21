@@ -192,4 +192,11 @@ public class MemberController {
         return memberService.phoneNumCheck(map.get("phoneNumber"));
         //return null;
     }*/
+
+    @PostMapping("/snsRegister")
+    public void snsRegister(@RequestBody Member member){
+        log.info("snsRegister" + member.getId());
+
+        memberService.snsRegister(member);
+    }
 }

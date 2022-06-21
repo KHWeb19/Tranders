@@ -22,5 +22,7 @@ public interface MemberService {
 
     void modifyRegion(MemberRegionResponse memberRegionResponse, String id);
 
+    void snsRegister(Member member);
+
     //String phoneNumCheck(String phoneNumber) throws CoolsmsException;
 }

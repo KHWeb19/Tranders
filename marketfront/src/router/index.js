@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import HomePage from '@/views/HomePage.vue'
 
 import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
@@ -33,6 +33,8 @@ import MyInfoPage from "@/views/myPage/MyInfoPage";
 import BossRegisterPage from "@/views/boss/BossRegisterPage";
 import BossPage from "@/views/boss/BossPage";
 import MyVillageProof from "@/views/myPage/MyVillageProof";
+import OauthPage from "@/views/Util/OauthPage";
+import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 
 Vue.use(VueRouter)
 
@@ -205,7 +207,16 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/snsRegister',
+    name: 'SnsRegisterPage',
+    component: SnsRegisterPage
+  },
+  {
+    path: '/oauth2/*',
+    component: OauthPage
+  },
 ]
 
 const router = new VueRouter({

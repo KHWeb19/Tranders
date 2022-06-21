@@ -82,4 +82,12 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public Long getMemberNo() {
         return member.getMemberNo();
     }
+
+    public String getProvider() {
+        return member.getProviderType().name();
+    }
+
+    public boolean getRegisterStatus() {
+        return member.getRegisterStatus();
+    }
 }

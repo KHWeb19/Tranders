@@ -40,6 +40,11 @@ public class Member {
     @Column(nullable = false)
     private String lng;
 
+    @Column(nullable = false)
+    private Boolean registerStatus;
+
+    private Long Money;
+
     private String address;
 
     private Float temperature;
@@ -60,6 +65,7 @@ public class Member {
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);
         member.setBossAuth(Boolean.FALSE);
+        member.setRegisterStatus(Boolean.TRUE);
 
         return member;
     }
