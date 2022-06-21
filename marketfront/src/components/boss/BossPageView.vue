@@ -10,29 +10,39 @@
       <div style="top: 25px; position: absolute; left: 88%">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
-<!--      <div style="position: absolute; left: 10px; bottom: 10px">
-        <v-img src="@/assets/profile.jpg" height="200px" width="200px" style="border-radius: 70%"></v-img>
-      </div>-->
     </div>
 
-    <div id="profile" style="border: 1px solid black;">
-      <div id="profile_img">
+    <div id="profile" style="border: 1px solid black; padding-top: 30px">
+<!--      <div  id="profile_img" style="border: 1px solid black">
         <v-img src="@/assets/profile.jpg" height="200px" width="200px" style="border-radius: 70%"></v-img>
+      </div>-->
+      <div id="profile_img" style="border: 1px solid black">
+        <v-img :src="require(`@/assets/bossProfile/${boss.profileImg}`)" height="200px" width="200px" style="border-radius: 70%"></v-img>
       </div>
-      <div>
-        <v-text-field v-model="name" solo style="width: 100%" readonly> </v-text-field>
+      <div style="padding-left: 55px; border: 1px solid black; font-size: 35px" class="pa-5">
+        {{ boss.placeName }}
+        <div style="border: 1px solid black; font-size: 15px" class="pa-2">
+          {{ boss.region }} ㆍ {{boss.category}} ㆍ 단골 0
+        </div>
       </div>
+
     </div>
 
   </div>
 </template>
 
 <script>
+
 export default {
   name: "BossPageView",
+  props: {
+    boss: {
+      type: Object
+    }
+  },
   data(){
     return {
-      name: ''
+      name: 'test'
     }
   },
   methods: {
@@ -40,7 +50,7 @@ export default {
       this.$router.push({name: 'MyPageProfile'})
     },
     modify(){
-
+      alert('사진을 변경하겠다!')
     }
   }
 }

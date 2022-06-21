@@ -6,7 +6,6 @@
 <script>
 import LoginView from "@/components/member/LoginView";
 import cookies from "vue-cookies";
-import {ParsingInfo} from "@/views/Util/LoginUtil";
 import axios from "axios";
 import {SAVE_COOKIE_ACCESS, SAVE_COOKIE_REFRESH} from "@/constant/login";
 
@@ -24,10 +23,10 @@ export default {
     alert(this.isLogin)
   },
   methods: {
-    login(payload){
+    async login(payload){
       if(!this.isLogin) {
         const {id, password} = payload;
-        axios.post("http://localhost:7777/member/login", {id, password})
+        await axios.post("http://localhost:7777/member/login", {id, password})
             .catch((res) => {
               alert(res + "에러 발생")
             })
@@ -41,7 +40,7 @@ export default {
                 cookies.set('access_token', res.data.access_token, SAVE_COOKIE_ACCESS);
                 cookies.set('refresh_token', res.data.refresh_token, SAVE_COOKIE_REFRESH);
 
-                ParsingInfo(res.data.access_token);
+                //ParsingInfo(res.data.access_token);
                 this.$router.push({name: "HomePage"}) // 로그인 후 어디로?
               }
 

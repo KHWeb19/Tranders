@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import HomePage from '@/views/HomePage.vue'
 
 import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
-import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
-import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
-import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
-import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue'
 import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
@@ -32,6 +32,9 @@ import MyPageProfile from "@/views/myPage/MyPageProfile";
 import MyInfoPage from "@/views/myPage/MyInfoPage";
 import BossRegisterPage from "@/views/boss/BossRegisterPage";
 import BossPage from "@/views/boss/BossPage";
+import MyVillageProof from "@/views/myPage/MyVillageProof";
+import OauthPage from "@/views/Util/OauthPage";
+import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 
 Vue.use(VueRouter)
 
@@ -161,6 +164,16 @@ const routes = [
     component: BossPage
   },
   {
+    path: '/villageProof',
+    name: 'MyVillageProof',
+    components: {
+      default: MyVillageProof,
+    },
+    props: {
+      default: true
+    },
+  },
+  {
     path: '/Tranders/CommunityList',
     name: 'CommunityBoardListPage',
     component: CommunityBoardListPage
@@ -194,7 +207,16 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/snsRegister',
+    name: 'SnsRegisterPage',
+    component: SnsRegisterPage
+  },
+  {
+    path: '/oauth2/*',
+    component: OauthPage
+  },
 ]
 
 const router = new VueRouter({

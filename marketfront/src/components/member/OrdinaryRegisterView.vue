@@ -42,9 +42,27 @@
           </v-col>
         </v-row>
 
-        <v-row style="height: 70px">
-          <v-col>
+<!--        <v-row style="height: 70px">
+          <v-col cols="10">
             <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
+          </v-col>
+          <v-col cols="2" class="pt-5">
+            <v-btn style="width: 100%" id="checkDub" @click="checkPhoneNum" outlined>번호 확인</v-btn>
+          </v-col>
+        </v-row>-->
+
+        <v-row style="height: 70px">
+          <v-col cols="10">
+            <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row style="height: 70px" v-if="ifCheck">
+          <v-col cols="10">
+            <v-text-field solo v-model="checkNum" style="width: 100%" placeholder="인증번호"> </v-text-field>
+          </v-col>
+          <v-col cols="2" class="pt-5">
+            <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
           </v-col>
         </v-row>
 
@@ -58,9 +76,15 @@
           </v-col>
         </v-row>
 
+<!--        <v-row style="height: 70px; margin-top: 35px">
+          <v-col>
+            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="!(checkDoubleId === true && checkDoublePhoneNum === true)">오이 마켓 시작하기</v-btn>
+          </v-col>
+        </v-row>-->
+
         <v-row style="height: 70px; margin-top: 35px">
           <v-col>
-            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="checkDoubleId === true">오이 마켓 시작하기</v-btn>
+            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="checkDoubleId === false">오이 마켓 시작하기</v-btn>
           </v-col>
         </v-row>
 
@@ -74,7 +98,7 @@ import axios from "axios";
 
 export default {
   name: "ordinaryRegisterView",
-  props: ['checkDoubleId'],
+  props: ['checkDoubleId', 'checkDoublePhoneNum', 'ifCheck'],
   data(){
     return {
       isIndividual: true,
@@ -83,7 +107,10 @@ export default {
       password: '',
       name: '',
       phoneNumber: '',
+      checkNum: '',
       region: '',
+      lat: 0,
+      lng: 0,
       rules: [v => v.length <= 12 || '12자리 이하 입력', v => v.length >= 8 || '8자리 이상 입력'],
       show: false,
       pwRules: {
@@ -116,6 +143,8 @@ export default {
       console.log(x);
       console.log(y);
 
+      this.lat = y;
+      this.lng = x;
 
       axios.post('http://127.0.0.1:5000/address-region', {x, y})
           .catch((res) => {
@@ -151,13 +180,23 @@ export default {
         roles = 1;
       }
 
-      const {id, password, name, phoneNumber, region} = this;
+      const {id, password, name, phoneNumber, region, lat, lng} = this;
 
-      this.$emit('register', {id, password, name, phoneNumber, region, roles})
+      this.$emit('register', {id, password, name, phoneNumber, region, roles, lat, lng})
     },
     checkDub(){
       const {id} = this;
       this.$emit('check', {id});
+    },
+    checkPhoneNum(){
+      const {phoneNumber} = this;
+
+      this.$emit('checkPhoneNum', {phoneNumber});
+    },
+    certification(){
+      let num = this.checkNum;
+
+      this.$emit('certification', {num})
     }
   }
 }
