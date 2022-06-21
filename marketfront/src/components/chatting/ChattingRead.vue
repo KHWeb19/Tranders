@@ -49,7 +49,7 @@
                         <v-img width="40" height="40" src="@/assets/profile.jpg"/>
                     </div>
                   </div>
-                  Member2
+                  
                   <br/>
                   roomNo: {{chatroom.roomNo}}
                 </v-btn> -->
@@ -359,7 +359,7 @@ export default {
     },
     onCharge(){
       window.open('http://kko.to/LJwi9Wf7n')
-      this.money = this.price
+      this.money += this.price
     }
   },
 

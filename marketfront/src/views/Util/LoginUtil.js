@@ -38,7 +38,6 @@ function logout(){
     cookies.remove('roles');
     cookies.remove('access_token');
     cookies.remove('refresh_token');
-    cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
 }
 
 export {
