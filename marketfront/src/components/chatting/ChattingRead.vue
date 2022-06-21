@@ -151,7 +151,7 @@
                           </v-card-text>
                           <v-card-actions>
                               <v-spacer></v-spacer>
-                              <v-btn color="red" text @click.native="onAppoint($event)">
+                              <v-btn color="blue" text @click.native="onAppoint($event)">
                                   완료
                               </v-btn>
                               <v-btn text @click="dialog.value=false">
@@ -162,7 +162,54 @@
                   </template>
               </v-dialog>
           </v-layout>
-          <v-btn>송금 하기</v-btn>
+          <v-layout>
+              <v-dialog persisten max-width="400">
+                  <template v-slot:activator="{ on }">
+                      <v-btn style="margin-left: auto;" v-on="on">송금 하기</v-btn>
+                  </template>
+                  <template v-slot:default="dialog">
+                                <v-card>
+                                    <v-card-title class="headline">
+                                        Pay
+                                    </v-card-title>
+                                    <v-card-text>
+                                      <div id="pay_box">결제금액: {{price}} 원</div>
+                                    </v-card-text>
+                                    <v-card-text >
+                                      <div id="pay_box" >
+                                        <div>페이머니: <span :style="price>money ? 'color:red' : ''">{{money}} </span>원</div>
+                                        <div style="display: inline-flex;
+  margin-left: auto;"><v-btn style="
+                                          
+    border-radius: 24px;
+    min-width: 80px;
+    height: 36px;
+    padding: 0px 9px;
+    margin: 0px 5px
+    letter-spacing: -0.1px;
+    position: relative;
+    overflow: hidden;
+    color: rgb(25, 28, 32);
+    background-color: rgb(255, 235, 0);" 
+                                        @click="onCharge()">
+                                            충전
+                                        </v-btn></div></div>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        
+                                        <v-btn text color="blue">
+                                            결제
+                                        </v-btn>
+                                        <v-btn text @click="dialog.value=false">
+                                            취소
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </template>
+              </v-dialog>
+          </v-layout>
+          <!-- <v-btn>송금 하기</v-btn> -->
           </div>
           </div>
           <div id='product'>
@@ -253,7 +300,8 @@ export default {
         name: cookies.get('name'),
         access_token: cookies.get('access_token'),
       },
-
+      price: 5000,
+      money: 0,
       
       message: '',
       lastMessage: '',
@@ -308,6 +356,10 @@ export default {
       const { access_token } = this.login
       const { date, time } = this
       this.$emit('onReminder', { access_token, date, time })
+    },
+    onCharge(){
+      window.open('http://kko.to/LJwi9Wf7n')
+      this.money = this.price
     }
   },
 
@@ -427,6 +479,14 @@ font-weight: bold;
     align-items: center;
     border-radius: 4px; */
 }
+#pay_box{
+  border: 1px solid #212124;;
+  border-radius: 8px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px
+}
 #product{
 
 	height: 72px;
@@ -470,7 +530,7 @@ font-weight: bold;
   /* overflow-x:hidden;  */
   /* overflow: hidden auto; */
   padding: 20px 20px 0px 20px;
-      border-bottom: 1px solid #bcbcbc;
+      /* border-bottom: 1px solid #bcbcbc; */
 }
 #submit{
 	/* height: 125px; */
