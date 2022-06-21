@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import HomeView from "@/components/home/HomeView";
 import axios from "axios";
 import cookies from "vue-cookies";
 import HomeView from "@/components/home/HomeView";

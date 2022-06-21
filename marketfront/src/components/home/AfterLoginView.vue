@@ -54,17 +54,20 @@
             나의 당근 
           </router-link>
         </v-btn>
+
+        <!-- <div style=""> -->
+          <v-btn fab @click="myPage" v-if="profileImg === null">
+            <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+          </v-btn>
+
+          <v-btn fab @click="myPage" v-else>
+            <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+          </v-btn>
+        <!-- </div> -->
       </div>
 
-      <div style="">
-        <v-btn fab @click="myPage" v-if="profileImg === null">
-          <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-        </v-btn>
 
-        <v-btn fab @click="myPage" v-else>
-          <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
-        </v-btn>
-      </div>
+    </div>
     </div>
   </header>
 </template>
