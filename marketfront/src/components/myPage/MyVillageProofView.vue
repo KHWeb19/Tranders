@@ -120,12 +120,6 @@ export default {
   },
   created() {
 
-  },
-  watch: {
-    lat: function (){
-      console.log('변경됨!')
-
-    }
   }
 }
 </script>

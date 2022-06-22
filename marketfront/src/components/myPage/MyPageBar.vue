@@ -12,7 +12,7 @@
 
         <v-col cols="6" style="padding-top: 35px">
           <span style="font-size: 30px;">
-            {{id}}
+            {{name}}
           </span>
         </v-col>
 
@@ -131,6 +131,7 @@ export default {
   data(){
     return{
       id: cookies.get('id'),
+      name: cookies.get('name'),
       selectedItem: this.index,
       items: [
         { text: '내 정보 설정', icon: 'mdi-account-circle-outline' },

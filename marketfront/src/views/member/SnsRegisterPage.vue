@@ -38,6 +38,7 @@ export default {
       axios.post(API_BASE_URL+'/member/snsRegister', {id, name, region, lat, lng}, config)
           .then((res) => {
             console.log(res);
+            this.$router.push({name: 'HomePage'})
           })
           .catch(() => {
             alert('에러')
