@@ -9,7 +9,7 @@ import {
     FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
-    FETCH_MY_REGION
+    FETCH_MY_REGION, FETCH_BOSS_BACK_PROFILE
 } from './mutation-types'
 
 import axios from 'axios'
@@ -97,5 +97,11 @@ export default {
             .then((res) => {
                 commit(FETCH_MY_REGION, res.data)
             })
+    },
+    fetchBossBackProfile({commit}, id) {
+        return axios.post(API_BASE_URL+'/boss/getBackProfile', {id}, config)
+            .then((res) => [
+                commit(FETCH_BOSS_BACK_PROFILE, res.data)
+            ])
     }
 }

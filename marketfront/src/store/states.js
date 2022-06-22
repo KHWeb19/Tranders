@@ -12,4 +12,5 @@ export default {
     boss: null,
     userInfo: null, // myPage
     mapOption: null, // lat, lng
+    backProfileImgs: [],
 }

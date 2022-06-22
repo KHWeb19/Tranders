@@ -10,7 +10,7 @@ import {
     FETCH_MY_PAGE,
     FETCH_MY_REGION,
     FETCH_COMMUNITY_BOARD_LIST,
-    FETCH_COMMUNITY_BOARD,
+    FETCH_COMMUNITY_BOARD, FETCH_BOSS_BACK_PROFILE,
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -60,6 +60,9 @@ export default {
     },
     [FETCH_MY_REGION] (state, mapOption){
         state.mapOption = mapOption;
+    },
+    [FETCH_BOSS_BACK_PROFILE] (state, backProfileImg){
+        state.backProfileImgs = backProfileImg;
     }
 }
 

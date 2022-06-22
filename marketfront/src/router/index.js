@@ -35,6 +35,7 @@ import BossPage from "@/views/boss/BossPage";
 import MyVillageProof from "@/views/myPage/MyVillageProof";
 import OauthPage from "@/views/Util/OauthPage";
 import SnsRegisterPage from "@/views/member/SnsRegisterPage";
+import BossMarketInfo from "@/views/boss/BossMarketInfo";
 
 Vue.use(VueRouter)
 
@@ -217,6 +218,11 @@ const routes = [
     path: '/oauth2/*',
     component: OauthPage
   },
+  {
+    path: '/bossMarket/info',
+    name: 'BossMarketInfo',
+    component: BossMarketInfo
+  }
 ]
 
 const router = new VueRouter({
