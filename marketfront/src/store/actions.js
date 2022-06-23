@@ -1,7 +1,7 @@
 import {
     FETCH_REFRESH_TOKEN,
-    FETCH_PRODUCT,
-    FETCH_PRODUCT_LIST,
+    FETCH_PRODUCT_BOARD,
+    FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_MEMBER_PROFILE,
@@ -25,16 +25,16 @@ const config = {
 };
 
 export default {
-    fetchProduct({ commit }) {
-        return axios.get('http://localhost:7777/product/${productNo}')
+    fetchProductBoard({ commit }, productNo) {
+        return axios.get(`http://localhost:7777/product/${productNo}`)
             .then((res) => {
-                commit(FETCH_PRODUCT, res.data)
+                commit(FETCH_PRODUCT_BOARD, res.data)
             })
     },
-    fetchProductList({ commit }) {
+    fetchProductBoardList({ commit }) {
         return axios.get('http://localhost:7777/product/list')
             .then((res) => {
-                commit(FETCH_PRODUCT_LIST, res.data)
+                commit(FETCH_PRODUCT_BOARD_LIST, res.data)
             })
     },
     refreshToken ({commit}) {

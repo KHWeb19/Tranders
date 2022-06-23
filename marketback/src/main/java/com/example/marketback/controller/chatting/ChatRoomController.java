@@ -19,12 +19,11 @@ public class ChatRoomController {
     @Autowired
     private ChatRoomService chatRoomService;
 
-    @PostMapping("/register/{member1No}/{member2}")
-//    public void chatRoomRegister(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2, @Validated @RequestBody ChatRoom chatRoom) {
-    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2") Long member2) {
-        log.info("chatRoomRegister()"+chatRoom+member2);
+    @PostMapping("/register/{member1No}/{productNo}")
+    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("productNo") Long productNo) {
+        log.info("chatRoomRegister()");
 
-        chatRoomService.register(chatRoom, member1No);
+        chatRoomService.register(chatRoom, member1No, productNo);
     }
 
     @GetMapping("/list/{memberNo}")

@@ -79,12 +79,17 @@
         </div>
 
         <p id="counts">관심 8 ∙ 채팅 11 ∙ 조회 111</p>
+
+        <v-btn @click="onChat">채팅하기</v-btn>
       </section>
     </article>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import cookies from "vue-cookies";
+Vue.use(cookies);
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 
 export default {
@@ -109,8 +114,27 @@ export default {
           prevEl: ".swiper-button-prev",
         },
       },
+      login: {
+        memberNo: cookies.get("memberNo"),
+        id: cookies.get("id"),
+        name: cookies.get("name"),
+        access_token: cookies.get("access_token"),
+      },
     };
   },
+  methods: {
+    onChat() {
+        //채팅방생성하고 해당채팅방정보 받아서 이동해야함
+        // this.$router.push({ name: "ChattingListPage", 
+        //params: {
+        //     member1No: this.login.memberNo.toString(), 
+        //     member2: '10'.toString(),
+        //     boardNo: '테스트게시물1',
+        //     }
+        // });
+        this.$emit('onChat', {member1No: this.login.memberNo, productNo: this.productBoard.productNo})
+    }
+  }
 };
 </script>
 

@@ -1,6 +1,7 @@
 package com.example.marketback.entity.chatting;
 
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.productBoard.ProductBoard;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,10 @@ public class ChatRoom {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Member member1;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private ProductBoard productBoard;
 
     //member와 조인
     @Column

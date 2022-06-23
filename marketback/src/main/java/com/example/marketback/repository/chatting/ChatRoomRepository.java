@@ -11,9 +11,10 @@ import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-    @Query("select c from ChatRoom c join c.member1 cm where cm.memberNo = :memberNo order by c.roomNo desc ")
+    @Query("select c from ChatRoom c join c.member1 cm join c.productBoard.member cpm where cm.memberNo = :memberNo or cpm.memberNo = :memberNo order by c.roomNo desc ")
     List<ChatRoom> findChatRoomByMemberNo(@Param("memberNo") Long memberNo);
 
+    //생성 후 방으로 바로됨 이동하려고 만든건데 잘 안
     @Query("select c from ChatRoom c where c.member1 = :member1 and c.member2 = :member2")
     Optional<ChatRoom> findChatRoomByMember(@Param("member1") Long member1, @Param("member2") Long member2);
 }

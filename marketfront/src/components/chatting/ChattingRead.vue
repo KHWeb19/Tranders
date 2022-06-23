@@ -34,7 +34,7 @@
                   height: 20px;
                   
                   ">
-                  <span style="font-weight: bold; font-size: 13px;">{{ chatroom.member2 }}</span>&nbsp;<span style="font-size: 12px;">00동</span></div>
+                  <span style="font-weight: bold; font-size: 13px;">{{chatroom.productBoard.member.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span></div>
                     <div style="display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -65,7 +65,7 @@
                       <v-img src="@/assets/profile.jpg"/>
                   </div>
               </div>
-              {{chatroom.member2}} 온도
+              {{chatroom.productBoard.member.name}} {{chatroom.productBoard.member.temperature}}°C
 
             <div id="right_button">
             <v-layout>
@@ -219,7 +219,7 @@
               border-radius: 4px;
               width: 40px;
               height: 40px;
-              object-fit: cover;" src="@/assets/profile.jpg"/>
+              object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
             </div>
             <div style="flex-direction: column;
     -webkit-box-pack: center;
@@ -229,8 +229,8 @@
     font-size: 14px;
     line-height: 150%;
     letter-spacing: -0.02em;">
-              <div>게시글 제목 </div>
-              <div style="font-weight: bold;">가격</div>
+              <div>{{chatroom.productBoard.title}}</div>
+              <div style="font-weight: bold;">{{chatroom.productBoard.price}}원</div>
             </div>
             <div>거래 상황</div>
           </div>

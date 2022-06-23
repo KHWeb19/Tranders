@@ -1,7 +1,7 @@
 <template>
   <div>
     <home-view></home-view>
-    <product-read-form v-if="productBoard" :productBoard="productBoard" />
+    <product-read-form v-if="productBoard" :productBoard="productBoard" @onChat="onChat"/>
     <p v-else>로딩중 ........</p>
     <v-btn @click="onDelete">삭제</v-btn>
     <router-link :to="{ name: 'ProductModifyPage' }">
@@ -55,6 +55,18 @@ export default {
           alert("삭제실패 문제 발생");
         });
     },
+    onChat(payload) {
+      const {member1No, productNo} = payload
+      console.log(member1No, productNo)
+      axios.post(`http://localhost:7777/chatting/register/${member1No}/${productNo}`, {member1No, productNo})
+          .then(() => {
+              alert('채팅방 등록 성공!')
+          })
+          .catch(() => {
+              alert('문제 발생!')
+          })
+      // this.fetchChatroom(member1, member2)
+    }
   },
 };
 </script>
