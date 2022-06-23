@@ -1,7 +1,5 @@
 <template>
-  <div align="center">
-    <product-register-form @submit="onSubmit" />
-  </div>
+  <product-register-form @submit="onSubmit" />
 </template>
 
 <script>
@@ -15,16 +13,28 @@ export default {
   },
   methods: {
     onSubmit(payload) {
-      const { title, price, content } = payload;
+      console.log(payload);
+      const {
+        memberNo,
+        productImage,
+        productImage1,
+        productImage2,
+        title,
+        price,
+        content,
+      } = payload;
       axios
-        .post("http://localhost:7777/product/register", {
+        .post(`http://localhost:7777/product/register/${memberNo}`, {
+          memberNo,
+          productImage,
+          productImage1,
+          productImage2,
           title,
           price,
           content,
         })
         .then(() => {
           alert("상품 등록 성공!");
-
           this.$router.push({
             name: "ProductListPage",
           });
