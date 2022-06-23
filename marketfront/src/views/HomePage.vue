@@ -77,7 +77,7 @@ export default {
 <style scoped>
 #home{
   padding-top: 24px;
-  background-color: #FBF7F2;
+  background-color: #E6F3E6;;
 }
 #top{
   width: 1024px;
