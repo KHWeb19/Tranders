@@ -13,4 +13,6 @@ export default {
     userInfo: null, // myPage
     mapOption: null, // lat, lng
     backProfileImgs: [],
+    bossMenu: [],
+    marketInfo: []
 }

@@ -36,6 +36,7 @@ import MyVillageProof from "@/views/myPage/MyVillageProof";
 import OauthPage from "@/views/Util/OauthPage";
 import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 import BossMarketInfo from "@/views/boss/BossMarketInfo";
+import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
 
 Vue.use(VueRouter)
 
@@ -222,6 +223,16 @@ const routes = [
     path: '/bossMarket/info',
     name: 'BossMarketInfo',
     component: BossMarketInfo
+  },
+  {
+    path: '/bossMarket/infoModify',
+    name: 'BossMarketInfoModify',
+    components: {
+      default: BossMarketInfoModify
+    },
+    props: {
+      default: true
+    }
   }
 ]
 

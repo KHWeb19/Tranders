@@ -2,21 +2,22 @@ package com.example.marketback.service.member;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossImage;
+import com.example.marketback.entity.boss.BossPrice;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.boss.BossImgRepository;
+import com.example.marketback.repository.boss.BossPriceRepository;
 import com.example.marketback.repository.boss.BossRepository;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.response.BossBackProfileImg;
+import com.example.marketback.response.BossPriceMenuResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,6 +32,9 @@ public class BossServiceImpl implements BossService{
 
     @Autowired
     private BossImgRepository bossImgRepository;
+
+    @Autowired
+    private BossPriceRepository bossPriceRepository;
 
     @Override
     public boolean checkBossMember(String id) {
@@ -99,5 +103,39 @@ public class BossServiceImpl implements BossService{
             response.add(new BossBackProfileImg(bossImage.getImageName()));
         }
         return response;
+    }
+
+    @Override
+    public void addPrice(BossPrice bossPrice, Long bossNo) {
+        Boss bossEntity = bossRepository.findByBossNo(bossNo);
+
+        bossPrice.setBoss(bossEntity);
+        bossPriceRepository.save(bossPrice);
+    }
+
+    @Override
+    public List<BossPriceMenuResponse> getMenu(String id) {
+        List<BossPrice> bossPriceEntity = bossPriceRepository.findByMemberId(id);
+
+        List<BossPriceMenuResponse> responses = new ArrayList<>();
+
+        for(BossPrice bossPrice : bossPriceEntity){
+            responses.add(new BossPriceMenuResponse(bossPrice.getBossPriceNo(), bossPrice.getMenuName(), bossPrice.getMenuPrice(), bossPrice.getMenuInfo()));
+        }
+
+        return responses;
+    }
+
+    @Override
+    public void modifyMenu(BossPrice bossPrice) {
+        BossPrice bossPriceEntity = bossPriceRepository.findBossByBossId(bossPrice.getBossPriceNo());
+        bossPrice.setBoss(bossPriceEntity.getBoss());
+
+        bossPriceRepository.save(bossPrice);
+    }
+
+    @Override
+    public void deleteMenu(Long menuNo) {
+        bossPriceRepository.deleteById(menuNo);
     }
 }

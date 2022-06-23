@@ -10,4 +10,7 @@ public interface BossRepository extends JpaRepository<Boss, Long> {
 
     @Query("select b from Boss b where b.member.id = :id")
     Boss findByMemberId(String id);
+
+    @Query("select b from Boss b where b.bossAuthNo = :bossNo")
+    Boss findByBossNo(Long bossNo);
 }

@@ -1,23 +1,21 @@
 <template>
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
-      <div style=" width: 100%; position: relative; z-index: 3" @click="backProfileImgDialog = true">
-        <v-img v-if="backProfileImgs === null" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"></v-img>
+      <div style=" width: 100%; position: relative;">
+        <v-img v-if="backProfileImgs === null" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
         <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
           <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
             <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
           </swiper-slide>
 
           <div class="swiper-pagination" slot="pagination"></div>
-<!--          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>-->
         </swiper>
       </div>
 
       <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div style="top: 25px; position: absolute; left: 88%">
+      <div style="top: 25px; position: absolute; left: 88%; z-index: 1">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
     </div>
@@ -79,10 +77,12 @@
           </div>
 
           <!--    정보가 있을 경우    -->
-        </div> <!-- 정보 부분 -->
+        </div>
 
         <div style="padding-bottom: 20px" class="home_style" v-else>
-          <span style="font-size: 30px; font-weight: bold;"> 정보 </span>
+          <div style="display: flex">
+            <span style="font-size: 30px; font-weight: bold; width: 30%"> 정보 </span> <span style="width: 70%; display: flex; justify-content: end;"><v-btn @click="modifyMarketInfo">수정</v-btn></span>
+          </div>
           <!--   정보가 없을 경우에     -->
           <div style="margin-top: 20px">
             <div style="height: auto; font-size: 23px;" class="pa-2">
@@ -104,7 +104,6 @@
             </div>
           </div>
 
-          <!--    정보가 없을 경우    -->
         </div> <!-- 정보 부분 -->
 
 
@@ -132,17 +131,32 @@
         <div style="padding-bottom: 20px" class="home_style">
           <span style="font-size: 30px; font-weight: bold;"> 가격 </span>
           <!--   정보가 없을 경우에     -->
-          <div style="margin-top: 20px">
+          <div style="margin-top: 20px" v-if="bossMenu === null">
             <div style="padding-top: 30px">
               <span style="font-size: 25px; opacity: 0.5;">상품이나 서비의 가격을 추가하고, 이웃의 눈길을 끌어보세요.</span>
             </div>
+          </div>
 
-            <div style="padding-top: 30px">
-              <v-btn style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="priceDialog = true">
-                가격 설정
-               </v-btn>
+          <div v-else>
+            <div v-for="(menu, index) in bossMenu" :key="index" style="padding-top: 20px">
+              <div style="display: flex">
+                <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>
+                <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>
+                <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>
+              </div>
+
+              <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">
+                {{menu.menuInfo}}
+              </div>
             </div>
           </div>
+
+          <div style="padding-top: 30px">
+            <v-btn style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="priceDialog = true">
+              가격 설정
+            </v-btn>
+          </div>
+
 
         </div> <!-- 가격 부분 -->
       </div>
@@ -187,10 +201,10 @@
           </v-card-actions>
         </v-row>
       </v-card>
-    </v-dialog>
+    </v-dialog> <!-- 이미지 프로필 변경 -->
 
-    <v-dialog v-model="backProfileImgDialog">
-      <v-card style="height: 700px">
+    <v-dialog v-model="backProfileImgDialog" width="1500">
+      <v-card style="height: 800px; border: 1px solid rgba(197,197,197,0.16)">
         <div class="main-container">
           <div class="room-deal-information-container">
             <div class="room-deal-information-title">사진 등록</div>
@@ -215,9 +229,6 @@
                   </div>
                   <div class="room-file-notice-item room-file-upload-button">
                     <div class="image-box">
-                      <!-- <div class="image-profile">
-  <img :src="profileImage" />
-  </div>-->
                       <label for="file">일반 사진 등록</label>
                       <input type="file" id="file" ref="files" @change="imageUpload" multiple />
                     </div>
@@ -237,30 +248,41 @@
                       <label for="file">추가 사진 등록</label>
                       <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
                     </div>
-                    <!-- <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div> -->
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div style="padding: 20px 20px 20px 20px">
+            <v-btn style="width: 100%; height: 50px; font-size: 30px" class="light-green lighten-3"  @click="saveBackProfile">저장</v-btn>
+          </div>
+
         </div>
-        <v-btn @click="saveBackProfile">저장</v-btn>
       </v-card>
-    </v-dialog>
+    </v-dialog> <!-- 뒷 배경 변경 -->
 
     <v-dialog v-model="priceDialog" width="800px">
-      <v-card width="800px" height="500px" class="pa-4">
-        <v-row>
-          <v-card-title>가격 목록</v-card-title>
+      <v-card width="800px" height=auto class="pa-4">
+        <v-row style="padding-bottom: 30px">
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="priceDialog = false"><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">가격 목록</v-card-title></v-col>
+          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"><v-btn @click="modifyPriceDialog = true">수정</v-btn></v-col>
         </v-row>
 
         <!--    리스트가 보이는 곳    -->
+        <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
+          <div style="font-size: 20px; font-weight: revert">{{menu.menuName}}</div>
+          <div style="font-size: 17px">{{menu.menuInfo}}</div>
+          <div style="font-size: 17px; font-weight: bolder">{{menu.menuPrice}}원</div>
+        </div>
 
-        <v-row>
-          <v-btn @click="addPriceDialog = true">가격 추가</v-btn>
-        </v-row>
+        <div style="padding-top: 20px; padding-bottom: 10px">
+          <v-btn width="100%" @click="addPriceDialog = true">가격 추가</v-btn>
+        </div>
       </v-card>
-    </v-dialog>
+    </v-dialog> <!-- 가격 추가 1 -->
 
     <v-dialog v-model="addPriceDialog"  width="800px">
       <v-card width="800px" class="pa-4">
@@ -273,7 +295,7 @@
           <div class="priceTitle"> 항목 </div>
 
           <div>
-            <v-text-field solo label="항목명을 입력하세요. (예: 아메리카노)"></v-text-field>
+            <v-text-field v-model="menuName" solo label="항목명을 입력하세요. (예: 아메리카노)"></v-text-field>
           </div>
 
           <div class="priceTitle">
@@ -281,7 +303,7 @@
           </div>
 
           <div>
-            <v-text-field solo label="가격을 입력하세요"></v-text-field>
+            <v-text-field v-model="menuPrice" solo label="가격을 입력하세요"></v-text-field>
           </div>
 
           <div class="priceTitle">
@@ -289,16 +311,73 @@
           </div>
 
           <div>
-            <v-textarea label="가격에 대한 설명이 필요하다면 적어주세요." solo></v-textarea>
+            <v-textarea v-model="menuInfo" label="가격에 대한 설명이 필요하다면 적어주세요." solo></v-textarea>
           </div>
 
           <div style="display: flex; justify-content: end">
             <v-btn style="margin-right: 8px" @click="addPriceDialog = false">close</v-btn>
-            <v-btn class="light-green lighten-3">save</v-btn>
+            <v-btn class="light-green lighten-3" @click="savePrice">save</v-btn>
           </div>
         </div>
       </v-card>
-    </v-dialog>
+    </v-dialog>  <!-- 가격 추가 2 -->
+
+    <v-dialog v-model="modifyPriceDialog" width="800px">
+      <v-card width="800px" height=auto class="pa-4">
+        <v-row style="padding-bottom: 30px" v-if="modifyCheck">
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="modifyPriceDialog = false"><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">가격 목록</v-card-title></v-col>
+          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"><v-btn @click="modifyPriceDialog = false">완료</v-btn></v-col>
+        </v-row>
+
+        <div v-if="modifyCheck">
+        <!--    리스트가 보이는 곳    -->
+          <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
+            <div style="font-size: 20px; font-weight: revert; display: flex">
+              <div style="width: 95%" @click="modifyPrice(menu)">{{menu.menuName}}</div>
+              <div style="width: 5%; justify-content: end"><v-btn icon @click="deletePrice(menu.menuNo)"><v-icon>mdi-close</v-icon></v-btn></div>
+            </div>
+            <div style="font-size: 17px" @click="modifyPrice(menu)">{{menu.menuInfo}}</div>
+            <div style="font-size: 17px; font-weight: bolder" @click="modifyPrice(menu)">{{menu.menuPrice}}원</div>
+          </div>
+          <div style="padding-top: 20px; padding-bottom: 10px">
+            <v-btn width="100%" @click="addPriceDialog = true">가격 추가</v-btn>
+          </div>
+        </div>
+
+        <div v-else>
+          <div style="padding: 10px 10px 10px 10px">
+            <div class="priceTitle"> 항목 </div>
+
+            <div>
+              <v-text-field v-model="modifyMenuName" solo label="항목명을 입력하세요. (예: 아메리카노)"></v-text-field>
+            </div>
+
+            <div class="priceTitle">
+              가격
+            </div>
+
+            <div>
+              <v-text-field v-model="modifyMenuPrice" solo label="가격을 입력하세요"></v-text-field>
+            </div>
+
+            <div class="priceTitle">
+              추가 설명 (선택)
+            </div>
+
+            <div>
+              <v-textarea v-model="modifyMenuInfo" label="가격에 대한 설명이 필요하다면 적어주세요." solo></v-textarea>
+            </div>
+
+            <div style="display: flex; justify-content: end">
+              <v-btn style="margin-right: 8px" @click="modifyCheck = true">close</v-btn>
+              <v-btn class="light-green lighten-3" @click="modifySave">save</v-btn>
+            </div>
+          </div>
+
+        </div>
+      </v-card>
+    </v-dialog> <!-- 가격 수정 -->
     </div>
 
 </template>
@@ -332,6 +411,7 @@ export default {
       changeImgDialog: false,
       backProfileImgDialog: false,
       addPriceDialog: false,
+      modifyPriceDialog: false,
       priceDialog: false,
       itemImageInfo: {
         uploadImages: ''
@@ -349,22 +429,27 @@ export default {
         pagination: {
           el: '.swiper-pagination',
           clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
         }
-      }
+      },
+      menuName: '',
+      menuPrice: '',
+      menuInfo: '',
+      modifyCheck: true,
+      modifyMenuNo: '',
+      modifyMenuName: '',
+      modifyMenuPrice: '',
+      modifyMenuInfo: '',
     }
   },
   methods: {
     ...mapActions(['fetchBossBackProfile']),
+    ...mapActions(['fetchBossMenuList']),
     backPage(){
       this.$router.push({name: 'MyPageProfile'})
     },
     modify(){
-      //alert('사진을 변경하겠다!')
-      this.backProfileImg = true
+      alert('사진을 변경하겠다!')
+      this.backProfileImgDialog = true
     },
     home(){
       this.isCheck = true;
@@ -374,6 +459,9 @@ export default {
     },
     infoDialog(){
       this.$router.push({name: 'BossMarketInfo'})
+    },
+    modifyMarketInfo(){
+      this.$router.push({name: 'BossMarketInfoModify', params: {bossNo: this.boss.bossAuthNo.toString()}})
     },
     changeImg(){
       alert('changeImg')
@@ -436,11 +524,6 @@ export default {
           }
         ];
         num = i;
-        //이미지 업로드용 프리뷰
-        // this.filesPreview = [
-        //   ...this.filesPreview,
-        //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
-        // ];
       }
       this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
       console.log(this.files);
@@ -487,6 +570,36 @@ export default {
       formData.append('id', this.id)
       formData.append('name', this.name)
       this.$emit('saveBackProfile', formData)
+    },
+    savePrice(){
+      const {menuName, menuPrice, menuInfo} = this
+      let bossNo = this.boss.bossAuthNo;
+      this.$emit('savePrice', {menuName, menuPrice, menuInfo, bossNo})
+      this.addPriceDialog = false;
+      this.priceDialog = false;
+    },
+    modifyPrice(menu){
+      this.modifyCheck = false;
+      this.modifyMenuNo = menu.menuNo;
+      this.modifyMenuPrice = menu.menuPrice;
+      this.modifyMenuName = menu.menuName;
+      this.modifyMenuInfo = menu.menuInfo;
+    },
+    modifySave(){
+      let menuName = this.modifyMenuName;
+      let menuPrice = this.modifyMenuPrice;
+      let menuInfo = this.modifyMenuInfo;
+      let bossPriceNo = this.modifyMenuNo;
+      alert(bossPriceNo)
+
+      this.$emit('modifySave', {menuName, menuPrice, menuInfo, bossPriceNo})
+    },
+    deletePrice(menuNo){
+      // 지우기
+      //alert(menuNo)
+
+      this.$emit('deletePrice', {menuNo})
+      this.modifyCheck = true
     }
   },
   mounted() {
@@ -506,10 +619,12 @@ export default {
 
   },
   computed: {
-    ...mapState(['backProfileImgs'])
+    ...mapState(['backProfileImgs']),
+    ...mapState(['bossMenu'])
   },
   created() {
     this.fetchBossBackProfile(this.id)
+    this.fetchBossMenuList(this.id)
   }
 }
 </script>

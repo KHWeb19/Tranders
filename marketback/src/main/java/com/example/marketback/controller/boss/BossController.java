@@ -2,8 +2,10 @@ package com.example.marketback.controller.boss;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossImage;
+import com.example.marketback.entity.boss.BossPrice;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.response.BossBackProfileImg;
+import com.example.marketback.response.BossPriceMenuResponse;
 import com.example.marketback.service.member.BossService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +138,40 @@ public class BossController {
         log.info("getBackProfile"+ map.get("id"));
 
         return bossService.getBackProfile(map.get("id"));
+    }
+
+    @PostMapping("/addPrice/{bossNo}")
+    public void addPrice(@PathVariable Long bossNo, @RequestBody BossPrice bossPrice){
+        log.info("addPrice" + bossNo);
+
+        bossService.addPrice(bossPrice, bossNo);
+    }
+
+    @PostMapping("/getMenu/{id}")
+    public List<BossPriceMenuResponse> getMenu(@PathVariable String id){
+        log.info("get Menu");
+
+        return bossService.getMenu(id);
+    }
+
+    @PostMapping("/modifyMenu")
+    public void modifyMenu(@RequestBody BossPrice bossPrice){
+        log.info("modifyMenu"+ bossPrice.getBossPriceNo());
+
+        bossService.modifyMenu(bossPrice);
+    }
+
+    @DeleteMapping("/deleteMenu/{menuNo}")
+    public void deleteMenu(@PathVariable Long menuNo){
+        log.info("deleteMenu" + menuNo);
+        bossService.deleteMenu(menuNo);
+    }
+
+    @PostMapping("/modifyMarketInfo")
+    public void modifyMarketInfo (@RequestBody BossMarketInfoRequest bossMarketInfoRequest){
+        log.info("modifyMarketInfo" + bossMarketInfoRequest.getId());
+
+        bossService.saveMarketInfo(bossMarketInfoRequest);
     }
 
 }

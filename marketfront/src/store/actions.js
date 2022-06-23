@@ -9,7 +9,7 @@ import {
     FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
-    FETCH_MY_REGION, FETCH_BOSS_BACK_PROFILE
+    FETCH_MY_REGION, FETCH_BOSS_BACK_PROFILE, FETCH_BOSS_MENU_LIST, FETCH_BOSS_MARKET_INFO
 } from './mutation-types'
 
 import axios from 'axios'
@@ -63,7 +63,13 @@ export default {
             })
     },
     fetchMemberProfile ({commit}, id) {
-        return axios.get(`http://localhost:7777/member/profile/${id}`, config)
+        return axios.get(`http://localhost:7777/member/profile/${id}`, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then((res) => {
                 commit(FETCH_MEMBER_PROFILE, res.data)
             })
@@ -103,5 +109,17 @@ export default {
             .then((res) => [
                 commit(FETCH_BOSS_BACK_PROFILE, res.data)
             ])
+    },
+    fetchBossMenuList({commit}, id){
+        return axios.post(`http://localhost:7777/boss/getMenu/${id}`, {}, config)
+            .then((res) => {
+                commit(FETCH_BOSS_MENU_LIST, res.data)
+            })
+    },
+    fetchMarketInfo({commit}, bossNo){
+        return axios.post(`http://localhost:7777/boss/getMarketInfo/${bossNo}`, {}, config)
+            .then((res) => {
+                commit(FETCH_BOSS_MARKET_INFO, res.data)
+            })
     }
 }
