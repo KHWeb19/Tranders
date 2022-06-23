@@ -265,7 +265,7 @@
           <div id='submit'>
             <div id='submit_form'>
               <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
-              <div style="display: flex; justify-content: flex-end; margin: 8px 10px"><v-btn type="submit">전송</v-btn></div>
+              <div style="display: flex; justify-content: flex-end; margin: 8px 10px"><v-btn>전송</v-btn></div>
             </div>
           </div>
         </div>
@@ -336,15 +336,19 @@ export default {
                           params: {roomNo: roomNo.toString()}})
     },
     onSubmit() {
-      // const { roomNo } = this.chatroom
-      const { message, now } = this
-      // console.log({ roomNo, message, now })
-      // this.$emit('submit', { roomNo, message })
-      this.newMessage.push({message, now})
-      console.log(this.newMessage)
-      this.lastMessage = message
-      this.message = ''
-      // this.getNewData();
+      // if (this.message) {
+        // const { roomNo } = this.chatroom
+        const { message, now } = this
+        // console.log({ roomNo, message, now })
+        // this.$emit('submit', { roomNo, message })
+        this.newMessage.push({message, now})
+        console.log(this.newMessage)
+        this.lastMessage = message
+        this.message = ''
+        // this.getNewData()
+      // } 
+
+
     
     },
     onAppoint() {

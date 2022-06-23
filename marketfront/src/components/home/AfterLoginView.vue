@@ -9,82 +9,71 @@
         </span>
       </div>
 
-      <div id="searchBar">
-        <!-- <input type="text" placeholder="동네 이름, 상품 검색" style=" width: 88%">
-        <v-btn icon style="width: 12%"> -->
-
-       <input type="text" placeholder="물품이나 동네를 검색해보세요">
-        <!-- <v-btn icon style="width: 12%">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn> -->
-      </div>
-
-
-      <div id="itemList" style="margin-left: auto;">
-        <!-- <v-btn text class="black--text">
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}"> -->
-
-        <div style="margin-left: auto;">
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            <v-btn text @click="test">
-              중고거래
-            </v-btn>
-          </router-link>
-
-          <router-link style="text-decoration: none;" :to="{name: 'CommunityBoardListPage'}">
-            <v-btn text>
-              동네생활
-            </v-btn>
-          </router-link>
-
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            <v-btn text>
-              내 근처
-            </v-btn>
-          </router-link>
-
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            <v-btn text>
-              채팅
-            </v-btn>
-          </router-link>
-
-          <v-btn text>
-            <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-              나의 당근
-            </router-link>
+      <div>
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text @click="test">
+            중고거래
           </v-btn>
+        </router-link>
+
+        <router-link style="text-decoration: none;" :to="{name: 'CommunityBoardListPage'}">
+          <v-btn text>
+            동네생활
+          </v-btn>
+        </router-link>
+
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
+            내 근처
+          </v-btn>
+        </router-link>
+
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
+            채팅
+          </v-btn>
+        </router-link>
+      </div>
+        
+      <div style="display: flex; margin-left: auto;">
+        <div id="searchBar">
+          <!-- <input type="text" placeholder="동네 이름, 상품 검색" style=" width: 88%">
+          <v-btn icon style="width: 12%"> -->
+
+        <input type="text" placeholder="물품이나 동네를 검색해보세요">
+          <!-- <v-btn icon style="width: 12%">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn> -->
+        </div>
+
+        <div>
+          <v-menu offset-y>
+            <template v-slot:activator="{on}">
+              <v-btn fab  v-if="profileImg === null" v-on="on">
+                <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+              </v-btn>
+
+              <v-btn fab v-else v-on="on">
+                <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item link @click="logout">
+                <v-list-item-title>
+                  로그아웃
+                </v-list-item-title>
+              </v-list-item>
+
+              <v-list-item link @click="myPage">
+                <v-list-item-title>
+                  My Page
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
       </div>
-
-      <div>
-        <v-menu offset-y style="float: right">
-          <template v-slot:activator="{on}">
-            <v-btn fab  v-if="profileImg === null" v-on="on">
-              <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-            </v-btn>
-
-            <v-btn fab v-else v-on="on">
-              <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
-            </v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item link @click="logout">
-              <v-list-item-title>
-                로그아웃
-              </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item link @click="myPage">
-              <v-list-item-title>
-                My Page
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-
 
     </div>
   </header>

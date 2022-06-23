@@ -5,31 +5,40 @@
         <span id="title"> 오이마켓 </span>
       </div>
 
-      <div id="searchBar" style="float: left; width: 45%; height: 50px">
-        <input
-          type="text"
-          placeholder="물품이나 동네를 검색해보세요"
-        />
-        <!-- <v-btn icon style="width: 12%">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn> -->
+      <div>
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text @click="test">
+            중고거래
+          </v-btn>
+        </router-link>
       </div>
 
-      <div style="width: 20%"></div>
+      <div style="display: flex; margin-left: auto;">
+        <div id="searchBar">
+          <input
+            type="text"
+            placeholder="물품이나 동네를 검색해보세요"
+          />
+          <!-- <v-btn icon style="width: 12%">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn> -->
+        </div>
 
-      <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-        <v-btn style="color: black" icon @click="loginBtn">
-          <span class="btn-text">로그인</span>
-        </v-btn>
-      </div>
+        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
+          <v-btn style="color: black" icon @click="loginBtn">
+            <span class="btn-text">로그인</span>
+          </v-btn>
+        </div>
 
-      <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-        <v-btn icon @click="register">
-          <span class="btn-text">회원가입</span>
-        </v-btn>
+        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
+          <v-btn icon @click="register">
+            <span class="btn-text">회원가입</span>
+          </v-btn>
+        </div>
       </div>
     </div>
   </header>
+
 </template>
 
 <script>
