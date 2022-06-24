@@ -80,7 +80,7 @@
 
         <p id="counts">관심 8 ∙ 채팅 11 ∙ 조회 111</p>
 
-        <v-btn @click="onChat">채팅하기</v-btn>
+        <v-btn v-if="login.memberNo!=productBoard.member.memberNo" @click="onChat">채팅하기</v-btn>
       </section>
     </article>
   </div>
@@ -132,7 +132,7 @@ export default {
         //     boardNo: '테스트게시물1',
         //     }
         // });
-        this.$emit('onChat', {member1No: this.login.memberNo, productNo: this.productBoard.productNo})
+        this.$emit('onChat', {member1No: this.login.memberNo, member2No: this.productBoard.member.memberNo, productNo: this.productBoard.productNo})
     }
   }
 };

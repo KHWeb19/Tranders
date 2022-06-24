@@ -28,11 +28,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     private ProductRepository productRepository;
 
     @Override
-    public void register(ChatRoom chatRoom, Long member1No, Long productNo) {
+    public void register(ChatRoom chatRoom, Long member1No, Long member2No, Long productNo) {
         //이미 있으면 생성 no
-        Optional<Member> maybeMember = memberRepository.findById(Long.valueOf(member1No));
+        Optional<Member> maybeMember1 = memberRepository.findById(Long.valueOf(member1No));
+        Optional<Member> maybeMember2 = memberRepository.findById(Long.valueOf(member2No));
         Optional<ProductBoard> maybeProduct = productRepository.findById(Long.valueOf(productNo));
-        chatRoom.setMember1(maybeMember.get());
+        chatRoom.setMember1(maybeMember1.get());
+        chatRoom.setMember2(maybeMember2.get());
         chatRoom.setProductBoard(maybeProduct.get());
         chatRoomRepository.save(chatRoom);
     }
@@ -70,6 +72,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 roomNo,
                 maybeChatRoom.get().getMember1(),
                 maybeChatRoom.get().getMember2(),
+                maybeChatRoom.get().getProductBoard(),
                 chatRoomRequest.getAppointDate(),
                 chatRoomRequest.getAppointTime()
         );

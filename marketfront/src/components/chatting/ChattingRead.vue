@@ -29,30 +29,28 @@
                     </div>
                 </div>
                 <div>
-                  <div style="display: flex;
-                  align-items: center;
-                  height: 20px;
-                  
-                  ">
-                  <span style="font-weight: bold; font-size: 13px;">{{chatroom.productBoard.member.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span></div>
-                    <div style="display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 20px;
-    font-size: 13px;
-    color: var(--seed-scale-color-gray-700);">{{lastMessage}}</div>
-                  </div>
-                </router-link>
-                <!-- <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
-                  <div>
-                    <div style="border-radius: 50%; overflow: hidden;">
-                        <v-img width="40" height="40" src="@/assets/profile.jpg"/>
+                    <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
                     </div>
-                  </div>
-                  
-                  <br/>
-                  roomNo: {{chatroom.roomNo}}
-                </v-btn> -->
+                    <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                    </div>
+                        <div v-if="lastMessage" style="display: flex;
+                        -webkit-box-align: center;
+                        align-items: center;
+                        height: 20px;
+                        font-size: 13px;
+                        color: var(--seed-scale-color-gray-700);">{{lastMessage}}
+                        </div>
+                        <div v-else style="display: flex;
+                        -webkit-box-align: center;
+                        align-items: center;
+                        height: 20px;
+                        font-size: 13px;
+                        color: var(--seed-scale-color-gray-700);">{{new_data.slice(-1)[0].content.message}}
+                        </div>
+                    </div>
+                </router-link>
             </div>
           </div>
         </div>
@@ -65,7 +63,8 @@
                       <v-img src="@/assets/profile.jpg"/>
                   </div>
               </div>
-              {{chatroom.productBoard.member.name}} {{chatroom.productBoard.member.temperature}}°C
+              <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
+              <span v-if="login.memberNo==chatroom.member1.memberNo">{{chatroom.member2.name}} {{chatroom.member2.temperature}}°C</span>
 
             <div id="right_button">
             <v-layout>
@@ -162,7 +161,7 @@
                   </template>
               </v-dialog>
           </v-layout>
-          <v-layout>
+          <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo">
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
                       <v-btn style="margin-left: auto;" v-on="on">송금 하기</v-btn>
@@ -173,11 +172,11 @@
                                         Pay
                                     </v-card-title>
                                     <v-card-text>
-                                      <div id="pay_box">결제금액: {{price}} 원</div>
+                                      <div id="pay_box">결제금액: {{chatroom.productBoard.price}} 원</div>
                                     </v-card-text>
                                     <v-card-text >
                                       <div id="pay_box" >
-                                        <div>페이머니: <span :style="price>money ? 'color:red' : ''">{{money}} </span>원</div>
+                                        <div>페이머니: <span :style="chatroom.productBoard.price>money ? 'color:red' : ''">{{money}} </span>원</div>
                                         <div style="display: inline-flex;
   margin-left: auto;"><v-btn style="
                                           
@@ -252,12 +251,19 @@
             </div> -->
             <!-- <div v-else> -->
             <div>
-              <div style="display: flex; justify-content: flex-end;"  v-for="msg in new_data" :key="msg.messageNo">
-                <p id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</p>
+              <div v-for="msg in new_data" :key="msg.messageNo">
+                <div style="display: flex; justify-content: flex-end;" v-if="login.memberNo==msg.content.memberNo">
+                  <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
+                </div>
+                <div style="display: flex;" v-else>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
+                  <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
+                </div>
               </div>
-              <div style="display: flex; justify-content: flex-end;"  v-for="msg in newMessage" :key="msg.messageNo">
+              <div style="display: flex; justify-content: flex-end;" v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message_date'>{{msg.now}}</div>
-                <div id='message_box'>{{msg.message}}</div>
+                <div id='message_greenBox'>{{msg.message}}</div>
               </div>
             </div>
           </div> 
@@ -275,7 +281,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import AfterLoginView from '../home/AfterLoginView.vue';
 import Vue from 'vue'
 import cookies from "vue-cookies";
@@ -296,11 +302,11 @@ export default {
   data() {
     return {
       login: {
+        memberNo: cookies.get("memberNo"),
         id: cookies.get('id'),
         name: cookies.get('name'),
         access_token: cookies.get('access_token'),
       },
-      price: 5000,
       money: 0,
       
       message: '',
@@ -308,9 +314,6 @@ export default {
       now: ('0' + (new Date()).getHours()).slice(-2) +':'+('0' + (new Date()).getMinutes()).slice(-2),
       new_data: [],
       newMessage: [],
-      memberNo: 1,
-      memberName: '지은',
-      boardName: '물품이름',
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu: false,
       time: '00:00',
@@ -319,37 +322,33 @@ export default {
     }
   },
   created() {
-      // this.getNewData();
+      this.getNewData();
   },
   methods: {
-    // getNewData() {
-    //             axios.get('http://127.0.0.1:5000/kafka-data')
-    //               .then((res) => {
-    //                 console.log(res.data)
-    //                   this.new_data = res.data;
-    //               }).catch((error) => {
-    //                   console.error(error);
-    //               });
-    //         },
+    getNewData() {
+                axios.get('http://127.0.0.1:5000/kafka-data')
+                  .then((res) => {
+                    console.log(res.data)
+                      this.new_data = res.data;
+                  }).catch((error) => {
+                      console.error(error);
+                  });
+            },
     goChatroom(roomNo) {
       this.$router.push({name: 'ChattingReadView',
                           params: {roomNo: roomNo.toString()}})
     },
     onSubmit() {
-      // if (this.message) {
-        // const { roomNo } = this.chatroom
+        const { roomNo } = this.chatroom
+        const { memberNo } = this.login
         const { message, now } = this
         // console.log({ roomNo, message, now })
-        // this.$emit('submit', { roomNo, message })
+        this.$emit('onSubmit', { roomNo, memberNo, message, now })
         this.newMessage.push({message, now})
-        console.log(this.newMessage)
+        // console.log(this.newMessage)
         this.lastMessage = message
         this.message = ''
         // this.getNewData()
-      // } 
-
-
-    
     },
     onAppoint() {
       const { date, time } = this
@@ -366,12 +365,6 @@ export default {
       this.money += this.price
     }
   },
-
-  // beforeUpdate() {
-  //   console.log('beforeUpdate');
-  //   this.getNewData();
-  // }
-
 }
 </script>
 
@@ -552,10 +545,10 @@ font-weight: bold;
     /* -webkit-box-pack: justify; */
     /* justify-content: space-between; */
 }
-#message_box{
+#message_greenBox{
 	height: 40px;
   color: white;
-  background-color: #ff7E36;
+  background-color: #086e5b;
   border-radius: 20px 2px 20px 20px;
   display: inline-flex;
   margin: 0px;
@@ -565,6 +558,20 @@ font-weight: bold;
   font-size: 14px;
   line-height: 150%;
   letter-spacing: -0.02em;
+}
+#message_box{
+display: inline-flex;
+    margin: 0px;
+    padding: 10px 14px;
+    max-width: 484px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    border-radius: 2px 20px 20px;
+    background-color: #eaebee;;
+    /* color: #212124; */
 }
 #message_date{
   color: #868b94;

@@ -56,9 +56,9 @@ export default {
         });
     },
     onChat(payload) {
-      const {member1No, productNo} = payload
-      console.log(member1No, productNo)
-      axios.post(`http://localhost:7777/chatting/register/${member1No}/${productNo}`, {member1No, productNo})
+      const {member1No, member2No, productNo} = payload
+      console.log(member1No, member2No, productNo)
+      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
           .then(() => {
               alert('채팅방 등록 성공!')
           })

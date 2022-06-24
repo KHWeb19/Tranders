@@ -27,11 +27,11 @@ public class ChatRoom {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    private ProductBoard productBoard;
+    private Member member2;
 
-    //member와 조인
-    @Column
-    private Long member2;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private ProductBoard productBoard;
 
     @Column(length = 32)
     private String appointDate;
@@ -45,10 +45,11 @@ public class ChatRoom {
 //    @UpdateTimestamp
 //    private Date updDate;
 //
-    public ChatRoom(Long roomNo, Member member1, Long member2, String appointDate, String appointTime){
+    public ChatRoom(Long roomNo, Member member1, Member member2, ProductBoard productBoard, String appointDate, String appointTime){
         this.roomNo = roomNo;
         this.member1 = member1;
         this.member2 = member2;
+        this.productBoard = productBoard;
         this.appointDate = appointDate;
         this.appointTime = appointTime;
     }
