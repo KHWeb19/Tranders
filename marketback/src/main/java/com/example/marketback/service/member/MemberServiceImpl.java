@@ -1,8 +1,11 @@
 package com.example.marketback.service.member;
 
+import com.example.marketback.entity.member.City;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.repository.member.CityRepository;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.CityVillageInfoResponse;
 import com.example.marketback.response.MemberRegionResponse;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -26,6 +29,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
 
     @Override
     public void register(Member member) {
@@ -124,6 +130,40 @@ public class MemberServiceImpl implements MemberService {
         memberEntity.setRegisterStatus(Boolean.TRUE);
 
         memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public CityVillageInfoResponse getVillageInfo(String id) {
+        Member memberEntity = memberRepository.findByMemberId(id);
+        City cityEntity = cityRepository.findByRegion(memberEntity.getRegion());
+        int searchNum;
+
+        if(memberEntity.getSearchRegion().charAt(memberEntity.getSearchRegion().length() -1) == '동'){
+            searchNum = 2;
+        }else if(memberEntity.getSearchRegion().charAt(memberEntity.getSearchRegion().length() -1) == '구'){
+            searchNum = 1;
+        }else {
+            searchNum = 0;
+        }
+
+        CityVillageInfoResponse response = new CityVillageInfoResponse(cityEntity.getCity(), cityEntity.getDistrict(), cityEntity.getVillageName(), searchNum);
+        return response;
+    }
+
+    @Override
+    public Integer saveVillageSetting(String id, String data) {
+        Member memberEntity = memberRepository.findByMemberId(id);
+
+        memberEntity.setSearchRegion(data);
+
+        System.out.println(data.charAt(data.length() -1));
+        if(data.charAt(data.length() -1) == '동'){
+            return 2;
+        }else if(data.charAt(data.length() -1) == '구'){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     /*@Override

@@ -6,8 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
+import com.example.marketback.entity.member.City;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.CityVillageInfoResponse;
 import com.example.marketback.response.MemberRegionResponse;
 import com.example.marketback.service.member.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -198,5 +200,19 @@ public class MemberController {
         log.info("snsRegister" + member.getId());
 
         memberService.snsRegister(member);
+    }
+
+    @PostMapping("/getMyVillage/{id}")
+    public CityVillageInfoResponse getVillageInfo(@PathVariable String id){
+        log.info("getVillageInfo");
+
+        return memberService.getVillageInfo(id);
+    }
+
+    @PostMapping("/saveVillage")
+    public Integer saveVillageSetting(@RequestBody Map<String, String> map){
+        log.info("saveVillage" + map.get("id")+", "+map.get("data"));
+
+        return memberService.saveVillageSetting(map.get("id"), map.get("data"));
     }
 }
