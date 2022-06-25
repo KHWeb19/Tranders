@@ -37,6 +37,7 @@ import OauthPage from "@/views/Util/OauthPage";
 import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 import BossMarketInfo from "@/views/boss/BossMarketInfo";
 import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
+import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 
 Vue.use(VueRouter)
 
@@ -174,6 +175,11 @@ const routes = [
     props: {
       default: true
     },
+  },
+  {
+    path: '/myVillageSetting',
+    name: 'MyVillageSetting',
+    component: MyVillageSetting,
   },
   {
     path: '/Tranders/CommunityList',

@@ -10,7 +10,11 @@ import {
     FETCH_MY_PAGE,
     FETCH_MY_REGION,
     FETCH_COMMUNITY_BOARD_LIST,
-    FETCH_COMMUNITY_BOARD, FETCH_BOSS_BACK_PROFILE, FETCH_BOSS_MENU_LIST, FETCH_BOSS_MARKET_INFO,
+    FETCH_COMMUNITY_BOARD,
+    FETCH_BOSS_BACK_PROFILE,
+    FETCH_BOSS_MENU_LIST,
+    FETCH_BOSS_MARKET_INFO,
+    FETCH_MY_VILLAGE_SETTING,
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -69,6 +73,9 @@ export default {
     },
     [FETCH_BOSS_MARKET_INFO] (state, marketInfo) {
         state.marketInfo = marketInfo;
+    },
+    [FETCH_MY_VILLAGE_SETTING] (state, villageInfo){
+        state.villageInfo = villageInfo;
     }
 }
 

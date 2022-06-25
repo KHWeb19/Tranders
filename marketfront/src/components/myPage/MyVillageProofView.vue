@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card width="100%">
-      <div class="map_box" style="padding: 5px 20px 5px 20px;">
+      <div class="map_box" style="padding: 15px 20px 5px 20px;">
         <v-row justify="center">
           <v-card-title style="font-size: 30px;">내 동네 인증</v-card-title>
         </v-row>
@@ -20,13 +20,13 @@
 
         <v-row justify="center" v-if="!isCheck">
           <v-card-text style="font-size: 25px;width: auto">
-            내가 설정한 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{options.region}}</span> 입니다.
+            내가 설정한 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{mapOption.region}}</span> 입니다.
           </v-card-text>
         </v-row>
 
         <v-row justify="center" v-if="isCheck">
           <v-card-text style="font-size: 25px;width: auto">
-            변경된 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{this.region}}</span> 입니다.
+            변경된 위치는 <span style="font-size: 30px; font-weight: bold;" class="light-green--text lighten-3">{{region}}</span> 입니다.
           </v-card-text>
         </v-row>
 
@@ -40,14 +40,16 @@
 
 <script>
 import axios from "axios";
+import {mapActions, mapState} from "vuex";
+import cookies from "vue-cookies";
 
 let kakao = window.kakao;
 
 export default {
   name: "MyVillageProofView",
-  props: ["options"],
   data() {
     return {
+      id: cookies.get("id"),
       lat: 0,
       lng: 0,
       region: '',
@@ -57,6 +59,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchMyRegion']),
     saveRegion(){
       const {lat, lng, region} = this;
       this.$emit('modifyLocation', {lat, lng, region});
@@ -102,24 +105,28 @@ export default {
       }
     },
   },
-  mounted() {
+  async created() {
+    await this.fetchMyRegion(this.id);
+
     let container = this.$refs.map;
 
     this.mapInstance = new kakao.maps.Map(container, {
-      center: new kakao.maps.LatLng(this.options.lat, this.options.lng),
+      center: new kakao.maps.LatLng(this.mapOption.lat, this.mapOption.lng),
       level: 10,
     });
 
     this.markInstance = new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(this.options.lat, this.options.lng),
+      position: new kakao.maps.LatLng(this.mapOption.lat, this.mapOption.lng),
       //clickable: true
     })
 
     this.markInstance.setMap(this.mapInstance);
+  },
+  mounted() {
 
   },
-  created() {
-
+  computed: {
+    ...mapState(['mapOption'])
   }
 }
 </script>
