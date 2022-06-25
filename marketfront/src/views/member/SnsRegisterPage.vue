@@ -1,13 +1,11 @@
 <template>
   <div>
-    <sns-register-view v-if="userInfo" :userInfo="userInfo" @register="register"></sns-register-view>
-    <p v-else> 로딩중 ... </p>
+    <sns-register-view @register="register"></sns-register-view>
   </div>
 </template>
 
 <script>
 import SnsRegisterView from "@/components/member/SnsRegisterView";
-import {mapActions, mapState} from "vuex";
 import cookies from "vue-cookies";
 import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
@@ -30,7 +28,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchMyPage']),
     register(payload){
       const {id, name, region, lat, lng} = payload
       console.log(name)
@@ -45,16 +42,7 @@ export default {
           })
     }
   },
-  computed: {
-    ...mapState(['userInfo'])
-  },
-  created() {
-    console.log(this.id)
-    this.fetchMyPage(this.id)
-        .catch(() => {
-          alert('에러')
-        })
-  }
+
 }
 </script>
 

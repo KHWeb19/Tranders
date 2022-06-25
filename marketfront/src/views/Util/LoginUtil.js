@@ -28,6 +28,7 @@ function ParsingInfo(token){
     cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
     cookies.set('name', name, SAVE_COOKIE_ACCESS);
     cookies.set('roles', roles, SAVE_COOKIE_ACCESS);
+    cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
     cookies.set('providerType', providerType, SAVE_COOKIE_ACCESS);
 }
 
@@ -38,7 +39,8 @@ function logout(){
     cookies.remove('roles');
     cookies.remove('access_token');
     cookies.remove('refresh_token');
-    cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
+    cookies.remove('providerType');
+    cookies.remove('registerStatus');
 }
 
 export {
