@@ -58,5 +58,16 @@ public class ChatRoomController {
         return chatRoomRequest;
     }
 
+    @PutMapping("/last/{roomNo}")
+    public ChatRoomRequest chatRoomLast (
+            @PathVariable("roomNo") Long roomNo,
+            @RequestBody ChatRoomRequest chatRoomRequest) {
+        log.info("chatRoomLast(): " + chatRoomRequest);
+
+        chatRoomService.last(chatRoomRequest, roomNo);
+
+        return chatRoomRequest;
+    }
+
 
 }

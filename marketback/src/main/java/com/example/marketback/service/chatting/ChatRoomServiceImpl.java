@@ -74,7 +74,23 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 maybeChatRoom.get().getMember2(),
                 maybeChatRoom.get().getProductBoard(),
                 chatRoomRequest.getAppointDate(),
-                chatRoomRequest.getAppointTime()
+                chatRoomRequest.getAppointTime(),
+                maybeChatRoom.get().getLastMessage()
+        );
+        chatRoomRepository.save(chatRoomEntity);
+    }
+
+    @Override
+    public void last(ChatRoomRequest chatRoomRequest, Long roomNo) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
+        ChatRoom chatRoomEntity = new ChatRoom(
+                roomNo,
+                maybeChatRoom.get().getMember1(),
+                maybeChatRoom.get().getMember2(),
+                maybeChatRoom.get().getProductBoard(),
+                maybeChatRoom.get().getAppointDate(),
+                maybeChatRoom.get().getAppointTime(),
+                chatRoomRequest.getLastMessage()
         );
         chatRoomRepository.save(chatRoomEntity);
     }

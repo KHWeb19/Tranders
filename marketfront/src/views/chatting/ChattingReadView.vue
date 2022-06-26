@@ -56,8 +56,10 @@ export default {
         ...mapActions(['fetchChatroomList']),
         onSubmit(payload) {
             console.log(payload)
-            const { roomNo, memberNo, message, now } = payload
-            axios.post('http://localhost:7777/kafka', { roomNo, memberNo, message, now })
+            const { roomNo, message } = payload
+            // const { roomNo, memberNo, message, now } = payload
+            // axios.post('http://localhost:7777/kafka', { roomNo, memberNo, message, now })
+            axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: message})
         },
         onAppoint(payload) {
             console.log(payload)

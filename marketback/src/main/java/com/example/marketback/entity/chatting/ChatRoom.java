@@ -38,19 +38,25 @@ public class ChatRoom {
 
     @Column(length = 32)
     private String appointTime;
-//
-//    @Column(length = 32)
-//    private String reminderTime;
+
+    @Column(length = 64)
+    private String lastMessage;
 
 //    @UpdateTimestamp
 //    private Date updDate;
 //
-    public ChatRoom(Long roomNo, Member member1, Member member2, ProductBoard productBoard, String appointDate, String appointTime){
+    public ChatRoom(Long roomNo, Member member1, Member member2, ProductBoard productBoard, String appointDate, String appointTime, String lastMessage){
         this.roomNo = roomNo;
         this.member1 = member1;
         this.member2 = member2;
         this.productBoard = productBoard;
         this.appointDate = appointDate;
         this.appointTime = appointTime;
+        this.lastMessage = lastMessage;
+    }
+
+    public ChatRoom(Long roomNo, String lastMessage){
+        this.roomNo = roomNo;
+        this.lastMessage = lastMessage;
     }
 }

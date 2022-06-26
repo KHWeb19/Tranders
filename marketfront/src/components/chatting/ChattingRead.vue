@@ -35,19 +35,20 @@
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
                       <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
                     </div>
-                        <div v-if="lastMessage" style="display: flex;
+                        <!-- <div v-if="lastMessage" style="display: flex;
                         -webkit-box-align: center;
                         align-items: center;
                         height: 20px;
                         font-size: 13px;
                         color: var(--seed-scale-color-gray-700);">{{lastMessage}}
-                        </div>
+                        </div> -->
                         <div v-else style="display: flex;
                         -webkit-box-align: center;
                         align-items: center;
                         height: 20px;
                         font-size: 13px;
-                        color: var(--seed-scale-color-gray-700);">{{new_data.slice(-1)[0].content.message}}
+                        color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
+                        <!-- {{new_data.slice(-1)[0].content.message}} -->
                         </div>
                     </div>
                 </router-link>
@@ -70,7 +71,7 @@
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn style="margin-left: auto;" v-on="on">약속 잡기</v-btn>
+                      <v-btn class="green lighten-2 white--text" style="margin-left: auto;" v-on="on">약속잡기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                       <v-card>
@@ -164,7 +165,7 @@
           <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo">
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn style="margin-left: auto;" v-on="on">송금 하기</v-btn>
+                      <v-btn class="green lighten-2 white--text" style="margin-left: auto;" v-on="on">송금하기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                                 <v-card>
@@ -208,7 +209,6 @@
                             </template>
               </v-dialog>
           </v-layout>
-          <!-- <v-btn>송금 하기</v-btn> -->
           </div>
           </div>
           <div id='product'>
@@ -270,8 +270,10 @@
 
           <div id='submit'>
             <div id='submit_form'>
-              <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>   
-              <div style="display: flex; justify-content: flex-end; margin: 8px 10px"><v-btn>전송</v-btn></div>
+              <textarea required @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
+              <div style="display: flex; justify-content: flex-end; margin: 8px 10px">
+                <v-btn type="submit" class="grey white--text">전송</v-btn>
+              </div>
             </div>
           </div>
         </div>
@@ -342,13 +344,12 @@ export default {
         const { roomNo } = this.chatroom
         const { memberNo } = this.login
         const { message, now } = this
-        // console.log({ roomNo, message, now })
-        this.$emit('onSubmit', { roomNo, memberNo, message, now })
-        this.newMessage.push({message, now})
-        // console.log(this.newMessage)
-        this.lastMessage = message
-        this.message = ''
-        // this.getNewData()
+        this.message=''
+        if(message!='\n' && message!=''){
+          this.$emit('onSubmit', { roomNo, memberNo, message, now })
+          this.newMessage.push({message, now})
+          this.message=''
+        }
     },
     onAppoint() {
       const { date, time } = this
