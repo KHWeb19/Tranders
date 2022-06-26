@@ -38,6 +38,7 @@ import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 import BossMarketInfo from "@/views/boss/BossMarketInfo";
 import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
 import MyVillageSetting from "@/views/myPage/MyVillageSetting";
+import nearPage from "@/views/near/NearPage";
 
 Vue.use(VueRouter)
 
@@ -239,6 +240,11 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {
+    path: '/near',
+    name: 'nearPage',
+    component: nearPage
   }
 ]
 

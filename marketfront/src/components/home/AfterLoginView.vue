@@ -37,7 +37,7 @@
             </v-btn>
           </router-link>
 
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <router-link style="text-decoration: none;" :to="{name: 'nearPage'}">
             <v-btn text>
               내 근처
             </v-btn>
@@ -109,12 +109,6 @@ export default {
   data(){
     return{
       id: "",
-      items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' },
-      ],
     }
   },
   methods: {
