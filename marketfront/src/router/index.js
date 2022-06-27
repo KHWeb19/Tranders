@@ -35,6 +35,9 @@ import BossPage from "@/views/boss/BossPage";
 import MyVillageProof from "@/views/myPage/MyVillageProof";
 import OauthPage from "@/views/Util/OauthPage";
 import SnsRegisterPage from "@/views/member/SnsRegisterPage";
+import BossMarketInfo from "@/views/boss/BossMarketInfo";
+import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
+import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 
 Vue.use(VueRouter)
 
@@ -174,6 +177,11 @@ const routes = [
     },
   },
   {
+    path: '/myVillageSetting',
+    name: 'MyVillageSetting',
+    component: MyVillageSetting,
+  },
+  {
     path: '/Tranders/CommunityList',
     name: 'CommunityBoardListPage',
     component: CommunityBoardListPage
@@ -217,6 +225,21 @@ const routes = [
     path: '/oauth2/*',
     component: OauthPage
   },
+  {
+    path: '/bossMarket/info',
+    name: 'BossMarketInfo',
+    component: BossMarketInfo
+  },
+  {
+    path: '/bossMarket/infoModify',
+    name: 'BossMarketInfoModify',
+    components: {
+      default: BossMarketInfoModify
+    },
+    props: {
+      default: true
+    }
+  }
 ]
 
 const router = new VueRouter({

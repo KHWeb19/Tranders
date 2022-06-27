@@ -7,7 +7,7 @@
 
       <v-row style="height: 70px; margin-top: 25px">
         <v-col>
-          <v-text-field solo style="width: 100%" :value="userInfo.id" placeholder="ID" readonly disabled> </v-text-field>
+          <v-text-field solo style="width: 100%" :value="id" placeholder="ID" readonly disabled> </v-text-field>
         </v-col>
       </v-row>
 
@@ -38,18 +38,13 @@
 
 <script>
 import axios from "axios";
+import cookies from "vue-cookies";
 
 export default {
   name: "SnsRegisterView",
-  props: {
-    userInfo: {
-      type: Object,
-      required: true
-    }
-  },
   data(){
     return {
-      id: '',
+      id: cookies.get("id"),
       name: '',
       region: '',
       lat: '',
@@ -101,10 +96,8 @@ export default {
       this.$emit('register', {id, name, region, lat, lng})
     },
   },
-  created() {
-    console.log(this.userInfo.id)
-    this.id = this.userInfo.id;
-    this.name = this.userInfo.name;
+  mounted() {
+    this.name = cookies.get('name');
   }
 }
 </script>

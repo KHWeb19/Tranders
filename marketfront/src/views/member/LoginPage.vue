@@ -8,6 +8,7 @@ import LoginView from "@/components/member/LoginView";
 import cookies from "vue-cookies";
 import axios from "axios";
 import {SAVE_COOKIE_ACCESS, SAVE_COOKIE_REFRESH} from "@/constant/login";
+import {ParsingInfo} from "@/views/Util/LoginUtil";
 
 export default {
   name: "LoginPage",
@@ -40,7 +41,7 @@ export default {
                 cookies.set('access_token', res.data.access_token, SAVE_COOKIE_ACCESS);
                 cookies.set('refresh_token', res.data.refresh_token, SAVE_COOKIE_REFRESH);
 
-                //ParsingInfo(res.data.access_token);
+                ParsingInfo(res.data.access_token);
                 this.$router.push({name: "HomePage"}) // 로그인 후 어디로?
               }
 

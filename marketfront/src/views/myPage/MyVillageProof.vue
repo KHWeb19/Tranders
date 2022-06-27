@@ -9,7 +9,7 @@
         </v-col>
 
         <v-col cols="8">
-          <my-village-proof-view :options="mapOption" @modifyLocation="modifyLocation"></my-village-proof-view>
+          <my-village-proof-view @modifyLocation="modifyLocation"></my-village-proof-view>
         </v-col>
       </v-row>
     </div>
@@ -21,7 +21,6 @@
 import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
 import MyVillageProofView from "@/components/myPage/MyVillageProofView";
-import {mapActions, mapState} from "vuex";
 import cookies from "vue-cookies";
 import axios from "axios";
 
@@ -46,7 +45,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchMyRegion']),
     modifyLocation(payload) {
       const {lat, lng, region} = payload;
       let id = this.id
@@ -59,12 +57,6 @@ export default {
   },
   created() {
 
-  },
-  computed: {
-    ...mapState(['mapOption'])
-  },
-  mounted() {
-    this.fetchMyRegion(this.id)
   }
 };
 </script>

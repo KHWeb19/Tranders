@@ -29,6 +29,21 @@ public class Boss {
 
     private String category;
 
+    @Lob
+    private String marketInfo;
+
+    private String phoneNumber;
+
+    private String marketHomePage;
+
+    private String startTime;
+
+    private String endTime;
+
+    private String lat;
+
+    private String lng;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_NO")
     private Member member;

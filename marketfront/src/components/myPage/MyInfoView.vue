@@ -156,7 +156,7 @@ export default {
   name: "MyInfoView",
   data() {
     return {
-      isCheck: false, // false로 꼭 변경해두기!
+      isCheck: true, // false로 꼭 변경해두기!
       changeIsCheck: true,
       id: cookies.get("id"),
       password: '',

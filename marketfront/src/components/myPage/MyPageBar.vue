@@ -12,7 +12,7 @@
 
         <v-col cols="6" style="padding-top: 35px">
           <span style="font-size: 30px;">
-            {{id}}
+            {{name}}
           </span>
         </v-col>
 
@@ -112,14 +112,6 @@ import cookies from "vue-cookies";
 import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 
-const config = {
-  headers: {
-    'Authorization': 'Bearer '+ cookies.get('access_token'),
-    'Accept' : 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
-
 export default {
   name: "MyProfileBar",
   props: {
@@ -131,6 +123,8 @@ export default {
   data(){
     return{
       id: cookies.get('id'),
+      name: cookies.get('name'),
+      access_token: cookies.get('access_token'),
       selectedItem: this.index,
       items: [
         { text: '내 정보 설정', icon: 'mdi-account-circle-outline' },
@@ -171,8 +165,13 @@ export default {
       alert('사장님 만들기!')
       let id = this.id;
 
-      console.log(id);
-      axios.post(API_BASE_URL+'/boss/checkMember', {id}, config)
+      axios.post(API_BASE_URL+'/boss/checkMember', {id}, {
+        headers: {
+          'Authorization': 'Bearer '+ this.access_token,
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
           .catch((res) => {
             alert(res + '에러')
           })
@@ -217,6 +216,10 @@ export default {
   mounted() {
     this.id = cookies.get('id');
     this.fetchMemberProfile(this.id)
+  },
+  created() {
+    this.access_token = cookies.get("access_token")
+    //alert(cookies.get("access_token"))
   }
 }
 </script>
