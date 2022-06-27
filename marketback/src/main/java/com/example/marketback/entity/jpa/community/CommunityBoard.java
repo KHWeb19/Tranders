@@ -1,7 +1,10 @@
 package com.example.marketback.entity.jpa.community;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.Formula;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -9,6 +12,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -28,6 +33,15 @@ public class CommunityBoard {
     @Column(length = 32, nullable = false)
     private String writer;
 
+    @Column(length = 32, nullable = false)
+    private String region;
+
+    @Column(length = 128)
+    private String placeName;
+
+    @Column(length = 128)
+    private String placeUrl;
+
     @Lob
     private String content;
 
@@ -39,11 +53,13 @@ public class CommunityBoard {
     @LastModifiedDate
     private String modifiedDate;
 
-    @Column
-    private Integer likesCnt = 0;
+    @Formula("(SELECT count(1) FROM community_board_like c WHERE c.community_board_board_no = board_no)")
+    private Integer likeCnt;
 
-    @Column
-    private Integer viewCnt = 0;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<CommunityBoardLike> likes = new HashSet<>();
 
     @Column
     private String fileName1;
@@ -88,9 +104,9 @@ public class CommunityBoard {
         this.modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
     }
 
-    public void increaseViewCnt() {
-        this.viewCnt++;
-    }
+//    public void increaseViewCnt() {
+//        this.viewCnt++;
+//    }
 
     public CommunityBoard(String fileName1, String fileName2){
         this.fileName1 = fileName1;

@@ -78,6 +78,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME_ACCESS ))
                 .withIssuer(request.getRequestURI())
                 .withClaim("name", member.getName())
+                .withClaim("region", member.getRegion())
                 .withClaim("roles", member.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 

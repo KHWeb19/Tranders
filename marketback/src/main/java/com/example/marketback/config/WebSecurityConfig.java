@@ -83,8 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/member/test1/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_BOSS')")
                 .antMatchers("/member/test2").access("hasRole('ROLE_MANAGER')")
-                .anyRequest().authenticated();
-                //.anyRequest().permitAll();
+//                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         http
                 .oauth2Login()

@@ -82,7 +82,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             return null;
         } else {
             CommunityBoard communityBoard = maybeReadBoard.get();
-            communityBoard.increaseViewCnt();
+//            communityBoard.increaseViewCnt();
             repository.save(communityBoard);
             return maybeReadBoard.get();
         }
@@ -134,6 +134,13 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     public void remove(Integer boardNo) throws Exception  {
         repository.deleteById(Long.valueOf(boardNo));
+    }
+
+    @Override
+    public List<CommunityBoard> searchList(String keyWord) {
+        List<CommunityBoard> findSearchList = repository.findByContentContaining(keyWord);
+
+        return findSearchList;
     }
 
 }
