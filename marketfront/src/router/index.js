@@ -10,7 +10,7 @@ import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPag
 import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
 import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
 import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
-import KakaoMap from '@/views/KakaoMap.vue'
+import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
 
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
@@ -146,11 +146,6 @@ const routes = [
     component: CommunityBoardRegisterPage
   },
   {
-    path: '/Tranders/CommunityRegister/PlaceSearch',
-    name: 'KakaoMap',
-    component: KakaoMap
-  },
-  {
     path: '/Tranders/CommunityRead/:boardNo',
     name: 'CommunityBoardReadPage',
     components: {
@@ -169,7 +164,17 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/Tranders/CommunityList/SearchList',
+    name: 'SearchListPage',
+    components: {
+      default: SearchListPage
+  },
+    props: {
+      default: true
+    }
+  },
 ]
 
 const router = new VueRouter({
