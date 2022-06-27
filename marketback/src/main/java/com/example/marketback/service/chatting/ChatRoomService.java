@@ -11,7 +11,7 @@ public interface ChatRoomService {
     public void register (ChatRoom chatRoom, Long member1No, Long member2No, Long productNo);
     public List<ChatRoom> list (Long memberNo);
     public ChatRoom read (Long roomNo);
-    public ChatRoom move (Long member1, Long member2);
+//    public ChatRoom move (Long member1, Long member2);
     public void modify (ChatRoomRequest chatRoomRequest, Long roomNo);
     public void last (ChatRoomRequest chatRoomRequest, Long roomNo);
 }

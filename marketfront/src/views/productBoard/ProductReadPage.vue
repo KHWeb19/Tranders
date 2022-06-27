@@ -60,12 +60,12 @@ export default {
       console.log(member1No, member2No, productNo)
       axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
           .then(() => {
-              alert('채팅방 등록 성공!')
+              this.$router.push({ name: "ChattingReadView", params: {roomNo: '1'.toString()}})
           })
           .catch(() => {
               alert('문제 발생!')
           })
-      // this.fetchChatroom(member1, member2)
+      
     }
   },
 };

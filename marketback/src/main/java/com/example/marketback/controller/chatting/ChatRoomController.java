@@ -40,12 +40,12 @@ public class ChatRoomController {
         return chatRoomService.read(roomNo);
     }
 
-    @GetMapping("/{member1}/{member2}")
-    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
-        log.info("chatRoomRead()");
-
-        return chatRoomService.move(member1, member2);
-    }
+//    @GetMapping("/{member1}/{member2}")
+//    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
+//        log.info("chatRoomRead()");
+//
+//        return chatRoomService.move(member1, member2);
+//    }
 
     @PutMapping("/{roomNo}")
     public ChatRoomRequest chatRoomModify (

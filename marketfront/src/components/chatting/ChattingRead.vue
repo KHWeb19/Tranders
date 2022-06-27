@@ -28,29 +28,39 @@
                         <v-img src="@/assets/profile.jpg"/>
                     </div>
                 </div>
-                <div>
+                <div style="display: flex; ">
+                  <div>
                     <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
                       <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
                     </div>
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
                       <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
                     </div>
-                        <!-- <div v-if="lastMessage" style="display: flex;
-                        -webkit-box-align: center;
-                        align-items: center;
-                        height: 20px;
-                        font-size: 13px;
-                        color: var(--seed-scale-color-gray-700);">{{lastMessage}}
-                        </div> -->
-                        <div v-else style="display: flex;
-                        -webkit-box-align: center;
-                        align-items: center;
-                        height: 20px;
-                        font-size: 13px;
-                        color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
-                        <!-- {{new_data.slice(-1)[0].content.message}} -->
-                        </div>
+                      <!-- <div v-if="lastMessage" style="display: flex;
+                      -webkit-box-align: center;
+                      align-items: center;
+                      height: 20px;
+                      font-size: 13px;
+                      color: var(--seed-scale-color-gray-700);">{{lastMessage}}
+                      </div> -->
+                      <div style="display: flex;
+                      -webkit-box-align: center;
+                      align-items: center;
+                      height: 20px;
+                      font-size: 13px;
+                      color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
+                      <!-- {{new_data.slice(-1)[0].content.message}} -->
+                      </div>
                     </div>
+                  </div>
+                  <div v-if="chatroom.productBoard.productImage" style="display: flex; margin-left: auto;">
+                      <v-img style="margin-right: 4px;
+                      border: 1px solid var(--profile-image-border);
+                      border-radius: 4px;
+                      width: 40px;
+                      height: 40px;
+                      object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
+                  </div>
                 </router-link>
             </div>
           </div>
@@ -71,7 +81,7 @@
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn class="green lighten-2 white--text" style="margin-left: auto;" v-on="on">약속잡기</v-btn>
+                      <v-btn class="grey white--text" style="margin-left: auto;" v-on="on">약속잡기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                       <v-card>
@@ -165,7 +175,7 @@
           <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo">
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn class="green lighten-2 white--text" style="margin-left: auto;" v-on="on">송금하기</v-btn>
+                      <v-btn class="grey white--text" style="margin-left: auto;" v-on="on">송금하기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                                 <v-card>
@@ -211,7 +221,7 @@
           </v-layout>
           </div>
           </div>
-          <div id='product'>
+          <div id='product' style="position:relative;">
             <div>
               <v-img style="margin-right: 12px;
               border: 1px solid var(--profile-image-border);
@@ -263,15 +273,33 @@
               </div>
               <div style="display: flex; justify-content: flex-end;" v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message_date'>{{msg.now}}</div>
-                <div id='message_greenBox'>{{msg.message}}</div>
+                <div v-if="msg.image" id='message_greenBox'> <v-img width="200px" height="200" :src="msg.message"/></div>
+                <div v-if="!msg.image" id='message_greenBox'>{{msg.message}}</div>
               </div>
             </div>
+            
           </div> 
-
+          <div v-if="priview" style="display: flex; position:absolute; bottom: 178px; background-color: rgba(128, 128, 128, 0.5); margin-left: 16px">
+            <v-img style="margin-left:305px;" width="200px" height="200" :src="priview"/>
+            <v-btn @click="deletePriview()" icon style="margin-right:237px;"><v-icon large color="white">mdi-alpha-x-circle-outline</v-icon></v-btn>
+          </div>
           <div id='submit'>
             <div id='submit_form'>
               <textarea required @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
-              <div style="display: flex; justify-content: flex-end; margin: 8px 10px">
+              <div style="display: flex; 
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin: 8px 10px;">
+                <div style="display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                column-gap: 12px;">
+                      <label for="files">
+                          <v-icon large>mdi-camera</v-icon>
+                      </label>
+                      <input type="file" id="files" ref="files" v-on:change="handleFileUpload()"/>
+                  </div>
+                  
                 <v-btn type="submit" class="grey white--text">전송</v-btn>
               </div>
             </div>
@@ -312,7 +340,7 @@ export default {
       money: 0,
       
       message: '',
-      lastMessage: '',
+      // lastMessage: [this.chatroom.roomNo, ''],
       now: ('0' + (new Date()).getHours()).slice(-2) +':'+('0' + (new Date()).getMinutes()).slice(-2),
       new_data: [],
       newMessage: [],
@@ -320,7 +348,7 @@ export default {
       menu: false,
       time: '00:00',
       menu2: false,
-
+      priview: '',
     }
   },
   created() {
@@ -340,11 +368,23 @@ export default {
       this.$router.push({name: 'ChattingReadView',
                           params: {roomNo: roomNo.toString()}})
     },
+    handleFileUpload () {
+      this.files = this.$refs.files.files
+      this.priview = URL.createObjectURL(this.files[0])
+    },
+    deletePriview() {
+      this.priview = ''
+    },
     onSubmit() {
         const { roomNo } = this.chatroom
         const { memberNo } = this.login
         const { message, now } = this
         this.message=''
+        if(this.priview){
+          this.$emit('onSubmit', { roomNo, memberNo, message:'사진을 전송 했습니다', now })
+          this.newMessage.push({message:this.priview, now, image:true})
+          this.priview=''
+        }
         if(message!='\n' && message!=''){
           this.$emit('onSubmit', { roomNo, memberNo, message, now })
           this.newMessage.push({message, now})
@@ -547,7 +587,7 @@ font-weight: bold;
     /* justify-content: space-between; */
 }
 #message_greenBox{
-	height: 40px;
+	/* height: 40px; */
   color: white;
   background-color: #086e5b;
   border-radius: 20px 2px 20px 20px;
@@ -555,6 +595,7 @@ font-weight: bold;
   margin: 0px;
   padding: 10px 14px;
   max-width: 484px;
+  max-height: 484px;
   white-space: pre-wrap;
   font-size: 14px;
   line-height: 150%;
@@ -595,5 +636,8 @@ textarea{
   border: none;
   outline: none;
 
+}
+#files {
+    visibility: hidden;
 }
 </style>
