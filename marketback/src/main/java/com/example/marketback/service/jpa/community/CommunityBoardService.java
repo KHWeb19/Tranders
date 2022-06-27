@@ -12,4 +12,5 @@ public interface CommunityBoardService {
     public CommunityBoard read (Integer boardNo);
     public void modify (CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception;
     public void remove (Integer boardNo) throws Exception;
+    public List<CommunityBoard> searchList(String searchWord);
 }

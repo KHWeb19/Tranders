@@ -1,21 +1,25 @@
 <template>
-    <v-container>
-        <!-- <v-row justify="center">
-            <img class="titleImg" src="@/assets/title/marketTitle.png" width=180 >
-        </v-row> -->
-        <v-row>
-            <community-board-modify :communityBoard="communityBoard" @submit="onSubmit"/>
-        </v-row>
-    </v-container>
+<v-container>
+    <home-view></home-view>
+    <br><br>
+    <v-row>
+        <community-board-modify :communityBoard="communityBoard" @submit="onSubmit"/>
+    </v-row>
+</v-container>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
+import HomeView from '@/components/home/HomeView'
 import CommunityBoardModify from '@/components/communityBoard/CommunityBoardModify.vue'
+
 export default {
-  components: { CommunityBoardModify },
     name:'CommunityBoardModifyPage',
+    components: { 
+        CommunityBoardModify,
+        HomeView, 
+        },
     props: {
         boardNo: {
             type: String,
@@ -33,7 +37,7 @@ export default {
                     'Content-Type': 'multipart/form-data'
                 }})
                     .then(res => {
-                        alert('게시물 수정 성공!')
+                        alert('게시물이 수정되었습니다!')
                         this.$router.push({
                             name: 'CommunityBoardReadPage',
                             params: { boardNo: res.data.boardNo.toString() }
@@ -54,16 +58,5 @@ export default {
 </script>
 
 <style scoped>
-/* .titleImg{ 
-    margin-top:4%;
-    margin-bottom: 5%;
-}
-@media (max-width:700px){
-    .titleImg {
-        margin-top:10%;
-        margin-left:20px;
-        margin-bottom:10%;
-        width:200px;
-    }
-}*/
+
 </style>

@@ -3,37 +3,17 @@
         <br><br>
             <v-form enctype="multipart/form-data" @submit.prevent="onSubmit">
                 <table>
-                    <!-- <v-col cols="12">
-                            <v-chip color="light green accent-2" @click="selectedSubject(item)" class="subject" v-model="usedSubject" v-for="(item, i) in subject" :key="i" >
-                                {{item}}
-                            </v-chip>                           
-                    </v-col>-->
                     <br>
                     <v-chip class="subject" color="light green accent-2">
                         {{communityBoard.usedSubject}}
                     </v-chip>
                     <br><br>
                     <v-row justify="center">
-                        <!-- <v-col cols="2" class="label" style="font-size:20pt">제목</v-col> -->
                         <v-col>
-
-                            <!-- <v-combobox 
-                            class="titleFloat"
-                                v-model="selectSubject"
-                                :items="items"
-                                label="말머리"
-                                filled
-                                style="width:150px; zoom:1"
-                                outlined
-                                dense
-                                color="indigo darken-4"
-                                ></v-combobox>-->
-                            
                             <v-text-field class="titleFloat" style="width:460px" color="indigo darken-4" placeholder=" 제목을 작성하세요." v-model="title"/>
                         </v-col>
                     </v-row>
                     <v-row  justify="center">
-                        <v-col cols="2" class="label" style="font-size:20pt">내용</v-col>
                         <v-col cols="12">
                             <v-textarea style="white-space:pre-line" cols="75" rows="7" 
                             outlined color="indigo darken-4" placeholder=" 우리 동네 관련된 질문이나 이야기를 해보세요."
@@ -52,31 +32,26 @@
                             <!-- <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/> -->
                             </v-carousel-item>                              
                         </v-carousel>
-                        <!-- <v-carousel hide-delimiters height="auto">   
-                            <v-carousel-item 
-                            v-for="(file, index) in files" :key="index" style="text-align:center">
-                            <img :src=file.preview class="preview"/>
-                            </v-carousel-item>  
-                        </v-carousel>-->
                     </v-row><br>                   
                         <v-icon large>mdi-image-outline</v-icon>
                         <input type="file" id="files" ref="files"  dense style="width:193px"
                                 multiple v-on:change="handleFileUpload()"/>
-                                <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityRegister/PlaceSearch'" color="blue-grey" text>
-                                    <v-icon large>mdi-map-marker-outline
-                                    </v-icon>
-                                </v-btn>                                    
+                                <v-dialog v-model="dialog" persisten max-width="1000">
+                            <template v-slot:activator="{ on }">
+                                <v-btn v-on="on"  onclick="" color="blue-grey" text>
+                                    <v-icon large>mdi-map-marker-outline</v-icon>
+                                    <v-text-field style="width:200px" placeholder="장소를 등록하세요." v-model="placeName"/>
+                                </v-btn>                              
+                            </template>
+                            <v-card>
+                                <kakao-map></kakao-map>        
+                            </v-card>
+                        </v-dialog>      
                     <br>
                     <div align="left">
                     <span style="color:red; font-size:12pt">최대 10개의 이미지 등록 가능({{files.length}}/10)</span>
                     </div>
                     <br>
-                    <!-- <v-row wrap>
-                        <v-btn class="writeBtn" color="black" dark>
-                            <router-link :to="{ name: 'CommunityBoardReadPage',
-                                    params: { boardNo: communityBoard.boardNo.toString() } }" style="color:white">cancle</router-link></v-btn>
-                        <v-btn type="submit" class="writeBtn2" color="red darken-3" dark>Modify</v-btn>
-                    </v-row> -->
                     <v-row wrap>
                         <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityList'" class="writeBtn" color="red accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-close</v-icon></v-btn>
                         <v-btn type="submit" class="writeBtn2" color="light green accent-4" style="box-shadow:none" dark fab small><v-icon> mdi-check</v-icon></v-btn>
@@ -87,8 +62,11 @@
 </template>
 
 <script>
+import EventBus from '@/eventBus.js'
+import KakaoMap from '../../views/KakaoMap.vue';
 export default {
-    name:'CommunityBoardModify',
+    components: { KakaoMap },
+    name:'CommunityBoardModify,KaKaoMap',
     props: {
         communityBoard: {
             type: Object,
@@ -97,6 +75,8 @@ export default {
     },
     data() {
         return {
+            placeName:'',
+            placeUrl:'',
             image :'',
             title:'',
             content:'',
@@ -112,12 +92,19 @@ export default {
         }
     },
     created () {
-        // this.writer = this.$store.state.userInfo.name
-        this.writer = ''
-        // this.viewCnt = this.market.viewCnt
+        EventBus.$on('placeRegister', (payload) => {
+            this.placeUrl = payload[0]
+            this.placeName = payload[1]
+            console.log(payload) 
+        })
+        this.writer = this.communityBoard.writer
+        this.region = this.communityBoard.region
         this.title = this.communityBoard.title
         this.content = this.communityBoard.content
         this.usedSubject = this.communityBoard.usedSubject
+        this.createdDate = this.communityBoard.createdDate
+        this.placeName = this.communityBoard.placeName
+        this.placeUrl = this.communityBoard.placeUrl
     },
     methods: {
         handleFileUpload () {
@@ -142,7 +129,7 @@ export default {
             }
         },
         onSubmit () {
-            const { title, content, writer, usedSubject} = this
+            const { title, content, writer, usedSubject, region, createdDate, placeName, placeUrl } = this
             let formData = new FormData();
 
             for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
@@ -153,6 +140,10 @@ export default {
             formData.append('content', content)
             formData.append('writer', writer)
             formData.append('usedSubject', usedSubject)
+            formData.append('region', region)
+            formData.append('createdDate', createdDate)
+            formData.append('placeName', placeName)
+            formData.append('placeUrl', placeUrl)
             
             this.$emit('submit', {formData})
             console.log(formData)            
@@ -239,11 +230,5 @@ table{
     margin-right:auto;
     max-width:350px;
     height:350px; 
-}
-@media (max-width:700px){ 
-    table {
-        zoom:60%;
-        margin-bottom:30px;
-    }
 }
 </style>
