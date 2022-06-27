@@ -29,7 +29,7 @@
                             </v-carousel-item>
                             <v-carousel-item 
                             v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
-                            <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
+                            <!-- <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/> -->
                             </v-carousel-item>                              
                         </v-carousel>
                     </v-row><br>                   

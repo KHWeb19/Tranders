@@ -1,6 +1,7 @@
 package com.example.marketback.controller.chatting;
 
 import com.example.marketback.entity.chatting.ChatRoom;
+import com.example.marketback.entity.member.Member;
 import com.example.marketback.service.chatting.ChatRoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,45 @@ public class ChatRoomController {
     @Autowired
     private ChatRoomService chatRoomService;
 
-    @PostMapping("/register")
-    public void chatRoomRegister(@Validated @RequestBody ChatRoom chatRoom) {
-        log.info("chatRoomRegister()");
+    @PostMapping("/register/{member1No}/{member2}")
+//    public void chatRoomRegister(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2, @Validated @RequestBody ChatRoom chatRoom) {
+    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2") Long member2) {
+        log.info("chatRoomRegister()"+chatRoom+member2);
 
-        chatRoomService.register(chatRoom);
+        chatRoomService.register(chatRoom, member1No);
     }
 
-    @GetMapping("/list")
-    public List<ChatRoom> chatRoomList() {
+    @GetMapping("/list/{memberNo}")
+    public List<ChatRoom> chatRoomList(@PathVariable("memberNo") Long memberNo) {
         log.info("chatRoomList()");
 
-        return chatRoomService.list();
+        return chatRoomService.list(memberNo);
     }
+
+    @GetMapping("/{roomNo}")
+    public ChatRoom chatRoomRead(@PathVariable("roomNo") Long roomNo) {
+        log.info("chatRoomRead()");
+
+        return chatRoomService.read(roomNo);
+    }
+
+    @GetMapping("/{member1}/{member2}")
+    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
+        log.info("chatRoomRead()");
+
+        return chatRoomService.move(member1, member2);
+    }
+
+    @PutMapping("/{roomNo}")
+    public ChatRoomRequest chatRoomModify (
+            @PathVariable("roomNo") Long roomNo,
+            @RequestBody ChatRoomRequest chatRoomRequest) {
+        log.info("chatRoomModify(): " + chatRoomRequest);
+
+        chatRoomService.modify(chatRoomRequest, roomNo);
+
+        return chatRoomRequest;
+    }
+
+
 }

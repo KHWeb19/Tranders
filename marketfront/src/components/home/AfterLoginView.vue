@@ -1,22 +1,17 @@
 <template>
-  <header class="fixed-bar-box-shadow">
-    <div id="header" style="height: 70px;">
+
+  <header>
+    <div id="header" style="height: 64px;">
+
       <div id="header-title">
         <span id="title">
           오이마켓
         </span>
       </div>
 
-      <div id="searchBar">
-        <input type="text" placeholder="물품이나 동네를 검색해보세요">
-        <!-- <v-btn icon style="width: 12%">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn> -->
-      </div>
-
-      <div style="margin-left: auto;">
+      <div>
         <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text>
+          <v-btn text @click="test">
             중고거래
           </v-btn>
         </router-link>
@@ -27,39 +22,96 @@
           </v-btn>
         </router-link>
 
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+        <router-link style="text-decoration: none;" :to="{name: 'NearPage'}">
           <v-btn text>
             내 근처
           </v-btn>
         </router-link>
 
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text>
-            채팅
-          </v-btn>
-        </router-link>
+          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+            <v-btn text>
+              채팅
+            </v-btn>
+          </router-link>
 
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text>
-            나의 당근
-          </v-btn>
-        </router-link>
+        </div>
+
+        <div style="display: flex; margin-left: auto;">
+          <div id="searchBar" style="display: flex; justify-content: center; padding-right: 20px">
+            <input type="text" placeholder="물품이나 동네를 검색해보세요">
+          </div>
+
+          <div>
+            <v-menu offset-y>
+              <template v-slot:activator="{on}">
+                <v-btn fab  v-if="profileImg === null" v-on="on">
+                  <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+                </v-btn>
+
+                <v-btn fab v-else v-on="on">
+                  <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item link @click="myPage">
+                  <v-list-item-title>
+                    My Page
+                  </v-list-item-title>
+                </v-list-item>
+
+                <v-list-item link @click="logout">
+                  <v-list-item-title>
+                    로그아웃
+                  </v-list-item-title>
+                </v-list-item>
+
+              </v-list>
+            </v-menu>
+          </div>
+        </div>
 
       </div>
-    </div>
   </header>
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+import cookies from "vue-cookies";
+import {logout} from "@/views/Util/LoginUtil";
+
 export default {
   name: "AfterLoginView",
   data(){
     return{
-
+      id: "",
+      items: [
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me 2' },
+      ],
     }
   },
   methods: {
-
+    ...mapActions(['fetchMemberProfile']),
+    myPage(){
+      this.$router.push({name: 'MyPageProfile'})
+    },
+    logout(){
+      logout();
+      this.$router.push({name: 'HomePage'})
+    },
+    test(){
+      alert('test')
+    }
+  },
+  computed: {
+    ...mapState(['profileImg'])
+  },
+  mounted() {
+    this.id = cookies.get('id');
+    this.fetchMemberProfile(this.id)
   }
 }
 </script>
@@ -102,19 +154,7 @@ input {
   padding: 10px 12px;
   font-size: 14px;
 }
-/* .bar-menu{
-  display: inline-flex;
-  width: 10%;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-} */
-.btn-text {
-  color: black;
+v-img{
+  height: 20px;
 }
-/* v-btn{
-  border-radius: 8px;
-  border: solid 1px black;
-} */
-
 </style>

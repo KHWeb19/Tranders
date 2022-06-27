@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
@@ -39,9 +41,16 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
 
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
-        String targetUrl = "http://localhost:8080/";
+        //String targetUrl = "http://localhost:8080/";
+
+        Optional<String> redirectUri = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
+                .map(Cookie::getValue);
+
+        System.out.println("리다이렉트 uri" + redirectUri);
 
         System.out.println(authentication.getPrincipal().toString());
+
+        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String name = authentication.getName();
         System.out.println(name);
@@ -55,6 +64,9 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
                 .withIssuer(request.getRequestURI())
                 .withClaim("name", member.getName())
                 .withClaim("region", member.getRegion())
+                .withClaim("memberNo", member.getMemberNo())
+                .withClaim("providerType", member.getProvider())
+                .withClaim("registerStatus", member.getRegisterStatus())
                 .withClaim("roles", member.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
@@ -66,23 +78,28 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
 
         System.out.println(access_token);
 
+        /*
         Cookie accessToken = new Cookie("access_token", access_token);
         accessToken.setMaxAge(60 * 10);
-        accessToken.setPath("/");
+        accessToken.setPath("/");*/
 
-        Cookie refreshToken = new Cookie("refresh_token", refresh_token);
+
+        /*Cookie refreshToken = new Cookie("refresh_token", refresh_token);
         refreshToken.setMaxAge(60 * 10);
         refreshToken.setPath("/");
 
-        response.addCookie(accessToken);
-        response.addCookie(refreshToken);
+        //response.addCookie(accessToken);
+        response.addCookie(refreshToken);*/
 
-        return targetUrl;
+        return UriComponentsBuilder.fromUriString(targetUrl)
+                .queryParam("access_token", access_token)
+                .queryParam("refresh_token", refresh_token)
+                .build().toUriString();
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
         super.clearAuthenticationAttributes(request);
-        //httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
+        httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
 }

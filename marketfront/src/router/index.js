@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import HomePage from '@/views/HomePage.vue'
 
 import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
@@ -11,6 +11,7 @@ import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardReg
 import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
 import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
 import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
+import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
@@ -23,10 +24,21 @@ import ChangePwPage from "@/views/member/search/ChangePwPage";
 // import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-import ChattingPage from '@/views/chatting/ChattingPage'
+// import ChattingPage from '@/views/chatting/ChattingPage'
+import ChattingReadView from '@/views/chatting/ChattingReadView'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
+import MyPageProfile from "@/views/myPage/MyPageProfile";
+import MyInfoPage from "@/views/myPage/MyInfoPage";
+import BossRegisterPage from "@/views/boss/BossRegisterPage";
+import BossPage from "@/views/boss/BossPage";
+import MyVillageProof from "@/views/myPage/MyVillageProof";
+import OauthPage from "@/views/Util/OauthPage";
+import SnsRegisterPage from "@/views/member/SnsRegisterPage";
+import BossMarketInfo from "@/views/boss/BossMarketInfo";
+import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
+import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 
 Vue.use(VueRouter)
 
@@ -93,23 +105,22 @@ const routes = [
     component: ChangePwPage,
     props: true
   },
-  // {
-  //   path: '/myPage',
-  //   name: 'myPage',
-  //   component: myPage
-  // },
   {
-    path: '/chat',
+    path: '/chatting',
     name: 'ChattingListPage',
-    component: ChattingListPage,
+    components:{
+      default: ChattingListPage
+    },
     props: {
       default: true
     }
   },
   {
-    path: '/chat/room/:roomNo',
-    name: 'ChattingPage',
-    component: ChattingPage,
+    path: '/chatting/:roomNo',
+    name: 'ChattingReadView',
+    components: {
+      default: ChattingReadView
+    },
     props: {
       default: true
     }
@@ -134,6 +145,42 @@ const routes = [
     path: '/python',
     name: 'PythonTest',
     component: PythonTest
+  },
+  {
+    path: '/myPageInfo',
+    name: 'MyInfoPage',
+    component: MyInfoPage,
+    props: true
+  },
+  {
+    path: '/myPage/profile',
+    name: 'MyPageProfile',
+    component: MyPageProfile
+  },
+  {
+    path: '/bossRegister',
+    name: 'BossRegisterPage',
+    component: BossRegisterPage
+  },
+  {
+    path: '/bossPage',
+    name: 'BossPage',
+    component: BossPage
+  },
+  {
+    path: '/villageProof',
+    name: 'MyVillageProof',
+    components: {
+      default: MyVillageProof,
+    },
+    props: {
+      default: true
+    },
+  },
+  {
+    path: '/myVillageSetting',
+    name: 'MyVillageSetting',
+    component: MyVillageSetting,
   },
   {
     path: '/Tranders/CommunityList',
@@ -175,6 +222,29 @@ const routes = [
       default: true
     }
   },
+    path: '/snsRegister',
+    name: 'SnsRegisterPage',
+    component: SnsRegisterPage
+  },
+  {
+    path: '/oauth2/*',
+    component: OauthPage
+  },
+  {
+    path: '/bossMarket/info',
+    name: 'BossMarketInfo',
+    component: BossMarketInfo
+  },
+  {
+    path: '/bossMarket/infoModify',
+    name: 'BossMarketInfoModify',
+    components: {
+      default: BossMarketInfoModify
+    },
+    props: {
+      default: true
+    }
+  }
 ]
 
 const router = new VueRouter({

@@ -8,6 +8,7 @@ import com.example.marketback.filter.CustomAuthenticationFilter;
 import com.example.marketback.filter.CustomAuthorizationFilter;
 //import com.example.marketback.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.example.marketback.oauth2.CustomOAuth2UserService;
+import com.example.marketback.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.example.marketback.oauth2.OAuth2SuccessHandler;
 import com.example.marketback.repository.member.MemberRepository;
 //import com.example.marketback.service.oauth.CustomOAuth2UserService;
@@ -43,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private OAuth2SuccessHandler oAuth2AuthenticationSuccessHandler;
 
-    /*@Autowired
+    @Autowired
     private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
-    }*/
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -89,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .oauth2Login()
                 .authorizationEndpoint()
-                //.authorizationRequestRepository(cookieAuthorizationRequestRepository())
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
                 .baseUri("/oauth2/authorization")
                 .and()
                 .redirectionEndpoint()

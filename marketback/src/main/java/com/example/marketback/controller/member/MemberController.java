@@ -1,6 +1,5 @@
 package com.example.marketback.controller.member;
 
-//import com.example.marketback.util.KakaoProfile;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -8,18 +7,22 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
-//import com.example.marketback.util.OAuthToken;
+import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.MemberRegionResponse;
 import com.example.marketback.service.member.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
@@ -113,5 +116,87 @@ public class MemberController {
     public String test2(){
         log.info("test2");
         return "<h2>test2</h2>";
+    }
+
+    @GetMapping("/profile/{id}")
+    public String profileImg(@PathVariable(value = "id") String id){
+        log.info(id);
+
+        return memberService.getMemberProfile(id);
+    }
+
+    @PostMapping("/userInfo")
+    public Member memberInfo(@RequestBody Map<String, String> map){
+        log.info("memberInfo" + map.get("id"));
+
+        return memberService.getMember(map.get("id"));
+    }
+
+    @PostMapping("/myPageCheck")
+    public ResponseEntity<Boolean> myPageCheck(@RequestBody MemberLoginRequest memberLoginRequest){
+        log.info("myPageCheck"+ memberLoginRequest.getId()+", "+memberLoginRequest.getPassword());
+
+        return new ResponseEntity<>(memberService.myPageCheck(memberLoginRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/modify")
+    public void memberModify(@RequestBody Member member){
+        log.info("memberModify" + member.getPassword());
+
+        memberService.modify(member);
+    }
+
+    @PostMapping("/modifyProfileImg")
+    public ResponseEntity<Boolean> modifyProfileImg(@RequestParam("imgFile") MultipartFile imgFile,
+                                 @RequestParam("id") String id){
+        log.info("modifyProfileImg");
+
+
+        try{
+            log.info("requestUploadFile() - Make file: " + imgFile.getOriginalFilename());
+
+            FileOutputStream file = new FileOutputStream("../marketfront/src/assets/profile/" + id + "_" + imgFile.getOriginalFilename());
+
+            String fileSrc = id + "_" + imgFile.getOriginalFilename();
+
+            System.out.println(fileSrc+", "+id);
+            file.write(imgFile.getBytes());
+            file.close();
+
+            memberService.modifyProfileImg(fileSrc, id);
+        } catch (Exception e){
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("/region")
+    public MemberRegionResponse memberRegion(@RequestBody Map<String, String> map){
+        log.info("memberRegion");
+
+        return memberService.getRegion(map.get("id"));
+    }
+
+    @PostMapping("/modifyRegion/{id}")
+    public void modifyRegion (@PathVariable String id, @RequestBody MemberRegionResponse memberRegionResponse){
+        log.info("modifyRegion" + id);
+
+        memberService.modifyRegion(memberRegionResponse, id);
+    }
+
+    /*@PostMapping("/register/check/sendSMS")
+    public String sendSMS(@RequestBody Map<String, String> map) throws CoolsmsException {
+        log.info("sendSMS"+ map.get("phoneNumber"));
+
+        return memberService.phoneNumCheck(map.get("phoneNumber"));
+        //return null;
+    }*/
+
+    @PostMapping("/snsRegister")
+    public void snsRegister(@RequestBody Member member){
+        log.info("snsRegister" + member.getId());
+
+        memberService.snsRegister(member);
     }
 }

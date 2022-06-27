@@ -79,6 +79,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURI())
                 .withClaim("name", member.getName())
                 .withClaim("region", member.getRegion())
+                .withClaim("memberNo", member.getMemberNo())
                 .withClaim("roles", member.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 

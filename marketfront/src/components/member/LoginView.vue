@@ -50,9 +50,7 @@
 </template>
 
 <script>
-import {ParsingInfo} from "@/views/Util/LoginUtil";
 import {GOOGLE_AUTH_URL, KAKAO_AUTH_URL} from "@/constant/login";
-import cookies from "vue-cookies";
 
 export default {
   name: "LoginView",
@@ -67,14 +65,11 @@ export default {
       const {id, password} = this;
       this.$emit("login", {id, password});
     },
-    kakaoLogin(){
-      //loginProcess("", "kakao")
+    async kakaoLogin(){
       location.href=KAKAO_AUTH_URL;
-      ParsingInfo(cookies.get('access_token'));
     },
     googleLogin(){
       location.href=GOOGLE_AUTH_URL;
-      ParsingInfo(cookies.get('access_token'));
     },
     searchId(){
       this.$router.push({name: "IdSearchPage"});
