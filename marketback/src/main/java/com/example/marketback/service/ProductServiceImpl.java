@@ -1,5 +1,7 @@
 package com.example.marketback.service;
-import com.example.marketback.entity.productBoard.Product;
+import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.productBoard.ProductBoard;
+import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.repository.productBoard.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -9,39 +11,46 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    ProductRepository repository;
+    ProductRepository productRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Override
-    public void register(Product product) {
-        repository.save(product);
+    public void register(ProductBoard productBoard, Long memberNo) {
+        Optional<Member> maybeMember = memberRepository.findById(Long.valueOf(memberNo));
+        productBoard.setMember(maybeMember.get());
+        productRepository.save(productBoard);
     }
 
     @Override
-    public List<Product> list() {
-        return repository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
+    public List<ProductBoard> list() {
+        return productRepository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
     }
 
-    @Override
-    public Product read(Integer productNo) {
-        Optional<Product> maybeReadProduct = repository.findById(Long.valueOf(productNo));
 
-        if (maybeReadProduct.equals(Optional.empty())) {
+    @Override
+    public ProductBoard read(Integer productNo) {
+        Optional<ProductBoard> maybeReadProductBoard = productRepository.findById(Long.valueOf(productNo));
+
+        if (maybeReadProductBoard.equals(Optional.empty())) {
             return null;
         }
-
-        return maybeReadProduct.get();
+        return maybeReadProductBoard.get();
     }
 
     @Override
-    public void modify(Product product) {
-        repository.save(product);
+    public void modify(ProductBoard productBoard) {
+        productRepository.save(productBoard);
     }
+
     @Override
-    public void remove(Integer productNo) {
-        repository.deleteById(Long.valueOf(productNo));
+    public void remove(Long productNo) {
+        productRepository.deleteById(Long.valueOf(productNo));
     }
 }

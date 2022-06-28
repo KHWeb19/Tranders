@@ -63,6 +63,7 @@ export default {
             console.log(payload)
             const { access_token, date, time } = payload
             axios.post('http://127.0.0.1:5000/kakao-message', {access_token, date, time})
+            // axios.post('http://localhost:5000/kakao-message', {access_token, date, time})
         }
     } 
 }
