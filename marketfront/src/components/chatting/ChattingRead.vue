@@ -36,14 +36,14 @@
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
                       <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
                     </div>
-                      <!-- <div v-if="lastMessage" style="display: flex;
+                      <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
                       -webkit-box-align: center;
                       align-items: center;
                       height: 20px;
                       font-size: 13px;
-                      color: var(--seed-scale-color-gray-700);">{{lastMessage}}
-                      </div> -->
-                      <div style="display: flex;
+                      color: var(--seed-scale-color-gray-700);">{{lastMessage.message}}
+                      </div>
+                      <div v-else style="display: flex;
                       -webkit-box-align: center;
                       align-items: center;
                       height: 20px;
@@ -264,17 +264,19 @@
               <div v-for="msg in new_data" :key="msg.messageNo">
                 <div style="display: flex; justify-content: flex-end;" v-if="login.memberNo==msg.content.memberNo">
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
-                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="require(`@/assets/chatting/${msg.content.message}`)"/></div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.message}}</div>
                 </div>
                 <div style="display: flex;" v-else>
                   <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
-                  <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="msg.content.message"/></div>
+                  <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.now}}</div>
                 </div>
               </div>
               <div style="display: flex; justify-content: flex-end;" v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message_date'>{{msg.now}}</div>
-                <div v-if="msg.image" id='message_greenBox'> <v-img width="200px" height="200" :src="msg.message"/></div>
-                <div v-if="!msg.image" id='message_greenBox'>{{msg.message}}</div>
+                <div v-if="msg.image" id='message_greenBox'><v-img width="200px" height="200" :src="msg.message"/></div>
+                <div v-else id='message_greenBox'>{{msg.message}}</div>
               </div>
             </div>
             
@@ -285,7 +287,7 @@
           </div>
           <div id='submit'>
             <div id='submit_form'>
-              <textarea required @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
+              <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
               <div style="display: flex; 
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -340,7 +342,7 @@ export default {
       money: 0,
       
       message: '',
-      // lastMessage: [this.chatroom.roomNo, ''],
+      lastMessage: '',
       now: ('0' + (new Date()).getHours()).slice(-2) +':'+('0' + (new Date()).getMinutes()).slice(-2),
       new_data: [],
       newMessage: [],
@@ -374,6 +376,7 @@ export default {
     },
     deletePriview() {
       this.priview = ''
+      console.log(this.newMessage)
     },
     onSubmit() {
         const { roomNo } = this.chatroom
@@ -381,14 +384,25 @@ export default {
         const { message, now } = this
         this.message=''
         if(this.priview){
-          this.$emit('onSubmit', { roomNo, memberNo, message:'사진을 전송 했습니다', now })
+          let formData = new FormData()
+          formData.append('fileList', this.files[0])
+          axios.post('http://localhost:7777/chatting/uploadImg', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+          .then (()=> {
+            this.$emit('onSubmit', { roomNo, memberNo, message:this.files[0].name, now, image:true })
+          })
           this.newMessage.push({message:this.priview, now, image:true})
           this.priview=''
+          this.lastMessage={roomNo, message:'사진을 전송 했습니다'}
         }
         if(message!='\n' && message!=''){
           this.$emit('onSubmit', { roomNo, memberNo, message, now })
           this.newMessage.push({message, now})
           this.message=''
+          this.lastMessage={roomNo, message}
         }
     },
     onAppoint() {
@@ -403,7 +417,7 @@ export default {
     },
     onCharge(){
       window.open('http://kko.to/LJwi9Wf7n')
-      this.money += this.price
+      this.money += this.chatroom.productBoard.price
     }
   },
 }

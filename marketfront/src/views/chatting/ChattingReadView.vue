@@ -56,10 +56,15 @@ export default {
         ...mapActions(['fetchChatroomList']),
         onSubmit(payload) {
             console.log(payload)
-            const { roomNo, message } = payload
-            // const { roomNo, memberNo, message, now } = payload
-            // axios.post('http://localhost:7777/kafka', { roomNo, memberNo, message, now })
-            axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: message})
+            // const { roomNo, message } = payload
+            const { roomNo, memberNo, message, now, image } = payload
+            axios.post('http://localhost:7777/kafka', { roomNo, memberNo, message, now, image })
+            if(image){
+                axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: '사진을 전송 했습니다'})
+            } else{
+                axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: message})
+            }
+            
         },
         onAppoint(payload) {
             console.log(payload)

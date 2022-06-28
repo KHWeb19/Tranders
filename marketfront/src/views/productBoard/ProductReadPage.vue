@@ -60,7 +60,7 @@ export default {
       console.log(member1No, member2No, productNo)
       axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
           .then(() => {
-              this.$router.push({ name: "ChattingReadView", params: {roomNo: '1'.toString()}})
+              this.$router.push({ name: "ChattingReadList" })
           })
           .catch(() => {
               alert('문제 발생!')
