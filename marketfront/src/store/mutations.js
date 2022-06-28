@@ -14,7 +14,7 @@ import {
     FETCH_BOSS_BACK_PROFILE,
     FETCH_BOSS_MENU_LIST,
     FETCH_BOSS_MARKET_INFO,
-    FETCH_MY_VILLAGE_SETTING,
+    FETCH_MY_VILLAGE_SETTING, FETCH_NEAR_MAP,
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -76,6 +76,9 @@ export default {
     },
     [FETCH_MY_VILLAGE_SETTING] (state, villageInfo){
         state.villageInfo = villageInfo;
+    },
+    [FETCH_NEAR_MAP] (state, nearMap){
+        state.nearMap = nearMap;
     }
 }
 

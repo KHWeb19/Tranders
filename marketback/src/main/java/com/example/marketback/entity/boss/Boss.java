@@ -56,4 +56,10 @@ public class Boss {
         this.category = category;
         this.member = member;
     }
+
+    public Boss(String placeName, String lat, String lng) {
+        this.placeName = placeName;
+        this.lat = lat;
+        this.lng = lng;
+    }
 }

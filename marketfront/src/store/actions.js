@@ -9,7 +9,7 @@ import {
     FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
-    FETCH_MY_REGION, FETCH_BOSS_BACK_PROFILE, FETCH_BOSS_MENU_LIST, FETCH_MY_VILLAGE_SETTING
+    FETCH_MY_REGION, FETCH_BOSS_BACK_PROFILE, FETCH_BOSS_MENU_LIST, FETCH_MY_VILLAGE_SETTING, FETCH_NEAR_MAP
 } from './mutation-types'
 
 import axios from 'axios'
@@ -156,6 +156,18 @@ export default {
         })
             .then((res) => {
                 commit(FETCH_MY_VILLAGE_SETTING, res.data)
+            })
+    },
+    fetchShowNearMap({commit}) {
+        return axios.post(API_BASE_URL+'/near/showMap', {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_NEAR_MAP, res.data)
             })
     }
 }
