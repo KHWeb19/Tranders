@@ -1,4 +1,4 @@
-package com.example.marketback.service.member;
+package com.example.marketback.service.boss;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossImage;
@@ -138,4 +138,5 @@ public class BossServiceImpl implements BossService{
     public void deleteMenu(Long menuNo) {
         bossPriceRepository.deleteById(menuNo);
     }
+
 }

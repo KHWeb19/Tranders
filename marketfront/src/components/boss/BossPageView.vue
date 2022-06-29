@@ -570,6 +570,7 @@ export default {
       formData.append('id', this.id)
       formData.append('name', this.name)
       this.$emit('saveBackProfile', formData)
+      this.backProfileImgDialog = false;
     },
     savePrice(){
       const {menuName, menuPrice, menuInfo} = this

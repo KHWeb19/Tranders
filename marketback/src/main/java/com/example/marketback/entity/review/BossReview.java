@@ -5,14 +5,18 @@ import com.example.marketback.entity.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Review {
+@EntityListeners(AuditingEntityListener.class)
+public class BossReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +24,8 @@ public class Review {
     private Long boseReviewNo;
 
     private String content;
+
+    private String state;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_NO")
@@ -29,4 +35,13 @@ public class Review {
     @JoinColumn(name = "BOSS_AUTH_NO")
     private Boss boss;
 
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    public BossReview(String content, String state, Member member, Boss boss) {
+        this.content = content;
+        this.state = state;
+        this.member = member;
+        this.boss = boss;
+    }
 }

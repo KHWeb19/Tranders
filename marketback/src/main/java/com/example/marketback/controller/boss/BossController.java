@@ -1,12 +1,12 @@
 package com.example.marketback.controller.boss;
 
 import com.example.marketback.entity.boss.Boss;
-import com.example.marketback.entity.boss.BossImage;
 import com.example.marketback.entity.boss.BossPrice;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.response.BossBackProfileImg;
 import com.example.marketback.response.BossPriceMenuResponse;
-import com.example.marketback.service.member.BossService;
+import com.example.marketback.service.boss.BossService;
+import com.example.marketback.service.boss.review.BossReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,9 @@ public class BossController {
 
     @Autowired
     private BossService bossService;
+
+    @Autowired
+    private BossReviewService bossReviewService;
 
     @PostMapping("/checkMember")
     public boolean checkMember(@RequestBody Map<String, String> map){
@@ -172,6 +175,42 @@ public class BossController {
         log.info("modifyMarketInfo" + bossMarketInfoRequest.getId());
 
         bossService.saveMarketInfo(bossMarketInfoRequest);
+    }
+
+    @PostMapping("/registerReview")
+    public ResponseEntity<Boolean> registerReview(@RequestParam("fileList") List<MultipartFile> imgFile,
+                               @RequestParam("id") String id,
+                               @RequestParam("name") String name,
+                               @RequestParam("content") String content,
+                               @RequestParam("bossNo") Long bossNo,
+                               @RequestParam("state") String state){
+
+        log.info("registerReview");
+
+        List<String> fileName = new ArrayList<>();
+
+        try{
+            for(MultipartFile files : imgFile) {
+                log.info("requestUploadFile() - Make file: " + files.getOriginalFilename());
+
+                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossReview/" + bossNo + "-" + id + "_" + name +"_" + files.getOriginalFilename());
+
+                String fileSrc = bossNo + "-" + id + "_" + name +"_" +  files.getOriginalFilename();
+
+                fileName.add(fileSrc);
+                log.info(fileSrc);
+                file.write(files.getBytes());
+                file.close();
+            }
+
+            bossReviewService.saveReview(fileName, id, name, content, bossNo, state);
+
+        } catch (Exception e){
+            log.info("에러");
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }

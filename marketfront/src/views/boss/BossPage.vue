@@ -41,6 +41,7 @@ export default {
       })
           .then((res) => {
             console.log(res)
+            this.$router.go();
           })
           .catch(() => {
             alert('에러')
