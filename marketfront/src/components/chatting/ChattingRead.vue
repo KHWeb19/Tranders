@@ -16,7 +16,7 @@
         
         <div id='center'>
           <div id='name'>
-            <div id='name_value'>{{this.login.name}}</div>
+            <div id='name_value'>{{userInfo.name}}</div>
           </div>
           <div id='chatList'>
             <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
@@ -31,10 +31,10 @@
                 <div style="display: flex; ">
                   <div>
                     <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span>
                     </div>
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member2.region}}</span>
                     </div>
                       <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
                       -webkit-box-align: center;
@@ -187,7 +187,7 @@
                                     </v-card-text>
                                     <v-card-text >
                                       <div id="pay_box" >
-                                        <div>페이머니: <span :style="chatroom.productBoard.price>money ? 'color:red' : ''">{{money}} </span>원</div>
+                                        <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
                                         <div style="display: inline-flex;
   margin-left: auto;"><v-btn style="
                                           
@@ -204,11 +204,13 @@
                                         @click="onCharge()">
                                             충전
                                         </v-btn></div></div>
+                                        <br/>
+                                        * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         
-                                        <v-btn text color="blue">
+                                        <v-btn text color="blue" @click="onPay()">
                                             결제
                                         </v-btn>
                                         <v-btn text @click="dialog.value=false">
@@ -323,6 +325,10 @@ export default {
   components: { AfterLoginView },
   name: "ChattingRead",
   props: {
+      userInfo: {
+          type: Object,
+          required: true
+      },
       chatroom: {
           type: Object,
           require: true
@@ -339,7 +345,6 @@ export default {
         name: cookies.get('name'),
         access_token: cookies.get('access_token'),
       },
-      money: 0,
       
       message: '',
       lastMessage: '',
@@ -376,7 +381,6 @@ export default {
     },
     deletePriview() {
       this.priview = ''
-      console.log(this.newMessage)
     },
     onSubmit() {
         const { roomNo } = this.chatroom
@@ -417,7 +421,15 @@ export default {
     },
     onCharge(){
       window.open('http://kko.to/LJwi9Wf7n')
-      this.money += this.chatroom.productBoard.price
+      this.userInfo.money += this.chatroom.productBoard.price
+      this.$emit('onCharge', {id:this.login.id, money: this.userInfo.money})
+    },
+    onPay(){
+      if(this.userInfo.money>=this.chatroom.productBoard.price) {
+        this.userInfo.money -= this.chatroom.productBoard.price
+        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money})
+      }
+
     }
   },
 }

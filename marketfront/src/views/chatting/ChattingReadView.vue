@@ -1,6 +1,6 @@
 <template>
     <div>
-        <chatting-read :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder"/>
+        <chatting-read :userInfo="userInfo" :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay"/>
 
     </div>
 
@@ -36,6 +36,7 @@ export default {
     }
   },
     computed: {
+        ...mapState(['userInfo']),
         ...mapState(['chatroom']),
         ...mapState(['chatrooms'])
     },
@@ -43,8 +44,8 @@ export default {
         this.fetchChatroomList(this.login.memberNo)
     },
     created() {
-
-      this.fetchChatroom(this.roomNo)
+        this.fetchMyPage(this.login.id)
+        this.fetchChatroom(this.roomNo)
           .catch(()=>{
               alert('채팅방 요청 실패')
               this.$router.push()
@@ -52,6 +53,7 @@ export default {
     //   this.getNewData();
     },
     methods: {
+        ...mapActions(['fetchMyPage']),
         ...mapActions(['fetchChatroom']),
         ...mapActions(['fetchChatroomList']),
         onSubmit(payload) {
@@ -76,6 +78,14 @@ export default {
             const { access_token, date, time } = payload
             axios.post('http://127.0.0.1:5000/kakao-message', {access_token, date, time})
             // axios.post('http://localhost:5000/kakao-message', {access_token, date, time})
+        },
+        onCharge(payload){
+            const { id, money } = payload
+            axios.put('http://localhost:7777/chatting/charge', {id, money})
+        },
+        onPay(payload){
+            const { id, money } = payload
+            axios.put('http://localhost:7777/chatting/charge', {id, money})
         }
     } 
 }
