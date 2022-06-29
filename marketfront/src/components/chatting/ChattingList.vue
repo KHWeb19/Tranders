@@ -28,51 +28,62 @@
                         <v-img src="@/assets/profile.jpg"/>
                     </div>
                 </div>
-                <div>
-                  <div style="    display: flex;
-
-    align-items: center;
-    height: 20px;
-    font-weight: bold;
-    font-size: 13px;
-
-
-
-
-
-    ">{{ chatroom.member2 }}</div>
-                    <div style="display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 20px;
-    font-size: 13px;
-    color: var(--seed-scale-color-gray-700);">{{lastMessage}}</div>
-                  </div>
-                </router-link>
-                <!-- <v-btn style="width: 310px; padding: 0px; margin-left: 0px" text @click="goChatroom(chatroom.roomNo)">
+                <div style="display: flex; ">
                   <div>
-                    <div style="border-radius: 50%; overflow: hidden;">
-                        <v-img width="40" height="40" src="@/assets/profile.jpg"/>
+                    <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                    </div>
+                    <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                    </div>
+                      <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
+                      -webkit-box-align: center;
+                      align-items: center;
+                      height: 20px;
+                      font-size: 13px;
+                      color: var(--seed-scale-color-gray-700);">{{lastMessage.message}}
+                      </div>
+                      <div v-else style="display: flex;
+                      -webkit-box-align: center;
+                      align-items: center;
+                      height: 20px;
+                      font-size: 13px;
+                      color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
+                      <!-- {{new_data.slice(-1)[0].content.message}} -->
+                      </div>
                     </div>
                   </div>
-                  Member2
-                  <br/>
-                  roomNo: {{chatroom.roomNo}}
-                </v-btn> -->
+                  <div v-if="chatroom.productBoard.productImage" style="display: flex; margin-left: auto;">
+                      <v-img style="margin-right: 4px;
+                      border: 1px solid var(--profile-image-border);
+                      border-radius: 4px;
+                      width: 40px;
+                      height: 40px;
+                      object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
+                  </div>
+                </router-link>
             </div>
           </div>
         </div>
         
         <div id='right'>
+          <div style="display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;"><v-icon x-large>mdi-chat</v-icon><span style="margin-top: 34px;">채팅할 상대를 선택해주세요.</span></div>
+          
         </div>
-
       </div>
   </form>
 
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import AfterLoginView from '../home/AfterLoginView.vue';
 import Vue from 'vue'
 import cookies from "vue-cookies";
@@ -93,53 +104,76 @@ export default {
   data() {
     return {
       login: {
+        memberNo: cookies.get("memberNo"),
         id: cookies.get('id'),
         name: cookies.get('name'),
         access_token: cookies.get('access_token'),
       },
-
+      money: 0,
       
       message: '',
       lastMessage: '',
       now: ('0' + (new Date()).getHours()).slice(-2) +':'+('0' + (new Date()).getMinutes()).slice(-2),
       new_data: [],
       newMessage: [],
-      memberNo: 1,
-      memberName: '지은',
-      boardName: '물품이름',
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu: false,
       time: '00:00',
       menu2: false,
-
+      priview: '',
     }
   },
   created() {
-      // this.getNewData();
+      this.getNewData();
   },
   methods: {
-    // getNewData() {
-    //             axios.get('http://127.0.0.1:5000/kafka-data')
-    //               .then((res) => {
-    //                 console.log(res.data)
-    //                   this.new_data = res.data;
-    //               }).catch((error) => {
-    //                   console.error(error);
-    //               });
-    //         },
+    getNewData() {
+                axios.get('http://127.0.0.1:5000/kafka-data')
+                  .then((res) => {
+                    console.log(res.data)
+                      this.new_data = res.data;
+                  }).catch((error) => {
+                      console.error(error);
+                  });
+            },
     goChatroom(roomNo) {
       this.$router.push({name: 'ChattingReadView',
                           params: {roomNo: roomNo.toString()}})
     },
-    onSubmit() {
-      // const { roomNo } = this.chatroom
-      const { message, now } = this
-      // console.log({ roomNo, message, now })
-      // this.$emit('submit', { this.chatroom.roomNo, this.message })
-      this.newMessage.push({message, now})
+    handleFileUpload () {
+      this.files = this.$refs.files.files
+      this.priview = URL.createObjectURL(this.files[0])
+    },
+    deletePriview() {
+      this.priview = ''
       console.log(this.newMessage)
-      this.lastMessage = message
-      // this.getNewData();
+    },
+    onSubmit() {
+        const { roomNo } = this.chatroom
+        const { memberNo } = this.login
+        const { message, now } = this
+        this.message=''
+        if(this.priview){
+          let formData = new FormData()
+          formData.append('fileList', this.files[0])
+          axios.post('http://localhost:7777/chatting/uploadImg', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+          .then (()=> {
+            this.$emit('onSubmit', { roomNo, memberNo, message:this.files[0].name, now, image:true })
+          })
+          this.newMessage.push({message:this.priview, now, image:true})
+          this.priview=''
+          this.lastMessage={roomNo, message:'사진을 전송 했습니다'}
+        }
+        if(message!='\n' && message!=''){
+          this.$emit('onSubmit', { roomNo, memberNo, message, now })
+          this.newMessage.push({message, now})
+          this.message=''
+          this.lastMessage={roomNo, message}
+        }
     },
     onAppoint() {
       const { date, time } = this
@@ -147,16 +181,15 @@ export default {
       history.go(0);
     },
     onReminder() {
-      // const { name, date, time } = this
-      // this.$emit('onReminder', { name, date, time })
+      const { access_token } = this.login
+      const { date, time } = this
+      this.$emit('onReminder', { access_token, date, time })
+    },
+    onCharge(){
+      window.open('http://kko.to/LJwi9Wf7n')
+      this.money += this.chatroom.productBoard.price
     }
   },
-
-  // beforeUpdate() {
-  //   console.log('beforeUpdate');
-  //   this.getNewData();
-  // }
-
 }
 </script>
 
@@ -187,7 +220,7 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 894px;
+	height: 938px;
   display: flex; 
   justify-content: center;
   border: 1px solid #bcbcbc;
@@ -217,7 +250,7 @@ font-weight: bold;
 }
 #chatList{
 	width: 310px;
-	height: 822px;
+	height: 865px;
 }
 #chatroom{
   /* display: flex;    */
@@ -240,10 +273,11 @@ font-weight: bold;
 }
 #right{
 	width: 810px;
+  height: 938px;
 	float: left;
   border: 1px solid #bcbcbc;
-          border-top-style: none;
-          border-left-style: none;
+  border-top-style: none;
+  border-left-style: none;
 }
 #right1{
 	width: 810px;
@@ -267,6 +301,14 @@ font-weight: bold;
     -webkit-box-align: center;
     align-items: center;
     border-radius: 4px; */
+}
+#pay_box{
+  border: 1px solid #212124;;
+  border-radius: 8px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px
 }
 #product{
 
@@ -307,30 +349,56 @@ font-weight: bold;
 #chatView{
 	width: 810px;
 	/* height: 555px; */
-  /* overflow-y:auto; 
-  overflow-x:hidden;  */
-  overflow: hidden auto;
+  overflow-y:auto; 
+  /* overflow-x:hidden;  */
+  /* overflow: hidden auto; */
   padding: 20px 20px 0px 20px;
-      border-bottom: 1px solid #bcbcbc;
+      /* border-bottom: 1px solid #bcbcbc; */
 }
 #submit{
-	width: 810px;
-	height: 125px;
+	/* height: 125px; */
+
 
 }
-#message_box{
-	height: 40px;
+#submit_form{
+
+  /* display: flex; */
+    /* flex-direction: column; */
+    /* position: relative; */
+    margin: 16px;
+    border: 1px solid #212124;;
+    border-radius: 8px;
+    /* -webkit-box-pack: justify; */
+    /* justify-content: space-between; */
+}
+#message_greenBox{
+	/* height: 40px; */
   color: white;
-  background-color: #ff7E36;
+  background-color: #086e5b;
   border-radius: 20px 2px 20px 20px;
   display: inline-flex;
   margin: 0px;
   padding: 10px 14px;
   max-width: 484px;
+  max-height: 484px;
   white-space: pre-wrap;
   font-size: 14px;
   line-height: 150%;
   letter-spacing: -0.02em;
+}
+#message_box{
+display: inline-flex;
+    margin: 0px;
+    padding: 10px 14px;
+    max-width: 484px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    border-radius: 2px 20px 20px;
+    background-color: #eaebee;;
+    /* color: #212124; */
 }
 #message_date{
   color: #868b94;
@@ -346,11 +414,15 @@ textarea{
   margin: 12px 12px 0px;
   width: calc(100% - 24px);
   height: 63px;
-  line-height: 150%;
+  /* line-height: 150%; */
   padding: 0px;
-  resize: none;
+  /* resize: none; */
   font-size: 14px;
   border: none;
   outline: none;
+
+}
+#files {
+    visibility: hidden;
 }
 </style>

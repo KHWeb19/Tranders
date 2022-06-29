@@ -76,7 +76,12 @@ const routes = [
   {
     path: '/productRead/:productNo',
     name: 'ProductReadPage',
-    component: ProductReadPage
+    components:{
+      default: ProductReadPage
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: '/ordinaryRegister',

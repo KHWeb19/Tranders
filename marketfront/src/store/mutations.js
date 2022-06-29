@@ -1,6 +1,6 @@
 import {
-    FETCH_PRODUCT,
-    FETCH_PRODUCT_LIST,
+    FETCH_PRODUCT_BOARD,
+    FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_LOGIN_TOKEN,
@@ -20,11 +20,11 @@ import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
 
 export default {
-    [FETCH_PRODUCT](state, product) {
-        state.product = product
+    [FETCH_PRODUCT_BOARD](state, productBoard) {
+        state.productBoard = productBoard
     },
-    [FETCH_PRODUCT_LIST](state, products) {
-        state.products = products
+    [FETCH_PRODUCT_BOARD_LIST](state, productBoards) {
+        state.productBoards = productBoards
     },
     [FETCH_LOGIN_TOKEN] (state, token){
         state.accessToken = token.accessToken;
