@@ -39,6 +39,7 @@ import BossMarketInfo from "@/views/boss/BossMarketInfo";
 import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
 import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 import NearPage from "@/views/near/NearPage";
+import BossReadPage from "@/views/boss/client/BossReadPage";
 
 Vue.use(VueRouter)
 
@@ -245,6 +246,16 @@ const routes = [
     path: '/near',
     name: 'NearPage',
     component: NearPage
+  },
+  {
+    path: '/bossRead',
+    name: 'BossReadPage',
+    components: {
+      default: BossReadPage
+    },
+    props: {
+      default: true
+    }
   }
 ]
 

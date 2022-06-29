@@ -7,7 +7,7 @@
 
 <script>
 import AfterLoginView from "@/components/home/AfterLoginView";
-import NearPageView from "@/components/near/nearPageView";
+import NearPageView from "@/components/near/NearPageView";
 export default {
   name: "NearPage",
   components: {NearPageView, AfterLoginView}

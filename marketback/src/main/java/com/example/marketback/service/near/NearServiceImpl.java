@@ -1,10 +1,15 @@
 package com.example.marketback.service.near;
 
 import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.review.BossReview;
 import com.example.marketback.repository.boss.BossRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewImageRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.response.BossMapResponse;
+import com.example.marketback.response.NearReviewResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +24,12 @@ public class NearServiceImpl implements NearService{
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private BossReviewRepository bossReviewRepository;
+
+    @Autowired
+    private BossReviewImageRepository bossReviewImageRepository;
+
     @Override
     public List<BossMapResponse> showMap() {
         List<Boss> bossEntity = bossRepository.findAll();
@@ -26,7 +37,7 @@ public class NearServiceImpl implements NearService{
         List<BossMapResponse> responses = new ArrayList<>();
 
         for (Boss boss : bossEntity) {
-            responses.add(new BossMapResponse(boss.getPlaceName(), boss.getLat(), boss.getLng()));
+            responses.add(new BossMapResponse(boss.getBossAuthNo(), boss.getPlaceName(), boss.getLat(), boss.getLng(), boss.getRegion(), boss.getCategory(), boss.getReviewCount()));
         }
 
         return responses;
@@ -45,5 +56,27 @@ public class NearServiceImpl implements NearService{
             bossRepository.save(boss);
         }
 
+    }
+
+    @Override
+    public Boss returnBoss(Long bossNo) {
+        return bossRepository.findByBossNo(bossNo);
+    }
+
+    @Override
+    public List<NearReviewResponse> nearReview() {
+        List<Boss> bossEntity = bossRepository.findAll();
+        List<NearReviewResponse> responses = new ArrayList<>();
+        System.out.println(bossEntity.size());
+
+        for(Boss boss : bossEntity) {
+            if(boss.getReviewCount() == 0) {
+                responses.add(null);
+            }else {
+                BossReview bossReview = bossReviewRepository.findTopByBossNoOrderByIdDesc(boss.getBossAuthNo());
+                responses.add(new NearReviewResponse(bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState()));
+            }
+        }
+        return responses;
     }
 }
