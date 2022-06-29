@@ -1,13 +1,15 @@
 package com.example.marketback.service;
 
-import com.example.marketback.entity.productBoard.Product;
+import com.example.marketback.entity.productBoard.ProductBoard;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface ProductService {
-    public void register (Product product);
-    public List<Product> list();
-    public Product read (Integer productNo);
-    public void modify (Product product);
-    public void remove (Integer productNo);
+    public void register(ProductBoard productBoard, Long memberNo);
+    public List<ProductBoard> list();
+    public ProductBoard read(Integer productNo);
+    public void modify(ProductBoard productBoard);
+    public void remove(Long productNo);
 }

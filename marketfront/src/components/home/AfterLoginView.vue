@@ -9,39 +9,24 @@
         </span>
       </div>
 
-      <div id="searchBar">
-        <!-- <input type="text" placeholder="동네 이름, 상품 검색" style=" width: 88%">
-        <v-btn icon style="width: 12%"> -->
+      <div>
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text @click="test">
+            중고거래
+          </v-btn>
+        </router-link>
 
-       <input type="text" placeholder="물품이나 동네를 검색해보세요">
-        <!-- <v-btn icon style="width: 12%">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn> -->
-      </div>
+        <router-link style="text-decoration: none;" :to="{name: 'CommunityBoardListPage'}">
+          <v-btn text>
+            동네생활
+          </v-btn>
+        </router-link>
 
-
-      <div id="itemList" style="margin-left: auto;">
-        <!-- <v-btn text class="black--text">
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}"> -->
-
-        <div style="margin-left: auto;">
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            <v-btn text @click="test">
-              중고거래
-            </v-btn>
-          </router-link>
-
-          <router-link style="text-decoration: none;" :to="{name: 'CommunityBoardListPage'}">
-            <v-btn text>
-              동네생활
-            </v-btn>
-          </router-link>
-
-          <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-            <v-btn text>
-              내 근처
-            </v-btn>
-          </router-link>
+        <router-link style="text-decoration: none;" :to="{name: 'NearPage'}">
+          <v-btn text>
+            내 근처
+          </v-btn>
+        </router-link>
 
           <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
             <v-btn text>
@@ -49,53 +34,44 @@
             </v-btn>
           </router-link>
 
-          <v-btn text>
-            <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-              나의 당근
-            </router-link>
-          </v-btn>
         </div>
+
+        <div style="display: flex; margin-left: auto;">
+          <div id="searchBar" style="display: flex; justify-content: center; padding-right: 20px">
+            <input type="text" placeholder="물품이나 동네를 검색해보세요">
+          </div>
+
+          <div>
+            <v-menu offset-y>
+              <template v-slot:activator="{on}">
+                <v-btn fab  v-if="profileImg === null" v-on="on">
+                  <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+                </v-btn>
+
+                <v-btn fab v-else v-on="on">
+                  <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item link @click="myPage">
+                  <v-list-item-title>
+                    My Page
+                  </v-list-item-title>
+                </v-list-item>
+
+                <v-list-item link @click="logout">
+                  <v-list-item-title>
+                    로그아웃
+                  </v-list-item-title>
+                </v-list-item>
+
+              </v-list>
+            </v-menu>
+          </div>
+        </div>
+
       </div>
-
-      <div>
-        <v-menu offset-y style="float: right">
-          <template v-slot:activator="{on}">
-            <v-btn fab  v-if="profileImg === null" v-on="on">
-              <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-            </v-btn>
-
-            <v-btn fab v-else v-on="on">
-              <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
-            </v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item link @click="logout">
-              <v-list-item-title>
-                로그아웃
-              </v-list-item-title>
-            </v-list-item>
-
-            <v-list-item link @click="myPage">
-              <v-list-item-title>
-                My Page
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-
-        <!-- <div style=""> -->
-<!--          <v-btn fab @click="myPage" v-if="profileImg === null">
-            <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-          </v-btn>
-
-          <v-btn fab @click="myPage" v-else>
-            <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
-          </v-btn>-->
-        <!-- </div> -->
-      </div>
-
-    </div>
   </header>
 </template>
 
@@ -178,20 +154,6 @@ input {
   padding: 10px 12px;
   font-size: 14px;
 }
-/* .bar-menu{
-  display: inline-flex;
-  width: 10%;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-} */
-/*.btn-text {
-  color: black;
-}*/
-/* v-btn{
-  border-radius: 8px;
-  border: solid 1px black;
-} */
 v-img{
   height: 20px;
 }

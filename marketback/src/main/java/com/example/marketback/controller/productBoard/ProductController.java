@@ -1,58 +1,80 @@
 package com.example.marketback.controller.productBoard;
 
-import com.example.marketback.entity.productBoard.Product;
+import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
 import java.util.List;
+
 
 @Slf4j
 @RestController
 @RequestMapping("/product")
-@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class ProductController {
 
     @Autowired
-    private ProductService service;
+    private ProductService productService;
 
-    @PostMapping("/register")
-    public void productRegister (@Validated @RequestBody Product product) {
-        log.info("productRegister()");
+    @PostMapping("/register/{memberNo}")
+    public void productRegister(@Validated @RequestBody ProductBoard productBoard, @PathVariable("memberNo") Long memberNo) {
+        log.info("productRegister()" + productBoard);
 
-        service.register(product);
+        productService.register(productBoard, memberNo);
     }
 
     @GetMapping("/list")
-    public List<Product> productList() {
+    public List<ProductBoard> productList() {
         log.info("productList()");
 
-        return service.list();
+        return productService.list();
     }
 
     @GetMapping("/{productNo}")
-    public Product productRead (@PathVariable("productNo") Integer productNo) {
+    public ProductBoard productRead(@PathVariable("productNo") Integer productNo) {
         log.info("productRead()");
 
-        return service.read(productNo);
+        return productService.read(productNo);
     }
 
     @PutMapping("/{productNo}")
-    public Product productModify (@PathVariable("productNo") Integer productNo, @RequestBody Product product) {
-        log.info("productModify(): " + product);
+    public ProductBoard productModify(@PathVariable("productNo") Integer productNo, @RequestBody ProductBoard productBoard) {
+        log.info("productModify(): " + productBoard);
 
-        product.setProductNo(Long.valueOf(productNo));
-        service.modify(product);
+        productBoard.setProductNo(Long.valueOf(productNo));
+        productService.modify(productBoard);
 
-        return product;
+        return productBoard;
     }
 
     @DeleteMapping("/{productNo}")
-    public void productRemove (@PathVariable("productNo") Integer productNo) {
+    public void productRemove(@PathVariable("productNo") Long productNo) {
         log.info("productRemove()");
 
-        service.remove(productNo);
+        productService.remove(productNo);
+    }
+
+    @ResponseBody
+    @PostMapping("/uploadImg")
+    public String requestUploadFile (@RequestParam("fileList") List<MultipartFile> fileList) {
+        try {
+            for (MultipartFile multipartFile: fileList) {
+                log.info("requestUploadFile() - Make file:" + multipartFile.getOriginalFilename());
+
+                FileOutputStream writer = new FileOutputStream("../marketfront/src/assets/pImage/" + multipartFile.getOriginalFilename());
+
+                writer.write(multipartFile.getBytes());
+                writer.close();
+            }
+        } catch (Exception e) {
+            return "Upload Fail!";
+        }
+
+        log.info("requestUploadFile(): Success!!");
+        return "Upload Success";
     }
 }

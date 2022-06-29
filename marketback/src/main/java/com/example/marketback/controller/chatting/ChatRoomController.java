@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Slf4j
@@ -19,12 +21,11 @@ public class ChatRoomController {
     @Autowired
     private ChatRoomService chatRoomService;
 
-    @PostMapping("/register/{member1No}/{member2}")
-//    public void chatRoomRegister(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2, @Validated @RequestBody ChatRoom chatRoom) {
-    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2") Long member2) {
-        log.info("chatRoomRegister()"+chatRoom+member2);
+    @PostMapping("/register/{member1No}/{member2No}/{productNo}")
+    public void chatRoomRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2No") Long member2No, @PathVariable("productNo") Long productNo) {
+        log.info("chatRoomRegister()");
 
-        chatRoomService.register(chatRoom, member1No);
+        chatRoomService.register(chatRoom, member1No, member2No, productNo);
     }
 
     @GetMapping("/list/{memberNo}")
@@ -41,12 +42,12 @@ public class ChatRoomController {
         return chatRoomService.read(roomNo);
     }
 
-    @GetMapping("/{member1}/{member2}")
-    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
-        log.info("chatRoomRead()");
-
-        return chatRoomService.move(member1, member2);
-    }
+//    @GetMapping("/{member1}/{member2}")
+//    public ChatRoom chatRoomMove(@PathVariable("member1") Long member1, @PathVariable("member2") Long member2) {
+//        log.info("chatRoomRead()");
+//
+//        return chatRoomService.move(member1, member2);
+//    }
 
     @PutMapping("/{roomNo}")
     public ChatRoomRequest chatRoomModify (
@@ -59,5 +60,37 @@ public class ChatRoomController {
         return chatRoomRequest;
     }
 
+    @PutMapping("/last/{roomNo}")
+    public ChatRoomRequest chatRoomLast (
+            @PathVariable("roomNo") Long roomNo,
+            @RequestBody ChatRoomRequest chatRoomRequest) {
+        log.info("chatRoomLast(): " + chatRoomRequest);
+
+        chatRoomService.last(chatRoomRequest, roomNo);
+
+        return chatRoomRequest;
+    }
+
+    @ResponseBody
+    @PostMapping("/uploadImg")
+    public String requestUploadFile (@RequestParam("fileList") List<MultipartFile> fileList) {
+        try {
+            for (MultipartFile multipartFile: fileList) {
+                log.info("requestUploadFile() - Make file:" + multipartFile.getOriginalFilename());
+
+                FileOutputStream writer = new FileOutputStream(
+                        "../marketfront/src/assets/chatting/" + multipartFile.getOriginalFilename()
+                );
+                writer.write(multipartFile.getBytes());
+                writer.close();
+            }
+        } catch (Exception e) {
+            return "Upload Fail!";
+        }
+
+        log.info("requestUploadFile(): Success!!!");
+
+        return "Upload Success!";
+    }
 
 }
