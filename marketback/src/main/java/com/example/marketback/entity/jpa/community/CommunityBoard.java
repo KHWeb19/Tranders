@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -91,8 +92,8 @@ public class CommunityBoard {
     @Column
     private String fileName10;
 
-//    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
-//    private int commentCnt;
+    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
+    private int commentCnt;
 
     @PrePersist
     public void onPrePersist() {
@@ -104,15 +105,11 @@ public class CommunityBoard {
         this.modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
     }
 
-//    public void increaseViewCnt() {
-//        this.viewCnt++;
-//    }
-
     public CommunityBoard(String fileName1, String fileName2){
         this.fileName1 = fileName1;
         this.fileName2 = fileName2;
     }
 
-//    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-//    private List<CommunityComment> comments;
+    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<CommunityComment> comments;
 }
