@@ -44,6 +44,8 @@ public class Boss {
 
     private String lng;
 
+    private Integer reviewCount;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
@@ -55,5 +57,12 @@ public class Boss {
         this.address = address;
         this.category = category;
         this.member = member;
+        this.reviewCount = 0;
+    }
+
+    public Boss(String placeName, String lat, String lng) {
+        this.placeName = placeName;
+        this.lat = lat;
+        this.lng = lng;
     }
 }
