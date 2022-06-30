@@ -94,9 +94,10 @@ public class BossServiceImpl implements BossService{
     }
 
     @Override
-    public List<BossBackProfileImg> getBackProfile(String id) {
-        List<BossImage> bossImages = bossImgRepository.findImgListByMemberId(id);
-
+    public List<BossBackProfileImg> getBackProfile(Long bossNo) {
+        log.info("id: "+bossNo);
+        List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
+        System.out.println(bossImages.get(0));
         List<BossBackProfileImg> response = new ArrayList<>();
 
         for (BossImage bossImage : bossImages) {

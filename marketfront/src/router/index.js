@@ -11,7 +11,6 @@ import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardReg
 import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
 import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
 import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
-import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
@@ -21,10 +20,8 @@ import IdSearchPage from "@/views/member/search/IdSearchPage";
 import PwSearchPage from "@/views/member/search/PwSearchPage";
 import ResultPage from "@/views/member/search/ResultPage";
 import ChangePwPage from "@/views/member/search/ChangePwPage";
-// import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-// import ChattingPage from '@/views/chatting/ChattingPage'
 import ChattingReadView from '@/views/chatting/ChattingReadView'
 import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
@@ -224,11 +221,12 @@ const routes = [
     name: 'SearchListPage',
     components: {
       default: SearchListPage
-  },
+    },
     props: {
       default: true
     }
   },
+  {
     path: '/snsRegister',
     name: 'SnsRegisterPage',
     component: SnsRegisterPage
@@ -266,7 +264,7 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
 ]
 
 const router = new VueRouter({

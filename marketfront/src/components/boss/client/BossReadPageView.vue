@@ -15,9 +15,6 @@
       <div style="top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div style="top: 25px; position: absolute; left: 88%; z-index: 1">
-        <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
-      </div>
     </div>
 
     <div id="profile" style="padding-top: 30px;">
@@ -71,106 +68,36 @@
       </div>
     </div>
 
-      <div v-if="isCheck">
-        <div style="padding-bottom: 20px" class="home_style" v-if="boss.marketInfo === null">
-          <span style="font-size: 30px; font-weight: bold;"> 정보 </span>
-          <!--   정보가 없을 경우에     -->
-          <div style="margin-top: 20px">
-            <div style="border-style: dotted; height: 120px; border-radius: 8px; text-align: center; font-size: 23px; opacity: 0.5" class="pa-11">
-              + &nbsp; 소개 문구 등록
-            </div>
+    <div v-if="isCheck">
+      <boss-read-home-view :boss="boss"></boss-read-home-view>
+    </div>
 
-            <div style="padding-top: 30px">
-              <span style="font-size: 25px; opacity: 0.5;"><v-icon x-large>mdi-map-marker-outline</v-icon> 주소를 추가해주세요.</span>
-            </div>
+    <div v-else>
+      <boss-read-review-list-view :bossNo="bossNo"></boss-read-review-list-view>
+    </div>
 
-            <div style="padding-top: 15px">
-              <span style="font-size: 25px; opacity: 0.5;"><v-icon x-large>mdi-clock-time-five-outline</v-icon> 영업시간을 추가해 주세요.</span>
-            </div>
+    <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
+      오이마켓에 등록된 가게의 정보는 가게 관리자가 직접 등록한 것으로 (주)오이마켓은 등록된 내용에 대하여 일체의 책임을 지지 않습니다.
+    </div>
+
+    <v-dialog v-model="phoneNumDialog" width="500px">
+      <v-card width="500px" height="150px" style="padding: 35px 30px 20px 30px">
+        <v-row justify="center">
+          <div>
+            <span class="light-green--text lighten-3" style="font-weight: bolder; font-size: 30px">{{boss.placeName}}</span>
+            <span style="font-size: 22px">의 전화번호</span>
           </div>
+        </v-row>
 
-          <!--    정보가 있을 경우    -->
-        </div>
+        <v-row justify="center">
+          <span style="font-size: 20px; padding-top: 10px">{{phoneNum}}</span>
+        </v-row>
 
-        <div style="padding-bottom: 20px" class="home_style" v-else>
-          <div style="display: flex">
-            <span style="font-size: 30px; font-weight: bold; width: 30%"> 정보 </span> <span style="width: 70%; display: flex; justify-content: end;"><v-btn>수정</v-btn></span>
-          </div>
-          <!--   정보가 없을 경우에     -->
-          <div style="margin-top: 20px">
-            <div style="height: auto; font-size: 23px;" class="pa-2">
-              {{boss.marketInfo}}
-            </div>
-
-            <div class="kmap" ref="map" style="position: relative; overflow: hidden"></div>
-
-            <div style="padding-top: 30px">
-              <span style="font-size: 25px;"><v-icon x-large>mdi-map-marker-outline</v-icon> {{ boss.address }}</span>
-            </div>
-
-            <div style="padding-top: 15px">
-              <span style="font-size: 25px;"><v-icon x-large>mdi-clock-time-five-outline</v-icon> {{boss.startTime}} ~ {{boss.endTime}}</span>
-            </div>
-
-            <div style="padding-top: 15px">
-              <span style="font-size: 25px;"><v-icon x-large>mdi-earth</v-icon> {{boss.marketHomePage}}</span>
-            </div>
-          </div>
-
-        </div> <!-- 정보 부분 -->
-
-
-        <hr style="height: 15px; background-color: rgba(94,94,94,0.16); border: none"/>
-
-        <div style="padding-bottom: 20px" class="home_style">
-          <span style="font-size: 30px; font-weight: bold;"> 쿠폰 </span>
-          <!--   정보가 없을 경우에     -->
-          <div style="margin-top: 20px">
-            <div style="padding-top: 30px">
-              <span style="font-size: 25px; opacity: 0.5;">아직 쿠폰이 없어요.</span>
-            </div>
-
-          </div>
-
-        </div> <!-- 쿠폰 부분 -->
-
-        <hr style="height: 15px; background-color: rgba(94,94,94,0.16); border: none"/>
-
-        <div style="padding-bottom: 20px" class="home_style">
-          <span style="font-size: 30px; font-weight: bold;"> 가격 </span>
-          <!--   메뉴가 없을 경우에     -->
-          <div style="margin-top: 20px" v-if="bossMenu === null">
-            <div style="padding-top: 30px">
-              <span style="font-size: 25px; opacity: 0.5;">상품이나 서비의 가격을 추가하고, 이웃의 눈길을 끌어보세요.</span>
-            </div>
-          </div>
-
-          <div v-else>
-            <div v-for="(menu, index) in bossMenu" :key="index" style="padding-top: 20px">
-              <div style="display: flex">
-                <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>
-                <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>
-                <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>
-              </div>
-
-              <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">
-                {{menu.menuInfo}}
-              </div>
-            </div>
-          </div>
-
-        </div> <!-- 가격 부분 -->
-      </div>
-
-      <div v-else style="border: 5px solid orange;">
-        <div style="height: 320px; text-align: center; font-size: 23px; opacity: 0.5" class="pa-12">
-          아직 후기가 없어요.
-        </div>
-      </div>
-
-      <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
-        오이마켓에 등록된 가게의 정보는 가게 관리자가 직접 등록한 것으로 (주)오이마켓은 등록된 내용에 대하여 일체의 책임을 지지 않습니다.
-      </div>
+        <v-row justify="end">
+          <v-btn @click="phoneNumDialog=false">확인</v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
 
     <v-dialog v-model="reviewDialog" width="800px">
       <v-card width="800px" height="auto" class="pa-4">
@@ -220,25 +147,6 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="phoneNumDialog" width="500px">
-      <v-card width="500px" height="150px" style="padding: 35px 30px 20px 30px">
-        <v-row justify="center">
-          <div>
-            <span class="light-green--text lighten-3" style="font-weight: bolder; font-size: 30px">{{boss.placeName}}</span>
-            <span style="font-size: 22px">의 전화번호</span>
-          </div>
-        </v-row>
-
-        <v-row justify="center">
-          <span style="font-size: 20px; padding-top: 10px">{{phoneNum}}</span>
-        </v-row>
-
-        <v-row justify="end">
-          <v-btn @click="phoneNumDialog=false">확인</v-btn>
-        </v-row>
-      </v-card>
-    </v-dialog>
-
   </div>
 
 </template>
@@ -248,7 +156,8 @@ import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
 import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
-let kakao = window.kakao;
+import BossReadHomeView from "@/components/boss/client/BossReadHomeView";
+import BossReadReviewListView from "@/components/boss/client/BossReadReviewListView";
 
 export default {
   name: "BossReadPageView",
@@ -258,13 +167,13 @@ export default {
     }
   },
   components:{
+    BossReadReviewListView,
+    BossReadHomeView,
     Swiper, SwiperSlide
   },
   data(){
     return {
       isCheck: true,
-      mapInstance: null,
-      markInstance: null,
       id: cookies.get("id"),
       name: cookies.get("name"),
       swiperOption: {
@@ -277,7 +186,14 @@ export default {
           clickable: true
         }
       },
+      bossNo: '',
+      content: '',
+      files: [], //업로드용 파일
+      filesPreview: [],
+      uploadImageIndex: 0,
+      phoneNumDialog: false,
       reviewDialog: false,
+      phoneNum: '',
       selection: [],
       reviewTag: [
         '친절해요',
@@ -285,18 +201,10 @@ export default {
         '만족스러워요',
         '아쉬워요'
       ],
-      textAreaMessage: this.boss.placeName +"에 대한 후기를 남겨주세요",
-      content: '',
-      files: [], //업로드용 파일
-      filesPreview: [],
-      uploadImageIndex: 0,
-      phoneNumDialog: false,
-      phoneNum: ''
     }
   },
   methods: {
     ...mapActions(['fetchBossBackProfile']),
-    ...mapActions(['fetchBossMenuList']),
     backPage(){
       this.$router.push({name: 'NearPage'})
     },
@@ -306,7 +214,6 @@ export default {
     },
     home(){
       this.isCheck = true;
-      this.initMap();
     },
     review(){
       this.isCheck = false;
@@ -393,35 +300,16 @@ export default {
 
       this.$emit('saveReview', formData)
     },
-    initMap(){
-      let container = this.$refs.map;
-
-      this.mapInstance = new kakao.maps.Map(container, {
-        center: new kakao.maps.LatLng(this.boss.lat, this.boss.lng),
-        level: 2,
-      });
-
-      this.markInstance = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(this.boss.lat, this.boss.lng),
-        //clickable: true
-      })
-
-      this.markInstance.setMap(this.mapInstance);
-    },
   },
   mounted() {
-    this.initMap();
-
     this.phoneNum = this.boss.phoneNumber.substr(0,3) +'-'+ this.boss.phoneNumber.substr(3, 4) + '-' + this.boss.phoneNumber.substr(8, 4);
-
   },
   computed: {
     ...mapState(['backProfileImgs']),
-    ...mapState(['bossMenu'])
   },
   created() {
-    this.fetchBossBackProfile(this.id)
-    this.fetchBossMenuList(this.id)
+    this.bossNo = this.boss.bossAuthNo;
+    this.fetchBossBackProfile(this.bossNo)
   }
 }
 </script>

@@ -16,7 +16,7 @@ public class BossReviewImage {
 
     private String imageName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOSS_REVIEW_NO")
     private BossReview review;
 

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +23,7 @@ public class BossReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOSS_REVIEW_NO")
-    private Long boseReviewNo;
+    private Long bossReviewNo;
 
     private String content;
 
@@ -34,6 +36,9 @@ public class BossReview {
     @ManyToOne
     @JoinColumn(name = "BOSS_AUTH_NO")
     private Boss boss;
+
+    @OneToMany(mappedBy = "review")
+    private List<BossReviewImage> bossReviewImagesList = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime createdDate;

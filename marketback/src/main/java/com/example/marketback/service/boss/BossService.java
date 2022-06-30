@@ -21,7 +21,7 @@ public interface BossService {
 
     void modifyProfile(String fileSrc, String id);
 
-    List<BossBackProfileImg> getBackProfile(String id);
+    List<BossBackProfileImg> getBackProfile(Long id);
 
     void addPrice(BossPrice bossPrice, Long bossNo);
 

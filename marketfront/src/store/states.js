@@ -17,5 +17,7 @@ export default {
     marketInfo: [],
     villageInfo: [],
     nearMap: [],
-    nearReview: null
+    nearReview: null,
+    bossReview: [],
+    bossReviewImg: []
 }

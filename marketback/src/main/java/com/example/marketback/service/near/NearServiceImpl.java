@@ -9,7 +9,6 @@ import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.response.BossMapResponse;
 import com.example.marketback.response.NearReviewResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -73,8 +72,8 @@ public class NearServiceImpl implements NearService{
             if(boss.getReviewCount() == 0) {
                 responses.add(null);
             }else {
-                BossReview bossReview = bossReviewRepository.findTopByBossNoOrderByIdDesc(boss.getBossAuthNo());
-                responses.add(new NearReviewResponse(bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState()));
+                List<BossReview> bossReview = bossReviewRepository.findTopByBossNoOrderByIdDesc(boss.getBossAuthNo());
+                responses.add(new NearReviewResponse(bossReview.get(0).getMember().getName(), bossReview.get(0).getMember().getRegion(), bossReview.get(0).getContent(), bossReview.get(0).getMember().getProfileImg(), bossReview.get(0).getState()));
             }
         }
         return responses;
