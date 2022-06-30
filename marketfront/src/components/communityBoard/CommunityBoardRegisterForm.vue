@@ -43,8 +43,9 @@
                             </v-carousel-item>         
                         </v-carousel>
                     </v-row><br>                   
-                        <v-icon large>mdi-image-outline</v-icon>
-                        <input type="file" id="files" ref="files"  dense style="width:193px"
+                        <!-- <v-icon large>mdi-image-outline</v-icon> -->
+                        <label for="files"><v-icon large>mdi-image-outline</v-icon></label>
+                        <input type="file" id="files" ref="files"  dense style="width:0px"
                                 multiple v-on:change="handleFileUpload()"/>
                         <v-dialog v-model="dialog" persisten max-width="1000">
                             <template v-slot:activator="{ on }">

@@ -35,6 +35,7 @@ export default {
 }
 #shadow{
     text-shadow: 2px 2px rgb(135,255,0);
-    color: rgb(185,255,75);
+    /* color: rgb(185,255,75); */
+    color: green;
 }
 </style>            
