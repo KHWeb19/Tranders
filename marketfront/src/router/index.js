@@ -6,10 +6,11 @@ import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
-import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
-import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
-import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
-import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue'
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
 import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
@@ -77,7 +78,12 @@ const routes = [
   {
     path: '/productRead/:productNo',
     name: 'ProductReadPage',
-    component: ProductReadPage
+    components:{
+      default: ProductReadPage
+    },
+    props: {
+      default: true
+    }
   },
   {
     path: '/ordinaryRegister',
@@ -194,11 +200,6 @@ const routes = [
     component: CommunityBoardRegisterPage
   },
   {
-    path: '/Tranders/CommunityRegister/PlaceSearch',
-    name: 'KakaoMap',
-    component: KakaoMap
-  },
-  {
     path: '/Tranders/CommunityRead/:boardNo',
     name: 'CommunityBoardReadPage',
     components: {
@@ -219,6 +220,15 @@ const routes = [
     }
   },
   {
+    path: '/Tranders/CommunityList/SearchList',
+    name: 'SearchListPage',
+    components: {
+      default: SearchListPage
+  },
+    props: {
+      default: true
+    }
+  },
     path: '/snsRegister',
     name: 'SnsRegisterPage',
     component: SnsRegisterPage

@@ -1,22 +1,24 @@
 <template>
-    <v-container >
-        <!-- <v-row justify="center"> -->
-            <!-- <img class="title" src="@/assets/title/communityTitle.png" width=250 > -->
-        <!-- </v-row> -->
-        <v-row>
-            <community-board-register-form @submit="onBoardSubmit"/>
-        </v-row>
-    </v-container>
+<v-container >
+    <home-view></home-view>
+    <br><br>
+    <v-row>
+        <community-board-register-form @submit="onBoardSubmit"/>
+    </v-row>
+</v-container>
 </template>
 
 <script>
-
+import HomeView from '@/components/home/HomeView'
+import CommunityBoardRegisterForm from '@/components/communityBoard/CommunityBoardRegisterForm.vue'
 import axios from 'axios'
-import CommunityBoardRegisterForm from '../../components/communityBoard/CommunityBoardRegisterForm.vue'
 
 export default {
-  components: { CommunityBoardRegisterForm },
     name: 'CommunityBoardRegisterPage',
+    components: { 
+        CommunityBoardRegisterForm, 
+        HomeView, 
+        },
     methods: {
         onBoardSubmit (payload) {
             const {formData} = payload
@@ -40,16 +42,6 @@ export default {
 </script>
 
 <style scoped>
-.title{
-    margin-top:4%;
-    margin-bottom: 5%;
-}
-@media (max-width:700px){
-    .title {
-        margin-top:10%;
-        margin-left:20px;
-        margin-bottom:10%;
-        width:200px;
-    }
-}
+
+
 </style>

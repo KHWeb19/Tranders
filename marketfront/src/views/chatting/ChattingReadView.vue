@@ -1,8 +1,8 @@
 <template>
-<div>
-        <chatting-read :chatrooms="chatrooms" :chatroom="chatroom" @onAppoint="onAppoint" @onReminder="onReminder"/>
+    <div>
+        <chatting-read :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder"/>
 
-</div>
+    </div>
 
 </template>
 
@@ -36,11 +36,11 @@ export default {
     }
   },
     computed: {
-    ...mapState(['chatroom']),
+        ...mapState(['chatroom']),
         ...mapState(['chatrooms'])
     },
     mounted() {
-    this.fetchChatroomList(this.login.memberNo)
+        this.fetchChatroomList(this.login.memberNo)
     },
     created() {
 
@@ -48,12 +48,24 @@ export default {
           .catch(()=>{
               alert('채팅방 요청 실패')
               this.$router.push()
-          }),
-      this.getNewData();
+          })
+    //   this.getNewData();
     },
     methods: {
         ...mapActions(['fetchChatroom']),
         ...mapActions(['fetchChatroomList']),
+        onSubmit(payload) {
+            console.log(payload)
+            // const { roomNo, message } = payload
+            const { roomNo, memberNo, message, now, image } = payload
+            axios.post('http://localhost:7777/kafka', { roomNo, memberNo, message, now, image })
+            if(image){
+                axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: '사진을 전송 했습니다'})
+            } else{
+                axios.put(`http://localhost:7777/chatting/last/${roomNo}`, {lastMessage: message})
+            }
+            
+        },
         onAppoint(payload) {
             console.log(payload)
             const { roomNo, date, time } = payload

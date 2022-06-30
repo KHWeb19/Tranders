@@ -3,8 +3,10 @@ package com.example.marketback.service.chatting;
 import com.example.marketback.controller.chatting.ChatRoomRequest;
 import com.example.marketback.entity.chatting.ChatRoom;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.repository.chatting.ChatRoomRepository;
 import com.example.marketback.repository.member.MemberRepository;
+import com.example.marketback.repository.productBoard.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,42 @@ import java.util.Optional;
 public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Autowired
-    ChatRoomRepository chatRoomRepository;
+    private ChatRoomRepository chatRoomRepository;
 
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
-    public void register(ChatRoom chatRoom, Long member1No) {
-        //member2No로 회원찾아서 member2에 set
-        //이미 있으면 생성 no
-        Optional<Member> maybeMember = memberRepository.findById(Long.valueOf(member1No));
-        chatRoom.setMember1(maybeMember.get());
-        chatRoomRepository.save(chatRoom);
+    public void register(ChatRoom chatRoom, Long member1No, Long member2No, Long productNo) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1No), Long.valueOf(member2No));
+        Optional<ProductBoard> maybeProduct = productRepository.findById(Long.valueOf(productNo));
+        //서로의 채팅방이 없다는게 확인되면 생성
+        if (maybeChatRoom.equals(Optional.empty())) {
+            Optional<Member> maybeMember1 = memberRepository.findById(Long.valueOf(member1No));
+            Optional<Member> maybeMember2 = memberRepository.findById(Long.valueOf(member2No));
+            chatRoom.setMember1(maybeMember1.get());
+            chatRoom.setMember2(maybeMember2.get());
+            chatRoom.setProductBoard(maybeProduct.get());
+            chatRoomRepository.save(chatRoom);
+        }
+        //존재하면 게시물만 변경
+        else {
+            ChatRoom chatRoomEntity = new ChatRoom(
+                    maybeChatRoom.get().getRoomNo(),
+                    maybeChatRoom.get().getMember1(),
+                    maybeChatRoom.get().getMember2(),
+                    maybeProduct.get(),
+                    maybeChatRoom.get().getAppointDate(),
+                    maybeChatRoom.get().getAppointTime(),
+                    maybeChatRoom.get().getLastMessage()
+            );
+            chatRoomRepository.save(chatRoomEntity);
+            chatRoom.setProductBoard(maybeProduct.get());
+        }
+
     }
 
     @Override
@@ -46,16 +72,16 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return maybeChatRoom.get();
     }
 
-    public ChatRoom move(Long member1, Long member2) {
-        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMember(Long.valueOf(member1), Long.valueOf(member2));
-
-        if (maybeChatRoom.equals(Optional.empty())) {
-            //없으면 생성하는거 추가하자
-            return null;
-        }
-
-        return maybeChatRoom.get();
-    }
+//    public ChatRoom move(Long member1, Long member2) {
+//        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMember(Long.valueOf(member1), Long.valueOf(member2));
+//
+//        if (maybeChatRoom.equals(Optional.empty())) {
+//            //없으면 생성하는거 추가하자
+//            return null;
+//        }
+//
+//        return maybeChatRoom.get();
+//    }
 
     @Override
     public void modify(ChatRoomRequest chatRoomRequest, Long roomNo) {
@@ -64,8 +90,25 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 roomNo,
                 maybeChatRoom.get().getMember1(),
                 maybeChatRoom.get().getMember2(),
+                maybeChatRoom.get().getProductBoard(),
                 chatRoomRequest.getAppointDate(),
-                chatRoomRequest.getAppointTime()
+                chatRoomRequest.getAppointTime(),
+                maybeChatRoom.get().getLastMessage()
+        );
+        chatRoomRepository.save(chatRoomEntity);
+    }
+
+    @Override
+    public void last(ChatRoomRequest chatRoomRequest, Long roomNo) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
+        ChatRoom chatRoomEntity = new ChatRoom(
+                roomNo,
+                maybeChatRoom.get().getMember1(),
+                maybeChatRoom.get().getMember2(),
+                maybeChatRoom.get().getProductBoard(),
+                maybeChatRoom.get().getAppointDate(),
+                maybeChatRoom.get().getAppointTime(),
+                chatRoomRequest.getLastMessage()
         );
         chatRoomRepository.save(chatRoomEntity);
     }

@@ -2,6 +2,7 @@ package com.example.marketback.controller.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
+import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.jpa.community.CommunityBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,5 +159,13 @@ public class CommunityBoardController {
 
         service.remove(boardNo);
 
+    }
+
+    @PostMapping("/search")
+    public List<CommunityBoard> CommunityBoardSearchList (@RequestBody KeyWordRequest keyWord) {
+        log.info("CommunityBoardSearchList()");
+        String word = keyWord.getKeyWord();
+
+        return service.searchList(word);
     }
 }

@@ -1,6 +1,6 @@
 export default {
-    product: null,
-    products: [],
+    productBoard: null,
+    productBoards: [],
     accessToken: null,
     refreshToken: null,
     chatroom: null,
