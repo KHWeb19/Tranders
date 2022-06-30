@@ -84,8 +84,10 @@ export default {
             axios.put('http://localhost:7777/chatting/charge', {id, money})
         },
         onPay(payload){
-            const { id, money } = payload
+            const { id, money, memberId } = payload
             axios.put('http://localhost:7777/chatting/charge', {id, money})
+            console.log(memberId)
+            this.$router.push({name: 'ReviewRegisterPage', params: {memberId:memberId.toString()} })
         }
     } 
 }

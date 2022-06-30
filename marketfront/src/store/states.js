@@ -5,6 +5,8 @@ export default {
     refreshToken: null,
     chatroom: null,
     chatrooms: [],
+    reviews: [],
+    manner: null,
     profileImg: null,
     communityBoards:[],
     communityBoard: null,

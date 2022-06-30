@@ -23,11 +23,14 @@ import ChangePwPage from "@/views/member/search/ChangePwPage";
 // import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-// import ChattingPage from '@/views/chatting/ChattingPage'
 import ChattingReadView from '@/views/chatting/ChattingReadView'
-import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
+import ReviewRegisterPage from '@/views/profile/ReviewRegisterPage'
+import ReviewListPage from '@/views/profile/ReviewListPage'
+import MannerReadPage from '@/views/profile/MannerReadPage'
+import ProfileBasicPage from '@/views/profile/ProfileBasicPage'
+
 import MyPageProfile from "@/views/myPage/MyPageProfile";
 import MyInfoPage from "@/views/myPage/MyInfoPage";
 import BossRegisterPage from "@/views/boss/BossRegisterPage";
@@ -127,9 +130,41 @@ const routes = [
     }
   },
   {
-    path: '/homeTest',
-    name: 'HomeTestPage',
-    component: HomeTestPage,
+    path: '/reviewRegister/:memberId',
+    name: 'ReviewRegisterPage',
+    components: {
+      default: ReviewRegisterPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/reviewList/:memberId',
+    name: 'ReviewListPage',
+    components: {
+      default: ReviewListPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/mannerRead/:memberId',
+    name: 'MannerReadPage',
+    components: {
+      default: MannerReadPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/profileBasic/:memberId',
+    name: 'ProfileBasicPage',
+    components: {
+      default: ProfileBasicPage,
+    },
     props: {
       default: true
     }

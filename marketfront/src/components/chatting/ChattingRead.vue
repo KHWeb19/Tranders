@@ -427,9 +427,8 @@ export default {
     onPay(){
       if(this.userInfo.money>=this.chatroom.productBoard.price) {
         this.userInfo.money -= this.chatroom.productBoard.price
-        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money})
+        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id})
       }
-
     }
   },
 }
