@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-view></home-view>
+    <after-login-view></after-login-view>
     <product-modify-form
       v-if="productBoard"
       :productBoard="productBoard"
@@ -14,13 +14,12 @@
 import axios from "axios";
 import { mapActions, mapState } from "vuex";
 import ProductModifyForm from "@/components/productBoard/ProductModifyForm.vue";
-import HomeView from "../../components/home/HomeView.vue";
-
+import AfterLoginView from "../../components/home/AfterLoginView.vue";
 export default {
   name: "ProductModifyPage",
   components: {
     ProductModifyForm,
-    HomeView,
+    AfterLoginView,
   },
   props: {
     productNo: {
@@ -34,10 +33,13 @@ export default {
   methods: {
     ...mapActions(["fetchProductBoard"]),
     onSubmit(payload) {
-      const { productImage, title, price, content } = payload;
-
+      const { memberNo, category, productImage, title, price, content } =
+        payload;
+      console.log(memberNo);
       axios
-        .put(`http://localhost:7777/product/${this.productNo}`, {
+        .put(`http://localhost:7777/product/${memberNo}/${this.productNo}`, {
+          memberNo,
+          category,
           productImage,
           title,
           price,

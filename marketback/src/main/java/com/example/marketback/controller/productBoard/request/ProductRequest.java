@@ -2,6 +2,7 @@ package com.example.marketback.controller.productBoard.request;
 
 import lombok.Data;
 
+
 @Data
 public class ProductRequest {
     private Long productNo;

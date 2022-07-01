@@ -1,7 +1,11 @@
 <template>
   <div>
-    <home-view></home-view>
-    <product-read-form v-if="productBoard" :productBoard="productBoard" @onChat="onChat"/>
+    <after-login-view></after-login-view>
+    <product-read-form
+      v-if="productBoard"
+      :productBoard="productBoard"
+      @onChat="onChat"
+    />
     <p v-else>로딩중 ........</p>
     <v-btn @click="onDelete">삭제</v-btn>
     <router-link :to="{ name: 'ProductModifyPage' }">
@@ -16,9 +20,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
-import HomeView from "../../components/home/HomeView.vue";
+import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import axios from "axios";
-
 export default {
   name: "ProductReadPage",
   props: {
@@ -29,7 +32,7 @@ export default {
   },
   components: {
     ProductReadForm,
-    HomeView,
+    AfterLoginView,
   },
   computed: {
     ...mapState(["productBoard"]),
@@ -56,17 +59,20 @@ export default {
         });
     },
     onChat(payload) {
-      const {member1No, member2No, productNo} = payload
-      console.log(member1No, member2No, productNo)
-      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
-          .then(() => {
-              this.$router.push({ name: "ChattingReadList" })
-          })
-          .catch(() => {
-              alert('문제 발생!')
-          })
-      
-    }
+      const { member1No, member2No, productNo } = payload;
+      console.log(member1No, member2No, productNo);
+      axios
+        .post(
+          `http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`,
+          { member1No, member2No, productNo }
+        )
+        .then(() => {
+          this.$router.push({ name: "ChattingReadList" });
+        })
+        .catch(() => {
+          alert("문제 발생!");
+        });
+    },
   },
 };
 </script>

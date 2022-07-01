@@ -5,7 +5,6 @@
 <script>
 import ProductRegisterForm from "@/components/productBoard/ProductRegisterForm";
 import axios from "axios";
-
 export default {
   name: "ProductRegisterPage",
   components: {
@@ -16,6 +15,7 @@ export default {
       console.log(payload);
       const {
         memberNo,
+        category,
         productImage,
         productImage1,
         productImage2,
@@ -26,6 +26,7 @@ export default {
       axios
         .post(`http://localhost:7777/product/register/${memberNo}`, {
           memberNo,
+          category,
           productImage,
           productImage1,
           productImage2,
