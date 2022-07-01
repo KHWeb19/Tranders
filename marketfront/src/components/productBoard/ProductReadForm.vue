@@ -102,6 +102,10 @@
           >채팅하기</v-btn
         >
       </section>
+
+      <section id="repo" style="display: flex; align-items: center; height: 50px"> <!-- 작성자와 같은지 확인하기 -->
+        <div style="width: 100%">이 게시글 신고하기</div><div style="display: flex; justify-content: end"><v-icon style="color: black">mdi-chevron-right</v-icon></div>
+      </section>
     </article>
   </div>
 </template>
@@ -259,6 +263,16 @@ img {
   line-height: 1.46;
   letter-spacing: -0.6px;
   color: #868e96;
+}
+
+
+#repo {
+  padding: 32px 0;
+  width: 677px;
+  margin: 0 auto;
+  border-top: 1px solid #868e96;;
+  border-bottom: 1px solid #868e96;
+  font-weight: bolder;
 }
 
 .slide-3d {

@@ -25,9 +25,11 @@
         </v-row>
 
         <v-row justify="center">
-          <v-col cols="4" @click="searchId">ID 찾기</v-col>
+          <v-col cols="3" @click="searchId">ID 찾기</v-col>
           <v-col cols="1">|</v-col>
-          <v-col cols="4" @click="searchPw">비밀번호 찾기</v-col>
+          <v-col cols="3" @click="searchPw">비밀번호 찾기</v-col>
+          <v-col cols="1">|</v-col>
+          <v-col cols="3" @click="register" style="color: green">회원 가입</v-col>
         </v-row>
 
         <v-row>
@@ -76,7 +78,10 @@ export default {
     },
     searchPw(){
       this.$router.push({name: "PwSearchPage"});
-    }
+    },
+    register() {
+      this.$router.push({ name: "RegisterMemberPage" });
+    },
   }
 }
 </script>

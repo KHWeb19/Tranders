@@ -6,8 +6,12 @@
       </div>
 
       <div>
-        <router-link style="text-decoration: none" :to="{ name: 'HomePage' }">
-          <v-btn text @click="test"> 중고거래 </v-btn>
+
+        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
+          <v-btn text>
+            중고거래
+          </v-btn>
+
         </router-link>
 
         <router-link
@@ -40,36 +44,39 @@
           />
         </div>
 
-        <div>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn fab v-if="profileImg === null" v-on="on">
-                <v-img
-                  contain
-                  max-height="58"
-                  src="@/assets/profile/Tranders_base_profile_img.png"
-                ></v-img>
-              </v-btn>
+        <div style="display: flex; margin-left: auto; align-items: center">
+          <div id="searchBar" style="">
+            <input type="text" placeholder="물품이나 동네를 검색해보세요">
+          </div>
 
-              <v-btn fab v-else v-on="on">
-                <v-img
-                  :src="require(`@/assets/profile/${profileImg}`)"
-                  id="img"
-                  style="height: 50px; width: 50px"
-                ></v-img>
-              </v-btn>
-            </template>
+          <div>
+            <v-menu offset-y>
+              <template v-slot:activator="{on}">
+                <v-btn fab  v-if="profileImg === null" v-on="on">
+                  <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+                </v-btn>
 
-            <v-list>
-              <v-list-item link @click="myPage">
-                <v-list-item-title> My Page </v-list-item-title>
-              </v-list-item>
+                <v-btn fab v-else v-on="on">
+                  <v-img :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 50px; width: 50px"></v-img>
+                </v-btn>
+              </template>
 
-              <v-list-item link @click="logout">
-                <v-list-item-title> 로그아웃 </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+              <v-list>
+                <v-list-item link @click="myPage">
+                  <v-list-item-title>
+                    My Page
+                  </v-list-item-title>
+                </v-list-item>
+
+                <v-list-item link @click="logout">
+                  <v-list-item-title>
+                    로그아웃
+                  </v-list-item-title>
+                </v-list-item>
+
+              </v-list>
+            </v-menu>
+          </div>
         </div>
       </div>
     </div>
@@ -87,15 +94,7 @@ export default {
   data() {
     return {
       id: "",
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" },
-      ],
-      searchList: [],
-      keyWord: "",
-    };
+    }
   },
   methods: {
     ...mapActions(["fetchMemberProfile"]),
@@ -104,7 +103,7 @@ export default {
     },
     logout() {
       logout();
-      this.$router.push({ name: "HomePage" });
+      this.$router.push({name: 'HomePage'})
     },
     test() {
       alert("test");
