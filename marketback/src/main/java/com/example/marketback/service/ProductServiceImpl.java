@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -45,12 +43,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void modify(ProductBoard productBoard) {
+    public void modify(ProductBoard productBoard, Long memberNo) {
+        Optional<Member> maybeMember = memberRepository.findById(Long.valueOf(memberNo));
+        productBoard.setMember(maybeMember.get());
         productRepository.save(productBoard);
     }
 
     @Override
     public void remove(Long productNo) {
         productRepository.deleteById(Long.valueOf(productNo));
+    }
+
+    @Override
+    public List<ProductBoard> searchList(String keyWord) {
+        List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
+
+        return findSearchList;
     }
 }
