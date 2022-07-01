@@ -9,7 +9,7 @@
         </v-col>
 
         <v-col cols="8">
-          <my-page-view></my-page-view>
+          <my-village-setting-view @saveRegion="saveRegion"></my-village-setting-view>
         </v-col>
       </v-row>
     </div>
@@ -20,14 +20,40 @@
 
 import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
-import MyPageView from "@/components/myPage/MyProfileView";
+import MyVillageSettingView from "@/components/myPage/MyVillageSettingView";
+import axios from "axios";
+import {API_BASE_URL} from "@/constant/login";
+import cookies from "vue-cookies";
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer ' + cookies.get('access_token'),
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+}
 
 export default {
-  components: {MyPageView, MyProfileBar, AfterLoginView},
+  components: {MyVillageSettingView, MyProfileBar, AfterLoginView},
   name: "MyVillageSetting",
   data(){
     return{
-      index: 1
+      index: 1,
+      id: cookies.get('id')
+    }
+  },
+  methods: {
+    saveRegion(payload) {
+      const {data} = payload;
+      let id = this.id;
+
+      axios.post(API_BASE_URL + '/member/saveVillage', {data, id}, config)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch(() => {
+            alert('에러')
+          })
     }
   }
 };

@@ -63,6 +63,7 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME_ACCESS ))
                 .withIssuer(request.getRequestURI())
                 .withClaim("name", member.getName())
+                .withClaim("region", member.getRegion())
                 .withClaim("memberNo", member.getMemberNo())
                 .withClaim("providerType", member.getProvider())
                 .withClaim("registerStatus", member.getRegisterStatus())

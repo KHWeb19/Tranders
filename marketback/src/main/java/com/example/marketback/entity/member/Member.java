@@ -53,6 +53,8 @@ public class Member {
 
     private String profileImg;
 
+    private String searchRegion;
+
     @Enumerated(EnumType.STRING)
     private MemberRole roles;
 
@@ -66,6 +68,7 @@ public class Member {
         member.setTemperature(36.5F);
         member.setBossAuth(Boolean.FALSE);
         member.setRegisterStatus(Boolean.TRUE);
+        member.setSearchRegion(member.getRegion());
 
         return member;
     }

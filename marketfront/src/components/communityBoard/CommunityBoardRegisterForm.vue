@@ -29,7 +29,7 @@
                     <v-row  justify="center">
                         <v-col cols="2" class="label" style="font-size:20pt">내용</v-col>
                         <v-col cols="12">
-                            <v-textarea style="white-space:pre-line" cols="75" rows="7" 
+                            <v-textarea class="content" style="white-space:pre-line" cols="75" rows="7" 
                             outlined color="indigo darken-4" placeholder=" 우리 동네 관련된 질문이나 이야기를 해보세요."
                             v-model="content">
                             </v-textarea>
@@ -40,24 +40,32 @@
                             <v-carousel-item 
                             v-for="(file, index) in files" :key="index" style="text-align:center">
                             <img :src=file.preview class="preview"/>
-                            </v-carousel-item>
+                            </v-carousel-item>         
                         </v-carousel>
                     </v-row><br>                   
-                        <v-icon large>mdi-image-outline</v-icon>
-                        <input type="file" id="files" ref="files"  dense style="width:193px"
+                        <!-- <v-icon large>mdi-image-outline</v-icon> -->
+                        <label for="files"><v-icon large>mdi-image-outline</v-icon></label>
+                        <input type="file" id="files" ref="files"  dense style="width:0px"
                                 multiple v-on:change="handleFileUpload()"/>
-                                <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityRegister/PlaceSearch'" color="blue-grey" text>
-                                    <v-icon large>mdi-map-marker-outline
-                                    </v-icon>
-                                </v-btn>                                    
+                        <v-dialog persisten max-width="1000">
+                            <template v-slot:activator="{ on }">
+                                <v-btn v-on="on"  onclick="" color="blue-grey" text>
+                                    <v-icon large>mdi-map-marker-outline</v-icon>
+                                    <v-text-field style="width:200px" placeholder="장소를 등록하세요." v-model="placeName"/>
+                                </v-btn>                              
+                            </template>
+                            <v-card>
+                                <kakao-map></kakao-map>        
+                            </v-card>
+                        </v-dialog>                                  
                     <br>
                     <div align="left">
                     <span style="color:red; font-size:12pt">최대 10개의 이미지 등록 가능({{files.length}}/10)</span>
                     </div>
                     <br>
                     <v-row wrap>
-                        <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityList'" class="writeBtn" color="red accent-4" dark><v-icon>mdi-close-circle-outline</v-icon></v-btn>
-                        <v-btn type="submit" class="writeBtn2" color="light green accent-4" dark><v-icon> mdi-send</v-icon></v-btn>
+                        <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityList'" class="writeBtn" color="red accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-close</v-icon></v-btn>
+                        <v-btn type="submit" class="writeBtn2" color="light green accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-send</v-icon></v-btn>
                     </v-row>
                 </table>
             </v-form>
@@ -65,10 +73,25 @@
 </template>
 
 <script>
+import EventBus from '@/eventBus.js'
+import Vue from 'vue'
+import cookies from "vue-cookies";
+import KakaoMap from '../../views/KakaoMap.vue';
+Vue.use(cookies)
+
 export default {
+  components: { KakaoMap },
     name:'CommunityBoardRegisterForm',
     data() {
         return {
+            login: {
+                name: cookies.get('name'),
+                id: cookies.get('id'),
+                region: cookies.get('region'),
+                access_token: cookies.get('access_token'),
+            },
+            placeName:'',
+            placeUrl:'',
             image :'',
             title:'',
             content:'',
@@ -81,11 +104,32 @@ export default {
                 '함께해요','동네질문', '동네맛집', '동네소식', '취미생활',  '분실/실종센터', '해주세요', '일상'
             ],
             selectSubject:[],
+            lat: 0,
+            lng: 0,
+            category: '',
+            phoneNumber: '',
+            address: '',
+            storeRegion: null
+
+
         }
     },
+
     created () {
-        // this.writer = this.$store.state.userInfo.nickname
-        this.writer = ''
+        EventBus.$on('placeRegister', (payload) => {
+            this.placeUrl = payload[0]
+            this.placeName = payload[1]
+            this.lng = payload[2]
+            this.lat = payload[3]
+            this.category = payload[4]
+            this.phoneNumber = payload[5]
+            this.storeRegion = payload[6];
+
+          //rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name
+            console.log(payload) 
+        })
+        this.writer = this.login.id
+        this.region = this.login.region
     },
     methods: {
         handleFileUpload () {
@@ -102,7 +146,6 @@ export default {
                     {
                         file: this.$refs.files.files[i],
                         preview: URL.createObjectURL(this.$refs.files.files[i])
-                    
                     }
                 ]
             }
@@ -110,7 +153,7 @@ export default {
             }
         },
         onBoardSubmit () {
-            const { title, content, writer, usedSubject} = this
+            const { title, content, writer, usedSubject, region, placeName, placeUrl, lat, lng, category, phoneNumber, storeRegion } = this
             let formData = new FormData();
 
             for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
@@ -121,7 +164,15 @@ export default {
             formData.append('content', content)
             formData.append('writer', writer)
             formData.append('usedSubject', usedSubject)
-            
+            formData.append('region', region)
+            formData.append('placeName', placeName)
+            formData.append('placeUrl', placeUrl)
+            formData.append('lat', lat)
+            formData.append('lng', lng)
+            formData.append('category', category)
+            formData.append('phoneNumber', phoneNumber)
+            formData.append('storeRegion', storeRegion)
+
             this.$emit('submit', {formData})
             console.log(formData)            
         },
@@ -136,7 +187,7 @@ export default {
                 el2 < 0 ? this.usedSubject.push(item) : this.usedSubject.splice(el2,1) 
                 console.log(this.usedSubject)
             
-        },
+        },  
 },
 }
 </script>
@@ -175,7 +226,7 @@ table{
     position: absolute;
     zoom:1;
     margin-top:0.5%;
-    margin-left:79%;
+    margin-left:82%;
     float:left;
 }
 .titleFloat {
@@ -194,11 +245,5 @@ table{
     margin-right:auto;
     max-width:350px;
     height:350px; 
-}
-@media (max-width:700px){ 
-    table {
-        zoom:60%;
-        margin-bottom:30px;
-    }
 }
 </style>

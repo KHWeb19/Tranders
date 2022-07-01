@@ -6,11 +6,11 @@ import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
 
-import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
-import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
-import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
-import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue'
-import KakaoMap from '@/views/KakaoMap.vue'
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
 
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
@@ -20,7 +20,6 @@ import IdSearchPage from "@/views/member/search/IdSearchPage";
 import PwSearchPage from "@/views/member/search/PwSearchPage";
 import ResultPage from "@/views/member/search/ResultPage";
 import ChangePwPage from "@/views/member/search/ChangePwPage";
-// import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
 import ChattingReadView from '@/views/chatting/ChattingReadView'
@@ -38,6 +37,12 @@ import BossPage from "@/views/boss/BossPage";
 import MyVillageProof from "@/views/myPage/MyVillageProof";
 import OauthPage from "@/views/Util/OauthPage";
 import SnsRegisterPage from "@/views/member/SnsRegisterPage";
+import BossMarketInfo from "@/views/boss/BossMarketInfo";
+import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
+import MyVillageSetting from "@/views/myPage/MyVillageSetting";
+import NearPage from "@/views/near/NearPage";
+import BossReadPage from "@/views/boss/client/BossReadPage";
+import NearReadPage from "@/views/near/NearReadPage";
 
 Vue.use(VueRouter)
 
@@ -214,6 +219,11 @@ const routes = [
     },
   },
   {
+    path: '/myVillageSetting',
+    name: 'MyVillageSetting',
+    component: MyVillageSetting,
+  },
+  {
     path: '/Tranders/CommunityList',
     name: 'CommunityBoardListPage',
     component: CommunityBoardListPage
@@ -222,11 +232,6 @@ const routes = [
     path: '/Tranders/CommunityRegister',
     name: 'CommunityBoardRegisterPage',
     component: CommunityBoardRegisterPage
-  },
-  {
-    path: '/Tranders/CommunityRegister/PlaceSearch',
-    name: 'KakaoMap',
-    component: KakaoMap
   },
   {
     path: '/Tranders/CommunityRead/:boardNo',
@@ -249,6 +254,16 @@ const routes = [
     }
   },
   {
+    path: '/Tranders/CommunityList/SearchList',
+    name: 'SearchListPage',
+    components: {
+      default: SearchListPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
     path: '/snsRegister',
     name: 'SnsRegisterPage',
     component: SnsRegisterPage
@@ -256,6 +271,46 @@ const routes = [
   {
     path: '/oauth2/*',
     component: OauthPage
+  },
+  {
+    path: '/bossMarket/info',
+    name: 'BossMarketInfo',
+    component: BossMarketInfo
+  },
+  {
+    path: '/bossMarket/infoModify',
+    name: 'BossMarketInfoModify',
+    components: {
+      default: BossMarketInfoModify
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/near',
+    name: 'NearPage',
+    component: NearPage
+  },
+  {
+    path: '/bossRead',
+    name: 'BossReadPage',
+    components: {
+      default: BossReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/nearRead',
+    name: 'NearReadPage',
+    components: {
+      default: NearReadPage
+    },
+    props: {
+      default: true
+    }
   },
 ]
 

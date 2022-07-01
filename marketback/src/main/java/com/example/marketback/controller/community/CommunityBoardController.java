@@ -1,7 +1,9 @@
 package com.example.marketback.controller.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
+import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.jpa.community.CommunityBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,10 @@ public class CommunityBoardController {
     private CommunityBoardRepository repository;
 
     @PostMapping("/register")
-    public void communityBoardRegister (@Validated CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+    public void communityBoardRegister (@Validated CommunityBoard board, @Validated Near near, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
         log.info("communityBoardRegister();" + file);
 
-        service.register(board,file);
+        service.register(board, near, file);
     }
 
     @GetMapping("/list")
@@ -158,5 +160,13 @@ public class CommunityBoardController {
 
         service.remove(boardNo);
 
+    }
+
+    @PostMapping("/search")
+    public List<CommunityBoard> CommunityBoardSearchList (@RequestBody KeyWordRequest keyWord) {
+        log.info("CommunityBoardSearchList()");
+        String word = keyWord.getKeyWord();
+
+        return service.searchList(word);
     }
 }

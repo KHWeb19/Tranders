@@ -12,5 +12,16 @@ export default {
     communityBoard: null,
     boss: null,
     userInfo: null, // myPage
-    mapOption: null, // lat, lng
+    mapOption: {}, // lat, lng
+    backProfileImgs: [],
+    bossMenu: [],
+    marketInfo: [],
+    villageInfo: [],
+    nearMap: [],
+    nearReview: null,
+    bossReview: [],
+    bossReviewImg: [],
+    nearMapComm: [],
+    nearComm: [],
+    near: null
 }

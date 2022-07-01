@@ -29,10 +29,13 @@
         <section class="card-wrap">
           <article class="card-top">
             <div class="card-photo">
-              <v-img />
+              <v-img
+                :src="require(`@/assets/pImage/${productBoard.productImage}`)"
+              />
             </div>
             <div class="card-desc">
               <div class="card-title">{{ productBoard.title }}</div>
+              <div class="card-title">{{ productBoard.price }}원</div>
               <div class="card-counts">
                 <span> 관심 5 </span>∙
                 <span> 채팅 6 </span>
@@ -54,6 +57,12 @@ export default {
       type: Array,
     },
   },
+  data() {
+    return {
+      searchList: [],
+      keyWord: "",
+    };
+  },
 };
 </script>
 
@@ -67,7 +76,6 @@ export default {
   margin-bottom: 40px;
   margin-top: 40px;
 }
-
 .card-wrap {
   width: 980px;
   margin: 0 auto;
@@ -75,13 +83,11 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
 }
-
 .card-top {
   width: calc(25% - 44px);
   margin-right: 44px;
   margin-bottom: 56px;
 }
-
 .card-photo {
   width: 100%;
   padding-top: 100%;
@@ -92,11 +98,9 @@ export default {
   box-shadow: inset 0px 0px 0px 1px rgb(0, 0, 0 / 15%);
   box-sizing: border-box;
 }
-
 .card-desc {
   margin-top: 12px;
 }
-
 .card-title {
   font-size: 16px;
   letter-spacing: -0.02px;
@@ -108,7 +112,6 @@ export default {
   line-height: 1.5;
   font-weight: normal;
 }
-
 .card-region-name {
   font-size: 13px;
   color: #212529;
@@ -118,12 +121,10 @@ export default {
   margin-bottom: 4px;
   line-height: 1.5;
 }
-
 .card-counts {
   color: #868e96;
   font-size: 13px;
 }
-
 .product-link {
   text-decoration: none !important;
 }

@@ -2,7 +2,7 @@
   <v-container>
     <v-card width="100%">
       <div style="padding-left: 50px; padding-right: 30px">
-        <div v-if="!isCheck" >
+        <div v-if="!isCheck">
           <v-row justify="center" style="padding-top: 40px">
             <v-card-title style="font-size: 30px">비밀번호를 입력해주세요</v-card-title>
           </v-row>
@@ -14,10 +14,17 @@
             </v-col>
           </v-row>
 
-          <v-row>
+          <v-row v-if="providerType">
             <v-col cols="3">비밀번호</v-col>
             <v-col cols="9">
               <v-text-field solo v-model="password" style="width: 100%" placeholder="PASSWORD"> </v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row v-else>
+            <v-col cols="3">인증번호</v-col> <!-- 카톡으로 인증하든, 메일로 인증하든 변경 -->
+            <v-col cols="9">
+              <v-text-field solo v-model="password" style="width: 100%" placeholder="인증번호"> </v-text-field>
             </v-col>
           </v-row>
 
@@ -159,6 +166,7 @@ export default {
       isCheck: false, // false로 꼭 변경해두기!
       changeIsCheck: true,
       id: cookies.get("id"),
+      providerType: cookies.get("providerType"),
       password: '',
       name: '',
       phoneNumber: '',

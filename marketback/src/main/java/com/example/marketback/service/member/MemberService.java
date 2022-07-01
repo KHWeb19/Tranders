@@ -1,7 +1,9 @@
 package com.example.marketback.service.member;
 
+import com.example.marketback.entity.member.City;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.response.CityVillageInfoResponse;
 import com.example.marketback.response.MemberRegionResponse;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
@@ -23,6 +25,10 @@ public interface MemberService {
     void modifyRegion(MemberRegionResponse memberRegionResponse, String id);
 
     void snsRegister(Member member);
+
+    CityVillageInfoResponse getVillageInfo(String id);
+
+    Integer saveVillageSetting(String id, String data);
 
     //String phoneNumCheck(String phoneNumber) throws CoolsmsException;
 }

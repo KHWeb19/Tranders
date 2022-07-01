@@ -29,6 +29,25 @@ public class Boss {
 
     private String category;
 
+    @Lob
+    private String marketInfo;
+
+    private String phoneNumber;
+
+    private String marketHomePage;
+
+    private String startTime;
+
+    private String endTime;
+
+    private String lat;
+
+    private String lng;
+
+    private Integer reviewCount;
+
+    private Integer communityCount;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
@@ -40,5 +59,13 @@ public class Boss {
         this.address = address;
         this.category = category;
         this.member = member;
+        this.reviewCount = 0;
+        this.communityCount = 0;
+    }
+
+    public Boss(String placeName, String lat, String lng) {
+        this.placeName = placeName;
+        this.lat = lat;
+        this.lng = lng;
     }
 }

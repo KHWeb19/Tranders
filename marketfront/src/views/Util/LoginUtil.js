@@ -14,6 +14,7 @@ function ParsingInfo(token){
     let userId = result.sub;
     let roles = result.roles;
     let name = result.name;
+    let region = result.region;
     let memberNo = result.memberNo;
     let providerType = result.providerType;
 
@@ -24,10 +25,12 @@ function ParsingInfo(token){
         let registerStatus = result.registerStatus;
         cookies.set('registerStatus', registerStatus, SAVE_COOKIE_ACCESS)
     }
+    cookies.set('region', region, SAVE_COOKIE_ACCESS);
     cookies.set('id', userId, SAVE_COOKIE_ACCESS);
     cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
     cookies.set('name', name, SAVE_COOKIE_ACCESS);
     cookies.set('roles', roles, SAVE_COOKIE_ACCESS);
+    cookies.set('memberNo', memberNo, SAVE_COOKIE_ACCESS);
     cookies.set('providerType', providerType, SAVE_COOKIE_ACCESS);
 }
 
@@ -38,6 +41,8 @@ function logout(){
     cookies.remove('roles');
     cookies.remove('access_token');
     cookies.remove('refresh_token');
+    cookies.remove('providerType');
+    cookies.remove('registerStatus');
 }
 
 export {
