@@ -14,16 +14,17 @@ export default {
     props: {
         memberId: {
             type: String,
+            required: true
         }
     },
     methods: {
         onSubmit(payload) {
             console.log(payload);
-            const {memberId, member2Id, select1, select2, select3, select4, sum, message} = payload;
+            const {memberId, member2Id, good1, good2, good3, good4, bad1, bad2, bad3, bad4, sum, message} = payload;
             axios.post(`http://localhost:7777/review/register/${memberId}/${member2Id}`, {
                 memberId, member2Id, sum, message})
             axios.post(`http://localhost:7777/manner/register/${memberId}`, {
-                memberId, count1: +select1, count2: +select2, count3: +select3, count4: +select4, })
+                memberId, good1: +good1, good2: +good2, good3: +good3, good4: +good4, bad1: +bad1, bad2: +bad2, bad3: +bad3, bad4: +bad4})
                 
         },
     }

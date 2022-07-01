@@ -25,19 +25,17 @@ public class MannerServiceImpl implements MannerService {
         Optional<Manner> maybeManner = mannerRepository.findByMemberId(memberId);
 
         if (maybeManner.equals(Optional.empty())) {
-            Manner mannerEntity = new Manner(
-                    maybeMember,
-                    manner.getCount1(),
-                    manner.getCount2(),
-                    manner.getCount3(),
-                    manner.getCount4()
-            );
-            mannerRepository.save(mannerEntity);
+            manner.setMember(maybeMember);
+            mannerRepository.save(manner);
         } else {
-            maybeManner.get().setCount1(maybeManner.get().getCount1()+manner.getCount1());
-            maybeManner.get().setCount2(maybeManner.get().getCount2()+manner.getCount2());
-            maybeManner.get().setCount3(maybeManner.get().getCount3()+manner.getCount3());
-            maybeManner.get().setCount4(maybeManner.get().getCount4()+manner.getCount4());
+            maybeManner.get().setGood1(maybeManner.get().getGood1()+manner.getGood1());
+            maybeManner.get().setGood2(maybeManner.get().getGood2()+manner.getGood2());
+            maybeManner.get().setGood3(maybeManner.get().getGood3()+manner.getGood3());
+            maybeManner.get().setGood4(maybeManner.get().getGood4()+manner.getGood4());
+            maybeManner.get().setBad1(maybeManner.get().getBad1()+manner.getBad1());
+            maybeManner.get().setBad2(maybeManner.get().getBad2()+manner.getBad2());
+            maybeManner.get().setBad3(maybeManner.get().getBad3()+manner.getBad3());
+            maybeManner.get().setBad4(maybeManner.get().getBad4()+manner.getBad4());
             mannerRepository.save(maybeManner.get());
         }
     }

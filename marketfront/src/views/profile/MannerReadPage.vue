@@ -1,9 +1,10 @@
 <template>
     <div>
         <after-login-view/>
-        <profile-top/>
-        <h2>매너 칭찬</h2>
-        <manner-read :manner="manner"/>
+        <div id='content'>
+            <profile-top :userInfo="userInfo" />
+            <manner-read :manner="manner"/>
+        </div>
     </div>
 </template>
 
@@ -22,6 +23,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(['userInfo']),
         ...mapState(['manner'])
     },
     created() {
@@ -30,9 +32,20 @@ export default {
                 alert('매너 칭찬 요청 실패')
                 this.$router.push()
             })
+        this.fetchMyPage(this.memberId)
     },
     methods: {
+        ...mapActions(['fetchMyPage']),
         ...mapActions(['fetchManner']),
     }
 }
 </script>
+
+<style scoped>
+#content{
+    display: block;
+    margin-top: 72px;
+    width: 677px;
+    margin: 30px auto 0 auto;
+}
+</style>

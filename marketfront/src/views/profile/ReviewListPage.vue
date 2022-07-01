@@ -1,9 +1,10 @@
 <template>
     <div>
         <after-login-view/>
-        <profile-top/>
-        <h2> 리뷰 리스트</h2>
-        <review-list :reviews="reviews"/>
+        <div id='content'>
+            <profile-top :userInfo="userInfo" />
+            <review-list :reviews="reviews"/>
+        </div>
     </div>
 </template>
 
@@ -20,14 +21,34 @@ export default {
         ProfileTop,
         AfterLoginView
     },
+    props: {
+        memberId: {
+            type: String,
+            required: true
+        }
+    },
     computed: {
+        ...mapState(['userInfo']),
         ...mapState(['reviews'])
     },
+    created() {
+        this.fetchMyPage(this.memberId)
+    },
     mounted () {
-        this.fetchReviewList('rrrrrrrr')
+        this.fetchReviewList(this.memberId)
     },
     methods: {
+        ...mapActions(['fetchMyPage']),
         ...mapActions(['fetchReviewList'])
     }
 }
 </script>
+
+<style scoped>
+#content{
+    display: block;
+    margin-top: 72px;
+    width: 677px;
+    margin: 30px auto 0 auto;
+}
+</style>
