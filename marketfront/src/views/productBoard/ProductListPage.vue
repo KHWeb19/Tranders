@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-view></home-view>
+    <after-login-view></after-login-view>
     <product-list-form :productBoards="productBoards" />
   </div>
 </template>
@@ -8,13 +8,12 @@
 <script>
 import ProductListForm from "@/components/productBoard/ProductListForm";
 import { mapState, mapActions } from "vuex";
-import HomeView from "../../components/home/HomeView.vue";
-
+import AfterLoginView from "../../components/home/AfterLoginView.vue";
 export default {
   name: "ProductListPage",
   components: {
     ProductListForm,
-    HomeView,
+    AfterLoginView,
   },
   computed: {
     ...mapState(["productBoards"]),

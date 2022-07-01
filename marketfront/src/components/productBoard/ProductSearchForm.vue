@@ -7,15 +7,14 @@
     <v-col
       class="none-product"
       v-if="
-        !productBoards ||
-        (Array.isArray(productBoards) && productBoards.length === 0)
+        !searchList || (Array.isArray(searchList) && searchList.length === 0)
       "
     >
       현재 등록된 상품이 없습니다!
     </v-col>
     <v-col
       v-else
-      v-for="productBoard in productBoards"
+      v-for="productBoard in searchList"
       :key="productBoard.productNo"
       cols="4"
     >
@@ -50,18 +49,13 @@
 
 <script>
 export default {
-  name: "ProductListForm",
+  name: "ProductSearchForm",
   components: {},
   props: {
-    productBoards: {
+    searchList: {
       type: Array,
+      required: true,
     },
-  },
-  data() {
-    return {
-      searchList: [],
-      keyWord: "",
-    };
   },
 };
 </script>
