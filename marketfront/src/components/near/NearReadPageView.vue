@@ -2,14 +2,7 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style="width: 100%; position: relative;">
-        <v-img v-if="backProfileImgs === null" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"></v-img>
-        <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
-          <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
-            <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
-          </swiper-slide>
-
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper>
+        <div id="img" style="width: 100%; height: 500px; background-color: #a0c5a0"></div>
       </div>
 
       <div style="top: 25px; padding-left: 5px; position: absolute; z-index: 1">
@@ -18,14 +11,13 @@
     </div>
 
     <div id="profile" style="padding-top: 30px;">
-
       <div id="profile_img">
-        <v-img :src="require(`@/assets/bossProfile/front/${boss.profileImg}`)" height="200px" width="200px" style="border-radius: 70%"></v-img>
+        <v-img src="@/assets/profile/Tranders_base_profile_img.png" height="200px" width="200px" style="border-radius: 70%"></v-img>
       </div>
       <div style="padding-left: 55px; font-size: 40px; width: 100%" class="pa-5">
-        {{ boss.placeName }}
+        {{ near.placeName }}
         <div style="font-size: 20px" class="pa-2">
-          {{ boss.region }} ㆍ {{boss.category}} ㆍ 단골 0
+          {{ near.storeRegion }} ㆍ {{near.category}} ㆍ 단골 0
         </div>
         <div>
           <v-btn class="white--text" style="font-weight: bold; background-color: #4c7732"> + 단골 맺기</v-btn>
@@ -53,35 +45,30 @@
     <div style="padding-bottom: 50px; height: 40px; padding-top: 30px">
       <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center;" @click="home = true; comm = false; review=false;">
         홈
-        <div v-if="home" style="border-bottom: 3px solid green">
-        </div>
+        <div v-if="home" style="border-bottom: 3px solid green"></div>
       </div>
 
       <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm = true; review=false;">
-        커뮤니티 {{boss.communityCount}}
-        <div v-if="comm" style="border-bottom: 3px solid green">
-        </div>
+        커뮤니티 {{near.communityCount}}
+        <div v-if="comm" style="border-bottom: 3px solid green"></div>
       </div>
 
       <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm=false; review = true;">
-        리뷰 {{boss.reviewCount}}
-        <div v-if="review" style="border-bottom: 3px solid green">
-
-        </div>
+        리뷰 {{near.reviewCount}}
+        <div v-if="review" style="border-bottom: 3px solid green"></div>
       </div>
-
     </div>
 
     <div v-if="home">
-      <boss-read-home-view :boss="boss"></boss-read-home-view>
+      <near-read-home-view :near="near"></near-read-home-view>
     </div>
 
     <div v-if="comm">
-      <boss-comm-list-view :bossNo="bossNo"></boss-comm-list-view>
+      <near-read-comm-list-view :nearNo="nearNo"></near-read-comm-list-view>
     </div>
 
     <div v-if="review">
-      <boss-read-review-list-view :bossNo="bossNo"></boss-read-review-list-view>
+      <near-read-review-list-view :nearNo="nearNo"></near-read-review-list-view>
     </div>
 
     <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
@@ -92,13 +79,13 @@
       <v-card width="500px" height="150px" style="padding: 35px 30px 20px 30px">
         <v-row justify="center">
           <div>
-            <span class="light-green--text lighten-3" style="font-weight: bolder; font-size: 30px">{{boss.placeName}}</span>
+            <span class="light-green--text lighten-3" style="font-weight: bolder; font-size: 30px">{{near.placeName}}</span>
             <span style="font-size: 22px">의 전화번호</span>
           </div>
         </v-row>
 
         <v-row justify="center">
-          <span style="font-size: 20px; padding-top: 10px">{{phoneNum}}</span>
+          <span style="font-size: 20px; padding-top: 10px">{{near.phoneNumber}}</span>
         </v-row>
 
         <v-row justify="end">
@@ -111,7 +98,7 @@
       <v-card width="800px" height="auto" class="pa-4">
         <div style="padding: 5px 20px 5px 20px">
           <v-row justify="center" style="font-size: 20px; padding-top: 20px">
-            {{name}} 님, {{boss.placeName}} 이용하셨나요?
+            {{name}} 님, {{near.placeName}} 이용하셨나요?
           </v-row>
           <v-row justify="center" style="font-weight: lighter; font-size: 18px">
             이웃에게 이용 경험을 알려보세요
@@ -161,25 +148,22 @@
 
 <script>
 import cookies from "vue-cookies";
-import {mapActions, mapState} from "vuex";
-import 'swiper/css/swiper.css'
-import {Swiper, SwiperSlide} from "vue-awesome-swiper";
-import BossReadHomeView from "@/components/boss/client/BossReadHomeView";
-import BossReadReviewListView from "@/components/boss/client/BossReadReviewListView";
-import BossCommListView from "@/components/boss/client/BossReadCommListView";
+import NearReadHomeView from "@/components/near/NearReadHomeView";
+import NearReadReviewListView from "@/components/near/NearReadReviewListView";
+import NearReadCommListView from "@/components/near/NearReadCommListView";
 
 export default {
-  name: "BossReadPageView",
+  name: "NearReadPageView",
   props: {
-    boss: {
+    near: {
       type: Object
     }
   },
   components:{
-    BossCommListView,
-    BossReadReviewListView,
-    BossReadHomeView,
-    Swiper, SwiperSlide
+    NearReadCommListView,
+    NearReadReviewListView,
+    NearReadHomeView
+
   },
   data(){
     return {
@@ -188,24 +172,13 @@ export default {
       review: false,
       id: cookies.get("id"),
       name: cookies.get("name"),
-      swiperOption: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        autoHeight: true,
-        loop: false,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        }
-      },
-      bossNo: '',
+      nearNo: '',
       content: '',
       files: [], //업로드용 파일
       filesPreview: [],
       uploadImageIndex: 0,
       phoneNumDialog: false,
       reviewDialog: false,
-      phoneNum: '',
       selection: [],
       reviewTag: [
         '친절해요',
@@ -216,7 +189,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchBossBackProfile']),
     backPage(){
       this.$router.push({name: 'NearPage'})
     },
@@ -289,8 +261,8 @@ export default {
       formData.append('id', this.id)
       formData.append('name', this.name)
       formData.append('content', this.content)
-      formData.append('bossNo', this.boss.bossAuthNo)
-      formData.append('nearNo', 0)
+      formData.append('nearNo', this.near.nearNo)
+      formData.append('bossNo', 0)
 
       let select = '';
 
@@ -309,14 +281,14 @@ export default {
     },
   },
   mounted() {
-    this.phoneNum = this.boss.phoneNumber.substr(0,3) +'-'+ this.boss.phoneNumber.substr(3, 4) + '-' + this.boss.phoneNumber.substr(8, 4);
+
   },
   computed: {
-    ...mapState(['backProfileImgs']),
+    //...mapState(['backProfileImgs']),
   },
   created() {
-    this.bossNo = this.boss.bossAuthNo;
-    this.fetchBossBackProfile(this.bossNo)
+    this.nearNo = this.near.nearNo;
+    //this.fetchBossBackProfile(this.bossNo)
   }
 }
 </script>

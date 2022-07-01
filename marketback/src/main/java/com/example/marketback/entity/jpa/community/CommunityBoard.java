@@ -1,5 +1,8 @@
 package com.example.marketback.entity.jpa.community;
 
+import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.near.Near;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -92,8 +95,20 @@ public class CommunityBoard {
     @Column
     private String fileName10;
 
-    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
-    private int commentCnt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NEAR_NO")
+    private Near near;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_NO")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "BOSS_AUTH_NO")
+    private Boss boss;
+
+//    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
+//    private int commentCnt;
 
     @PrePersist
     public void onPrePersist() {
@@ -110,6 +125,6 @@ public class CommunityBoard {
         this.fileName2 = fileName2;
     }
 
-    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<CommunityComment> comments;
+    //    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//    private List<CommunityComment> comments;
 }

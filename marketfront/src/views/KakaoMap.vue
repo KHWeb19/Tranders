@@ -7,7 +7,7 @@
       <input type="text" value="" placeholder="장소를 검색해주세요." @keyup.enter="searchPlace"/>
       <div class="results">
         <div class="place" v-for="rs in search.results" :key="rs.id">
-          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister((rs.place_url),$event); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
+          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister(rs); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
           <div class="addr">{{rs.road_address_name}}
           </div>
         </div>
@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     if (window.kakao && window.kakao.maps) {
-      this.initMap();
+      setTimeout(() => { this.initMap() }, 100)
     } else {
       const script = document.createElement('script');
       script.onload = () => kakao.maps.load(this.initMap);
@@ -154,12 +154,11 @@ export default {
       var map = new kakao.maps.Map(mapContainer, mapOption);
     },
 
-    placeRegister(placeUrl,$event) {
-      const payload = [ placeUrl, $event.target.innerHTML ]
-      const placeName = $event.target.innerHTML
+    placeRegister(rs) {
+      const payload = [ rs.place_url, rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name]
       EventBus.$emit('placeRegister', payload)
-      console.log(placeName) 
-      console.log(placeUrl)
+      //console.log(placeName)
+      console.log(rs)
     }
   },
 }

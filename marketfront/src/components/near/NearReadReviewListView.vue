@@ -16,7 +16,7 @@
 
         <div v-if="bossReviewImg">
           <swiper class="swiper" :options="swiperOption" style="height: 500px">
-            <swiper-slide v-for="(img,index2) in bossReviewImg[index]" :key="index2">
+            <swiper-slide v-for="(img,index) in bossReviewImg[index]" :key="index">
               <v-img max-height="550px" :src="require(`@/assets/bossReview/${img}`)" id="img"></v-img>
             </swiper-slide>
 
@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
 import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
+import {mapActions, mapState} from "vuex";
 
 export default {
-  name: "BossReadReviewListView",
+  name: "NearReadReviewListView",
   props: {
-    bossNo: {
+    nearNo: {
       type: Number,
     }
   },
@@ -70,6 +70,7 @@ export default {
           clickable: true
         }
       },
+      date: []
     }
   },
   methods: {
@@ -94,7 +95,7 @@ export default {
     ...mapState(['bossReviewImg'])
   },
   async mounted() {
-    let num = '0' +this.bossNo;
+    let num = '00' +this.nearNo;
     await this.fetchBossReview(num);
     setTimeout(() => {
       this.fetchBossReviewImage(num)

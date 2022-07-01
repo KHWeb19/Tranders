@@ -13,12 +13,15 @@ public class ReviewResponse {
     private String profileImg;
     private String state;
 
-    public ReviewResponse(Long reviewNo, String name, String region, String content, String profileImg, String state) {
+    private String date;
+
+    public ReviewResponse(Long reviewNo, String name, String region, String content, String profileImg, String state, String date) {
         this.reviewNo = reviewNo;
         this.name = name;
         this.region = region;
         this.content = content;
         this.profileImg = profileImg;
         this.state = state;
+        this.date = date;
     }
 }

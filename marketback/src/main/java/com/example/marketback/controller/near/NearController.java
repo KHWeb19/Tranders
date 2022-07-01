@@ -2,7 +2,9 @@ package com.example.marketback.controller.near;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.response.BossMapResponse;
+import com.example.marketback.response.NearPageResponse;
 import com.example.marketback.response.NearReviewResponse;
+import com.example.marketback.response.NoBossMapResponse;
 import com.example.marketback.service.near.NearService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,26 @@ public class NearController {
         log.info("NearReviewResponse");
 
        return nearService.nearReview();
-        //return null;
+    }
+
+    @PostMapping("/communityMap")
+    public List<NoBossMapResponse> nearCommunityMap() {
+        log.info("nearCommunityMap");
+
+        return nearService.communityMapList();
+    }
+
+    @PostMapping("/communityBoard")
+    public List<NearReviewResponse> nearCommunityBoard(){
+        log.info("nearCommunityBoard");
+
+        return nearService.communityBoard();
+    }
+
+    @PostMapping("/{nearNo}")
+    public NearPageResponse showNearPage(@PathVariable Long nearNo){
+        log.info("showNearPage: "+ nearNo);
+
+        return nearService.showNearPage(nearNo);
     }
 }

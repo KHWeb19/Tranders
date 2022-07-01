@@ -91,9 +91,6 @@ export default {
         console.log(arr)
         this.selection.push(arr);
       }
-    },
-    readReview(reviewNo) {
-      this.$router.push({name: 'BossReadReviewPage', query: {reviewNo: reviewNo}});
     }
   },
   computed: {
@@ -101,8 +98,11 @@ export default {
     ...mapState(['bossReviewImg'])
   },
   async mounted() {
-    await this.fetchBossReview(this.bossNo);
-    await this.fetchBossReviewImage(this.bossNo)
+    let num = '0' +this.bossNo;
+    await this.fetchBossReview(num);
+    setTimeout(() => {
+      this.fetchBossReviewImage(num)
+    }, 80)
     await this.parsingState();
   }
 }

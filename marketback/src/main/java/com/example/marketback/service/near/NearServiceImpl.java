@@ -1,13 +1,18 @@
 package com.example.marketback.service.near;
 
 import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.near.Near;
 import com.example.marketback.entity.review.BossReview;
 import com.example.marketback.repository.boss.BossRepository;
-import com.example.marketback.repository.boss.bossReview.BossReviewImageRepository;
 import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
+import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
 import com.example.marketback.repository.member.MemberRepository;
+import com.example.marketback.repository.near.NearRepository;
 import com.example.marketback.response.BossMapResponse;
+import com.example.marketback.response.NearPageResponse;
 import com.example.marketback.response.NearReviewResponse;
+import com.example.marketback.response.NoBossMapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +32,10 @@ public class NearServiceImpl implements NearService{
     private BossReviewRepository bossReviewRepository;
 
     @Autowired
-    private BossReviewImageRepository bossReviewImageRepository;
+    private CommunityBoardRepository communityBoardRepository;
+
+    @Autowired
+    private NearRepository nearRepository;
 
     @Override
     public List<BossMapResponse> showMap() {
@@ -77,5 +85,43 @@ public class NearServiceImpl implements NearService{
             }
         }
         return responses;
+    }
+
+    @Override
+    public List<NoBossMapResponse> communityMapList() {
+        List<Near> nearList = nearRepository.findAll();
+
+        List<NoBossMapResponse> responses = new ArrayList<>();
+
+        for(Near near : nearList){
+            int maxCount = near.getReviewCount() > near.getCommunityCount() ? near.getReviewCount() : near.getCommunityCount();
+            responses.add(new NoBossMapResponse(near.getNearNo(), near.getPlaceName(), near.getLat(), near.getLng(), near.getStoreRegion(), near.getCategory(), maxCount));
+        }
+        return responses;
+    }
+
+    @Override
+    public List<NearReviewResponse> communityBoard() {
+        List<Near> nearEntity = nearRepository.findAll();
+        List<NearReviewResponse> responses = new ArrayList<>();
+        System.out.println(nearEntity.size());
+
+        for(Near near : nearEntity) {
+            if(near.getReviewCount() == 0 && near.getCommunityCount() == 0){
+                responses.add(null);
+            }else {
+                List<CommunityBoard> communityBoardList = communityBoardRepository.findTopByBossNoOrderByIdDesc(near.getNearNo());
+                System.out.println("test: "+ communityBoardList.size());
+                responses.add(new NearReviewResponse(communityBoardList.get(0).getMember().getName(), communityBoardList.get(0).getMember().getRegion(), communityBoardList.get(0).getContent(), communityBoardList.get(0).getMember().getProfileImg(), communityBoardList.get(0).getUsedSubject()));
+            }
+        }
+        return responses;
+    }
+
+    @Override
+    public NearPageResponse showNearPage(Long nearNo) {
+        Near nearEntity = nearRepository.findByNearNo(nearNo);
+
+        return new NearPageResponse(nearEntity.getNearNo(), nearEntity.getPlaceName(), nearEntity.getCategory(), nearEntity.getPhoneNumber(), nearEntity.getMarketHomePage(), nearEntity.getAddress(), nearEntity.getStoreRegion(), nearEntity.getLat(), nearEntity.getLng(), nearEntity.getReviewCount(), nearEntity.getCommunityCount());
     }
 }

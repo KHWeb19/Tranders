@@ -19,7 +19,7 @@ import {
     FETCH_CLIENT_BOSS_VIEW,
     FETCH_NEAR_REVIEW,
     FETCH_BOSS_REVIEW,
-    FETCH_BOSS_REVIEW_IMAGE
+    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -96,6 +96,15 @@ export default {
     },
     [FETCH_BOSS_REVIEW_IMAGE] (state, reviewImg){
         state.bossReviewImg = reviewImg;
+    },
+    [FETCH_NEAR_COMMUNITY_MAP] (state, nearMapComm){
+        state.nearMapComm = nearMapComm;
+    },
+    [FETCH_NEAR_COMM] (state, nearComm){
+        state.nearComm = nearComm;
+    },
+    [FETCH_NEAR_COMM_PAGE] (state, near){
+        state.near = near;
     }
 }
 

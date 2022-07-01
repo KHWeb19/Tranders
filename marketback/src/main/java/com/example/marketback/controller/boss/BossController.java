@@ -2,14 +2,13 @@ package com.example.marketback.controller.boss;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossPrice;
+import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.entity.review.BossReview;
-import com.example.marketback.entity.review.BossReviewImage;
-import com.example.marketback.repository.boss.BossRepository;
 import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.response.BossBackProfileImg;
 import com.example.marketback.response.BossPriceMenuResponse;
-import com.example.marketback.response.NearReviewResponse;
+import com.example.marketback.response.CommunityBoardListResponse;
 import com.example.marketback.response.ReviewResponse;
 import com.example.marketback.service.boss.BossService;
 import com.example.marketback.service.boss.review.BossReviewService;
@@ -24,6 +23,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -193,19 +193,23 @@ public class BossController {
                                @RequestParam("name") String name,
                                @RequestParam("content") String content,
                                @RequestParam("bossNo") Long bossNo,
+                               @RequestParam("nearNo") Long nearNo,
                                @RequestParam("state") String state){
 
         log.info("registerReview");
 
         List<String> fileName = new ArrayList<>();
-
+        Long num;
+        if(nearNo == 0) num = bossNo;
+        else num = nearNo;
+        UUID uuid = UUID.randomUUID();
         try{
             for(MultipartFile files : imgFile) {
                 log.info("requestUploadFile() - Make file: " + files.getOriginalFilename());
 
-                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossReview/" + bossNo + "-" + id + "_" + name +"_" + files.getOriginalFilename());
+                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossReview/" + num + "_" + id +"_"+ uuid+ "_" + files.getOriginalFilename());
 
-                String fileSrc = bossNo + "-" + id + "_" + name +"_" +  files.getOriginalFilename();
+                String fileSrc = num + "_" + id + "_" + uuid+ "_" +  files.getOriginalFilename();
 
                 fileName.add(fileSrc);
                 log.info(fileSrc);
@@ -213,7 +217,7 @@ public class BossController {
                 file.close();
             }
 
-            bossReviewService.saveReview(fileName, id, name, content, bossNo, state);
+            bossReviewService.saveReview(fileName, id, name, content, bossNo, nearNo, state);
 
         } catch (Exception e){
             log.info("에러");
@@ -223,19 +227,30 @@ public class BossController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PostMapping("/review/{bossNo}")
-    public List<ReviewResponse> reviewList(@PathVariable Long bossNo){
-        log.info("reviewList: " + bossNo);
-
-        return bossReviewService.getReview(bossNo);
+    @PostMapping("/review")
+    public List<ReviewResponse> reviewList(@RequestBody Map<String, String> num){
+        log.info("boss!!!!reviewList: " + num.get("num"));
+        return bossReviewService.getReview(num.get("num"));
     }
 
-    @PostMapping("/reviewImg/{bossNo}")
-    public List<List<String>> reviewImg(@PathVariable Long bossNo){
-        log.info("reviewList: " + bossNo);
+    @PostMapping("/reviewImg")
+    public List<List<String>> reviewImg(@RequestBody Map<String, String> num){
+        log.info("reviewList: " + num.get("num"));
+        List<BossReview> bossReviewEntity;
 
-        List<BossReview> bossReviewEntity = bossReviewRepository.findByBossNo(bossNo);
-        return bossReviewService.getReviewImg(bossReviewEntity, bossNo);
+        if(num.get("num").charAt(0) == '0' && num.get("num").charAt(1) == '0') {
+            bossReviewEntity = bossReviewRepository.findByNearNo(Long.valueOf(num.get("num")));
+        }else{
+            bossReviewEntity = bossReviewRepository.findByBossNo(Long.valueOf(num.get("num")));
+        }
+
+        return bossReviewService.getReviewImg(bossReviewEntity, num.get("num"));
     }
 
+    @PostMapping("/comm")
+    public List<CommunityBoardListResponse> commList(@RequestBody Map<String, String> num){
+        log.info("reviewList: " + num.get("num"));
+
+        return bossReviewService.getComm(num.get("num"));
+    }
 }

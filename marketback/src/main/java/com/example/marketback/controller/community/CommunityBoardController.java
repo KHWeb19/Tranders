@@ -1,6 +1,7 @@
 package com.example.marketback.controller.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
 import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.jpa.community.CommunityBoardService;
@@ -29,10 +30,10 @@ public class CommunityBoardController {
     private CommunityBoardRepository repository;
 
     @PostMapping("/register")
-    public void communityBoardRegister (@Validated CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+    public void communityBoardRegister (@Validated CommunityBoard board, @Validated Near near, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
         log.info("communityBoardRegister();" + file);
 
-        service.register(board,file);
+        service.register(board, near, file);
     }
 
     @GetMapping("/list")
