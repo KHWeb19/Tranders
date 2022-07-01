@@ -4,7 +4,6 @@
         <div class="pa-4" style="width: 100%">
           <div style="font-size: 35px; font-weight: bold">이웃과 함께 만드는 오이 지도</div>
           <div style="font-size: 20px;">이웃들이 소개한 맛집을 지도에 담았어요</div>
-          {{nearMapComm}}
           <div class="map_wrap" style="position: relative; margin-top: 25px">
             <div class="infoBox" id="infoBox1" ref="mapDiv" style="border-radius: 8px; display: none; padding-top: 5px; padding-left: 5px">
               <div style="display: flex; align-items: center; padding-left: 8px; height: 30px">

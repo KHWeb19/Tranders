@@ -83,7 +83,7 @@ public class BossReviewServiceImpl implements BossReviewService{
 
         for (BossReview bossReview : bossReviewEntity) {
             //log.info(bossReview.getBossReviewImagesList().get(0).getImageName() + "이미지");
-            response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState()));
+            response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), bossReview.getCreatedDate()));
         }
         return response;
     }

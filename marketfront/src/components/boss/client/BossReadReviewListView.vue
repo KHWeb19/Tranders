@@ -6,7 +6,7 @@
           <div style="padding-right: 10px"><v-img :src="require(`@/assets/profile/${boss.profileImg}`)" max-height="60" max-width="60"></v-img></div>
           <div>
             <div style="font-size: 22px; font-weight: bolder">{{boss.name}}</div>
-            <div> {{boss.region}} ㆍ 05월 12일</div>
+            <div> {{boss.region}} ㆍ {{boss.date}}</div>
           </div>
         </div>
 

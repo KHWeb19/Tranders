@@ -39,7 +39,7 @@ export default {
             }else{
               setTimeout(() => {
                 this.$router.go()
-              }, 10)
+              }, 80)
             }
           })
           .catch(() => {
