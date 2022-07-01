@@ -48,7 +48,11 @@
               </div>
 
               <div id="profile-left">
-                <div id="userName">{{ productBoard.member.name }}</div>
+                <div id="userName"><router-link :to="{
+                    name: 'ProfileBasicPage', 
+                    params: { memberId: productBoard.member.id.toString() } }">
+                    {{ productBoard.member.name }}
+                </router-link></div>
                 <div id="region-name">{{ productBoard.member.address }}</div>
               </div>
             </div>
@@ -139,21 +143,9 @@ export default {
   },
   methods: {
     onChat() {
-      //채팅방생성하고 해당채팅방정보 받아서 이동해야함
-      // this.$router.push({ name: "ChattingListPage",
-      //params: {
-      //     member1No: this.login.memberNo.toString(),
-      //     member2: '10'.toString(),
-      //     boardNo: '테스트게시물1',
-      //     }
-      // });
-      this.$emit("onChat", {
-        member1No: this.login.memberNo,
-        member2No: this.productBoard.member.memberNo,
-        productNo: this.productBoard.productNo,
-      });
-    },
-  },
+        this.$emit('onChat', {member1No: this.login.memberNo, member2No: this.productBoard.member.memberNo, productNo: this.productBoard.productNo})
+    }
+  }
 };
 </script>
 

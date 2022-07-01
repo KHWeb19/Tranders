@@ -59,20 +59,16 @@ export default {
         });
     },
     onChat(payload) {
-      const { member1No, member2No, productNo } = payload;
-      console.log(member1No, member2No, productNo);
-      axios
-        .post(
-          `http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`,
-          { member1No, member2No, productNo }
-        )
-        .then(() => {
-          this.$router.push({ name: "ChattingReadList" });
-        })
-        .catch(() => {
-          alert("문제 발생!");
-        });
-    },
+      const {member1No, member2No, productNo} = payload
+      console.log(member1No, member2No, productNo)
+      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
+          .then(() => {
+              this.$router.push({ name: "ChattingListPage" })
+          })
+          .catch(() => {
+              alert('문제 발생!')
+          })
+    }
   },
 };
 </script>
