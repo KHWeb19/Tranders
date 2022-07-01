@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card>
+    <div>
       <div v-for="(boss, index) in bossReview" :key="index" style="padding: 20px 15px 0 20px; border-bottom: 1px solid rgba(187,187,187,0.23);">
         <div style="display: flex; margin-top: 2px">
           <div style="padding-right: 10px"><v-img :src="require(`@/assets/profile/${boss.profileImg}`)" max-height="60" max-width="60"></v-img></div>
@@ -16,7 +16,7 @@
 
         <div v-if="bossReviewImg">
           <swiper class="swiper" :options="swiperOption" style="height: 500px">
-            <swiper-slide v-for="(img,index) in bossReviewImg[index]" :key="index">
+            <swiper-slide v-for="(img,index2) in bossReviewImg[index]" :key="index2">
               <v-img max-height="550px" :src="require(`@/assets/bossReview/${img}`)" id="img"></v-img>
             </swiper-slide>
 
@@ -32,7 +32,7 @@
           </v-chip-group>
         </div>
       </div>
-    </v-card>
+    </div>
   </div>
 </template>
 
@@ -87,9 +87,6 @@ export default {
         console.log(arr)
         this.selection.push(arr);
       }
-    },
-    readReview(reviewNo) {
-      this.$router.push({name: 'BossReadReviewPage', query: {reviewNo: reviewNo}});
     }
   },
   computed: {
@@ -97,8 +94,11 @@ export default {
     ...mapState(['bossReviewImg'])
   },
   async mounted() {
-    await this.fetchBossReview(this.bossNo);
-    await this.fetchBossReviewImage(this.bossNo)
+    let num = '0' +this.bossNo;
+    await this.fetchBossReview(num);
+    setTimeout(() => {
+      this.fetchBossReviewImage(num)
+    }, 80)
     await this.parsingState();
   }
 }

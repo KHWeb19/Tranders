@@ -37,7 +37,9 @@ export default {
             if(res.data === false){
               alert('에러 발생')
             }else{
-              this.$router.go()
+              setTimeout(() => {
+                this.$router.go()
+              }, 10)
             }
           })
           .catch(() => {
@@ -49,10 +51,7 @@ export default {
     ...mapState(['boss'])
   },
   mounted() {
-    this.bossNo = this.$route.query.bossNo;
-    alert(this.bossNo)
     this.fetchClientBossView(this.bossNo);
-    //this.fetchBossPage(this.memberNo)
   }
 }
 </script>

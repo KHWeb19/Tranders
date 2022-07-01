@@ -51,28 +51,36 @@
     </div>
 
     <div style="padding-bottom: 50px; height: 40px; padding-top: 30px">
-      <div v-if="isCheck" style="float: left; height: 40px; width: 50%; border-right: black solid 1px; font-size: 25px; text-align: center; border-bottom: 3px solid black">
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center;" @click="home = true; comm = false; review=false;">
         홈
+        <div v-if="home" style="border-bottom: 3px solid green">
+        </div>
       </div>
 
-      <div v-else style="float: left; height: 40px; width: 50%; border-right: black solid 1px; font-size: 25px; text-align: center" @click="home">
-        홈
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm = true; review=false;">
+        커뮤니티 {{boss.communityCount}}
+        <div v-if="comm" style="border-bottom: 3px solid green">
+        </div>
       </div>
 
-      <div v-if="isCheck" style="float: left; height: 40px; width: 50%; font-size: 25px; text-align: center" @click="review">
-        후기
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm=false; review = true;">
+        리뷰 {{boss.reviewCount}}
+        <div v-if="review" style="border-bottom: 3px solid green">
+
+        </div>
       </div>
 
-      <div v-else style="float: left; height: 40px; width: 50%; font-size: 25px; text-align: center; border-bottom: 3px solid black">
-        후기
-      </div>
     </div>
 
-    <div v-if="isCheck">
+    <div v-if="home">
       <boss-read-home-view :boss="boss"></boss-read-home-view>
     </div>
 
-    <div v-else>
+    <div v-if="comm">
+      <boss-comm-list-view :bossNo="bossNo"></boss-comm-list-view>
+    </div>
+
+    <div v-if="review">
       <boss-read-review-list-view :bossNo="bossNo"></boss-read-review-list-view>
     </div>
 
@@ -134,7 +142,7 @@
                 <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
                   x
                 </div>
-                <img :src="file.preview" />
+                <img :src="file.preview"  alt=""/>
               </div>
             </div>
           </div>
@@ -158,6 +166,7 @@ import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
 import BossReadHomeView from "@/components/boss/client/BossReadHomeView";
 import BossReadReviewListView from "@/components/boss/client/BossReadReviewListView";
+import BossCommListView from "@/components/boss/client/BossReadCommListView";
 
 export default {
   name: "BossReadPageView",
@@ -167,13 +176,16 @@ export default {
     }
   },
   components:{
+    BossCommListView,
     BossReadReviewListView,
     BossReadHomeView,
     Swiper, SwiperSlide
   },
   data(){
     return {
-      isCheck: true,
+      home: true,
+      comm: false,
+      review: false,
       id: cookies.get("id"),
       name: cookies.get("name"),
       swiperOption: {
@@ -211,12 +223,6 @@ export default {
     modify(){
       alert('사진을 변경하겠다!')
       this.backProfileImgDialog = true
-    },
-    home(){
-      this.isCheck = true;
-    },
-    review(){
-      this.isCheck = false;
     },
     addImg(){
       this.$refs.files.click()
@@ -284,6 +290,7 @@ export default {
       formData.append('name', this.name)
       formData.append('content', this.content)
       formData.append('bossNo', this.boss.bossAuthNo)
+      formData.append('nearNo', 0)
 
       let select = '';
 
