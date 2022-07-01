@@ -17,7 +17,7 @@ import {
     FETCH_CLIENT_BOSS_VIEW,
     FETCH_NEAR_REVIEW,
     FETCH_BOSS_REVIEW,
-    FETCH_BOSS_REVIEW_IMAGE,
+    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE,
 } from './mutation-types'
 
 import axios from 'axios'
@@ -202,8 +202,8 @@ export default {
                 commit(FETCH_NEAR_REVIEW, res.data)
             })
     },
-    fetchBossReview({commit}, bossNo){
-        return axios.post(`http://localhost:7777/boss/review/${bossNo}`, {}, {
+    fetchBossReview({commit}, num){
+        return axios.post('http://localhost:7777/boss/review', {num}, {
             headers: {
                 'Authorization': 'Bearer '+ cookies.get('access_token'),
                 'Accept' : 'application/json',
@@ -214,8 +214,8 @@ export default {
                 commit(FETCH_BOSS_REVIEW, res.data)
             })
     },
-    fetchBossReviewImage({commit}, bossNo){
-        return axios.post(`http://localhost:7777/boss/reviewImg/${bossNo}`, {}, {
+    fetchBossReviewImage({commit}, num){
+        return axios.post('http://localhost:7777/boss/reviewImg', {num}, {
             headers: {
                 'Authorization': 'Bearer '+ cookies.get('access_token'),
                 'Accept' : 'application/json',
@@ -225,5 +225,53 @@ export default {
             .then((res) => {
                 commit(FETCH_BOSS_REVIEW_IMAGE, res.data)
             })
-    }
+    },
+    fetchNearCommunityMap({commit}){
+        return axios.post(API_BASE_URL+'/near/communityMap', {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_NEAR_COMMUNITY_MAP, res.data)
+            })
+    },
+    fetchNearComm({commit}){
+        return axios.post(API_BASE_URL+'/near/communityBoard', {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_NEAR_COMM, res.data)
+            })
+    },
+    fetchNearCommPage({commit}, nearNo){
+        return axios.post(`http://localhost:7777/near/${nearNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_NEAR_COMM_PAGE, res.data)
+            })
+    },
+    fetchBossComm({commit}, num){
+        return axios.post('http://localhost:7777/boss/comm', {num}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_BOSS_REVIEW, res.data)
+            })
+    },
 }

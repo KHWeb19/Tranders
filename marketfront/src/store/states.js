@@ -19,5 +19,8 @@ export default {
     nearMap: [],
     nearReview: null,
     bossReview: [],
-    bossReviewImg: []
+    bossReviewImg: [],
+    nearMapComm: [],
+    nearComm: [],
+    near: null
 }

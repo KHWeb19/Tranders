@@ -46,6 +46,8 @@ public class Boss {
 
     private Integer reviewCount;
 
+    private Integer communityCount;
+
     @OneToOne
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
@@ -58,6 +60,7 @@ public class Boss {
         this.category = category;
         this.member = member;
         this.reviewCount = 0;
+        this.communityCount = 0;
     }
 
     public Boss(String placeName, String lat, String lng) {
