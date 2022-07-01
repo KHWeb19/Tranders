@@ -5,9 +5,9 @@
     <v-row>
         <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
     </v-row>
-    <v-row>
-        <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" />
-    </v-row>
+<!--    <v-row>-->
+<!--        <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" />-->
+<!--    </v-row>-->
 </v-container>
 </template>
 
@@ -16,7 +16,7 @@ import HomeView from '@/components/home/HomeView'
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import CommunityBoardRead from '@/components/communityBoard/CommunityBoardRead.vue'
-import CommunityCommentList from '@/components/communityBoard/CommunityCommentList.vue'
+// import CommunityCommentList from '@/components/communityBoard/CommunityCommentList.vue'
 
 export default {
     name:'CommunityBoardReadPage',
@@ -34,7 +34,7 @@ export default {
     },
     components: {
         CommunityBoardRead,
-        CommunityCommentList,
+        // CommunityCommentList,
         HomeView,
     },
 

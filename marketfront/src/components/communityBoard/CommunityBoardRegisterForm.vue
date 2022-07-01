@@ -47,7 +47,7 @@
                         <label for="files"><v-icon large>mdi-image-outline</v-icon></label>
                         <input type="file" id="files" ref="files"  dense style="width:0px"
                                 multiple v-on:change="handleFileUpload()"/>
-                        <v-dialog v-model="dialog" persisten max-width="1000">
+                        <v-dialog persisten max-width="1000">
                             <template v-slot:activator="{ on }">
                                 <v-btn v-on="on"  onclick="" color="blue-grey" text>
                                     <v-icon large>mdi-map-marker-outline</v-icon>
@@ -81,11 +81,12 @@ Vue.use(cookies)
 
 export default {
   components: { KakaoMap },
-    name:'CommunityBoardRegisterForm,KaKaoMap',
+    name:'CommunityBoardRegisterForm',
     data() {
         return {
             login: {
                 name: cookies.get('name'),
+                id: cookies.get('id'),
                 region: cookies.get('region'),
                 access_token: cookies.get('access_token'),
             },
@@ -103,6 +104,14 @@ export default {
                 '함께해요','동네질문', '동네맛집', '동네소식', '취미생활',  '분실/실종센터', '해주세요', '일상'
             ],
             selectSubject:[],
+            lat: 0,
+            lng: 0,
+            category: '',
+            phoneNumber: '',
+            address: '',
+            storeRegion: null
+
+
         }
     },
 
@@ -110,9 +119,16 @@ export default {
         EventBus.$on('placeRegister', (payload) => {
             this.placeUrl = payload[0]
             this.placeName = payload[1]
+            this.lng = payload[2]
+            this.lat = payload[3]
+            this.category = payload[4]
+            this.phoneNumber = payload[5]
+            this.storeRegion = payload[6];
+
+          //rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name
             console.log(payload) 
         })
-        this.writer = this.login.name
+        this.writer = this.login.id
         this.region = this.login.region
     },
     methods: {
@@ -137,7 +153,7 @@ export default {
             }
         },
         onBoardSubmit () {
-            const { title, content, writer, usedSubject, region, placeName, placeUrl } = this
+            const { title, content, writer, usedSubject, region, placeName, placeUrl, lat, lng, category, phoneNumber, storeRegion } = this
             let formData = new FormData();
 
             for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
@@ -151,7 +167,12 @@ export default {
             formData.append('region', region)
             formData.append('placeName', placeName)
             formData.append('placeUrl', placeUrl)
-            
+            formData.append('lat', lat)
+            formData.append('lng', lng)
+            formData.append('category', category)
+            formData.append('phoneNumber', phoneNumber)
+            formData.append('storeRegion', storeRegion)
+
             this.$emit('submit', {formData})
             console.log(formData)            
         },
