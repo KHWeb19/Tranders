@@ -13,7 +13,7 @@
         </router-link>
       </div>
 
-      <div style="display: flex; margin-left: auto;">
+      <div style="display: flex; margin-left: auto; align-items: center">
         <div id="searchBar">
           <input
             type="text"
@@ -21,15 +21,9 @@
           />
         </div>
 
-        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-          <v-btn style="color: black" icon @click="loginBtn">
+        <div class="bar-menu" style="float: left; width: auto; height: auto; padding-left: 20px">
+          <v-btn style="color: black; font-size: 20px; font-weight: lighter" icon @click="loginBtn">
             <span class="btn-text">로그인</span>
-          </v-btn>
-        </div>
-
-        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-          <v-btn icon @click="register">
-            <span class="btn-text">회원가입</span>
           </v-btn>
         </div>
       </div>
@@ -44,10 +38,7 @@ export default {
   methods: {
     loginBtn() {
       this.$router.push({ name: "LoginPage" });
-    },
-    register() {
-      this.$router.push({ name: "RegisterMemberPage" });
-    },
+    }
   },
 };
 </script>

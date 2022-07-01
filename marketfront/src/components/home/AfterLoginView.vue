@@ -11,7 +11,7 @@
 
       <div>
         <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text @click="test">
+          <v-btn text>
             중고거래
           </v-btn>
         </router-link>
@@ -36,8 +36,8 @@
 
         </div>
 
-        <div style="display: flex; margin-left: auto;">
-          <div id="searchBar" style="display: flex; justify-content: center; padding-right: 20px">
+        <div style="display: flex; margin-left: auto; align-items: center">
+          <div id="searchBar" style="">
             <input type="text" placeholder="물품이나 동네를 검색해보세요">
           </div>
 
@@ -85,12 +85,6 @@ export default {
   data(){
     return{
       id: "",
-      items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' },
-      ],
     }
   },
   methods: {
@@ -101,9 +95,6 @@ export default {
     logout(){
       logout();
       this.$router.push({name: 'HomePage'})
-    },
-    test(){
-      alert('test')
     }
   },
   computed: {
