@@ -1,13 +1,7 @@
 <template>
         <div id='user_profile'>
             <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}동</span></h2>
-            <div id='profile_detail'>
-                <div style="display: flex">
-                <div style="margin-left: 153px">첫 온도 36.5°C ▼</div>
-                <div style="margin-left: auto;">매너온도 {{userInfo.temperature}}°C</div> 
-                </div> 
-                <v-slider readonly inverse-label v-model="userInfo.temperature"></v-slider>
-            </div>
+            <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
             
             <div id='profile_image'>
                 <v-img id="image" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
@@ -59,7 +53,7 @@ export default {
 }
 #profile_detail{
     margin: 10px 0;
-    /* margin-left: 80px; */
+    margin-left: 80px;
     font-size: 15px;
     letter-spacing: -0.6px;
     color: #868e96;
