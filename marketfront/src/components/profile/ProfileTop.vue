@@ -1,20 +1,20 @@
 <template>
-        <div id='user_profile'>
-            <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}동</span></h2>
-            <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
-            
-            <div id='profile_image'>
-                <v-img id="image" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
-            </div>
+    <div id='user_profile'>
+        <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}동</span></h2>
+        <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
         
-            <div id='user_filter'>
-                <ul>
-                <li><router-link id='basic_router' :to="{name: 'ProfileBasicPage' }">판매 상품</router-link></li>
-                <li><router-link id='basic_router' :to="{name: 'ReviewListPage' }">거래 후기</router-link></li>
-                <li><router-link id='basic_router' :to="{name: 'MannerReadPage' }">매너 칭찬</router-link></li>
-                </ul>
-            </div>
+        <div id='profile_image'>
+            <v-img id="image" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
         </div>
+    
+        <div id='user_filter'>
+            <ul>
+            <li><router-link id='basic_router' :to="{name: 'ProfileBasicPage' }">판매 상품</router-link></li>
+            <li><router-link id='basic_router' :to="{name: 'ReviewListPage' }">거래 후기</router-link></li>
+            <li><router-link id='basic_router' :to="{name: 'MannerReadPage' }">매너 칭찬</router-link></li>
+            </ul>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -78,8 +78,9 @@ export default {
 }
 #user_filter ul{
     list-style-type: none;
-    border-bottom: 1px solid #e9ecef;
-    padding-bottom: 10px;
+    border-bottom: 2px solid #eaebee;
+    padding-bottom: 7px;
+    padding-left: 0px;
 }
 #user_filter li{
     display: inline-block;

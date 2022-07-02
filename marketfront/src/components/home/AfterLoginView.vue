@@ -34,8 +34,8 @@
         <div>
           <v-menu offset-y>
             <template v-slot:activator="{on}">
-              <v-btn v-if="profileImg === null" v-on="on">
-                <v-img contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+              <v-btn id='my_button' depressed v-if="profileImg === null" v-on="on">
+                <v-img width="24" height="24" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>&nbsp;▼
               </v-btn>
 
               <v-btn id='my_button' depressed v-else v-on="on">
@@ -221,6 +221,5 @@ input {
   appearance: none;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 </style>
