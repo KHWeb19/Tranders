@@ -3,6 +3,8 @@ import {
     FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_REVIEW_LIST,
+    FETCH_MANNER,
     FETCH_LOGIN_TOKEN,
     FETCH_REFRESH_TOKEN,
     FETCH_MEMBER_PROFILE,
@@ -50,6 +52,12 @@ export default {
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
+    },
+    [FETCH_REVIEW_LIST] (state, reviews) {
+        state.reviews = reviews
+    },
+    [FETCH_MANNER] (state, manner) {
+        state.manner = manner
     },
     [FETCH_MEMBER_PROFILE] (state, profileImg) {
         console.log(profileImg);

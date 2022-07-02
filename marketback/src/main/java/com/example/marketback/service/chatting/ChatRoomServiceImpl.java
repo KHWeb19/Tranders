@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,5 +112,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 chatRoomRequest.getLastMessage()
         );
         chatRoomRepository.save(chatRoomEntity);
+    }
+
+    @Override
+    public void charge(Member member) {
+        Member memberEntity = memberRepository.findByMemberId(member.getId());
+        memberEntity.setMoney(member.getMoney());
+
+        memberRepository.save(memberEntity);
     }
 }

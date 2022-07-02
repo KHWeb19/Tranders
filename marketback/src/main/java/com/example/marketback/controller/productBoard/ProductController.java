@@ -1,6 +1,7 @@
 package com.example.marketback.controller.productBoard;
 
 import com.example.marketback.entity.productBoard.ProductBoard;
+import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,12 @@ public class ProductController {
         return productService.read(productNo);
     }
 
-    @PutMapping("/{productNo}")
-    public ProductBoard productModify(@PathVariable("productNo") Integer productNo, @RequestBody ProductBoard productBoard) {
+    @PutMapping("/{memberNo}/{productNo}")
+    public ProductBoard productModify(@PathVariable("productNo") Integer productNo, @RequestBody ProductBoard productBoard, @PathVariable("memberNo") Long memberNo) {
         log.info("productModify(): " + productBoard);
 
         productBoard.setProductNo(Long.valueOf(productNo));
-        productService.modify(productBoard);
+        productService.modify(productBoard, memberNo);
 
         return productBoard;
     }
@@ -76,5 +77,13 @@ public class ProductController {
 
         log.info("requestUploadFile(): Success!!");
         return "Upload Success";
+    }
+
+    @PostMapping("/search")
+    public List<ProductBoard> productBoardSearchList(@RequestBody KeyWordRequest keyWord) {
+        log.info("ProductBoardSearchList()");
+        String word = keyWord.getKeyWord();
+
+        return productService.searchList(word);
     }
 }

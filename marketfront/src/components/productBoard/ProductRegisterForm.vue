@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-view></home-view>
+    <after-login-view></after-login-view>
     <v-form enctype="multipart/form-data" @submit.prevent="onSubmit">
       <table>
         <tr>
@@ -40,6 +40,18 @@
         </tr>
 
         <tr>
+          <td>카테고리</td>
+          <td>
+            <input
+              type="text"
+              solo
+              style="width: 100%"
+              v-model="category"
+              placeholder="카테고리를 설정해주세요"
+            />
+          </td>
+        </tr>
+        <tr>
           <td>제목</td>
           <td>
             <input type="text" v-model="title" />
@@ -68,15 +80,13 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
-
 import axios from "axios";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import HomeView from "../home/HomeView.vue";
-
+import AfterLoginView from "../home/AfterLoginView.vue";
 export default {
   name: "ProductRegisterForm",
   components: {
-    HomeView,
+    AfterLoginView,
     Swiper,
     SwiperSlide,
   },
@@ -88,6 +98,7 @@ export default {
       preview: "",
       preview2: null,
       preview3: null,
+      category: "",
       title: "",
       price: "",
       content: "",
@@ -136,6 +147,7 @@ export default {
             if (this.files[2]) {
               this.productImage3 = this.files[2].name;
               const {
+                category,
                 productImage,
                 productImage2,
                 productImage3,
@@ -145,6 +157,7 @@ export default {
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
+                category,
                 productImage,
                 productImage2,
                 productImage3,
@@ -153,10 +166,17 @@ export default {
                 content,
               });
             } else {
-              const { productImage, productImage2, title, price, content } =
-                this;
+              const {
+                productImage,
+                category,
+                productImage2,
+                title,
+                price,
+                content,
+              } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
+                category,
                 productImage,
                 productImage2,
                 title,
@@ -165,9 +185,10 @@ export default {
               });
             }
           } else {
-            const { productImage, title, price, content } = this;
+            const { productImage, category, title, price, content } = this;
             this.$emit("submit", {
               memberNo: this.login.memberNo,
+              category,
               productImage,
               title,
               price,
@@ -197,3 +218,4 @@ export default {
   }
 }
 </style>
+
