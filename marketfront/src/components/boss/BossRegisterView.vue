@@ -22,7 +22,7 @@
           <v-col>가게 대표 이미지</v-col>
           <v-col>
             <v-btn @click="onClickFile" icon v-if="isCheck">
-              <!-- <v-img src="@/assets/plus.png" style="height: 200px; width: 250px"> </v-img> -->
+               <v-img src="@/assets/plus.png" style="height: 200px; width: 250px"> </v-img>
             </v-btn>
             <div class="itemFileBox" ref="itemFileBox">
               <input type="file" class="item-file-image" id="uploadItemFile" ref="uploadItemFile" @change="onFileSelected" accept="image/*" style="display: none"/>
