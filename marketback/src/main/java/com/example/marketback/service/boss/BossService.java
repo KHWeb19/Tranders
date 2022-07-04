@@ -1,4 +1,4 @@
-package com.example.marketback.service.member;
+package com.example.marketback.service.boss;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossPrice;
@@ -21,7 +21,7 @@ public interface BossService {
 
     void modifyProfile(String fileSrc, String id);
 
-    List<BossBackProfileImg> getBackProfile(String id);
+    List<BossBackProfileImg> getBackProfile(Long id);
 
     void addPrice(BossPrice bossPrice, Long bossNo);
 
@@ -30,5 +30,4 @@ public interface BossService {
     void modifyMenu(BossPrice bossPrice);
 
     void deleteMenu(Long menuNo);
-
 }

@@ -41,6 +41,7 @@ export default {
       })
           .then((res) => {
             console.log(res)
+            setTimeout(() => {this.$router.go()}, 500);
           })
           .catch(() => {
             alert('에러')
@@ -59,7 +60,7 @@ export default {
             if(res.data === false){
               alert('에러 발생')
             }else{
-              this.$router.go()
+              setTimeout(() => {this.$router.go()}, 500);
             }
           })
           .catch(() => {

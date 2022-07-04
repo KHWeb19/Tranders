@@ -16,6 +16,7 @@
             margin-top: 32px;">
                 <div style="color: #ADB5BD;
                 margin-top: 32px;">
+                    <p style="margin-bottom: 4px;">아이콘출처 <a style="color: #868e96; text-decoration: none;" href="https://www.flaticon.com/free-icons/smile">icons created by Pixel perfect - Flaticon</a></p>
                     <p style="margin-bottom: 4px;">고객문의 <span style="color: #868e96;">cs@oeoeservice.com</span> 제휴문의 <span style="color: #868e96;">contact@oeoe.com</span></p>
                     <p style="margin-bottom: 4px;">광고 <span style="color: #868e96;">ad@oeoe.com</span> PR문의 <span style="color: #868e96;">pr@oeoe.com</span></p>
                     <p style="margin-bottom: 4px;

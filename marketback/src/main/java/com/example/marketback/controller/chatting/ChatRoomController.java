@@ -3,6 +3,7 @@ package com.example.marketback.controller.chatting;
 import com.example.marketback.entity.chatting.ChatRoom;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.service.chatting.ChatRoomService;
+import com.example.marketback.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -91,6 +92,13 @@ public class ChatRoomController {
         log.info("requestUploadFile(): Success!!!");
 
         return "Upload Success!";
+    }
+
+    @PutMapping("/charge")
+    public void chargeModify(@RequestBody Member member){
+        log.info("chargeModify" + member.getMoney());
+
+        chatRoomService.charge(member);
     }
 
 }

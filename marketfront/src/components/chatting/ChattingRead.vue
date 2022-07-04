@@ -16,7 +16,7 @@
         
         <div id='center'>
           <div id='name'>
-            <div id='name_value'>{{this.login.name}}</div>
+            <div id='name_value'>{{userInfo.name}}</div>
           </div>
           <div id='chatList'>
             <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
@@ -31,10 +31,10 @@
                 <div style="display: flex; ">
                   <div>
                     <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span>
                     </div>
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member2.region}}</span>
                     </div>
                       <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
                       -webkit-box-align: center;
@@ -81,7 +81,7 @@
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn class="grey white--text" style="margin-left: auto;" v-on="on">약속잡기</v-btn>
+                      <v-btn id='my_button' depressed v-on="on">약속잡기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                       <v-card>
@@ -175,7 +175,7 @@
           <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo">
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
-                      <v-btn class="grey white--text" style="margin-left: auto;" v-on="on">송금하기</v-btn>
+                      <v-btn id='my_button' depressed style="margin-left:15px" v-on="on">송금하기</v-btn>
                   </template>
                   <template v-slot:default="dialog">
                                 <v-card>
@@ -187,7 +187,7 @@
                                     </v-card-text>
                                     <v-card-text >
                                       <div id="pay_box" >
-                                        <div>페이머니: <span :style="chatroom.productBoard.price>money ? 'color:red' : ''">{{money}} </span>원</div>
+                                        <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
                                         <div style="display: inline-flex;
   margin-left: auto;"><v-btn style="
                                           
@@ -204,11 +204,13 @@
                                         @click="onCharge()">
                                             충전
                                         </v-btn></div></div>
+                                        <br/>
+                                        * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         
-                                        <v-btn text color="blue">
+                                        <v-btn text color="blue" @click="onPay()">
                                             결제
                                         </v-btn>
                                         <v-btn text @click="dialog.value=false">
@@ -249,11 +251,10 @@
               <span style="font-weight: 700; margin-right: 4px;">알림</span>
               <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}} 거래 약속을 만들었어요.</span>
               </div>
-              <v-btn @click="onReminder()">알림 받기</v-btn> 
-              <!-- 카톡 로그인 유저만 알림 받을 수 있도록 -->
+              <!-- <v-btn class='success' depressed @click="onReminder()"><b>알림 받기</b></v-btn>  -->
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:529px': 'height:625px'">
+          <div id='chatView' :style="chatroom.appointDate ? 'height:540px': 'height:625px'">
             <!-- <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
                     {{chatroom.roomNo}} 채팅방에 입장하였습니다. 
@@ -265,10 +266,10 @@
                 <div style="display: flex; justify-content: flex-end;" v-if="login.memberNo==msg.content.memberNo">
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
                   <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="require(`@/assets/chatting/${msg.content.message}`)"/></div>
-                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.message}}</div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image"><b>{{msg.content.message}}</b></div>
                 </div>
                 <div style="display: flex;" v-else>
-                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo"><b>{{msg.content.message}}</b></div>
                   <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="msg.content.message"/></div>
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.now}}</div>
                 </div>
@@ -276,7 +277,7 @@
               <div style="display: flex; justify-content: flex-end;" v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message_date'>{{msg.now}}</div>
                 <div v-if="msg.image" id='message_greenBox'><v-img width="200px" height="200" :src="msg.message"/></div>
-                <div v-else id='message_greenBox'>{{msg.message}}</div>
+                <div v-else id='message_greenBox'><b>{{msg.message}}</b></div>
               </div>
             </div>
             
@@ -289,20 +290,20 @@
             <div id='submit_form'>
               <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
               <div style="display: flex; 
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    margin: 8px 10px;">
+              -webkit-box-pack: justify;
+              justify-content: space-between;
+              margin: 8px 10px;">
                 <div style="display: flex;
                 -webkit-box-align: center;
                 align-items: center;
-                column-gap: 12px;">
+                ">
                       <label for="files">
-                          <v-icon large>mdi-camera</v-icon>
+                          <v-icon large style="margin-top:4px">mdi-camera</v-icon>
                       </label>
                       <input type="file" id="files" ref="files" v-on:change="handleFileUpload()"/>
                   </div>
                   
-                <v-btn type="submit" class="grey white--text">전송</v-btn>
+                <v-btn id='my_button' depressed type="submit">전송</v-btn>
               </div>
             </div>
           </div>
@@ -323,6 +324,10 @@ export default {
   components: { AfterLoginView },
   name: "ChattingRead",
   props: {
+      userInfo: {
+          type: Object,
+          required: true
+      },
       chatroom: {
           type: Object,
           require: true
@@ -339,7 +344,6 @@ export default {
         name: cookies.get('name'),
         access_token: cookies.get('access_token'),
       },
-      money: 0,
       
       message: '',
       lastMessage: '',
@@ -357,15 +361,15 @@ export default {
       this.getNewData();
   },
   methods: {
-    getNewData() {
-                axios.get('http://127.0.0.1:5000/kafka-data')
-                  .then((res) => {
-                    console.log(res.data)
-                      this.new_data = res.data;
-                  }).catch((error) => {
-                      console.error(error);
-                  });
-            },
+    async getNewData() {
+      await axios.get('http://127.0.0.1:5000/kafka-data')
+        .then((res) => {
+          console.log(res.data)
+            this.new_data = res.data;
+        }).catch((error) => {
+            console.error(error);
+        });
+    },
     goChatroom(roomNo) {
       this.$router.push({name: 'ChattingReadView',
                           params: {roomNo: roomNo.toString()}})
@@ -376,9 +380,8 @@ export default {
     },
     deletePriview() {
       this.priview = ''
-      console.log(this.newMessage)
     },
-    onSubmit() {
+    async onSubmit() {
         const { roomNo } = this.chatroom
         const { memberNo } = this.login
         const { message, now } = this
@@ -417,7 +420,14 @@ export default {
     },
     onCharge(){
       window.open('http://kko.to/LJwi9Wf7n')
-      this.money += this.chatroom.productBoard.price
+      this.userInfo.money += this.chatroom.productBoard.price
+      this.$emit('onCharge', {id:this.login.id, money: this.userInfo.money})
+    },
+    onPay(){
+      if(this.userInfo.money>=this.chatroom.productBoard.price) {
+        this.userInfo.money -= this.chatroom.productBoard.price
+        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id})
+      }
     }
   },
 }
@@ -568,8 +578,8 @@ font-weight: bold;
   font-size: 14px;
   letter-spacing: -0.02em;
   /* margin: 8px 0px; */
-  background-color: #fff7e6;
-  color: #ba5e02;
+  background-color: #E6F3E6;
+  color: #086e5b;
   width: 100%;
       align-items: center;
     justify-content: space-between;
@@ -595,7 +605,7 @@ font-weight: bold;
     /* flex-direction: column; */
     /* position: relative; */
     margin: 16px;
-    border: 1px solid #212124;;
+    border: 1px solid #868b94;
     border-radius: 8px;
     /* -webkit-box-pack: justify; */
     /* justify-content: space-between; */
@@ -653,5 +663,15 @@ textarea{
 }
 #files {
     visibility: hidden;
+}
+#my_button{
+  letter-spacing: -2%;
+  background-color: white;
+  color: #212124;
+  height: 40px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #d1d3d8;
 }
 </style>

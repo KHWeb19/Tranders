@@ -13,4 +13,7 @@ public interface BossImgRepository extends JpaRepository<BossImage, Long> {
 
     @Query("select bi from BossImage bi where bi.boss.member.id = :id")
     List<BossImage> findImgListByMemberId(String id);
+
+    @Query("select bi from BossImage bi where bi.boss.bossAuthNo = :id")
+    List<BossImage> findImgListByBossNo(Long id);
 }

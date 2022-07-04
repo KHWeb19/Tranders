@@ -1,7 +1,11 @@
 package com.example.marketback.service.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
+import com.example.marketback.repository.member.MemberRepository;
+import com.example.marketback.repository.near.NearRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -10,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -21,8 +23,14 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Autowired
     CommunityBoardRepository repository;
 
+    @Autowired
+    private NearRepository nearRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Override
-    public void register(CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+    public void register(CommunityBoard board, Near near, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
 
         try {
             if (file != null) {
@@ -65,12 +73,54 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             log.info("Upload Fail!!!");
         }
         log.info("requestUploadFile(): Success!!!");
+
+        System.out.println(near.getStoreRegion());
+
+        Member memberEntity = memberRepository.findByMemberId(board.getWriter());
+        board.setWriter(memberEntity.getName());
+        board.setRegion(memberEntity.getRegion());
+        board.setMember(memberEntity);
+
+        if(!Objects.equals(near.getStoreRegion(), "null")) {
+            Optional<Near> nearOptional = nearRepository.findByAddress(near.getStoreRegion());
+
+            if (nearOptional.isEmpty()) {
+                System.out.println("없다");
+                String category = near.getCategory().substring(near.getCategory().lastIndexOf("> ") + 2);
+                String[] region = near.getStoreRegion().split(" ");
+
+                near.setCategory(category);
+                near.setAddress(near.getStoreRegion());
+//                near.setStoreRegion(region[2]);
+                near.setMarketHomePage(board.getPlaceUrl());
+                near.setReviewCount(0);
+                near.setCommunityCount(1);
+            } else {
+                near = nearOptional.get();
+                near.setCommunityCount(near.getCommunityCount() + 1);
+            }
+            nearRepository.save(near);
+        }else {
+            near = null;
+        }
+
+        board.setNear(near);
         repository.save(board);
     }
 
     @Override
     public List<CommunityBoard> list() {
-        return repository.findAll(Sort.by(Sort.Direction.DESC, "boardNo"));
+        log.info("list");
+
+        List<CommunityBoard> communityBoardList = repository.findAll(Sort.by(Sort.Direction.DESC, "boardNo"));
+
+        List<CommunityBoard> response = new ArrayList<>();
+
+        for(CommunityBoard communityBoard : communityBoardList){
+            communityBoard.setNear(null);
+            response.add(communityBoard);
+        }
+        return response;
     }
 
     @Override
@@ -83,8 +133,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         } else {
             CommunityBoard communityBoard = maybeReadBoard.get();
 //            communityBoard.increaseViewCnt();
-            repository.save(communityBoard);
-            return maybeReadBoard.get();
+            //repository.save(communityBoard);
+            communityBoard.setNear(null);
+            return communityBoard;
         }
     }
 

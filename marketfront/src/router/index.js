@@ -11,7 +11,6 @@ import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardReg
 import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
 import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
 import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
-import KakaoMap from '@/views/KakaoMap.vue'
 
 import MemberPage from "@/views/member/MemberPage";
 import LoginPage from "@/views/member/LoginPage";
@@ -21,14 +20,16 @@ import IdSearchPage from "@/views/member/search/IdSearchPage";
 import PwSearchPage from "@/views/member/search/PwSearchPage";
 import ResultPage from "@/views/member/search/ResultPage";
 import ChangePwPage from "@/views/member/search/ChangePwPage";
-// import myPage from "@/views/myPage/MyPage";
 
 import ChattingListPage from '@/views/chatting/ChattingListPage'
-// import ChattingPage from '@/views/chatting/ChattingPage'
 import ChattingReadView from '@/views/chatting/ChattingReadView'
-import HomeTestPage from '@/views/chatting/HomeTestPage'
 import BoardTestPage from '@/views/chatting/BoardTestPage'
 import PythonTest from '@/views/chatting/PythonTest'
+import ReviewRegisterPage from '@/views/profile/ReviewRegisterPage'
+import ReviewListPage from '@/views/profile/ReviewListPage'
+import MannerReadPage from '@/views/profile/MannerReadPage'
+import ProfileBasicPage from '@/views/profile/ProfileBasicPage'
+
 import MyPageProfile from "@/views/myPage/MyPageProfile";
 import MyInfoPage from "@/views/myPage/MyInfoPage";
 import BossRegisterPage from "@/views/boss/BossRegisterPage";
@@ -39,6 +40,13 @@ import SnsRegisterPage from "@/views/member/SnsRegisterPage";
 import BossMarketInfo from "@/views/boss/BossMarketInfo";
 import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
 import MyVillageSetting from "@/views/myPage/MyVillageSetting";
+import NearPage from "@/views/near/NearPage";
+import BossReadPage from "@/views/boss/client/BossReadPage";
+import NearReadPage from "@/views/near/NearReadPage";
+import ManagerPage from "@/views/Manger/ManagerPage";
+import ReportManagementPage from "@/views/Manger/ReportManagementPage";
+import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
+import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
 
 Vue.use(VueRouter)
 
@@ -131,9 +139,41 @@ const routes = [
     }
   },
   {
-    path: '/homeTest',
-    name: 'HomeTestPage',
-    component: HomeTestPage,
+    path: '/reviewRegister/:memberId',
+    name: 'ReviewRegisterPage',
+    components: {
+      default: ReviewRegisterPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/reviewList/:memberId',
+    name: 'ReviewListPage',
+    components: {
+      default: ReviewListPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/mannerRead/:memberId',
+    name: 'MannerReadPage',
+    components: {
+      default: MannerReadPage,
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/profileBasic/:memberId',
+    name: 'ProfileBasicPage',
+    components: {
+      default: ProfileBasicPage,
+    },
     props: {
       default: true
     }
@@ -222,11 +262,12 @@ const routes = [
     name: 'SearchListPage',
     components: {
       default: SearchListPage
-  },
+    },
     props: {
       default: true
     }
   },
+  {
     path: '/snsRegister',
     name: 'SnsRegisterPage',
     component: SnsRegisterPage
@@ -249,6 +290,56 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {
+    path: '/near',
+    name: 'NearPage',
+    component: NearPage
+  },
+  {
+    path: '/bossRead',
+    name: 'BossReadPage',
+    components: {
+      default: BossReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/nearRead',
+    name: 'NearReadPage',
+    components: {
+      default: NearReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/manger',
+    name: 'ManagerPage',
+    component: ManagerPage
+  },
+  {
+    path: '/repoManagement',
+    name: 'ReportManagementPage',
+    component: ReportManagementPage
+  },
+  {
+    path: '/repoManagementRead',
+    name: 'ReportManagementReadPage',
+    components: {
+      default: ReportManagementReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/mangerMember',
+    name: 'ManagerMemberPage',
+    component: ManagerMemberPage
   }
 ]
 

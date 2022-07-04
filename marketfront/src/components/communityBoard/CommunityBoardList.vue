@@ -40,17 +40,17 @@
           <span class="mr-2">&bull;&nbsp;{{communityBoard.region}}</span>
       </v-card-actions>
       <hr>
-      &nbsp;&nbsp;&nbsp;
       <v-icon>
               mdi-heart
       </v-icon>
       &nbsp;
-      <span class="mr-2">{{communityBoard.likeCnt}}</span>
-      &nbsp;&nbsp;&nbsp;
+      <span class="mr-1">{{communityBoard.likeCnt}}</span>
+      &nbsp;
       <v-icon>
               mdi-comment
       </v-icon>
-      <span class="mr-2">{{communityBoard.commentCnt}}</span>
+      &nbsp;
+      <span class="mr-1">{{communityBoard.commentCnt}}</span>
       <span id="cd" class="mr-2">{{communityBoard.createdDate}}</span>
     </v-card>
     <div class="btn-cover">
