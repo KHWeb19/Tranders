@@ -23,7 +23,7 @@ export default {
         onBoardSubmit (payload) {
             const {formData} = payload
        
-            axios.post('http://localhost:7777/communityboard/register', formData, { headers: {
+            axios.post(`http://localhost:7777/communityboard/register`, formData, { headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
                     .then(() => {

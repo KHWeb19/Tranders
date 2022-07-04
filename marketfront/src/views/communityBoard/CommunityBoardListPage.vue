@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    <home-view></home-view>
+    <after-login-view/>
     <br><br><br>
     <v-row justify="center">
         <span id="shadow" class="shadow">동네 생활</span>
@@ -12,15 +12,14 @@
 </template>
 
 <script>
-import HomeView from '@/components/home/HomeView'
 import CommunityBoardList from '@/components/communityBoard/CommunityBoardList.vue'
+import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import { mapState, mapActions } from 'vuex'
-
 export default {
     name: 'CommunityBoardListPage',
     components: {
       CommunityBoardList,
-      HomeView,
+      AfterLoginView
     },
     computed: {
         ...mapState(['communityBoards'])
