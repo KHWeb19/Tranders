@@ -4,17 +4,18 @@
   <v-row>
     <v-col cols="3">  
       <v-icon>mdi-magnify</v-icon>
-      <input type="text" value="" placeholder="장소를 검색해주세요." @keyup.enter="searchPlace"/>
+      <input type="text" style="width:160px; border: 0; background-color: rgb(191, 246, 201)" value="" placeholder="장소를 검색해주세요." @keyup.enter="searchPlace"/>
       <div class="results">
         <div class="place" v-for="rs in search.results" :key="rs.id">
-          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister(rs); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
+          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister((rs.place_url),$event); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
           <div class="addr">{{rs.road_address_name}}
           </div>
         </div>
       </div>
     </v-col>
     <v-col cols="9">
-      <section class="KakaoMap">
+      <v-text-field style="width:230px" v-model="placeName"/><v-btn @click="registerAlert(checkBatchimEnding)" class="rsBtn" color="light green accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-send</v-icon></v-btn>
+      <section class="KakaoMap">   
         <div id="map">
         </div>
       </section>
@@ -40,7 +41,8 @@ export default {
         keyword: null,
         pgn: null,
         results: [],
-      }
+      },
+      placeName:'',
     }
   },
   mounted() {
@@ -54,6 +56,14 @@ export default {
       document.head.appendChild(script);
     }
   },
+  created () {
+        EventBus.$on('placeRegister', (payload) => {
+            this.placeUrl = payload[0]
+            this.placeName = payload[1]
+          //rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name
+            console.log(payload) 
+        })
+    },
   methods: {
     initMap() {
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -154,11 +164,27 @@ export default {
       var map = new kakao.maps.Map(mapContainer, mapOption);
     },
 
-    placeRegister(rs) {
-      const payload = [ rs.place_url, rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name]
+    placeRegister(placeUrl,$event) {
+      const payload = [ placeUrl, $event.target.innerHTML ]
+      const placeName = $event.target.innerHTML
       EventBus.$emit('placeRegister', payload)
-      //console.log(placeName)
-      console.log(rs)
+      console.log(placeName) 
+      console.log(placeUrl)
+    },
+
+    checkBatchimEnding(word) {
+      if (typeof word !== 'string') return null;
+      var lastLetter = word[word.length - 1];
+      var uni = lastLetter.charCodeAt(0);
+      if (uni < 44032 || uni > 55203) return null;
+      return (uni - 44032) % 28 != 0;
+    },
+    
+    registerAlert(checkBatchimEnding){
+      const word = this.placeName
+      var adj = checkBatchimEnding(word)?'이':'가';
+      console.log (`${word}${adj} 등록되었습니다.`);
+      alert( this.placeName + adj + ' 등록되었습니다.') 
     }
   },
 }
@@ -185,5 +211,12 @@ export default {
   width: 100%; 
   height: 725px;
   border: 1px #a8a8a8 solid;
+}
+.rsBtn {
+    position: absolute;
+    zoom:0.8;
+    margin-top:-5%;
+    margin-left:25%;
+    float:left;
 }
 </style>
