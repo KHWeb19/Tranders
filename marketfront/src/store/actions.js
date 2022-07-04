@@ -20,7 +20,17 @@ import {
     FETCH_CLIENT_BOSS_VIEW,
     FETCH_NEAR_REVIEW,
     FETCH_BOSS_REVIEW,
-    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE,
+    FETCH_BOSS_REVIEW_IMAGE,
+    FETCH_NEAR_COMMUNITY_MAP,
+    FETCH_NEAR_COMM,
+    FETCH_NEAR_COMM_PAGE,
+    FETCH_REPORT_RECENT,
+    FETCH_TOTAL_PAGE,
+    FETCH_REPORT_READE,
+    FETCH_REPORT_IMAGE_READE,
+    FETCH_REPORT_BOARD_READE,
+    FETCH_TODAY_REGISTER,
+    FETCH_TODAY_REPORT,
 } from './mutation-types'
 
 import axios from 'axios'
@@ -295,4 +305,100 @@ export default {
                 commit(FETCH_BOSS_REVIEW, res.data)
             })
     },
+    fetchReportRecent({commit}){
+        return axios.post(API_BASE_URL+'/manager/reportListRecent', {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_REPORT_RECENT, res.data)
+            })
+    },
+    fetchTotalPage({commit}){
+        return axios.get(API_BASE_URL+'/manager/getTotalPage', {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_TOTAL_PAGE, res.data)
+            })
+    },
+    fetchReportRead({commit}, reportNo) {
+        return axios.post(`http://localhost:7777/manager/${reportNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_REPORT_READE, res.data)
+            })
+    },
+    fetchReportReadImage({commit}, reportNo){
+        return axios.post(`http://localhost:7777/manager/image/${reportNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_REPORT_IMAGE_READE, res.data)
+            })
+    },
+    fetchReportReadBoard({commit}, reportNo){
+        return axios.post(`http://localhost:7777/manager/board/${reportNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_REPORT_BOARD_READE, res.data)
+            })
+    },
+    fetchMemberTotalPage({commit}){
+        return axios.get(API_BASE_URL+'/manager/member/getTotalPage', {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_TOTAL_PAGE, res.data)
+            })
+    },
+    fetchTodayRegisterMember({commit}){
+        return axios.post(API_BASE_URL+'/manager/todayRegister', {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_TODAY_REGISTER, res.data)
+            })
+    },
+    fetchTodayReport({commit}){
+        return axios.post(API_BASE_URL+'/manager/todayReport', {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_TODAY_REPORT, res.data)
+            })
+    }
 }

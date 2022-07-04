@@ -103,9 +103,11 @@
         >
       </section>
 
-      <section id="repo" style="display: flex; align-items: center; height: 50px"> <!-- 작성자와 같은지 확인하기 -->
+      <section @click="reportDialog = true"  id="repo" style="display: flex; align-items: center; height: 50px"> <!-- 작성자와 같은지 확인하기 -->
         <div style="width: 100%">이 게시글 신고하기</div><div style="display: flex; justify-content: end"><v-icon style="color: black">mdi-chevron-right</v-icon></div>
       </section>
+
+      <report-dialog-view v-if="reportDialog" @closeDialog="closeDialog" @sendReport="sendReport" @sendImgReport="sendImgReport" :productNo="this.productBoard.productNo"></report-dialog-view>
     </article>
   </div>
 </template>
@@ -115,6 +117,7 @@ import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
 export default {
   name: "ProductReadPage",
   props: {
@@ -124,6 +127,7 @@ export default {
     },
   },
   components: {
+    ReportDialogView,
     Swiper,
     SwiperSlide,
   },
@@ -143,11 +147,21 @@ export default {
         name: cookies.get("name"),
         access_token: cookies.get("access_token"),
       },
+      reportDialog: false
     };
   },
   methods: {
     onChat() {
         this.$emit('onChat', {member1No: this.login.memberNo, member2No: this.productBoard.member.memberNo, productNo: this.productBoard.productNo})
+    },
+    closeDialog(){
+      this.reportDialog = false;
+    },
+    sendReport(payload){
+      this.$emit('sendReport', payload)
+    },
+    sendImgReport(payload){
+      this.$emit('sendImgReport', payload)
     }
   }
 };
@@ -270,7 +284,7 @@ img {
   padding: 32px 0;
   width: 677px;
   margin: 0 auto;
-  border-top: 1px solid #868e96;;
+  border-top: 1px solid #868e96;
   border-bottom: 1px solid #868e96;
   font-weight: bolder;
 }

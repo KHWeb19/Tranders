@@ -39,6 +39,7 @@ function logout(){
     cookies.remove('memberNo');
     cookies.remove('name');
     cookies.remove('roles');
+    cookies.remove('region');
     cookies.remove('access_token');
     cookies.remove('refresh_token');
     cookies.remove('providerType');
