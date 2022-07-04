@@ -1,4 +1,4 @@
-package com.example.marketback.service;
+package com.example.marketback.service.productBoard;
 
 import com.example.marketback.entity.productBoard.ProductBoard;
 

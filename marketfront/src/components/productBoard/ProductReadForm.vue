@@ -1,13 +1,6 @@
 <template>
   <div>
     <article id="content">
-      <tr align="left">
-        <td style="padding: 6px 9px" colspan="3" v-if="like">
-          <v-btn icon @click="onLikes(productBoard.productNo)">
-            <v-icon color="red"> mdi-cards-heart </v-icon>
-          </v-btn>
-        </td>
-      </tr>
       <section id="profile">
         <div class="space-between">
           <div style="display: flex">
@@ -79,7 +72,9 @@
       <section id="description">
         <h1 property="schema:name" id="title" style="margin-top: 0px">
           {{ productBoard.title }}
+          {{ productBoard.process }}
         </h1>
+
         <p id="category">
           {{ productBoard.category }} •
           {{ productBoard.regDate }}
@@ -97,9 +92,7 @@
           <p>{{ productBoard.content }}</p>
         </div>
 
-        <p id="counts" v-if="productBoard.productLikes.length">
-          관심 {{ productBoard.likes.length }} ∙ 채팅 11 ∙ 조회 111
-        </p>
+        <p id="counts">관심 5 ∙ 채팅 11 ∙ 조회 {{ productBoard.viewCnt }}</p>
 
         <v-btn
           v-if="login.memberNo != productBoard.member.memberNo"
@@ -116,8 +109,7 @@ import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import { mapActions, mapState } from "vuex";
-import axios from "axios";
+
 export default {
   name: "ProductReadPage",
   props: {
@@ -148,16 +140,6 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapState(["productBoard"]),
-    ...mapState(["like"]),
-  },
-  mounted() {
-    this.fetchProductLike({
-      productNo: this.productNo,
-      memberNo: this.memberNo,
-    });
-  },
   methods: {
     onChat() {
       //채팅방생성하고 해당채팅방정보 받아서 이동해야함
@@ -173,21 +155,6 @@ export default {
         member2No: this.productBoard.member.memberNo,
         productNo: this.productBoard.productNo,
       });
-    },
-    ...mapActions(["fetchProductLike"]),
-    onLikes() {
-      const { productNo } = this;
-      axios
-        .post(
-          `http://localhost:7777/productLikes/${productNo}/${this.memberNo}`,
-          { productNo, memberNo: this.memberNo }
-        )
-        .then(() => {
-          history(0);
-        })
-        .catch(() => {
-          alert("문제 발생!");
-        });
     },
   },
 };

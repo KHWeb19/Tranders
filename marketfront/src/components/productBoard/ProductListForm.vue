@@ -37,8 +37,8 @@
               <div class="card-title">{{ productBoard.title }}</div>
               <div class="card-title">{{ productBoard.price }}원</div>
               <div class="card-counts">
-                <span> 관심 {{ productBoard.productLikes.length }} </span>∙
-                <span> 채팅 6 </span>
+                <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
+                <span>조회수 {{ productBoard.viewCnt }}</span>
               </div>
             </div>
           </article>
@@ -49,6 +49,10 @@
 </template>
 
 <script>
+import Vue from "vue";
+import cookies from "vue-cookies";
+Vue.use(cookies);
+
 export default {
   name: "ProductListForm",
   components: {},
@@ -61,6 +65,12 @@ export default {
     return {
       searchList: [],
       keyWord: "",
+      login: {
+        memberNo: cookies.get("memberNo"),
+        id: cookies.get("id"),
+        name: cookies.get("name"),
+        access_token: cookies.get("access_token"),
+      },
     };
   },
 };

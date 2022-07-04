@@ -1,4 +1,4 @@
-package com.example.marketback.service;
+package com.example.marketback.service.productBoard;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.repository.member.MemberRepository;
@@ -38,8 +38,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (maybeReadProductBoard.equals(Optional.empty())) {
             return null;
+        } else {
+            ProductBoard productBoard = maybeReadProductBoard.get();
+            productBoard.increaseViewCnt();;
+            productRepository.save(productBoard);
+            return maybeReadProductBoard.get();
         }
-        return maybeReadProductBoard.get();
     }
 
     @Override
