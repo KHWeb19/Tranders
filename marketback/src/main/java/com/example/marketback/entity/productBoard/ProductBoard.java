@@ -47,6 +47,12 @@ public class ProductBoard {
     @Column(length = 64, nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private Integer viewCnt = 0;
+
+    @Column(length = 64, nullable = false)
+    private String process;
+
     @CreatedDate
     private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
 
@@ -57,4 +63,7 @@ public class ProductBoard {
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
 
+    public void increaseViewCnt() {
+        this.viewCnt++;
+    }
 }

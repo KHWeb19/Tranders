@@ -76,7 +76,9 @@
       <section id="description">
         <h1 property="schema:name" id="title" style="margin-top: 0px">
           {{ productBoard.title }}
+          {{ productBoard.process }}
         </h1>
+
         <p id="category">
           {{ productBoard.category }} •
           {{ productBoard.regDate }}
@@ -94,7 +96,7 @@
           <p>{{ productBoard.content }}</p>
         </div>
 
-        <p id="counts">관심 8 ∙ 채팅 11 ∙ 조회 111</p>
+        <p id="counts">관심 5 ∙ 채팅 11 ∙ 조회 {{ productBoard.viewCnt }}</p>
 
         <v-btn
           v-if="login.memberNo != productBoard.member.memberNo"
@@ -118,6 +120,7 @@ import cookies from "vue-cookies";
 Vue.use(cookies);
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
+
 export default {
   name: "ProductReadPage",
   props: {
