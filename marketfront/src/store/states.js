@@ -9,6 +9,7 @@ export default {
     profileImg: null,
     communityBoards:[],
     communityBoard: null,
+    communityComments: [],
     boss: null,
     userInfo: null, // myPage
     mapOption: {}, // lat, lng

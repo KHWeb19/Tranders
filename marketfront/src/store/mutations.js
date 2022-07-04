@@ -11,6 +11,7 @@ import {
     FETCH_MY_REGION,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
+    FETCH_COMMUNITY_COMMENTS_LIST,
     FETCH_BOSS_BACK_PROFILE,
     FETCH_BOSS_MENU_LIST,
     FETCH_BOSS_MARKET_INFO,
@@ -60,6 +61,9 @@ export default {
     },
     [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
         state.communityBoard = communityBoard
+    },
+    [FETCH_COMMUNITY_COMMENTS_LIST](state, communityComments) {
+        state.communityComments = communityComments
     },
     [FETCH_BOSS_PAGE] (state, boss){
         state.boss = boss;
