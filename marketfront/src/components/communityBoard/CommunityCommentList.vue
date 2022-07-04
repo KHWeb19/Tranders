@@ -18,7 +18,7 @@
                     <label for="files"><v-icon class="vb" large>mdi-image-outline</v-icon></label>
                     <input type="file" id="files" ref="files" dense style="width:0px" 
                             multiple v-on:change="handleFileUpload()"/>
-                            <v-dialog v-model="dialog" persisten max-width="1000">   
+                            <v-dialog v-model="dialog" persisten max-width="1000">
                                 <template v-slot:activator="{ on }">
                                     <v-btn v-on="on"  onclick="" color="blue-grey" text>
                                         <v-icon class="vb" large>mdi-map-marker-outline</v-icon>
@@ -62,9 +62,9 @@
                 <v-img v-else :src="require(`@/assets/uploadImg/community/${commentList.fileName}`)"></v-img>
                 </div>               
                 <template v-if="commentList.commentWriter == commentWriter">
-                    <v-dialog v-model="dialog1" persisten max-width="350">
+                    <v-dialog persisten max-width="350">
                             <template v-slot:activator="{ on }">
-                                <v-btn v-on="on" type="button" class="comModifyBtn" color="blue-grey darken-1" style="box-shadow:none" fab x-small dark>
+                                <v-btn @click="modifyComment(commentList)" v-on="on" type="button" class="comModifyBtn" color="blue-grey darken-1" style="box-shadow:none" fab x-small dark>
                                     <v-icon>mdi-eraser</v-icon>    
                                 </v-btn>                           
                             </template>
@@ -78,10 +78,10 @@
                                 <v-btn v-on="on"  onclick="" color="blue-grey" text>
                                     <v-icon large>mdi-map-marker-outline</v-icon>
                                     <v-text-field style="width:200px" v-model="commentList.placeName"/>
-                                </v-btn>                              
+                                </v-btn>
                             </template>
                             <v-card>
-                                <kakao-map></kakao-map>        
+                                <kakao-map></kakao-map>
                             </v-card>
                         </v-dialog>           -->
                         <v-btn @click=onModifySubmit() class="writeBtn" color="light green accent-4" style="box-shadow:none" dark fab x-small><v-icon> mdi-check</v-icon></v-btn>
@@ -105,7 +105,7 @@ import { mapActions, mapState } from 'vuex'
 import KakaoMap from '../../views/KakaoMap.vue';
 export default {
     components: { KakaoMap },
-    name:'CommentList,KaKaoMap',
+    name:'CommentList',
     props: {
         communityComments : {
             type:Array
@@ -172,6 +172,9 @@ export default {
             this.image = url
             this.files = this.$refs.files.files[0]
         },
+      modifyComment(commentList){
+        this.ediComment = commentList.comment;
+      },
     //     onSubmit () {
     //         const comment  = this.commentList.comment
     //         axios.post(`http://localhost:7777/communityboard/${this.boardNo}/comment/register`, { comment }).then(() => {
@@ -188,7 +191,7 @@ export default {
     //   },
             onModifySubmit () {
             const comment = this.ediComment
-
+            alert(comment)
             let formData = new FormData()
 
             formData.append('comment', comment)
