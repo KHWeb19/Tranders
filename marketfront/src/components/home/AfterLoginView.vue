@@ -98,7 +98,7 @@ export default {
         .then((res) => {
           console.log("검색성공");
           console.log(res.data);
-          if (this.$route.path !== "/productSearchList")
+          // if (this.$route.path !== "/productSearchList")
             this.$router.push({
               name: "ProductSearchListPage",
               params: { searchList: res.data },
