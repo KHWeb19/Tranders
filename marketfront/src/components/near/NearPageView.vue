@@ -26,7 +26,7 @@
                 </div>
               </div>
 
-              <div style=" height: 40px;">
+              <div style=" height: 35px;">
                 <v-chip-group id="chipGroup" multiple v-model="selection" style="display: none;" active-class="light-green lighten-2 white--text">
                   <v-chip v-for="(tag, index) in reviewTag" :key="index" x-small style="font-size: 11px; height: 20px">
                     {{ tag }}
@@ -235,7 +235,7 @@ export default {
           this.region = '';
           this.content = '';
           this.selection = '';
-          alert(bossLink)
+          //alert(bossLink)
           bossLink.href = '/bossRead?bossNo='+no;
 
           infoBox1.style.display = 'block';
@@ -360,7 +360,7 @@ export default {
   top: 50px;
   left:0;
   bottom:0;
-  width:350px;
+  width:400px;
   height: 180px;
   margin:10px 0 30px 10px;
   padding:5px;

@@ -16,8 +16,8 @@
 
 <script>
 import CommunityBoardList from '@/components/communityBoard/CommunityBoardList.vue'
+import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import { mapState, mapActions } from 'vuex'
-import AfterLoginView from '../../components/home/AfterLoginView.vue'
 
 export default {
     name: 'CommunityBoardListPage',

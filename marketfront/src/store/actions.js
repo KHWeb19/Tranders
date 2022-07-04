@@ -11,6 +11,7 @@ import {
     FETCH_MY_PAGE,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
+    FETCH_COMMUNITY_COMMENTS_LIST,
     FETCH_MY_REGION,
     FETCH_BOSS_BACK_PROFILE,
     FETCH_BOSS_MENU_LIST,
@@ -107,6 +108,12 @@ export default {
             .then((res) => {
                 commit(FETCH_COMMUNITY_BOARD, res.data)
             })
+    },
+    fetchCommunityCommentsList({ commit }, boardNo) {
+        return axios.get(`http://localhost:7777/communityboard/${boardNo}/comment/list`)
+            .then((res) => {
+                commit(FETCH_COMMUNITY_COMMENTS_LIST, res.data)
+        })
     },
     fetchBossPage ({commit}, memberNo) {
         return axios.post(API_BASE_URL+'/boss/pageView', {memberNo}, {
