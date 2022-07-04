@@ -21,7 +21,17 @@ import {
     FETCH_CLIENT_BOSS_VIEW,
     FETCH_NEAR_REVIEW,
     FETCH_BOSS_REVIEW,
-    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE
+    FETCH_BOSS_REVIEW_IMAGE,
+    FETCH_NEAR_COMMUNITY_MAP,
+    FETCH_NEAR_COMM,
+    FETCH_NEAR_COMM_PAGE,
+    FETCH_REPORT_RECENT,
+    FETCH_TOTAL_PAGE,
+    FETCH_REPORT_READE,
+    FETCH_REPORT_IMAGE_READE,
+    FETCH_REPORT_BOARD_READE,
+    FETCH_MEMBER_LIST,
+    FETCH_TODAY_REGISTER, FETCH_TODAY_REPORT
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -113,6 +123,31 @@ export default {
     },
     [FETCH_NEAR_COMM_PAGE] (state, near){
         state.near = near;
+    },
+    [FETCH_REPORT_RECENT] (state, recentReport){
+        state.recentReport = recentReport;
+    },
+    [FETCH_TOTAL_PAGE] (state, page){
+        state.page = page;
+    },
+    [FETCH_REPORT_READE] (state, reportRead){
+        state.reportRead = reportRead;
+    },
+    [FETCH_REPORT_IMAGE_READE] (state, reportImg){
+        state.reportImageRead = reportImg;
+    },
+    [FETCH_REPORT_BOARD_READE] (state, reportBoard){
+        state.reportBoardRead = reportBoard;
+    },
+    [FETCH_MEMBER_LIST] (state, member) {
+        state.member = member;
+    },
+    [FETCH_TODAY_REGISTER] (state, todayMember) {
+        state.todayMember = todayMember;
+    },
+    [FETCH_TODAY_REPORT] (state, todayReport) {
+        state.todayReport = todayReport;
     }
+
 }
 
