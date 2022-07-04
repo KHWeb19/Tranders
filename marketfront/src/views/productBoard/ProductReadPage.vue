@@ -5,6 +5,8 @@
       v-if="productBoard"
       :productBoard="productBoard"
       @onChat="onChat"
+      @sendReport="sendReport"
+      @sendImgReport="sendImgReport"
     />
     <p v-else>로딩중 ........</p>
     <v-btn @click="onDelete">삭제</v-btn>
@@ -18,10 +20,22 @@
 </template>
 
 <script>
+
+import cookies from "vue-cookies";
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer '+ cookies.get('access_token'),
+    'Accept' : 'application/json',
+    'Content-Type': 'application/json'
+  }
+};
+
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
 import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import axios from "axios";
+import {API_BASE_URL} from "@/constant/login";
 export default {
   name: "ProductReadPage",
   props: {
@@ -67,6 +81,35 @@ export default {
           })
           .catch(() => {
               alert('문제 발생!')
+          })
+    },
+    sendReport(payload){
+      const {category1, category2, content, banCheck, productNo, toId, fromId} = payload;
+
+      axios.post(API_BASE_URL+'/report/saveReport', {category1, category2, content, banCheck, productNo, toId, fromId}, config)
+          .then((res) => {
+            console.log(res);
+            this.$router.go();
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    sendImgReport(payload){
+      // 이미지가 없을때 안받아지면.. sendReport 를 불러서 처리하자
+      axios.post(API_BASE_URL+'/report/saveImgText', payload, {
+        headers: {
+          'Authorization': 'Bearer '+ cookies.get('access_token'),
+          'Accept' : 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+          .then((res) => {
+            console.log(res)
+            this.$router.go()
+          })
+          .catch(() => {
+            alert('에러')
           })
     }
   },

@@ -1,6 +1,6 @@
 <template>
-  <div style="border: 1px solid green">
-    <article id="content" style="border: 1px solid purple">
+  <div>
+    <article id="content">
       <section id="profile">
         <div class="space-between">
           <div style="display: flex">
@@ -107,7 +107,7 @@
         <div style="width: 100%">이 게시글 신고하기</div><div style="display: flex; justify-content: end"><v-icon style="color: black">mdi-chevron-right</v-icon></div>
       </section>
 
-      <report-dialog-view v-if="reportDialog" @closeDialog="closeDialog" :productNo="this.productBoard.productNo"></report-dialog-view>
+      <report-dialog-view v-if="reportDialog" @closeDialog="closeDialog" @sendReport="sendReport" @sendImgReport="sendImgReport" :productNo="this.productBoard.productNo"></report-dialog-view>
     </article>
   </div>
 </template>
@@ -156,6 +156,12 @@ export default {
     },
     closeDialog(){
       this.reportDialog = false;
+    },
+    sendReport(payload){
+      this.$emit('sendReport', payload)
+    },
+    sendImgReport(payload){
+      this.$emit('sendImgReport', payload)
     }
   }
 };

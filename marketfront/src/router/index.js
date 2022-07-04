@@ -43,6 +43,10 @@ import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 import NearPage from "@/views/near/NearPage";
 import BossReadPage from "@/views/boss/client/BossReadPage";
 import NearReadPage from "@/views/near/NearReadPage";
+import ManagerPage from "@/views/Manger/ManagerPage";
+import ReportManagementPage from "@/views/Manger/ReportManagementPage";
+import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
+import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
 
 Vue.use(VueRouter)
 
@@ -312,6 +316,31 @@ const routes = [
       default: true
     }
   },
+  {
+    path: '/manger',
+    name: 'ManagerPage',
+    component: ManagerPage
+  },
+  {
+    path: '/repoManagement',
+    name: 'ReportManagementPage',
+    component: ReportManagementPage
+  },
+  {
+    path: '/repoManagementRead',
+    name: 'ReportManagementReadPage',
+    components: {
+      default: ReportManagementReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/mangerMember',
+    name: 'ManagerMemberPage',
+    component: ManagerMemberPage
+  }
 ]
 
 const router = new VueRouter({

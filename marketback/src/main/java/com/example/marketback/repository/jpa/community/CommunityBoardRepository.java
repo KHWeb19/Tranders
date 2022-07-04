@@ -28,5 +28,8 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
 
     @Query("select cb from CommunityBoard cb where cb.near.nearNo = :nearNo")
     List<CommunityBoard> findByNearNo(Long nearNo);
+
+    @Query("select cb from CommunityBoard cb where cb.boardNo = :productNo")
+    CommunityBoard findByProductNo(Long productNo);
 }
 

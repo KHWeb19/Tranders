@@ -23,5 +23,14 @@ export default {
     bossReviewImg: [],
     nearMapComm: [],
     nearComm: [],
-    near: null
+    near: null,
+    recentReport: [],
+    report: [],
+    reportRead: {},
+    reportBoardRead: null,
+    reportImageRead: null,
+    page: null,
+    member: [],
+    todayMember: null,
+    todayReport: null
 }
