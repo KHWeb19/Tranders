@@ -38,15 +38,15 @@ export default {
 #review_list{
     list-style-type: none;
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    margin-block-start: 10px;
+    margin-block-end: 10px;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    padding-inline-start: 0px;
 }
 #review{
     padding: 16px 0;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 2px solid #eaebee;
     position: relative;
 }
 #review_profile_image{

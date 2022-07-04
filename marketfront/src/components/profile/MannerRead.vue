@@ -1,22 +1,23 @@
 <template>
     <div id='user_manners'>
-        <ol id='manners_list'></ol>
-        <li id='manner'>
-            <p id='manner_content'>제가 있는 곳까지 와서 거래했어요.</p> 
-            <p id='manner_count'>{{manner.good1}}명</p>
-        </li>
-        <li id='manner'>
-            <p id='manner_content'>친절하고 매너가 좋아요.</p> 
-            <p id='manner_count'>{{manner.good2}}명</p>
-        </li>
-        <li id='manner'>
-            <p id='manner_content'>시간 약속을 잘 지켜요.</p> 
-            <p id='manner_count'>{{manner.good3}}명</p>
-        </li>
-        <li id='manner'>
-            <p id='manner_content'>응답이 빨라요.</p> 
-            <p id='manner_count'>{{manner.good4}}명</p>
-        </li>
+        <ol id='manners_list'>
+            <li id='manner'>
+                <p id='manner_content'>제가 있는 곳까지 와서 거래했어요.</p> 
+                <p id='manner_count'>{{manner.good1}}명</p>
+            </li>
+            <li id='manner'>
+                <p id='manner_content'>친절하고 매너가 좋아요.</p> 
+                <p id='manner_count'>{{manner.good2}}명</p>
+            </li>
+            <li id='manner'>
+                <p id='manner_content'>시간 약속을 잘 지켜요.</p> 
+                <p id='manner_count'>{{manner.good3}}명</p>
+            </li>
+            <li id='manner'>
+                <p id='manner_content'>응답이 빨라요.</p> 
+                <p id='manner_count'>{{manner.good4}}명</p>
+            </li>
+        </ol>
     </div>
 </template>
 
@@ -45,7 +46,7 @@ ol {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    padding-inline-start: 0px;
 }
 #manners_list {
     counter-reset: item;
@@ -59,7 +60,7 @@ li {
     counter-increment: item;
     position: relative;
     padding: 16px 0;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 2px solid #eaebee;
 }
 #manner_content {
     display: inline-block;
@@ -74,8 +75,8 @@ li {
 }
 p {
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    margin-block-start: 10px;
+    margin-block-end: 10px;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
