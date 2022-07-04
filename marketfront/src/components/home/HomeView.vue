@@ -7,7 +7,7 @@
 
       <div>
         <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text @click="test">
+          <v-btn text>
             중고거래
           </v-btn>
         </router-link>
@@ -19,9 +19,6 @@
             type="text"
             placeholder="물품이나 동네를 검색해보세요"
           />
-          <!-- <v-btn icon style="width: 12%">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn> -->
         </div>
 
         <div class="bar-menu" style="float: left; width: 10%; height: 50px">

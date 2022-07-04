@@ -15,6 +15,11 @@ import {
     FETCH_BOSS_MENU_LIST,
     FETCH_BOSS_MARKET_INFO,
     FETCH_MY_VILLAGE_SETTING,
+    FETCH_NEAR_MAP,
+    FETCH_CLIENT_BOSS_VIEW,
+    FETCH_NEAR_REVIEW,
+    FETCH_BOSS_REVIEW,
+    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -76,6 +81,30 @@ export default {
     },
     [FETCH_MY_VILLAGE_SETTING] (state, villageInfo){
         state.villageInfo = villageInfo;
+    },
+    [FETCH_NEAR_MAP] (state, nearMap){
+        state.nearMap = nearMap;
+    },
+    [FETCH_CLIENT_BOSS_VIEW] (state, boss){
+        state.boss = boss;
+    },
+    [FETCH_NEAR_REVIEW] (state, nearReview){
+        state.nearReview = nearReview;
+    },
+    [FETCH_BOSS_REVIEW] (state, review) {
+        state.bossReview = review;
+    },
+    [FETCH_BOSS_REVIEW_IMAGE] (state, reviewImg){
+        state.bossReviewImg = reviewImg;
+    },
+    [FETCH_NEAR_COMMUNITY_MAP] (state, nearMapComm){
+        state.nearMapComm = nearMapComm;
+    },
+    [FETCH_NEAR_COMM] (state, nearComm){
+        state.nearComm = nearComm;
+    },
+    [FETCH_NEAR_COMM_PAGE] (state, near){
+        state.near = near;
     }
 }
 
