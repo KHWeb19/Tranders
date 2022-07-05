@@ -24,25 +24,6 @@
         </v-col>
       </v-row>
 
-      <v-row style="margin-top: 20px;">
-        <div style="border: 1px solid green; width: 100%; height: 50px; margin-right: 20px; border-radius: 8px; right: 0" class="pa-3">
-          <div style="color: green">
-            오이페이
-          </div>
-
-          <v-col cols="6" style="padding-top: 35px">
-            <span style="font-size: 30px">
-              {{ name }}
-            </span>
-          </v-col>
-
-          <v-col cols="2" style="padding-top: 35px">
-            <v-btn style="margin-top: 5px" icon>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-
         <v-row style="margin-top: 20px">
           <div
             style="
