@@ -39,6 +39,14 @@
           </td>
         </tr>
 
+        <v-col>
+          <v-select
+            class="checkProcess"
+            v-model="process"
+            :items="selectProcess"
+            label="판매상황 체크"
+          ></v-select>
+        </v-col>
         <tr>
           <td>카테고리</td>
           <td>
@@ -92,6 +100,8 @@ export default {
   },
   data() {
     return {
+      selectProcess: ["판매중", "판매완료"],
+      process: "",
       productImage: "",
       productImage1: null,
       productImage2: null,
@@ -147,6 +157,7 @@ export default {
             if (this.files[2]) {
               this.productImage3 = this.files[2].name;
               const {
+                process,
                 category,
                 productImage,
                 productImage2,
@@ -157,6 +168,7 @@ export default {
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
+                process,
                 category,
                 productImage,
                 productImage2,
@@ -167,6 +179,7 @@ export default {
               });
             } else {
               const {
+                process,
                 productImage,
                 category,
                 productImage2,
@@ -176,6 +189,7 @@ export default {
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
+                process,
                 category,
                 productImage,
                 productImage2,
@@ -185,9 +199,11 @@ export default {
               });
             }
           } else {
-            const { productImage, category, title, price, content } = this;
+            const { process, productImage, category, title, price, content } =
+              this;
             this.$emit("submit", {
               memberNo: this.login.memberNo,
+              process,
               category,
               productImage,
               title,

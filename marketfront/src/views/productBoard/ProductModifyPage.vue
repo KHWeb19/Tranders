@@ -33,12 +33,20 @@ export default {
   methods: {
     ...mapActions(["fetchProductBoard"]),
     onSubmit(payload) {
-      const { memberNo, category, productImage, title, price, content } =
-        payload;
+      const {
+        memberNo,
+        process,
+        category,
+        productImage,
+        title,
+        price,
+        content,
+      } = payload;
       console.log(memberNo);
       axios
         .put(`http://localhost:7777/product/${memberNo}/${this.productNo}`, {
           memberNo,
+          process,
           category,
           productImage,
           title,
