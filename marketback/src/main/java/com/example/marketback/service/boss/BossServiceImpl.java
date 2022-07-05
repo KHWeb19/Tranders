@@ -97,13 +97,16 @@ public class BossServiceImpl implements BossService{
     public List<BossBackProfileImg> getBackProfile(Long bossNo) {
         log.info("id: "+bossNo);
         List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
-        System.out.println(bossImages.get(0));
         List<BossBackProfileImg> response = new ArrayList<>();
 
-        for (BossImage bossImage : bossImages) {
-            response.add(new BossBackProfileImg(bossImage.getImageName()));
+        if(bossImages.size() != 0) {
+            for (BossImage bossImage : bossImages) {
+                response.add(new BossBackProfileImg(bossImage.getImageName()));
+            }
+            return response;
+        }else {
+            return null;
         }
-        return response;
     }
 
     @Override

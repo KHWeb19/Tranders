@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div v-if="bossReview === ''" style="height: 320px; text-align: center; font-size: 23px; opacity: 0.5" class="pa-12">
+      아직 후기가 없어요.
+    </div>
+
+    <div v-else>
     <div v-for="(boss, index) in bossReview" :key="index" style="padding: 20px 15px 0 20px; border-bottom: 1px solid rgba(187,187,187,0.23);">
       <div @click="moveComm(boss.boardNo)">
         <div style="padding-bottom: 12px">{{boss.usedSubject }}</div>
@@ -24,6 +29,7 @@
 
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -31,7 +37,7 @@
 import {mapActions, mapState} from "vuex";
 
 export default {
-  name: "BossCommListView",
+  name: "BossReadCommListView",
   props: {
     bossNo: {
       type: Number,
@@ -53,7 +59,7 @@ export default {
     ...mapState(['bossReview']),
   },
   async mounted() {
-    let num = '0' + this.nearNo;
+    let num = '0' + this.bossNo;
     await this.fetchBossComm(num);
   }
 }

@@ -2,7 +2,11 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style="width: 100%; position: relative;">
-        <v-img v-if="backProfileImgs === null" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"></v-img>
+        <div v-if="backProfileImgs === ''" style="width: 100%; height: 500px;">
+          <div style="width: 100%; position: relative;">
+            <div id="img" style="width: 100%; height: 500px; background-color: #a0c5a0"></div>
+          </div>
+        </div>
         <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
           <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
             <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
@@ -77,11 +81,11 @@
     </div>
 
     <div v-if="comm">
-      <boss-comm-list-view :bossNo="bossNo"></boss-comm-list-view>
+      <boss-read-comm-list-view :bossNo="bossNo"></boss-read-comm-list-view>
     </div>
 
     <div v-if="review">
-      <boss-read-review-list-view :bossNo="bossNo"></boss-read-review-list-view>
+      <boss-read-review-list-view :bossNo="bossNo" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview"></boss-read-review-list-view>
     </div>
 
     <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
@@ -166,7 +170,7 @@ import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
 import BossReadHomeView from "@/components/boss/client/BossReadHomeView";
 import BossReadReviewListView from "@/components/boss/client/BossReadReviewListView";
-import BossCommListView from "@/components/boss/client/BossReadCommListView";
+import BossReadCommListView from "@/components/boss/client/BossReadCommListView";
 
 export default {
   name: "BossReadPageView",
@@ -176,7 +180,7 @@ export default {
     }
   },
   components:{
-    BossCommListView,
+    BossReadCommListView,
     BossReadReviewListView,
     BossReadHomeView,
     Swiper, SwiperSlide
@@ -283,9 +287,6 @@ export default {
     saveReview(){
       let formData = new FormData;
 
-      for(let i = 0; i < this.files.length; i++){
-        formData.append('fileList', this.files[i].file)
-      }
       formData.append('id', this.id)
       formData.append('name', this.name)
       formData.append('content', this.content)
@@ -305,8 +306,25 @@ export default {
 
       formData.append('state', select)
 
-      this.$emit('saveReview', formData)
+      if(this.files.length > 0) {
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('fileList', this.files[i].file)
+        }
+        this.$emit('saveReview', formData)
+      }else {
+        this.$emit('saveNoImageReview', formData)
+      }
+
     },
+    modifyReview(formData){
+      this.$emit('modifyReview', formData)
+    },
+    modifyImgReview(formData){
+      this.$emit('modifyImgReview', formData)
+    },
+    deleteReview(payload){
+      this.$emit('deleteReview', payload)
+    }
   },
   mounted() {
     this.phoneNum = this.boss.phoneNumber.substr(0,3) +'-'+ this.boss.phoneNumber.substr(3, 4) + '-' + this.boss.phoneNumber.substr(8, 4);

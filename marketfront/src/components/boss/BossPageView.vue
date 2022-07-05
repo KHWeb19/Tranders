@@ -2,7 +2,7 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style=" width: 100%; position: relative;">
-        <v-img v-if="backProfileImgs === null" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
+        <v-img v-if="backProfileImgs === ''" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
         <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
           <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
             <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
@@ -35,30 +35,39 @@
     </div>
 
     <div style="padding-bottom: 50px; height: 40px; padding-top: 30px">
-      <div v-if="isCheck" style="float: left; height: 40px; width: 50%; border-right: black solid 1px; font-size: 25px; text-align: center; border-bottom: 3px solid black">
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center;" @click="home = true; comm = false; review=false;">
         홈
+        <div v-if="home" style="border-bottom: 3px solid green">
+        </div>
       </div>
 
-      <div v-else style="float: left; height: 40px; width: 50%; border-right: black solid 1px; font-size: 25px; text-align: center" @click="home">
-        홈
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm = true; review=false;">
+        커뮤니티 {{boss.communityCount}}
+        <div v-if="comm" style="border-bottom: 3px solid green">
+        </div>
       </div>
 
-      <div v-if="isCheck" style="float: left; height: 40px; width: 50%; font-size: 25px; text-align: center" @click="review">
-        후기
+      <div style="float: left; height: 40px; width: 33%; font-size: 25px; text-align: center" @click="home = false; comm=false; review = true;">
+        리뷰 {{boss.reviewCount}}
+        <div v-if="review" style="border-bottom: 3px solid green">
+
+        </div>
       </div>
 
-      <div v-else style="float: left; height: 40px; width: 50%; font-size: 25px; text-align: center; border-bottom: 3px solid black">
-        후기
-      </div>
     </div>
 
-      <div v-if="isCheck">
-        <boss-home-view :boss="boss" @savePrice="savePrice" @modifySave="modifySave" @deletePrice="deletePrice"></boss-home-view>
-      </div>
 
-      <div v-else>
-        <boss-review-list-view :bossNo="bossNo"></boss-review-list-view>
-      </div>
+    <div v-if="home">
+      <boss-home-view :boss="boss"></boss-home-view>
+    </div>
+
+    <div v-if="comm">
+      <boss-comm-list-view :bossNo="bossNo"></boss-comm-list-view>
+    </div>
+
+    <div v-if="review">
+      <boss-review-list-view :bossNo="bossNo"></boss-review-list-view>
+    </div>
 
       <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
         오이마켓에 등록된 가게의 정보는 가게 관리자가 직접 등록한 것으로 (주)오이마켓은 등록된 내용에 대하여 일체의 책임을 지지 않습니다.
@@ -167,6 +176,7 @@ import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
 import BossHomeView from "@/components/boss/BossHomeView";
 import BossReviewListView from "@/components/boss/BossReviewListView";
+import BossCommListView from "@/components/boss/BossCommListView";
 
 export default {
   name: "BossPageView",
@@ -176,13 +186,16 @@ export default {
     }
   },
   components:{
+    BossCommListView,
     BossReviewListView,
     BossHomeView,
     Swiper, SwiperSlide
   },
   data(){
     return {
-      isCheck: true,
+      home: true,
+      comm: false,
+      review: false,
       backProfileImg: false,
       id: cookies.get("id"),
       bossNo: '',
@@ -217,12 +230,6 @@ export default {
     modify(){
       alert('사진을 변경하겠다!')
       this.backProfileImgDialog = true
-    },
-    home(){
-      this.isCheck = true;
-    },
-    review(){
-      this.isCheck = false;
     },
     savePrice(payload) {
       this.$emit('savePrice', payload)
@@ -363,7 +370,7 @@ export default {
   width: 100%;
   max-width: 1250px;
   margin: 0 auto;
-  padding: 15px 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 0 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
 }
 #profile {
   padding: 15px 20px 20px 20px;
