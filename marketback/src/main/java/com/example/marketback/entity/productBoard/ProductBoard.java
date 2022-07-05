@@ -50,7 +50,7 @@ public class ProductBoard {
     @Column(nullable = false)
     private Integer viewCnt = 0;
 
-    @Column(length = 64, nullable = false)
+    @Column(nullable = false)
     private String process;
 
     @CreatedDate

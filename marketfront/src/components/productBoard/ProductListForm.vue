@@ -4,6 +4,7 @@
     <router-link :to="{ name: 'ProductRegisterPage' }">
       게시물 작성
     </router-link>
+    <button @click="viewSort">정렬</button>
     <v-col
       class="none-product"
       v-if="
@@ -63,6 +64,7 @@ export default {
   },
   data() {
     return {
+      viewCnt: [],
       searchList: [],
       keyWord: "",
       login: {
@@ -72,6 +74,16 @@ export default {
         access_token: cookies.get("access_token"),
       },
     };
+  },
+  methods: {
+    viewSort() {
+      this.productBoards.sort(function (a, b) {
+        return b.viewCnt - a.viewCnt;
+      });
+    },
+  },
+  mounted() {
+    this.viewSort();
   },
 };
 </script>

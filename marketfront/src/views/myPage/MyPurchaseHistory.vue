@@ -29,7 +29,7 @@ export default {
     MyProfileBar,
     AfterLoginView,
   },
-  name: "MypurchaseHistory",
+  name: "MyPurchaseHistory",
   computed: {
     ...mapState(["productBoards"]),
   },
