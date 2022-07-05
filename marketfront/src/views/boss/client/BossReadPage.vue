@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
-    <boss-read-page-view v-else :boss="boss" @saveReview="saveReview" @saveNoImageReview="saveNoImageReview" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview"></boss-read-page-view>
+<!--    <boss-page-view v-else @savePrice="savePrice" @saveBackProfile="saveBackProfile" @saveBossProfileImg="saveBossProfileImg" @modifySave="modifySave" @deletePrice="deletePrice"></boss-page-view>-->
+    <boss-read-page-view v-else :boss="boss" @saveReview="saveReview" @saveNoImageReview="saveNoImageReview" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview" @onChat="onChat"></boss-read-page-view>
   </div>
 </template>
 
@@ -51,6 +52,17 @@ export default {
           })
           .catch(() => {
             alert('에러')
+          })
+    },
+    onChat(payload) {
+      const {member1No, member2No} = payload
+      console.log(member1No, member2No)
+      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}`, {member1No, member2No})
+          .then(() => {
+              this.$router.push({ name: "ChattingListPage" })
+          })
+          .catch(() => {
+              alert('문제 발생!')
           })
     },
     saveNoImageReview(formData){

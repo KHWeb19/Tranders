@@ -1,24 +1,18 @@
 <template>
-<v-container>
-    <home-view></home-view>
-    <br><br>
-    <v-row>
+    <div id='board_register'>
         <community-board-modify :communityBoard="communityBoard" @submit="onSubmit"/>
-    </v-row>
-</v-container>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
-import HomeView from '@/components/home/HomeView'
 import CommunityBoardModify from '@/components/communityBoard/CommunityBoardModify.vue'
 
 export default {
     name:'CommunityBoardModifyPage',
     components: { 
         CommunityBoardModify,
-        HomeView, 
         },
     props: {
         boardNo: {
@@ -58,5 +52,7 @@ export default {
 </script>
 
 <style scoped>
-
+#board_register {
+    background: #f8f9fa;
+}
 </style>

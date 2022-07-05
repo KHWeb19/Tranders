@@ -1,26 +1,29 @@
 <template>
-<v-container>
-    <home-view></home-view>
-    <br><br>
-    <v-row>
-        <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
-    </v-row>
-   <v-row>
-       <community-comment-list @submit="onCommentSubmit"  :boardNo="boardNo" :communityComments="communityComments" />
-   </v-row>
-</v-container>
+    <div>
+        <after-login-view/>
+        <div id='board_read'>
+            <v-container>
+                <v-row>
+                    <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
+                </v-row>
+                <v-row>
+                <community-comment-list @submit="onCommentSubmit" :boardNo="boardNo" :communityComments="communityComments"/>
+                </v-row>
+            </v-container>
+        </div>
+    </div>
 </template>
 
 <script>
-import HomeView from '@/components/home/HomeView'
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import CommunityBoardRead from '@/components/communityBoard/CommunityBoardRead.vue'
 import CommunityCommentList from '@/components/communityBoard/CommunityCommentList.vue'
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 
 export default {
     name:'CommunityBoardReadPage',
-        props: {
+    props: {
         boardNo: {
             type: String,
             required: true
@@ -35,7 +38,7 @@ export default {
     components: {
         CommunityBoardRead,
         CommunityCommentList,
-        HomeView,
+        AfterLoginView,
     },
 
     created () {
@@ -79,5 +82,8 @@ export default {
 </script>
 
 <style scoped>
-
+#board_read {
+    background: #f8f9fa;
+    padding-top: 30px;
+}
 </style>

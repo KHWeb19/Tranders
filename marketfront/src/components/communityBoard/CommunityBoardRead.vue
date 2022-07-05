@@ -1,89 +1,80 @@
 <template>
-    <v-container>
-        <br><br>
+    <div id='community_read'>
             <v-form enctype="multipart/form-data">
                 <table>
-                    <br>
-                    <v-row wrap>
+                    <!-- <v-row wrap>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <v-btn @click="goPage" class="backBtn" color="grey darken-3" style="box-shadow:none" dark fab small><v-icon>mdi-arrow-left</v-icon></v-btn>
-                    </v-row>
-                         <v-card-text>
-                        <v-chip class="subject" color="light green accent-2">
-                            {{communityBoard.usedSubject}}
-                        </v-chip>
-                    </v-card-text>
-          <span class="mr-2"><b>{{communityBoard.writer}}</b></span>
-          <span class="mr-2">&bull;&nbsp;{{communityBoard.region}}</span>
-          <hr><br>
-                    <v-row justify="center">
-                            <div class="label2">
-                            {{ communityBoard.title}}
-                            </div>
-                    </v-row>
-                    <br>
-                    <v-row  wrap justify="center">
-                        <v-carousel hide-delimiters  height="auto">
-                            <v-carousel-item 
-                            v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
-                            <img 
-                            :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
-                            </v-carousel-item>
-                        </v-carousel>
-                    </v-row>
-                    <v-row justify="center" class="mt-7">
-                             <v-col cols="12">
-                            <v-textarea style="white-space:pre-line" cols="75" rows="7" 
-                            outlined color="indigo darken-4" readonly
-                            :value="communityBoard.content">
-                            </v-textarea>
-                    </v-col>
-                    </v-row>
-                    <v-container v-if="communityBoard.placeName != ''">
-                    <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="communityBoard.placeUrl" style="text-decoration:none"  target="_blank">{{communityBoard.placeName}}</a></b><br>
-                    </v-container>
-                    <v-container v-if="communityBoard.placeName == ''">
-                    </v-container>
-                    <br><br>
-                    <v-row wrap>
-                        <v-btn @click=like color="red darken-1" style="box-shadow:none" dark fab small>
-                        <v-icon>mdi-heart</v-icon>
-                    </v-btn>
-                    &nbsp;&nbsp;
-                    <div class="Cnt">
-                            {{ communityBoard.likeCnt }}
+                    </v-row> -->
+                    <div id='user_profile'>
+                        <h2 id='nickname'>{{communityBoard.member.name}}
+                            <span id='region_name'>{{communityBoard.member.address}}</span>
+                        </h2>
+                        <div id='profile_detail'>매너온도 {{communityBoard.member.temperature}}°C</div>
+                        <div id='profile_image'>
+                            <v-img id="image" :src="require(`@/assets/profile/${communityBoard.member.profileImg}`)"/>
+                        </div>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    <v-btn @click=comment color="purple darken-1" style="box-shadow:none" dark fab small>
+                    <div id='read_title_content'>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <v-chip color="#E6F3E6">
+                                    <b>{{communityBoard.usedSubject}}</b>
+                                </v-chip>
+                                <b style="margin-top:3px"> {{communityBoard.title}}</b>
+                            </div>
+                            <div>
+                                <router-link style=text-decoration:none; :to="{ name: 'CommunityBoardModifyPage', params: { boardNo: communityBoard.boardNo.toString() }}">
+                                    <v-btn v-if="this.login.name == communityBoard.writer" type="button" id='my_button' depressed>수정</v-btn> 
+                                </router-link>    
+                                <v-btn v-if="this.login.name == communityBoard.writer" @click="onDelete" id='my_button' depressed style="margin-left:12px">
+                                    삭제
+                                </v-btn>   
+                            </div>
+                        </div>
+                        <v-row>
+                            <v-carousel hide-delimiters height="auto">
+                                <v-carousel-item 
+                                v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
+                                <img 
+                                :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
+                                </v-carousel-item>
+                            </v-carousel>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <div style="padding: 10px">
+                                    {{communityBoard.content}}
+                                    <div id='read_date_heart'>
+                                        {{communityBoard.createdDate}}
+                                        <div>
+                                            <v-btn @click=like class="success" depressed fab x-small>
+                                            <v-icon>mdi-heart</v-icon>
+                                            </v-btn>
+                                            {{ communityBoard.likeCnt }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </div>
+                    <div v-if="communityBoard.placeName != ''">
+                    <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="communityBoard.placeUrl" style="text-decoration:none"  target="_blank">{{communityBoard.placeName}}</a></b><br>
+                    </div>
+                    <!-- <div v-if="communityBoard.placeName == ''">
+                    </div> -->
+                        
+                    <!--<v-btn @click=comment color="purple darken-1" style="box-shadow:none" dark fab small>
                         <v-icon>mdi-comment</v-icon>
                     </v-btn>
                      &nbsp;&nbsp;
                     <div class="Cnt">
                             {{ communityBoard.commentCnt }}
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <router-link style=text-decoration:none; :to="{ name: 'CommunityBoardModifyPage', params: { boardNo: communityBoard.boardNo.toString() }}">
-            
-        <v-btn v-if="this.login.name == communityBoard.writer" type="button" color="blue-grey darken-1" style="box-shadow:none" dark fab small><v-icon>mdi-eraser</v-icon>    
-        </v-btn>    
-        </router-link> 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <v-btn v-if="this.login.name == communityBoard.writer" @click="onDelete" color="blue-grey darken-4" style="box-shadow:none" dark fab small>
-                        <v-icon>mdi-trash-can-outline</v-icon>
-                    </v-btn>   
-                    </v-row>
-                                          
+                    </div> -->
+                                                 
                 </table>
             </v-form>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -167,7 +158,89 @@ export default {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+#community_read{
+    /* border-radius: 8px; */
+    border: 1px solid #e9ecef;
+    width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 40px;
+    line-height: 24px;
+    background: #fff;
+}
+#user_profile{
+    display: block;
+    position: relative;
+    border-bottom: 1px solid #eaebee;
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
+}
+#nickname{
+    text-align: left;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    margin-left: 80px;
+}
+#region_name{
+    font-size: 17px;
+    color: #212529;
+    font-weight: normal;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+#profile_detail{
+    margin: 10px 0;
+    margin-left: 80px;
+    font-size: 15px;
+    letter-spacing: -0.6px;
+    color: #868e96;
+}
+#profile_image{
+    display: block;    
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#image{
+    width: 58px;
+    height: 58px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+#read_title_content{
+    padding: 32px 0 0 0;
+    width: 677px;
+    /* margin: 0 auto; */
+}
+#read_date_heart{
+    font-size: 13px;
+    line-height: 1.46;
+    letter-spacing: -0.6px;
+    color: #868e96;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#my_button{
+  letter-spacing: -2%;
+  background-color: white;
+  color: #212124;
+  height: 40px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #d1d3d8;
+}
+p {
+  display: block;
+  margin: 0px;
+}
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
 .label{
     margin-right:3%;
     text-align: center;
@@ -178,7 +251,6 @@ export default {
 table{
     position: relative;
     background-color: rgb(191, 246, 201);
-    /* rgb(185, 255, 75) (210, 255, 140) */
     padding-left: 5%;
     padding-right: 5%;
     padding-top: 0.5%;
@@ -194,7 +266,7 @@ hr {
 }
 .label2{
      font-family: 'Noto Sans KR', sans-serif;
-     /* margin-top:8px; */
+     margin-top:8px;
      font-size:20pt;
 }
 .backBtn {
@@ -233,12 +305,12 @@ hr {
     font-family: 'Noto Sans KR', sans-serif;
     margin-right:1.5%;
     zoom:130%;
-}
+}*/
 .preview {
     position: relative;
     margin-left: auto;
     margin-right:auto;
     max-width:350px;
     height:350px; 
-}
+} 
 </style>
