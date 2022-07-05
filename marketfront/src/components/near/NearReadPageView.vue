@@ -68,7 +68,7 @@
     </div>
 
     <div v-if="review">
-      <near-read-review-list-view :nearNo="nearNo"></near-read-review-list-view>
+      <near-read-review-list-view :nearNo="nearNo" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview"></near-read-review-list-view>
     </div>
 
     <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
@@ -255,14 +255,11 @@ export default {
     saveReview(){
       let formData = new FormData;
 
-      for(let i = 0; i < this.files.length; i++){
-        formData.append('fileList', this.files[i].file)
-      }
       formData.append('id', this.id)
       formData.append('name', this.name)
       formData.append('content', this.content)
-      formData.append('nearNo', this.near.nearNo)
       formData.append('bossNo', 0)
+      formData.append('nearNo', this.near.nearNo)
 
       let select = '';
 
@@ -277,8 +274,25 @@ export default {
 
       formData.append('state', select)
 
-      this.$emit('saveReview', formData)
+      if(this.files.length > 0) {
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('fileList', this.files[i].file)
+        }
+        this.$emit('saveReview', formData)
+      }else {
+        this.$emit('saveNoImageReview', formData)
+      }
+
     },
+    modifyReview(formData){
+      this.$emit('modifyReview', formData)
+    },
+    modifyImgReview(formData){
+      this.$emit('modifyImgReview', formData)
+    },
+    deleteReview(payload){
+      this.$emit('deleteReview', payload)
+    }
   },
   mounted() {
 

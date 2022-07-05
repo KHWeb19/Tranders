@@ -7,6 +7,8 @@ import lombok.Setter;
 public class ReviewResponse {
 
     private Long reviewNo;
+
+    private String id;
     private String name;
     private String region;
     private String content;
@@ -15,8 +17,9 @@ public class ReviewResponse {
 
     private String date;
 
-    public ReviewResponse(Long reviewNo, String name, String region, String content, String profileImg, String state, String date) {
+    public ReviewResponse(Long reviewNo, String id, String name, String region, String content, String profileImg, String state, String date) {
         this.reviewNo = reviewNo;
+        this.id = id;
         this.name = name;
         this.region = region;
         this.content = content;

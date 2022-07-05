@@ -2,23 +2,33 @@
   <v-container>
     <v-card width="100%">
       <div style="padding-left: 50px; padding-right: 30px">
-        <v-row @click="myProfile" style="padding-top: 20px">
-          <v-col cols="4">
-            <div>
-              <v-img
-                v-if="profileImg === null"
-                contain
-                max-height="58"
-                src="@/assets/profile/Tranders_base_profile_img.png"
-              ></v-img>
-              <v-img
-                v-else
-                :src="require(`@/assets/profile/${profileImg}`)"
-                id="img"
-                style="height: 100px; width: 80px"
-              ></v-img>
-            </div>
-          </v-col>
+
+      <v-row @click="myProfile" style="padding-top: 20px" >
+        <v-col cols="4">
+          <div>
+            <v-img v-if="profileImg === null" contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
+            <v-img v-else :src="require(`@/assets/profile/${profileImg}`)" id="img" max-width="80" min-height="80" style="height: 80px; width: 80px; border-radius: 70%"></v-img>
+          </div>
+        </v-col>
+
+        <v-col cols="6" style="padding-top: 35px">
+          <span style="font-size: 30px;">
+            {{name}}
+          </span>
+        </v-col>
+
+        <v-col cols="2" style="padding-top: 35px">
+          <v-btn style="margin-top: 5px" icon>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row style="margin-top: 20px;">
+        <div style="border: 1px solid green; width: 100%; height: 50px; margin-right: 20px; border-radius: 8px; right: 0" class="pa-3">
+          <div style="color: green">
+            오이페이
+          </div>
 
           <v-col cols="6" style="padding-top: 35px">
             <span style="font-size: 30px">

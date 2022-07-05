@@ -99,15 +99,13 @@ public class BossServiceImpl implements BossService{
         List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
         List<BossBackProfileImg> response = new ArrayList<>();
 
-        if (bossImages.size() == 0){
-            System.out.println("!!!! 크키가 없어요~");
-            return null;
-        }else {
-
+        if(bossImages.size() != 0) {
             for (BossImage bossImage : bossImages) {
                 response.add(new BossBackProfileImg(bossImage.getImageName()));
             }
             return response;
+        }else {
+            return null;
         }
     }
 
