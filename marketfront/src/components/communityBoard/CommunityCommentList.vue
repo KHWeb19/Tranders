@@ -105,11 +105,19 @@ import { mapActions, mapState } from 'vuex'
 import KakaoMap from '../../views/KakaoMap.vue';
 export default {
     components: { KakaoMap },
-    name:'CommentList',
+    name:'CommentList,CommunityBoardReadPage',
     props: {
         communityComments : {
             type:Array
         },
+          boardNo: {
+            type: String,
+            required: true
+        }
+    },
+    mounted() {
+        this.fetchCommunityCommentsList(this.commentId)
+        this.fetchCommunityCommentsList(this.boardNo)
     },
     data () {
         return {
@@ -138,6 +146,7 @@ export default {
        this.commentWriter = this.login.name
        this.commentRegion = this.login.region
        this.ediComment = this.commentList.comment
+    //    this.commentId = this.commentList.commentId
     //    this.placeName = this.commentList.placeName
     //    this.placeUrl = this.commentList.placeUrl
     },
@@ -174,6 +183,8 @@ export default {
         },
       modifyComment(commentList){
         this.ediComment = commentList.comment;
+        this.commentId = commentList.commentId;
+        // this.boardNo = commentList.boardNo;
       },
     //     onSubmit () {
     //         const comment  = this.commentList.comment
@@ -191,13 +202,16 @@ export default {
     //   },
             onModifySubmit () {
             const comment = this.ediComment
+            // const { boardNo } = this.communityBoard
             alert(comment)
             let formData = new FormData()
-
+            // this.fetchCommunityCommentsList(this.boardNo)
             formData.append('comment', comment)
             console.log(formData)
+            console.log(this.boardNo)
+            console.log(this.communityBoard)
             
-            axios.post(`http://localhost:7777/communityboard/${this.boardNo}/comment/register`, formData, { headers: {
+            axios.put(`http://localhost:7777/communityboard/${this.boardNo}/${this.commentId}/comment/register`,formData, { headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
                    .then(() => {
@@ -205,9 +219,9 @@ export default {
                     history.go(0)
             })
             .catch (() => {
-                console.log(this.boardNo)
+                console.log(this.commentId)
                 alert('문제 발생!')
-                })
+                })  
         }   
 }
 }  

@@ -6,7 +6,7 @@
         <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
     </v-row>
    <v-row>
-       <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" />
+       <community-comment-list @submit="onCommentSubmit"  :boardNo="boardNo" :communityComments="communityComments" />
    </v-row>
 </v-container>
 </template>
