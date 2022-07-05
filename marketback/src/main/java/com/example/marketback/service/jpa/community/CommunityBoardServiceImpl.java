@@ -91,7 +91,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
                 near.setCategory(category);
                 near.setAddress(near.getStoreRegion());
-                near.setStoreRegion(region[2]);
+//                near.setStoreRegion(region[2]);
                 near.setMarketHomePage(board.getPlaceUrl());
                 near.setReviewCount(0);
                 near.setCommunityCount(1);

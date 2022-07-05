@@ -2,14 +2,19 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style=" width: 100%; position: relative;">
-        <v-img v-if="backProfileImgs === ''" src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
-        <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
+        <div v-if="backProfileImgs === ''">
+          <v-img src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
+        </div>
+        <div v-else>
+        <swiper class="swiper" :options="swiperOption" style="height: 500px">
+
           <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
             <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
           </swiper-slide>
 
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
+        </div>
       </div>
 
       <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
@@ -349,10 +354,6 @@ export default {
       this.$emit('saveBackProfile', formData)
       this.backProfileImgDialog = false;
     }
-  },
-  mounted() {
-
-
   },
   computed: {
     ...mapState(['backProfileImgs']),

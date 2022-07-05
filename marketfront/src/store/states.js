@@ -5,10 +5,12 @@ export default {
     refreshToken: null,
     chatroom: null,
     chatrooms: [],
-    //roomNo: JSON.parse(localStorage.getItem('roomNo')),
+    reviews: [],
+    manner: null,
     profileImg: null,
     communityBoards:[],
     communityBoard: null,
+    communityComments: [],
     boss: null,
     userInfo: null, // myPage
     mapOption: {}, // lat, lng
@@ -22,5 +24,14 @@ export default {
     bossReviewImg: [],
     nearMapComm: [],
     nearComm: [],
-    near: null
+    near: null,
+    recentReport: [],
+    report: [],
+    reportRead: {},
+    reportBoardRead: null,
+    reportImageRead: null,
+    page: null,
+    member: [],
+    todayMember: null,
+    todayReport: null
 }

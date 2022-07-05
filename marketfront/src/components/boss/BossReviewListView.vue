@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div v-if="bossReview === ''" style="height: 320px; text-align: center; font-size: 23px; opacity: 0.5" class="pa-12">
       아직 후기가 없어요.
@@ -13,28 +14,28 @@
             <div> {{boss.region}} ㆍ 05월 12일</div>
           </div>
         </div>
+      </div>
 
-        <div style="padding-top: 20px; font-size: 25px">
-          {{boss.content}}
-        </div>
+      <div style="padding-top: 20px; font-size: 25px">
+        {{boss.content}}
+      </div>
 
-        <div v-if="bossReviewImg">
-          <swiper class="swiper" :options="swiperOption" style="height: 500px">
-            <swiper-slide v-for="(img,index) in bossReviewImg[index]" :key="index">
-              <v-img max-height="550px" :src="require(`@/assets/bossReview/${img}`)" id="img"></v-img>
-            </swiper-slide>
+      <div v-if="bossReviewImg">
+        <swiper class="swiper" :options="swiperOption" style="height: 500px">
+          <swiper-slide v-for="(img,index) in bossReviewImg[index]" :key="index">
+            <v-img max-height="550px" :src="require(`@/assets/bossReview/${img}`)" id="img"></v-img>
+          </swiper-slide>
 
-            <div class="swiper-pagination" slot="pagination"></div>
-          </swiper>
-        </div>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+      </div>
 
-        <div style="padding-bottom: 8px">
-          <v-chip-group multiple v-model="selection[index]" active-class="light-green lighten-2 white--text">
-            <v-chip v-for="(tag, index) in reviewTag" :key="index">
-              {{ tag }}
-            </v-chip>
-          </v-chip-group>
-        </div>
+      <div style="padding-bottom: 8px">
+        <v-chip-group multiple v-model="selection[index]" active-class="light-green lighten-2 white--text">
+          <v-chip v-for="(tag, index) in reviewTag" :key="index">
+            {{ tag }}
+          </v-chip>
+        </v-chip-group>
       </div>
     </div>
   </div>
@@ -104,6 +105,8 @@ export default {
       this.fetchBossReviewImage(num)
     }, 80)
     await this.parsingState();
+
+    alert(this.bossReview)
   }
 }
 </script>

@@ -3,6 +3,8 @@ import {
     FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_REVIEW_LIST,
+    FETCH_MANNER,
     FETCH_LOGIN_TOKEN,
     FETCH_REFRESH_TOKEN,
     FETCH_MEMBER_PROFILE,
@@ -11,6 +13,7 @@ import {
     FETCH_MY_REGION,
     FETCH_COMMUNITY_BOARD_LIST,
     FETCH_COMMUNITY_BOARD,
+    FETCH_COMMUNITY_COMMENTS_LIST,
     FETCH_BOSS_BACK_PROFILE,
     FETCH_BOSS_MENU_LIST,
     FETCH_BOSS_MARKET_INFO,
@@ -19,7 +22,17 @@ import {
     FETCH_CLIENT_BOSS_VIEW,
     FETCH_NEAR_REVIEW,
     FETCH_BOSS_REVIEW,
-    FETCH_BOSS_REVIEW_IMAGE, FETCH_NEAR_COMMUNITY_MAP, FETCH_NEAR_COMM, FETCH_NEAR_COMM_PAGE
+    FETCH_BOSS_REVIEW_IMAGE,
+    FETCH_NEAR_COMMUNITY_MAP,
+    FETCH_NEAR_COMM,
+    FETCH_NEAR_COMM_PAGE,
+    FETCH_REPORT_RECENT,
+    FETCH_TOTAL_PAGE,
+    FETCH_REPORT_READE,
+    FETCH_REPORT_IMAGE_READE,
+    FETCH_REPORT_BOARD_READE,
+    FETCH_MEMBER_LIST,
+    FETCH_TODAY_REGISTER, FETCH_TODAY_REPORT
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -51,6 +64,12 @@ export default {
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
     },
+    [FETCH_REVIEW_LIST] (state, reviews) {
+        state.reviews = reviews
+    },
+    [FETCH_MANNER] (state, manner) {
+        state.manner = manner
+    },
     [FETCH_MEMBER_PROFILE] (state, profileImg) {
         console.log(profileImg);
         state.profileImg = profileImg;
@@ -60,6 +79,9 @@ export default {
     },
     [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
         state.communityBoard = communityBoard
+    },
+    [FETCH_COMMUNITY_COMMENTS_LIST](state, communityComments) {
+        state.communityComments = communityComments
     },
     [FETCH_BOSS_PAGE] (state, boss){
         state.boss = boss;
@@ -105,6 +127,31 @@ export default {
     },
     [FETCH_NEAR_COMM_PAGE] (state, near){
         state.near = near;
+    },
+    [FETCH_REPORT_RECENT] (state, recentReport){
+        state.recentReport = recentReport;
+    },
+    [FETCH_TOTAL_PAGE] (state, page){
+        state.page = page;
+    },
+    [FETCH_REPORT_READE] (state, reportRead){
+        state.reportRead = reportRead;
+    },
+    [FETCH_REPORT_IMAGE_READE] (state, reportImg){
+        state.reportImageRead = reportImg;
+    },
+    [FETCH_REPORT_BOARD_READE] (state, reportBoard){
+        state.reportBoardRead = reportBoard;
+    },
+    [FETCH_MEMBER_LIST] (state, member) {
+        state.member = member;
+    },
+    [FETCH_TODAY_REGISTER] (state, todayMember) {
+        state.todayMember = todayMember;
+    },
+    [FETCH_TODAY_REPORT] (state, todayReport) {
+        state.todayReport = todayReport;
     }
+
 }
 

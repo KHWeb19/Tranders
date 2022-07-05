@@ -57,7 +57,7 @@ public class BossController {
         try{
             log.info("requestUploadFile() - Make file: " + imgFile.getOriginalFilename());
 
-            FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/" + id + "_" + imgFile.getOriginalFilename());
+            FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/front/" + id + "_" + imgFile.getOriginalFilename());
 
             String fileSrc = id + "_" + imgFile.getOriginalFilename();
 

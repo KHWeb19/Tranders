@@ -1,79 +1,67 @@
 <template>
-  <header>
-    <div id="header" style="height: 64px">
-      <div id="header-title">
-        <span id="title"> 오이마켓 </span>
-      </div>
+  <div id='nav'>
+    <div id="header">
+      <router-link id="title" :to="{name: 'HomePage'}">
+        오이마켓
+      </router-link>
 
-      <div>
-        <router-link style="text-decoration: none" :to="{ name: 'HomePage' }">
-          <v-btn text @click="test"> 중고거래 </v-btn>
+      <div id='nav_list'>
+        <router-link id='nav_item' :to="{name: 'ProductListPage'}">
+          중고거래
         </router-link>
-
-        <router-link
-          style="text-decoration: none"
-          :to="{ name: 'CommunityBoardListPage' }"
-        >
-          <v-btn text> 동네생활 </v-btn>
+        <router-link id='nav_item' :to="{ name: 'CommunityBoardListPage' }">
+          동네생활
         </router-link>
-
-        <router-link style="text-decoration: none" :to="{ name: 'NearPage' }">
-          <v-btn text> 내 근처 </v-btn>
+        <router-link id='nav_item' :to="{ name: 'NearPage' }">
+          내 근처
         </router-link>
-
-        <router-link style="text-decoration: none" :to="{ name: 'HomePage' }">
-          <v-btn text> 채팅 </v-btn>
+        <router-link id='nav_item' :to="{ name: 'ChattingListPage' }">
+          채팅
         </router-link>
       </div>
 
-      <div style="display: flex; margin-left: auto">
-        <div
-          id="searchBar"
-          style="display: flex; justify-content: center; padding-right: 20px"
-        >
+      <div id='nav_right'>
+        <div id="searchBar">
           <input
-            @keyup.enter="searchStart"
-            class="search"
-            type="text"
-            v-model="keyWord"
-            placeholder="물품이나 동네를 검색해보세요"
+          @keyup.enter="searchStart"
+          class="search"
+          type="text"
+          v-model="keyWord"
+          placeholder="물품이나 동네를 검색해보세요"
           />
         </div>
 
         <div>
           <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn fab v-if="profileImg === null" v-on="on">
-                <v-img
-                  contain
-                  max-height="58"
-                  src="@/assets/profile/Tranders_base_profile_img.png"
-                ></v-img>
+            <template v-slot:activator="{on}">
+              <v-btn id='my_button' depressed v-if="profileImg === null" v-on="on">
+                <v-img width="24" height="24" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>&nbsp;▼
               </v-btn>
 
-              <v-btn fab v-else v-on="on">
-                <v-img
-                  :src="require(`@/assets/profile/${profileImg}`)"
-                  id="img"
-                  style="height: 50px; width: 50px"
-                ></v-img>
+              <v-btn id='my_button' depressed v-else v-on="on">
+                <v-img width="24" height="24" :src="require(`@/assets/profile/${profileImg}`)"></v-img>&nbsp;▼
               </v-btn>
             </template>
 
             <v-list>
               <v-list-item link @click="myPage">
-                <v-list-item-title> My Page </v-list-item-title>
+                <v-list-item-title>
+                  내 정보
+                </v-list-item-title>
               </v-list-item>
 
               <v-list-item link @click="logout">
-                <v-list-item-title> 로그아웃 </v-list-item-title>
+                <v-list-item-title>
+                  로그아웃
+                </v-list-item-title>
               </v-list-item>
+
             </v-list>
           </v-menu>
         </div>
       </div>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
@@ -87,15 +75,7 @@ export default {
   data() {
     return {
       id: "",
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" },
-      ],
-      searchList: [],
-      keyWord: "",
-    };
+    }
   },
   methods: {
     ...mapActions(["fetchMemberProfile"]),
@@ -104,7 +84,7 @@ export default {
     },
     logout() {
       logout();
-      this.$router.push({ name: "HomePage" });
+      this.$router.push({name: 'HomePage'})
     },
     test() {
       alert("test");
@@ -118,7 +98,7 @@ export default {
         .then((res) => {
           console.log("검색성공");
           console.log(res.data);
-          if (this.$route.path !== "/productSearchList")
+          // if (this.$route.path !== "/productSearchList")
             this.$router.push({
               name: "ProductSearchListPage",
               params: { searchList: res.data },
@@ -144,38 +124,102 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+#nav{
+  background-color: white;
+  color: #212124;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100vw;
+  /* position: fixed;
+  z-index: 999; */
+}
 #header {
+  max-width: 1200px;
+  height: 64px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 0;
-}
-#header-title {
-  display: inline-block;
-  margin-right: 16px;
 }
 #title {
+  text-decoration: none;
+  width: 160px;
   color: green;
   font-family: ONE-Mobile-POP, serif;
   font-size: 26px;
 }
+#nav_list{
+  display: block;
+  width: 100%;
+  padding-top: 0;
+  padding-right: 40px;
+  padding-bottom: 0;
+  padding-left: 40px;
+}
+#nav_list .router-link-active, 
+#nav_list .router-link-exact-active {
+  text-decoration: none;
+  line-height: 1.32;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  margin-right: 30px;
+  color: green
+}
+#nav_item{
+  text-decoration: none;
+  line-height: 1.32;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  margin-right: 30px;
+  color: #4d5159;
+}
+#nav_right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #searchBar {
+  display: block;
   position: relative;
-  width: 295px;
-  padding-top: 2px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-right: 12px;
 }
 input {
-  width: 100%;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
+  width: 288px;
+  line-height: 1.36;
+  font-size: 16px;
+  background-color: #f2f3f6;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 6px;
+  color: #212124;
 }
-v-img {
-  height: 20px;
+#my_button{
+  line-height: 1.3;
+  font-size: 16px;
+  letter-spacing: -2%;
+  display: block;
+  white-space: nowrap;
+  background-color: white;
+  color: #212124;
+  height: 40px;
+  font-weight: 700;
+  /* width: fit-content; */
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #d1d3d8;
+  background: none;
+  appearance: none;
+  justify-content: center;
+  align-items: center;
 }
 </style>

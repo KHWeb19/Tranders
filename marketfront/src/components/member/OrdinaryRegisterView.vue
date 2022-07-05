@@ -175,11 +175,12 @@ export default {
       let roles;
 
       if (this.isManager) {
-        roles = 0;
-      } else {
         roles = 1;
+      } else {
+        roles = 0;
       }
 
+      //alert(roles)
       const {id, password, name, phoneNumber, region, lat, lng} = this;
 
       this.$emit('register', {id, password, name, phoneNumber, region, roles, lat, lng})

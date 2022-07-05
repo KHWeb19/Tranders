@@ -107,8 +107,8 @@ public class CommunityBoard {
     @JoinColumn(name = "BOSS_AUTH_NO")
     private Boss boss;
 
-//    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
-//    private int commentCnt;
+    @Formula("(SELECT count(1) FROM community_comment c WHERE c.community_board_board_no = board_no)")
+    private int commentCnt;
 
     @PrePersist
     public void onPrePersist() {
@@ -125,6 +125,6 @@ public class CommunityBoard {
         this.fileName2 = fileName2;
     }
 
-    //    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-//    private List<CommunityComment> comments;
+    @OneToMany(mappedBy = "communityBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<CommunityComment> comments;
 }
