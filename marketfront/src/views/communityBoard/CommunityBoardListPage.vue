@@ -1,23 +1,26 @@
 <template>
     <div>
         <after-login-view/>
-        <v-container>
-            
-            <br><br><br>
-            <v-row justify="center">
-                <span id="shadow" class="shadow">동네 생활</span>
+        <div id='board_list'>
+            <div >
                 <community-board-list :communityBoards="communityBoards"/>
-            </v-row>
-            <v-btn class=writeBtn type="button" color="light green accent-4" style="box-shadow:none" onclick="location.href='http://localhost:8080/Tranders/CommunityRegister'" fixed right bottom dark fab big><v-icon>mdi-plus</v-icon>    
-            </v-btn>                                 <!-- green darken-1 -->
-        </v-container>
+                <!-- <br><br><br>
+                <v-row justify="center">
+                    <span id="shadow" class="shadow">동네 생활</span>
+                    <community-board-list :communityBoards="communityBoards"/>
+                </v-row> -->
+                <v-btn id='writeBtn' depressed fixed right bottom fab big class="success" type="button" onclick="location.href='http://localhost:8080/Tranders/CommunityRegister'">
+                    <v-icon>mdi-plus</v-icon>    
+                </v-btn>                                 <!-- green darken-1 -->
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import CommunityBoardList from '@/components/communityBoard/CommunityBoardList.vue'
-import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import { mapState, mapActions } from 'vuex'
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 
 export default {
     name: 'CommunityBoardListPage',
@@ -38,11 +41,14 @@ export default {
 </script>
 
 <style scoped>
-.writeBtn {
+#board_list {
+    background: #f8f9fa;
+    padding-top: 30px;
+}
+#writeBtn {
     position: sticky;
-    /* margin-top:10%; */
-    margin-left:82%;
-    zoom:1;
+    margin-left:74%;
+    /* zoom:1; */
 }
 .shadow{
     font-family:  'Cute Font', cursive;

@@ -1,27 +1,89 @@
 <template>
-    <v-container>
-        <br><br>
+    <div id='content'>
             <v-form enctype="multipart/form-data" @submit.prevent="onSubmit">
+                <div id='title'>
+                    <div>
+                        <v-layout>
+                            <v-dialog persisten max-width="400">
+                                <template v-slot:activator="{ on }">
+                                    <v-icon v-on="on" id='goBack' large color="black">mdi-chevron-left</v-icon>
+                                </template>
+                                <template v-slot:default="dialog">
+                                    <v-card>
+                                        <v-card-title class="headline">
+                                            글쓰기를 취소하시겠습니까?
+                                        </v-card-title>
+                                        <v-card-text >
+                                            * 수정하던 내용이 사라져요
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn text color="red" @click="goBack()">
+                                                안쓸래요
+                                            </v-btn>
+                                            <v-btn text @click="dialog.value=false">
+                                                계속 쓸래요
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </template>
+                            </v-dialog>
+                        </v-layout>
+                    </div>
+                    <div><h2 style="margin-top: 6px; margin-left: 5px;">동네생활 글수정</h2></div>
+                </div>
                 <table>
-                    <br>
-                    <v-chip class="subject" color="light green accent-2">
-                        {{communityBoard.usedSubject}}
-                    </v-chip>
-                    <br><br>
-                    <v-row justify="center">
+                    <v-row>
                         <v-col>
-                            <v-text-field class="titleFloat" style="width:460px" color="indigo darken-4" placeholder=" 제목을 작성하세요." v-model="title"/>
+                        <v-chip color="#E6F3E6">
+                            <b>{{communityBoard.usedSubject}}</b>
+                        </v-chip>
                         </v-col>
                     </v-row>
-                    <v-row  justify="center">
+                    <v-row>
+                        <v-col><h3>제목</h3></v-col>
                         <v-col cols="12">
-                            <v-textarea style="white-space:pre-line" cols="75" rows="7" 
-                            outlined color="indigo darken-4" placeholder=" 우리 동네 관련된 질문이나 이야기를 해보세요."
+                            <input id='input' placeholder="제목을 입력해주세요." v-model="title"/>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col><h3>내용</h3></v-col>
+                        <v-col cols="12">
+                            <textarea placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
                             v-model="content">
-                            </v-textarea>
+                            </textarea>
                         </v-col>                       
                     </v-row>
-                    <v-row  wrap justify="center">
+                    <v-row>
+                        <v-col><h3>장소</h3></v-col>
+                        <v-col cols="12">
+                            <v-dialog v-model="dialog" persisten max-width="1000">
+                            <template v-slot:activator="{ on }">
+                                <input id='input' v-on="on" placeholder="공유하고 싶은 장소를 검색할 수 있어요." v-model="placeName"/>
+                            </template>
+                            <v-card>
+                                <kakao-map></kakao-map>        
+                            </v-card>
+                            </v-dialog>
+                        </v-col>                       
+                    </v-row>
+                    <v-row>
+                        <v-col><h3>사진 ({{files.length}}/10)</h3></v-col>
+                        <v-col cols="12">
+                            <div id='image'>
+                                <label for="files"><v-icon large>mdi-camera</v-icon></label>
+                                <input type="file" id="files" ref="files" dense style="width:0px"
+                                        multiple v-on:change="handleFileUpload()"/>
+                                <v-carousel hide-delimiters height="auto">    
+                                    <v-carousel-item 
+                                    v-for="(file, index) in files" :key="index" style="text-align:center">
+                                    <img :src=file.preview class="preview"/>
+                                    </v-carousel-item>         
+                                </v-carousel>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <!-- <v-row>
                         <v-carousel hide-delimiters  height="auto">
                             <v-carousel-item 
                             v-for="(file, index) in files" :key="index" style="text-align:center">
@@ -32,33 +94,33 @@
                             <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
                             </v-carousel-item>                              
                         </v-carousel>
-                    </v-row><br>                   
+                    </v-row>                 
                         <v-icon large>mdi-image-outline</v-icon>
                         <input type="file" id="files" ref="files"  dense style="width:193px"
                                 multiple v-on:change="handleFileUpload()"/>
-                                <v-dialog v-model="dialog" persisten max-width="1000">
-                            <template v-slot:activator="{ on }">
-                                <v-btn v-on="on"  onclick="" color="blue-grey" text>
-                                    <v-icon large>mdi-map-marker-outline</v-icon>
-                                    <v-text-field style="width:200px" placeholder="장소를 등록하세요." v-model="placeName"/>
-                                </v-btn>                              
-                            </template>
-                            <v-card>
-                                <kakao-map></kakao-map>        
-                            </v-card>
-                        </v-dialog>      
-                    <br>
+                            <v-dialog v-model="dialog" persisten max-width="1000">
+                                <template v-slot:activator="{ on }">
+                                    <v-btn v-on="on"  onclick="" color="blue-grey" text>
+                                        <v-icon large>mdi-map-marker-outline</v-icon>
+                                        <v-text-field style="width:200px" placeholder="장소를 등록하세요." v-model="placeName"/>
+                                    </v-btn>                              
+                                </template>
+                                <v-card>
+                                    <kakao-map></kakao-map>        
+                                </v-card>
+                            </v-dialog>      
                     <div align="left">
                     <span style="color:red; font-size:12pt">최대 10개의 이미지 등록 가능({{files.length}}/10)</span>
-                    </div>
-                    <br>
-                    <v-row wrap>
-                        <v-btn onclick="location.href='http://localhost:8080/Tranders/CommunityList'" class="writeBtn" color="red accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-close</v-icon></v-btn>
-                        <v-btn type="submit" class="writeBtn2" color="light green accent-4" style="box-shadow:none" dark fab small><v-icon> mdi-check</v-icon></v-btn>
+                    </div> -->
+
+                    <v-row>
+                        <v-col>
+                            <v-btn block depressed color="success" height="60" type="submit"><h3><b>수정 완료</b></h3></v-btn>
+                        </v-col>
                     </v-row>
                 </table>
             </v-form>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -173,11 +235,62 @@ export default {
                 console.log(this.usedSubject)
             
         },
+        goBack() {
+            this.$router.go(-1);
+        }
 },
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+table {
+    width: 100%;
+  }
+#content{
+    display: block;
+    margin-top: 72px;
+    width: 677px;
+    margin: 30px auto 0 auto;
+    border: 1px solid #e9ecef;
+    width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    line-height: 24px;
+    background: #fff;
+}
+#title{
+    display:flex; 
+    padding-bottom: 20px;
+}
+#input{
+    width: 100%;
+    border: 2px solid #EAEBEE;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 16px;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 16px;
+}
+textarea{
+    border: 2px solid #eaebee;
+    box-sizing: border-box;
+    border-radius: 6px;
+    width: 100%;
+    height: 300px;
+    padding: 16px;
+    resize: none;
+}
+#image{
+    border: 2px solid #eaebee;
+    box-sizing: border-box;
+    border-radius: 6px;
+    width: 100%;
+    padding: 16px;
+    resize: none;
+}
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
 .label{
     margin-right:3%;
     text-align: center;
@@ -188,7 +301,6 @@ export default {
 table{
     position: relative;
     background-color: rgb(191, 246, 201);
-    /* rgb(185, 255, 75) (210, 255, 140) */
     padding-left: 5%;
     padding-right: 5%;
     padding-top: 0.5%;
@@ -223,7 +335,7 @@ table{
     font-family: 'Noto Sans KR', sans-serif;
     margin-right:1.5%;
     zoom:130%;
-}
+} */
 .preview {
     position: relative;
     margin-left: auto;
