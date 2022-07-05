@@ -26,8 +26,8 @@
                         <v-carousel hide-delimiters  height="auto">
                             <v-carousel-item 
                             v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
-                            <!-- <img 
-                            :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/> -->
+                            <img 
+                            :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
                             </v-carousel-item>
                         </v-carousel>
                     </v-row>
@@ -50,13 +50,17 @@
                         <v-icon>mdi-heart</v-icon>
                     </v-btn>
                     &nbsp;&nbsp;
-                    <div class="likeCnt">
+                    <div class="Cnt">
                             {{ communityBoard.likeCnt }}
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
                     <v-btn @click=comment color="purple darken-1" style="box-shadow:none" dark fab small>
                         <v-icon>mdi-comment</v-icon>
                     </v-btn>
+                     &nbsp;&nbsp;
+                    <div class="Cnt">
+                            {{ communityBoard.commentCnt }}
+                    </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -107,12 +111,10 @@ export default {
                 access_token: cookies.get('access_token'),
             },
         fileName1: this.communityBoard.fileName1,
-        files:[]
+        files:[],
         }
     },
-
     methods: {
-        // ...mapActions(['fetchMarketCommentsList']),
         goPage () {
             this.$router.push('/Tranders/CommunityList')
         },
@@ -160,8 +162,7 @@ export default {
                 }
             })
             }
-        }
-            
+        },        
     }
 }
 </script>
@@ -201,7 +202,7 @@ hr {
     margin-left:-8%;
     zoom:1;
 }
-.likeCnt {
+.Cnt {
     font-size: 20pt;
     font-family: 'Noto Sans KR', sans-serif;
      

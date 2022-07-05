@@ -1,6 +1,7 @@
 package com.example.marketback.repository.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.review.BossReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,16 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     void updateLikeCount(Long boardNo);
 
 
+    @Query("select cb from CommunityBoard cb where cb.near.nearNo = :nearNo")
+    List<CommunityBoard> findTopByBossNoOrderByIdDesc(Long nearNo);
+
+    @Query("select cb from CommunityBoard cb where cb.boss.bossAuthNo = :bossNo")
+    List<CommunityBoard> findByBossNo(Long bossNo);
+
+    @Query("select cb from CommunityBoard cb where cb.near.nearNo = :nearNo")
+    List<CommunityBoard> findByNearNo(Long nearNo);
+
+    @Query("select cb from CommunityBoard cb where cb.boardNo = :productNo")
+    CommunityBoard findByProductNo(Long productNo);
 }
 

@@ -1,44 +1,35 @@
 <template>
-  <header class="fixed-bar-box-shadow">
-    <div id="header" style="height: 70px">
-      <div id="header-title">
-        <span id="title"> 오이마켓 </span>
-      </div>
+  <div id='nav'>
+    <div id="header">
+      <router-link id="title" :to="{name: 'HomePage'}">
+        오이마켓
+      </router-link>
 
-      <div>
-        <router-link style="text-decoration: none;" :to="{name: 'HomePage'}">
-          <v-btn text @click="test">
-            중고거래
-          </v-btn>
+      <div id='nav_list'>
+        <router-link id='nav_item' :to="{name: 'ProductListPage'}">
+          중고거래
         </router-link>
       </div>
 
-      <div style="display: flex; margin-left: auto;">
+      <div id='nav_right'>
         <div id="searchBar">
           <input
-            type="text"
-            placeholder="물품이나 동네를 검색해보세요"
+          @keyup.enter="searchStart"
+          class="search"
+          type="text"
+          v-model="keyWord"
+          placeholder="물품이나 동네를 검색해보세요"
           />
-          <!-- <v-btn icon style="width: 12%">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn> -->
         </div>
 
-        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-          <v-btn style="color: black" icon @click="loginBtn">
-            <span class="btn-text">로그인</span>
-          </v-btn>
-        </div>
-
-        <div class="bar-menu" style="float: left; width: 10%; height: 50px">
-          <v-btn icon @click="register">
-            <span class="btn-text">회원가입</span>
+        <div>
+          <v-btn id='my_button' depressed @click="loginBtn">
+            로그인
           </v-btn>
         </div>
       </div>
     </div>
-  </header>
-
+  </div>
 </template>
 
 <script>
@@ -47,10 +38,7 @@ export default {
   methods: {
     loginBtn() {
       this.$router.push({ name: "LoginPage" });
-    },
-    register() {
-      this.$router.push({ name: "RegisterMemberPage" });
-    },
+    }
   },
 };
 </script>
@@ -63,49 +51,103 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+#nav{
+  background-color: white;
+  color: #212124;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100vw;
+  /* position: fixed;
+  z-index: 999; */
+}
 #header {
+  max-width: 1200px;
+  height: 64px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 0;
-}
-#searchBar {
-  position: relative;
-  width: 295px;
-  padding-top: 8px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-#header-title {
-  display: inline-block;
-  margin-right: 16px;
 }
 #title {
+  text-decoration: none;
+  width: 160px;
   color: green;
   font-family: ONE-Mobile-POP, serif;
   font-size: 26px;
 }
-input {
+#nav_list{
+  display: block;
   width: 100%;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
+  padding-top: 0;
+  padding-right: 40px;
+  padding-bottom: 0;
+  padding-left: 40px;
 }
-.bar-menu {
-  display: inline-flex;
-  width: 10%;
-  height: 50px;
+#nav_list .router-link-active, 
+#nav_list .router-link-exact-active {
+  text-decoration: none;
+  line-height: 1.32;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  margin-right: 30px;
+  color: green
+}
+#nav_item{
+  text-decoration: none;
+  line-height: 1.32;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  margin-right: 30px;
+  color: #4d5159;
+}
+#nav_right{
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-.btn-text {
-  color: black;
+#searchBar {
+  display: block;
+  position: relative;
+  margin-right: 12px;
 }
-v-btn {
-  border-radius: 8px;
-  border: solid 1px black;
+input {
+  width: 288px;
+  line-height: 1.36;
+  font-size: 16px;
+  background-color: #f2f3f6;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 6px;
+  color: #212124;
+}
+#my_button{
+  line-height: 1.3;
+  font-size: 16px;
+  letter-spacing: -2%;
+  display: block;
+  white-space: nowrap;
+  background-color: white;
+  color: #212124;
+  height: 40px;
+  font-weight: 700;
+  /* width: fit-content; */
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #d1d3d8;
+  background: none;
+  appearance: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>

@@ -4,9 +4,11 @@ import com.example.marketback.entity.boss.Boss;
 import lombok.*;
 import org.apache.kafka.common.protocol.types.Field;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -53,19 +55,22 @@ public class Member {
 
     private String profileImg;
 
+    private String searchRegion;
+
     @Enumerated(EnumType.STRING)
     private MemberRole roles;
 
     @Enumerated(EnumType.STRING)
     private ProviderType providerType;
 
-    @CreationTimestamp
-    private Timestamp createDate;
+    @CreatedDate
+    private String createDate = String.valueOf(LocalDateTime.now());
 
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);
         member.setBossAuth(Boolean.FALSE);
         member.setRegisterStatus(Boolean.TRUE);
+        member.setSearchRegion(member.getRegion());
 
         return member;
     }
