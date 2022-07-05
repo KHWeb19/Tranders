@@ -32,7 +32,7 @@ public class CommunityCommentController {
         log.info("Comment modify(): ");
 
 //        return CommunityCommentServiceImpl.modify(commentId, communityComment);
-        service.modify(commentId, comment, boardNo,file);
+        service.modify(commentId, boardNo, comment, file);
     }
 
     @GetMapping("/{boardNo}/comment/list")

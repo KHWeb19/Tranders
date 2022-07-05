@@ -44,34 +44,32 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     }
 
     @Override
-    public void modify(Long commentId, String comment, Long boardNo, @RequestParam(required = false) MultipartFile file) throws Exception {
-
-        CommunityComment boardItem = CommunityCommentRepository.findByCommentId(commentId);
-
+    public void modify(Long commentId, Long boardNo, String comment, MultipartFile file) throws Exception {
+        CommunityComment boardItem = repository.findByCommentId(commentId);
         boardItem.setComment(comment);
 
-//        communityComment.setCommunityBoard(boardItem.get());
+        repository.save(boardItem);
+        //        communityComment.setCommunityBoard(boardItem.get());
 
-            //pass
+        //pass
 
-//        communityComment.setCommunityBoard(boardItem.get());
-//        if (file != null) {
-//            UUID uuid = UUID.randomUUID();
-//            String fileName = uuid + "_" + file.getOriginalFilename();
-//            FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
-//
-//            saveFile.write(file.getBytes());
-//            saveFile.close();
-//
-//            communityComment.setFileName(fileName);
-//        }
+        //        communityComment.setCommunityBoard(boardItem.get());
+        //        if (file != null) {
+        //            UUID uuid = UUID.randomUUID();
+        //            String fileName = uuid + "_" + file.getOriginalFilename();
+        //            FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
+        //
+        //            saveFile.write(file.getBytes());
+        //            saveFile.close();
+        //
+        //            communityComment.setFileName(fileName);
+        //        }
 
-//        communityComment.setCommentId(Long.valueOf(commentId));
-//
-//        repository.save(communityComment);
+        //        communityComment.setCommentId(Long.valueOf(commentId));
+        //
+        //        repository.save(communityComment);
 
-//        return communityComment;
-
+        //        return communityComment;
     }
 
     @Override
