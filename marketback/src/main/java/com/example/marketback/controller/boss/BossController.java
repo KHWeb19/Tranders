@@ -313,10 +313,10 @@ public class BossController {
         return bossReviewService.getComm(num.get("num"));
     }
 
-    @PostMapping("/deleteReview/{reviewNo}")
-    public void deleteReview(@PathVariable Long reviewNo){
-        log.info("deleteReview");
+    @PostMapping("/deleteReview/{reviewNo}/{entityNo}")
+    public void deleteReview(@PathVariable Long reviewNo, @PathVariable String entityNo){
+        log.info("deleteReview" + entityNo +"!!!!!!!!!!!!!!!!!!!!!!!");
 
-        bossReviewService.deleteReview(reviewNo);
+        bossReviewService.deleteReview(reviewNo, entityNo);
     }
 }

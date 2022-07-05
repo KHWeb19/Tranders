@@ -226,9 +226,17 @@ public class BossReviewServiceImpl implements BossReviewService{
     }
 
     @Override
-    public void deleteReview(Long reviewNo) {
+    public void deleteReview(Long reviewNo, String num) {
         List<BossReviewImage> bossReviewImages = bossReviewImageRepository.findByReviewNo(reviewNo);
         bossReviewImageRepository.deleteAll(bossReviewImages);
         bossReviewRepository.deleteById(reviewNo);
+
+        if(num.charAt(0) == '0' && num.charAt(1) == '0') {
+            Boss boss = bossRepository.findByBossNo(Long.valueOf(num));
+            boss.setReviewCount(boss.getReviewCount() -1);
+        }else {
+            Near near = nearRepository.findByNearNo(Long.valueOf(num));
+            near.setReviewCount(near.getReviewCount() -1);
+        }
     }
 }

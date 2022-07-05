@@ -16,10 +16,12 @@
               <div> {{boss.region}} ㆍ {{boss.date}}</div>
             </div>
           </div>
+
           <div style="display: flex; justify-content: end; width: 50%">
             <v-btn v-if="id === boss.id" style="margin-right: 10px" @click="modify(boss, index)">수정</v-btn>
             <v-btn v-if="id === boss.id" @click="deleteReview(boss)">삭제</v-btn>
           </div>
+
         </div>
 
         <div style="padding-top: 20px; font-size: 25px">
@@ -262,7 +264,9 @@ export default {
     },
     deleteReview(boss){
       let reviewNo = boss.reviewNo;
-      this.$emit('deleteReview', {reviewNo});
+      let entityNo = '00' + this.bossNo;
+      //console.log(entityNo)
+      this.$emit('deleteReview', {reviewNo, entityNo});
     }
   },
   computed: {

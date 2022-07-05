@@ -2,7 +2,7 @@ package com.example.marketback.controller.productBoard;
 
 import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.request.KeyWordRequest;
-import com.example.marketback.service.ProductService;
+import com.example.marketback.service.productBoard.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
