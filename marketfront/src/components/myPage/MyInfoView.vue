@@ -2,7 +2,7 @@
   <v-container>
     <v-card width="100%">
       <div style="padding-left: 50px; padding-right: 30px">
-        <div v-if="!isCheck">
+        <div v-if="!isCheck && providerType === 'undefined'">
           <v-row justify="center" style="padding-top: 40px">
             <v-card-title style="font-size: 30px">비밀번호를 입력해주세요</v-card-title>
           </v-row>
@@ -14,7 +14,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="providerType">
+          <v-row v-if="providerType === null">
             <v-col cols="3">비밀번호</v-col>
             <v-col cols="9">
               <v-text-field solo v-model="password" style="width: 100%" placeholder="PASSWORD"> </v-text-field>
@@ -41,7 +41,7 @@
             <v-col>
               <div>
                 <v-img v-if="userInfo.profileImg === null" contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-                <v-img v-else :src="require(`@/assets/profile/${userInfo.profileImg}`)" id="img" style="height: 180px; width: 180px" @click="changeImg"></v-img>
+                <v-img v-else :src="require(`@/assets/profile/${userInfo.profileImg}`)" id="img" style="height: 180px; width: 180px; border-radius: 70%" @click="changeImg"></v-img>
                 <input type=file class="file-input" id="files" ref="files" multiple v-on:change="fileUpload()" style="display: none">
               </div>
             </v-col>
@@ -67,27 +67,27 @@
               </v-col>
             </v-row>
 
-            <v-row>
+            <v-row v-if="providerType === 'undefined'">
               <v-col cols="3">비밀번호</v-col>
               <v-col cols="9">
                 <v-text-field v-model="password" solo style="width: 100%" placeholder="변경할 비밀번호를 적어주세요"> </v-text-field>
               </v-col>
             </v-row>
 
-            <v-row>
+<!--            <v-row v-if="providerType === 'undefined'">
               <v-col cols="3">전화번호</v-col>
               <v-col cols="7">
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
-            </v-row>
+            </v-row>-->
 
-<!--            <v-row>
+            <v-row v-if="providerType === 'undefined'">
               <v-col cols="3">전화번호</v-col>
               <v-col cols="7">
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
               <v-col cols="2" class="pt-5">
-                <v-btn style="width: 100%" id="checkDub" @click="checkPhoneNum" outlined>번호 확인</v-btn>
+                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" @click="checkPhoneNum">번호 확인</v-btn>
               </v-col>
             </v-row>
 
@@ -98,7 +98,7 @@
               <v-col cols="2" class="pt-5">
                 <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
               </v-col>
-            </v-row>-->
+            </v-row>
 
             <v-row style="height: 70px; margin-top: 35px">
               <v-col>

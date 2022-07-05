@@ -6,7 +6,7 @@
         <v-col cols="4">
           <div>
             <v-img v-if="profileImg === null" contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-            <v-img v-else :src="require(`@/assets/profile/${profileImg}`)" id="img" style="height: 100px; width: 80px"></v-img>
+            <v-img v-else :src="require(`@/assets/profile/${profileImg}`)" id="img" max-width="80" min-height="80" style="height: 80px; width: 80px; border-radius: 70%"></v-img>
           </div>
         </v-col>
 
