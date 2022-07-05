@@ -2,6 +2,7 @@ package com.example.marketback.controller.community;
 
 import com.example.marketback.entity.jpa.community.CommunityComment;
 import com.example.marketback.service.jpa.community.CommunityCommentService;
+import com.example.marketback.service.jpa.community.CommunityCommentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,15 @@ public class CommunityCommentController {
     public void register (@Validated CommunityComment communityComment, @PathVariable("boardNo") Integer boardNo, @RequestParam(required = false) MultipartFile file) throws Exception {
         log.info("Comment register()" + communityComment);
         service.register(boardNo, communityComment, file);
+    }
+
+    @PutMapping("/{boardNo}/{commentId}/comment/register")
+    public void modify (@RequestParam("comment") String comment, @PathVariable("commentId") Long commentId, @PathVariable("boardNo") Long boardNo, @RequestParam(required = false) MultipartFile file) throws Exception {
+
+        log.info("Comment modify(): ");
+
+//        return CommunityCommentServiceImpl.modify(commentId, communityComment);
+        service.modify(commentId, boardNo, comment, file);
     }
 
     @GetMapping("/{boardNo}/comment/list")

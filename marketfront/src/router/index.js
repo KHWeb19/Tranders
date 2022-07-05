@@ -5,11 +5,14 @@ import HomePage from '@/views/HomePage.vue'
 import ProductListPage from '@/views/productBoard/ProductListPage'
 import ProductRegisterPage from '@/views/productBoard/ProductRegisterPage'
 import ProductReadPage from '@/views/productBoard/ProductReadPage'
+import ProductModifyPage from '@/views/productBoard/ProductModifyPage'
+import ProductSearchListPage from '@/views/productBoard/ProductSearchListPage'
+import MyPurchaseHistory from '@/views/myPage/MyPurchaseHistory'
 
-import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue' 
-import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue' 
-import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue' 
-import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue' 
+import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
+import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
+import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
+import CommunityBoardModifyPage from '@/views/communityBoard/CommunityBoardModifyPage.vue'
 import SearchListPage from '@/views/communityBoard/SearchListPage.vue'
 
 import MemberPage from "@/views/member/MemberPage";
@@ -84,8 +87,33 @@ const routes = [
   {
     path: '/productRead/:productNo',
     name: 'ProductReadPage',
-    components:{
+    components: {
       default: ProductReadPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/myPurchase',
+    name: 'MyPurchaseHistory',
+    component: MyPurchaseHistory
+  },
+  {
+    path: '/productModify/:productNo',
+    name: 'ProductModifyPage',
+    components: {
+      default: ProductModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/product/searchList',
+    name: 'ProductSearchListPage',
+    components: {
+      default: ProductSearchListPage
     },
     props: {
       default: true
@@ -121,7 +149,7 @@ const routes = [
   {
     path: '/chatting',
     name: 'ChattingListPage',
-    components:{
+    components: {
       default: ChattingListPage
     },
     props: {
@@ -351,3 +379,8 @@ const router = new VueRouter({
 
 
 export default router
+
+
+
+
+

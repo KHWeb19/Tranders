@@ -102,7 +102,6 @@ export default {
           .catch(() => {
             alert('에러')
           })
-
     }
   },
   computed: {

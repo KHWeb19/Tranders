@@ -1,16 +1,16 @@
 <template>
     <div>
         <after-login-view/>
-            <div id='board_read'>
-                <v-container>
-                    <v-row>
-                        <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
-                    </v-row>
-                    <v-row>
-                    <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" :boardNo="boardNo" />
-                    </v-row>
-                </v-container>
-            </div>
+        <div id='board_read'>
+            <v-container>
+                <v-row>
+                    <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
+                </v-row>
+                <v-row>
+                <community-comment-list @submit="onCommentSubmit" :boardNo="boardNo" :communityComments="communityComments"/>
+                </v-row>
+            </v-container>
+        </div>
     </div>
 </template>
 
