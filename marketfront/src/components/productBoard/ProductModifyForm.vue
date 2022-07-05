@@ -11,6 +11,14 @@
             :src="require(`@/assets/pImage/${productBoard.productImage}`)"
           />
         </div>
+        <v-col>
+          <v-select
+            class="checkProcess"
+            v-model="process"
+            :items="selectProcess"
+            label="판매상황 체크"
+          ></v-select>
+        </v-col>
         <tr>
           <td>카테고리</td>
           <td>
@@ -58,6 +66,7 @@ export default {
   data() {
     return {
       selectProcess: ["판매중", "판매완료"],
+      process: "",
       category: "",
       productImage: "",
       title: "",
@@ -81,9 +90,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      const { category, productImage, title, price, content } = this;
+      const { process, category, productImage, title, price, content } = this;
       this.$emit("submit", {
         memberNo: this.login.memberNo,
+        process,
         category,
         productImage,
         title,
@@ -93,6 +103,7 @@ export default {
     },
   },
   created() {
+    this.process = this.productBoard.process;
     this.productImage = this.productBoard.productImage;
     this.category = this.productBoard.category;
     this.title = this.productBoard.title;

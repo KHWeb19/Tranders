@@ -15,6 +15,7 @@ export default {
       console.log(payload);
       const {
         memberNo,
+        process,
         category,
         productImage,
         productImage1,
@@ -26,6 +27,7 @@ export default {
       axios
         .post(`http://localhost:7777/product/register/${memberNo}`, {
           memberNo,
+          process,
           category,
           productImage,
           productImage1,

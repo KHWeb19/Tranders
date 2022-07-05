@@ -49,7 +49,7 @@
 
               <div id="profile-left">
                 <div id="userName"><router-link :to="{
-                    name: 'ProfileBasicPage', 
+                    name: 'ProfileBasicPage',
                     params: { memberId: productBoard.member.id.toString() } }">
                     {{ productBoard.member.name }}
                 </router-link></div>
@@ -74,6 +74,7 @@
       </section>
 
       <section id="description">
+        <h2 style="margin-bottom: 5px">{{ productBoard.process }}</h2>
         <h1 property="schema:name" id="title" style="margin-top: 0px">
           {{ productBoard.title }}
           {{ productBoard.process }}
@@ -105,11 +106,25 @@
         >
       </section>
 
-      <section @click="reportDialog = true"  id="repo" style="display: flex; align-items: center; height: 50px"> <!-- 작성자와 같은지 확인하기 -->
-        <div style="width: 100%">이 게시글 신고하기</div><div style="display: flex; justify-content: end"><v-icon style="color: black">mdi-chevron-right</v-icon></div>
+      <section
+        @click="reportDialog = true"
+        id="repo"
+        style="display: flex; align-items: center; height: 50px"
+      >
+        <!-- 작성자와 같은지 확인하기 -->
+        <div style="width: 100%">이 게시글 신고하기</div>
+        <div style="display: flex; justify-content: end">
+          <v-icon style="color: black">mdi-chevron-right</v-icon>
+        </div>
       </section>
 
-      <report-dialog-view v-if="reportDialog" @closeDialog="closeDialog" @sendReport="sendReport" @sendImgReport="sendImgReport" :productNo="this.productBoard.productNo"></report-dialog-view>
+      <report-dialog-view
+        v-if="reportDialog"
+        @closeDialog="closeDialog"
+        @sendReport="sendReport"
+        @sendImgReport="sendImgReport"
+        :productNo="this.productBoard.productNo"
+      ></report-dialog-view>
     </article>
   </div>
 </template>
