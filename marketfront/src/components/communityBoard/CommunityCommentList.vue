@@ -43,7 +43,7 @@
                     &nbsp;&nbsp;{{ commentList.commentWriter}}
                 </v-col>
                 <v-col cols="2">
-                    {{ commentList.commentRegion }} 
+                    {{ commentList.commentRegion }}
                 </v-col>        
                 <v-col cols="4">
                     {{ commentList.comment}} 
@@ -110,6 +110,10 @@ export default {
         communityComments : {
             type:Array
         },
+        boardNo :{
+            type:String,
+            require: true
+        }
     },
     data () {
         return {

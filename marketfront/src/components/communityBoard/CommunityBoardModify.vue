@@ -115,7 +115,7 @@
 
                     <v-row>
                         <v-col>
-                            <v-btn block depressed color="success" height="60" type="submit"><h3><b>수정 완료</b></h3></v-btn>
+                            <v-btn block depressed color="success" height="50" type="submit"><h3><b>수정 완료</b></h3></v-btn>
                         </v-col>
                     </v-row>
                 </table>
@@ -248,7 +248,6 @@ table {
 #content{
     display: block;
     margin-top: 72px;
-    width: 677px;
     margin: 30px auto 0 auto;
     border: 1px solid #e9ecef;
     width: 800px;

@@ -159,7 +159,7 @@ export default {
 </script>
 <style scoped>
 #community_read{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     border: 1px solid #e9ecef;
     width: 800px;
     margin: 0 auto;

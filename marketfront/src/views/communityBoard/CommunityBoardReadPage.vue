@@ -7,7 +7,7 @@
                         <community-board-read v-if="communityBoard" :communityBoard="communityBoard"/>
                     </v-row>
                     <v-row>
-                    <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" />
+                    <community-comment-list @submit="onCommentSubmit" :communityComments="communityComments" :boardNo="boardNo" />
                     </v-row>
                 </v-container>
             </div>
@@ -23,7 +23,7 @@ import AfterLoginView from '../../components/home/AfterLoginView.vue'
 
 export default {
     name:'CommunityBoardReadPage',
-        props: {
+    props: {
         boardNo: {
             type: String,
             required: true

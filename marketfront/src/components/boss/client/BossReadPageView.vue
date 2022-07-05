@@ -39,7 +39,7 @@
         <div style="flex-direction: row; flex-wrap: wrap; padding-top: 20px; font-size: 18px">전화문의</div>
       </div>
 
-      <div style="width: 33%; display: flex; flex-direction: column; align-items: center; border-right: rgba(168,168,168,0.4) solid 1px">
+      <div style="width: 33%; display: flex; flex-direction: column; align-items: center; border-right: rgba(168,168,168,0.4) solid 1px" @click="onChat">
         <div><v-img style="opacity: 0.7" src="@/assets/icon/conversation.png" max-width="80px"></v-img></div>
         <div style="flex-direction: row; flex-wrap: wrap; padding-top: 20px; font-size: 18px">채팅문의</div>
       </div>
@@ -188,6 +188,7 @@ export default {
       review: false,
       id: cookies.get("id"),
       name: cookies.get("name"),
+      memberNo: cookies.get("memberNo"),
       swiperOption: {
         slidesPerView: 1,
         spaceBetween: 30,
@@ -306,6 +307,9 @@ export default {
       formData.append('state', select)
 
       this.$emit('saveReview', formData)
+    },
+    onChat() {
+        this.$emit('onChat', {member1No: this.memberNo, member2No: this.boss.member.memberNo})
     },
   },
   mounted() {

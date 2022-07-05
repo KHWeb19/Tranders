@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-    @Query("select c from ChatRoom c join c.member1 cm join c.productBoard.member cpm where cm.memberNo = :memberNo or cpm.memberNo = :memberNo order by c.roomNo desc ")
+    @Query("select c from ChatRoom c join c.member1 cm join c.member2 cm2 where cm.memberNo = :memberNo or cm2.memberNo = :memberNo order by c.roomNo desc ")
     List<ChatRoom> findChatRoomByMemberNo(@Param("memberNo") Long memberNo);
 
     //서로의 채팅방이 존재하는지

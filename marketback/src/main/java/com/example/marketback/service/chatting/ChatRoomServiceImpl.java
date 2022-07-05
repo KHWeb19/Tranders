@@ -55,7 +55,20 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             chatRoomRepository.save(chatRoomEntity);
             chatRoom.setProductBoard(maybeProduct.get());
         }
+    }
 
+    @Override
+    public void bossRegister(ChatRoom chatRoom, Long member1No, Long member2No) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1No), Long.valueOf(member2No));
+        //서로의 채팅방이 없다는게 확인되면 생성
+        if (maybeChatRoom.equals(Optional.empty())) {
+            Optional<Member> maybeMember1 = memberRepository.findById(Long.valueOf(member1No));
+            Optional<Member> maybeMember2 = memberRepository.findById(Long.valueOf(member2No));
+            chatRoom.setMember1(maybeMember1.get());
+            chatRoom.setMember2(maybeMember2.get());
+            chatRoom.setProductBoard(null);
+            chatRoomRepository.save(chatRoom);
+        }
     }
 
     @Override

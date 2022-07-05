@@ -125,7 +125,7 @@ methods: {
 
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
 #community_list{
-    border-radius: 8px;
+    /* border-radius: 8px; */
     border: 1px solid #e9ecef;
     width: 800px;
     margin: 0 auto;
