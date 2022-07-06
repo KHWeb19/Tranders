@@ -69,6 +69,19 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             chatRoom.setProductBoard(null);
             chatRoomRepository.save(chatRoom);
         }
+        //존재하면 게시물만 변경
+        else {
+            ChatRoom chatRoomEntity = new ChatRoom(
+                    maybeChatRoom.get().getRoomNo(),
+                    maybeChatRoom.get().getMember1(),
+                    maybeChatRoom.get().getMember2(),
+                    null,
+                    maybeChatRoom.get().getAppointDate(),
+                    maybeChatRoom.get().getAppointTime(),
+                    maybeChatRoom.get().getLastMessage()
+            );
+            chatRoomRepository.save(chatRoomEntity);
+        }
     }
 
     @Override

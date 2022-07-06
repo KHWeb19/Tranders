@@ -1,9 +1,11 @@
 <template>
-    <div>
+    <div style="background: #f8f9fa; min-height: 100vh;">
         <after-login-view/>
-        <div id='content'>
-            <profile-top :userInfo="userInfo" />
-            <profile-basic />
+        <div style="padding: 30px;">
+            <div id='content'>
+                <profile-top :userInfo="userInfo" />
+                <profile-basic />
+            </div>
         </div>
     </div>
 </template>
@@ -36,9 +38,14 @@ export default {
 
 <style scoped>
 #content{
-    display: block;
-    margin-top: 72px;
-    width: 677px;
-    margin: 30px auto 0 auto;
+  display: block;
+  margin-top: 72px;
+  margin: 30px auto 0 auto;
+  border: 1px solid #e9ecef;
+  width: 800px;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
+  padding: 0 40px 40px 40px;
 }
 </style>

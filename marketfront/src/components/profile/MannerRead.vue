@@ -36,7 +36,6 @@ export default {
 <style scoped>
 #user_manners{
     position: relative;
-    padding-bottom: 30px;
     display: block;
 }
 ol {
@@ -60,7 +59,7 @@ li {
     counter-increment: item;
     position: relative;
     padding: 16px 0;
-    border-bottom: 2px solid #eaebee;
+    border-bottom: 1px solid #eaebee;
 }
 #manner_content {
     display: inline-block;

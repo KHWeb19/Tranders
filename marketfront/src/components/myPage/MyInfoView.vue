@@ -1,9 +1,8 @@
 <template>
-  <v-container>
-    <v-card width="100%">
-      <div style="padding-left: 50px; padding-right: 30px">
+  <div>
+      <div style="padding: 40px 100px; border-left: 1px solid #e9ecef;">
         <div v-if="!isCheck && providerType === 'undefined'">
-          <v-row justify="center" style="padding-top: 40px">
+          <v-row justify="center">
             <v-card-title style="font-size: 30px">비밀번호를 입력해주세요</v-card-title>
           </v-row>
 
@@ -27,10 +26,11 @@
               <v-text-field solo v-model="password" style="width: 100%" placeholder="인증번호"> </v-text-field>
             </v-col>
           </v-row>
-
-          <v-row>
-            <v-btn @click="memberCheck" style="width: 100%; height: 50px; font-size: 20px; border-radius: 18px" class="light-green lighten-3">인증</v-btn>
-          </v-row>
+          <div class="pa-4" style="margin-top: 20px">
+            <v-row>
+              <v-btn @click="memberCheck" block depressed color="success" height="50"><h3><b>인증</b></h3></v-btn>
+            </v-row>
+          </div>
 
           <v-row style="height: 35px"></v-row>
         </div>
@@ -87,7 +87,7 @@
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
               <v-col cols="2" class="pt-5">
-                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" @click="checkPhoneNum">번호 확인</v-btn>
+                <v-btn style="width: 100%" class="success" id="checkDub" @click="checkPhoneNum"><b>번호 확인</b></v-btn>
               </v-col>
             </v-row>
 
@@ -102,7 +102,7 @@
 
             <v-row style="height: 70px; margin-top: 35px">
               <v-col>
-                <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">변경완료</v-btn>
+                <v-btn @click="registerBtn" block depressed color="success" height="50"><h3><b>변경 완료</b></h3></v-btn>
               </v-col>
             </v-row>
           </div>
@@ -141,8 +141,7 @@
 
         </div>
       </div>
-    </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -277,9 +276,9 @@ export default {
 
 <style scoped>
 #userInfo{
-  max-width: 460px;
+  /* max-width: 460px; */
   margin: 0 auto;
   padding-top: 60px;
-  padding-bottom: 35px;
+  /* padding-bottom: 35px; */
 }
 </style>

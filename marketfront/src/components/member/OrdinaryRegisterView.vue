@@ -1,45 +1,43 @@
 <template>
   <div id="login-wrap">
     <div class="login-box" v-if="!registerCheck" >
-      <span class="title_g" style="font-size: 50px">오이 마켓</span>
-      <br>
-      <span class="title_b">-</span><span class="title_g">오</span><span class="title_b">늘은</span><span class="title_g"> 이</span><span class="title_b">거 사자</span><span class="title_b">-</span>
+      <span class="title_g" style="font-size: 50px">오이마켓</span>
 
-      <v-container style="padding-top: 30px">
-        <v-form ref="form" v-model="form" class="pa-4 pt-6">
+      <!-- <v-container > -->
+        <v-form ref="form" v-model="form" style="padding-top: 80px">
         <v-row style="height: 70px">
           <v-col>
-            <v-btn @click="btnI" style="width: 100%; height: 100%; font-size: 20px" :class="{'light-green': isIndividual, 'lighten-3': true}">개인</v-btn>
+            <v-btn @click="btnI" depressed style="width: 100%; height: 100%; font-size: 20px" :class="{'success': isIndividual, 'gray': true}">개인</v-btn>
           </v-col>
 
           <v-col>
-            <v-btn @click="btnM" style="width: 100%; height: 100%; font-size: 18px"  :class="{'light-green': isManager, 'lighten-3': true}">관리자</v-btn>
+            <v-btn @click="btnM" depressed style="width: 100%; height: 100%; font-size: 18px"  :class="{'success': isManager, 'gray': true}">관리자</v-btn>
           </v-col>
         </v-row>
 
-        <v-row style="height: 70px; margin-top: 25px">
-          <v-col cols="9">
-            <v-text-field v-model="id" :rules="rules" solo style="width: 100%" placeholder="ID"> </v-text-field>
-          </v-col>
-          <v-col cols="3" class="pt-5">
-            <v-btn style="width: 100%" id="checkDub" @click="checkDub" outlined>중복 확인</v-btn>
+        <v-row style="height: 70px;">
+          <v-col>
+            <div id='id' style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">            
+              <div><input v-model="id" :rules="rules" solo style="width: 100%; outline-style: none;" placeholder="ID"/></div>
+              <div><v-btn id="checkDub" @click="checkDub" outlined>중복 확인</v-btn></div>
+            </div>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field v-model="password"
+            <input id='id' v-model="password"
                           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                           :rules="[pwRules.required, pwRules.min, pwRules.max]"
                           :type="show ? 'text' : 'password'"
                           placeholder="PW"
-                          @click:append="show = !show" solo style="width: 100%"> </v-text-field>
+                          @click:append="show = !show" solo style="width: 100%"/>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field solo style="width: 100%" v-model="name" placeholder="NAME"> </v-text-field>
+            <input id='id' solo style="width: 100%" v-model="name" placeholder="NAME"/>
           </v-col>
         </v-row>
 
@@ -53,27 +51,26 @@
                 </v-row>-->
 
         <v-row style="height: 70px">
-          <v-col cols="10">
-            <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
+          <v-col>
+            <input id='id' solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"/>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px" v-if="ifCheck">
-          <v-col cols="10">
-            <v-text-field solo v-model="checkNum" style="width: 100%" placeholder="인증번호"> </v-text-field>
+          <v-col>
+            <input id='id' solo v-model="checkNum" style="width: 100%" placeholder="인증번호"/>
           </v-col>
           <v-col cols="2" class="pt-5">
             <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
           </v-col>
         </v-row>
 
-        <v-row style="height: 70px">
-          <v-col cols="10">
-            <v-text-field solo style="width: 100%" placeholder="ADDRESS" v-model="region" readonly> </v-text-field>
-          </v-col>
-
-          <v-col cols="2" class="pt-5">
-            <v-btn style="width: 100%" id="address" @click="whereami" class="red--text" icon><v-icon>mdi-map-marker</v-icon></v-btn>
+        <v-row style="height: 70px;">
+          <v-col>
+            <div id='id' style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">            
+              <div><input v-model="region" :rules="rules" solo style="width: 100%; outline-style: none;" placeholder="ADDRESS" readonly/></div>
+              <div><v-btn id="checkDub" @click="whereami" outlined>위치 등록</v-btn></div>
+            </div>
           </v-col>
         </v-row>
 
@@ -83,31 +80,32 @@
                   </v-col>
                 </v-row>-->
 
-        <v-row style="height: 70px; margin-top: 35px">
+        <v-row style="height: 70px; padding-top: 12px">
           <v-col>
-            <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="!(checkDoubleId && form)">오이 마켓 시작하기</v-btn>
+            <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
           </v-col>
         </v-row>
+
         </v-form>
-      </v-container>
+
+
     </div>
 
     <div class="login-box2" v-else>
-      <span class="title_g" style="font-size: 50px">오이 마켓</span>
+      <span class="title_g" style="font-size: 50px">오이마켓</span>
 
-      <div id="register_agree" v-if="registerCheck" style="padding-top: 5px">
-        <h3>약관 동의</h3>
-
-        <div style="display: flex; justify-content: center">
-          <v-checkbox v-model="agreeCheckBoxAll" @click="test" label="회원가입 약관에 모두 동의합니다"></v-checkbox>
+      <div id="register_agree" v-if="registerCheck" style="padding-top: 40px">
+        <div style="display: flex; padding-bottom: 20px">
+          <div><v-icon @click="goBack" large color="black">mdi-chevron-left</v-icon></div>
+          <div><h2 style="margin-top: 6px; margin-left: 5px;">약관 동의</h2></div>
         </div>
 
         <div>
-            <div style="display: flex; justify-content: center">
+            <div>
               <v-checkbox v-model="agreeCheckBox1" label="이용약관 동의 (필수)"></v-checkbox>
             </div>
 
-            <v-textarea style="width: 100%; min-height: 200px" filled label="이용약관" value="제1조(목적) 이 약관은 업체 회사(전자상거래 사업자)가 운영하는 업체 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
+            <v-textarea filled label="이용약관" value="제1조(목적) 이 약관은 업체 회사(전자상거래 사업자)가 운영하는 업체 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
 
     ※「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
 
@@ -349,7 +347,7 @@
           </div>
 
         <div>
-            <div style="display: flex; justify-content: center">
+            <div>
               <v-checkbox v-model="agreeCheckBox2" label="개인정보 수집 및 이용 동의 (필수)"></v-checkbox>
             </div>
 
@@ -490,10 +488,14 @@
   1) 공고일자 : 2018년 05월 01일
   2) 시행일자 : 2018년 05월 01일"></v-textarea>
           </div>
+        <div>
+          <v-checkbox v-model="agreeCheckBoxAll" @click="test" label="회원가입 약관에 모두 동의합니다"></v-checkbox>
+        </div>
+
 
         <div style="display: flex; justify-content: center">
-          <v-btn @click="back" style="margin-right: 30px"> 취소 </v-btn>
-          <v-btn :disabled="!(agreeCheckBox1 && agreeCheckBox2)" @click="registerCheck=false" class="light-green lighten-2"> 회원가입 </v-btn>
+          <!-- <v-btn @click="back" style="margin-right: 30px"> 취소 </v-btn> -->
+          <v-btn :disabled="!(agreeCheckBox1 && agreeCheckBox2)" @click="registerCheck=false" block depressed color="success" height="50"><h3><b>계속</b></h3></v-btn>
         </div>
       </div>
     </div>
@@ -617,6 +619,9 @@ export default {
     test(){
       this.agreeCheckBox1 = this.agreeCheckBoxAll;
       this.agreeCheckBox2 = this.agreeCheckBoxAll;
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   },
 }
@@ -625,27 +630,44 @@ export default {
 <style scoped>
 #login-wrap{
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
+  max-width: 800px;
   text-align: center;
+  display: block;
+  border: 1px solid #e9ecef;
+  margin: 0 auto;
+  padding: 140px;
+  line-height: 24px;
+  background: #fff;
+  height: 100vh;
 }
-.login-box{
+/* .login-box{
   max-width: 460px;
   margin: 0 auto;
   padding-top: 100px;
-}
+} */
 
-.login-box2{
+/* .login-box2{
   padding-top: 20px;
   max-width: 460px;
   margin: 0 auto;
+} */
+#id{
+    width: 100%;
+    border: 2px solid #EAEBEE;
+    /* border: 1px solid #d1d3d8; */
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 16px;
+    box-shadow: none;
+    appearance: none;
+    padding: 16px;
+    outline-style: none;
 }
-
-#register_agree{
+/* #register_agree{
   max-width: 660px;
   margin: 0 auto;
   padding-bottom: 90px;
-}
+} */
 
 .title_g{
   font-family: ONE-Mobile-POP, serif;

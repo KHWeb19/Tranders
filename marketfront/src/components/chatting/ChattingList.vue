@@ -1,8 +1,4 @@
 <template>
-  <form @submit.prevent="onSubmit" >
-    <div id='top'>
-      <after-login-view/>
-    </div>
       <div id='full'>
         <div id='left'>
           <div id='image'>
@@ -49,11 +45,10 @@
                       height: 20px;
                       font-size: 13px;
                       color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
-                      <!-- {{new_data.slice(-1)[0].content.message}} -->
                       </div>
                     </div>
                   </div>
-                  <div v-if="chatroom.productBoard.productImage" style="display: flex; margin-left: auto;">
+                  <div v-if="chatroom.productBoard" style="display: flex; margin-left: auto;">
                       <v-img style="margin-right: 4px;
                       border: 1px solid var(--profile-image-border);
                       border-radius: 4px;
@@ -68,29 +63,24 @@
         
         <div id='right'>
           <div style="display: flex;
-    -webkit-box-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
     align-items: center;
-    width: 100%;
+    width: 800px;
     height: 100%;
     flex-direction: column;"><v-icon x-large>mdi-chat</v-icon><span style="margin-top: 34px;">채팅할 상대를 선택해주세요.</span></div>
           
         </div>
       </div>
-  </form>
 
 </template>
 
 <script>
 import axios from 'axios'
-import AfterLoginView from '../home/AfterLoginView.vue';
 import Vue from 'vue'
 import cookies from "vue-cookies";
 Vue.use(cookies)
 
 export default {
-  components: { AfterLoginView },
   name: "ChattingList",
   props: {
       chatroom: {
@@ -194,24 +184,23 @@ export default {
 </script>
 
 <style scoped>
-#top{
-  /* height: 70px;
-  display: flex;
-  justify-content: center; */
-  border-bottom: 1px solid #bcbcbc;
-}
+/* #top{
+  border-bottom: 1px solid #e9ecef;
+} */
 #logo{
   display: flex;
-  /* -webkit-box-pack: justify; */
-  /* justify-content: space-between; */
-  /* -webkit-box-align: center; */
   align-items: center;
   width: 1200px;
   padding: 0px 8px;
 }
 #full{
-	width: 1200px;
-	margin: auto; /* 중앙 맞춤 */
+  display: flex;
+  border-left: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  width: 1200px;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
 }
 #left{
 	width: 80px;
@@ -220,209 +209,50 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 938px;
+	height: 900px;
   display: flex; 
   justify-content: center;
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-right-style: none;
 }
 #center{
 	width: 310px;
 	float: left;
-  border: 1px solid #bcbcbc;
+  border: 1px solid #e9ecef;
   border-top-style: none;
+  border-bottom-style: none;
 }
 #name{
-    border-bottom: 1px solid #bcbcbc;
+    border-bottom: 1px solid #e9ecef;
     position: relative;
     display: flex;
     height: 72px;
     min-height: 72px;
     padding: 0px 20px;
-    /* -webkit-box-align: center; */
     align-items: center;
 }
 #name_value{
-font-weight: bold;
+    font-weight: bold;
     font-size: 16px;
     line-height: 150%;
 }
 #chatList{
 	width: 310px;
-	height: 865px;
+	height: 825px;
 }
-#chatroom{
-  /* display: flex;    */
-  
-}
+
 #chatroom_link{
   display: flex;
-    padding: 16px;
-    height: 72px;
-    border-bottom: 1px solid #bcbcbc;
-    -webkit-box-align: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    background-position: center center;
-    contain: content;
-    color: inherit;
-    cursor: pointer;
-    text-decoration: none;
-}
-#right{
-	width: 810px;
-  height: 938px;
-	float: left;
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-left-style: none;
-}
-#right1{
-	width: 810px;
-	height: 72px;
-  min-height: 72px;
-  display: flex; 
-  border-bottom: 1px solid #bcbcbc;
-    /* -webkit-box-pack: justify; */
-    /* justify-content: space-between; */
-    /* -webkit-box-align: center; */
-    align-items: center;
-    /* height: 64px; */
-    /* min-height: 64px; */
-    padding: 0px 20px;
-}
-#right_button{
-  display: inline-flex;
-  margin-left: auto;
-    /* -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    align-items: center;
-    border-radius: 4px; */
-}
-#pay_box{
-  border: 1px solid #212124;;
-  border-radius: 8px;
-  height: 70px;
-  display: flex;
+  padding: 16px;
+  height: 72px;
+  border-bottom: 1px solid #e9ecef;
+  -webkit-box-align: center;
   align-items: center;
-  padding: 0px 15px
+  position: relative;
+  overflow: hidden;
+  background-position: center center;
+  contain: content;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
 }
-#product{
 
-	height: 72px;
-  display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    padding: 0px 20px;
-    font-size: 14px;
-    border-bottom: 1px solid #bcbcbc;
-}
-#notice{
-  display: flex;
-      -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-      padding: 20px 20px 0px 20px;
-    
-
-}
-#notice_box{
-    display: flex;
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 14px;
-  letter-spacing: -0.02em;
-  /* margin: 8px 0px; */
-  background-color: #fff7e6;
-  color: #ba5e02;
-  width: 100%;
-      align-items: center;
-    justify-content: space-between;
-
-}
-#chatView{
-	width: 810px;
-	/* height: 555px; */
-  overflow-y:auto; 
-  /* overflow-x:hidden;  */
-  /* overflow: hidden auto; */
-  padding: 20px 20px 0px 20px;
-      /* border-bottom: 1px solid #bcbcbc; */
-}
-#submit{
-	/* height: 125px; */
-
-
-}
-#submit_form{
-
-  /* display: flex; */
-    /* flex-direction: column; */
-    /* position: relative; */
-    margin: 16px;
-    border: 1px solid #212124;;
-    border-radius: 8px;
-    /* -webkit-box-pack: justify; */
-    /* justify-content: space-between; */
-}
-#message_greenBox{
-	/* height: 40px; */
-  color: white;
-  background-color: #086e5b;
-  border-radius: 20px 2px 20px 20px;
-  display: inline-flex;
-  margin: 0px;
-  padding: 10px 14px;
-  max-width: 484px;
-  max-height: 484px;
-  white-space: pre-wrap;
-  font-size: 14px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
-}
-#message_box{
-display: inline-flex;
-    margin: 0px;
-    padding: 10px 14px;
-    max-width: 484px;
-    word-break: break-word;
-    white-space: pre-wrap;
-    font-size: 14px;
-    line-height: 150%;
-    letter-spacing: -0.02em;
-    border-radius: 2px 20px 20px;
-    background-color: #eaebee;;
-    /* color: #212124; */
-}
-#message_date{
-  color: #868b94;
-  font-size: 12px;
-  /* line-height: 150%; */
-  letter-spacing: -0.02em;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0px 4px;
-}
-textarea{
-  margin: 12px 12px 0px;
-  width: calc(100% - 24px);
-  height: 63px;
-  /* line-height: 150%; */
-  padding: 0px;
-  /* resize: none; */
-  font-size: 14px;
-  border: none;
-  outline: none;
-
-}
-#files {
-    visibility: hidden;
-}
 </style>

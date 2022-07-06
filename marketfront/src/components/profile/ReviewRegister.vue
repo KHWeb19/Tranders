@@ -1,33 +1,35 @@
 <template>
     <div id='content'>  
         <div id='title'>
-            <div><v-layout>
-                <v-dialog persisten max-width="400">
-                    <template v-slot:activator="{ on }">
-                        <v-icon v-on="on" id='goBack' large color="black">mdi-arrow-left</v-icon>
-                    </template>
-                    <template v-slot:default="dialog">
-                        <v-card>
-                            <v-card-title class="headline">
-                                홈으로 이동합니다
-                            </v-card-title>
-                            <v-card-text >
-                                * 작성하던 내용이 사라지고 다시 후기를 작성할 수 없어요
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn text color="red" @click="goBack()">
-                                    안쓸래요
-                                </v-btn>
-                                <v-btn text @click="dialog.value=false">
-                                    작성할래요
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </template>
-                </v-dialog>
-            </v-layout></div>
-            <div><h2>거래 후기 보내기</h2></div>
+            <div>
+                <v-layout>
+                    <v-dialog persisten max-width="400">
+                        <template v-slot:activator="{ on }">
+                            <v-icon v-on="on" large color="black">mdi-chevron-left</v-icon>
+                        </template>
+                        <template v-slot:default="dialog">
+                            <v-card>
+                                <v-card-title class="headline">
+                                    홈으로 이동합니다
+                                </v-card-title>
+                                <v-card-text >
+                                    * 작성하던 내용이 사라지고 다시 후기를 작성할 수 없어요
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn text color="red" @click="goBack()">
+                                        안쓸래요
+                                    </v-btn>
+                                    <v-btn text @click="dialog.value=false">
+                                        작성할래요
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </template>
+                    </v-dialog>
+                </v-layout>
+            </div>
+            <div><h2 style="margin-top: 6px; margin-left: 5px;">거래 후기 보내기</h2></div>
         </div>
         <div id='content_text'>       
             <h3>{{userInfo.name}}님과 거래가 어떠셨나요?</h3>
@@ -127,7 +129,7 @@
             <span>작성한 내용은 상대방 프로필에 공개됩니다.</span>
         </div>
         <textarea v-model="message"></textarea>
-        <v-btn block depressed color="success" height="60" @click="onSubmit"><h3><b>거래 후기 작성 완료</b></h3></v-btn>
+        <v-btn block depressed color="success" height="50" @click="onSubmit"><h3><b>거래 후기 작성 완료</b></h3></v-btn>
     </div>
 </template>
 
@@ -223,9 +225,6 @@ export default {
 </script>
 
 <style scoped>
-#goBack{
-    margin-right: 20px;
-}
 #title{
     display:flex; 
     padding-bottom: 10px;
@@ -233,8 +232,14 @@ export default {
 #content{
     display: block;
     margin-top: 72px;
-    width: 677px;
     margin: 30px auto 0 auto;
+    border: 1px solid #e9ecef;
+    width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    line-height: 24px;
+    background: #fff;
+    height: 100vh;
 }
 #content_text{
     text-align: center;
@@ -245,7 +250,7 @@ export default {
     text-align: center;
     justify-content: center;
     padding-bottom: 30px;
-    border-bottom: 2px solid #eaebee;
+    border-bottom: 1px solid #eaebee;
 }
 #icon{
     width: 100px;
@@ -256,7 +261,7 @@ export default {
     position: relative;
     padding-bottom: 30px;
     display: block;
-    border-bottom: 2px solid #eaebee;
+    border-bottom: 1px solid #eaebee;
 }
 ol {
     display: block;
@@ -286,9 +291,10 @@ textarea{
     border: 2px solid #eaebee;
     box-sizing: border-box;
     border-radius: 6px;
-    height: 100%;
+    height: 100px;
     width: 100%;
-    padding: 16px 16px 27px 16px;
+    padding: 16px;
+    resize: none;
 }
 span{
     color: #868e96;

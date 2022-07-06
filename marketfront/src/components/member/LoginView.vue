@@ -97,6 +97,8 @@ export default {
   padding: 140px;
   line-height: 24px;
   background: #fff;
+  height: 100vh;
+
 }
 #login-box{
   max-width: 460px;

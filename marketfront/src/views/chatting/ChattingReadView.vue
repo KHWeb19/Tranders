@@ -1,9 +1,11 @@
 <template>
-    <div>
+<div>
+    <after-login-view/>
+    <div id='chat_read'>
         <chatting-read :userInfo="userInfo" :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay"/>
 
     </div>
-
+</div>
 </template>
 
 <script>
@@ -12,12 +14,14 @@ import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import Vue from 'vue'
 import cookies from "vue-cookies";
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 Vue.use(cookies)
 
 export default {
     name: "ChattingReadView",
     components: { 
-      ChattingRead
+      ChattingRead,
+        AfterLoginView
     },
     props: {
         roomNo: {
@@ -92,3 +96,10 @@ export default {
     } 
 }
 </script>
+
+<style scoped>
+#chat_read{
+  background: #f8f9fa;
+  /* padding: 30px 0; */
+}
+</style>

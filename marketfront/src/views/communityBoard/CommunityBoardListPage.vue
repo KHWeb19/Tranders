@@ -43,7 +43,7 @@ export default {
 <style scoped>
 #board_list {
     background: #f8f9fa;
-    padding-top: 30px;
+    /* padding-top: 30px; */
 }
 #writeBtn {
     position: sticky;

@@ -1,15 +1,15 @@
 <template>
-  <div id="login-wrap">
-    <div id="login-box">
+  <div id="back_page">
+    <div id="login-wrap">
+      <div id="login-box">
       <span id="title">오이마켓</span>
-      <br>
-      <span>"오늘이 이거 사자"</span>
 
-      <div style="margin-top: 80px">
-        <v-btn id="login-btn" @click="ordinaryRegister">일반 회원가입</v-btn>
+      <div style="margin: 80px 0">
+        <!-- <v-btn id="login-btn"></v-btn> -->
+        <v-btn  @click="ordinaryRegister" block depressed color="success" height="50"><h3><b>일반 회원가입</b></h3></v-btn>
       </div>
 
-      <div style="margin-top: 30px">
+      <div style="margin: 30px 0">
         SNS 아이디로 회원가입할 수 있습니다!
       </div>
 
@@ -18,7 +18,7 @@
           <v-img contain max-height="58" src="@/assets/login/kakao.png"></v-img>
         </v-btn>
       </div>
-
+      </div>
     </div>
   </div>
 </template>
@@ -44,11 +44,20 @@ export default {
 </script>
 
 <style scoped>
+#back_page {
+    background: #f8f9fa;
+}
 #login-wrap{
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
+  max-width: 800px;
   text-align: center;
+  display: block;
+  border: 1px solid #e9ecef;
+  margin: 0 auto;
+  padding: 140px;
+  line-height: 24px;
+  background: #fff;
+  height: 100vh;
 }
 #login-box{
   max-width: 460px;

@@ -6,7 +6,7 @@
                     <v-layout>
                         <v-dialog persisten max-width="400">
                             <template v-slot:activator="{ on }">
-                                <v-icon v-on="on" id='goBack' large color="black">mdi-chevron-left</v-icon>
+                                <v-icon v-on="on" large color="black">mdi-chevron-left</v-icon>
                             </template>
                             <template v-slot:default="dialog">
                                 <v-card>

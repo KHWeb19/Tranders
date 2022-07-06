@@ -1,6 +1,6 @@
 <template>
     <div id='user_profile'>
-        <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}동</span></h2>
+        <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}</span></h2>
         <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
         
         <div id='profile_image'>
