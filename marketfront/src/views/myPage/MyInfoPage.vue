@@ -10,7 +10,7 @@
 
         <v-col cols="8">
           <div v-if="userInfo === null"> <v-btn>죄송합니다 다시 부탁드려요</v-btn></div>
-          <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @saveProfileImg="saveProfileImg" @checkPhoneNum="checkPhoneNum"
+          <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @modifyMemberSns="modifyMemberSns" @changePassword="changePassword" @saveProfileImg="saveProfileImg" @checkPhoneNum="checkPhoneNum"
                         @certification="certification" :ifCheck="ifCheck"></my-info-view>
         </v-col>
 
@@ -29,7 +29,7 @@ import MyInfoView from "@/components/myPage/MyInfoView";
 import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
 import axios from "axios";
-import {API_BASE_URL} from "@/constant/login";
+import {API_BASE_URL, SAVE_COOKIE_ACCESS} from "@/constant/login";
 
 const config = {
   headers: {
@@ -53,15 +53,41 @@ export default {
   methods: {
     ...mapActions(['fetchMyPage']),
     modifyMember(payload){
-      const {id, password, name, phoneNumber} = payload
+      const {id, name, phoneNumber} = payload
 
-      axios.post(API_BASE_URL+'/member/modify', {id, password, name, phoneNumber}, config)
+      axios.post(API_BASE_URL+'/member/modify', {id, name, phoneNumber}, config)
           .then((res) => {
             console.log(res);
-            cookies.remove('access_token');
-            cookies.remove('refresh_token');
+            cookies.set('name', name, SAVE_COOKIE_ACCESS);
+            this.$router.go()
+            // logout();
+            // this.$router.push({name: 'LoginPage'})
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    modifyMemberSns(payload){
+      const {id, name} = payload;
 
-            this.$router.push({name: 'LoginPage'})
+      axios.post(API_BASE_URL+'/member/modifySns', {id, name}, config)
+          .then((res) => {
+            console.log(res);
+            cookies.set('name', name, SAVE_COOKIE_ACCESS);
+            this.$router.go()
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    changePassword(payload){
+      const {id, password} = payload;
+
+      axios.post(API_BASE_URL+'/member/modifyPw', {id, password}, config)
+          .then((res) => {
+            console.log(res);
+            //logout();
+            this.$router.go()
           })
           .catch(() => {
             alert('에러')

@@ -8,6 +8,7 @@ import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.request.MemberModifySnsRequest;
 import com.example.marketback.response.CityVillageInfoResponse;
 import com.example.marketback.response.MemberRegionResponse;
 import com.example.marketback.service.member.MemberService;
@@ -141,9 +142,23 @@ public class MemberController {
 
     @PostMapping("/modify")
     public void memberModify(@RequestBody Member member){
-        log.info("memberModify" + member.getPassword());
+        log.info("memberModify" + member.getName());
 
         memberService.modify(member);
+    }
+
+    @PostMapping("/modifyPw")
+    public void memberModifyPw(@RequestBody MemberLoginRequest memberLoginRequest){
+        log.info("memberModify" + memberLoginRequest);
+
+        memberService.modifyPw(memberLoginRequest);
+    }
+
+    @PostMapping("/modifySns")
+    public void memberModifySns(@RequestBody MemberModifySnsRequest memberModifySnsRequest){
+        log.info("memberModify" + memberModifySnsRequest.getName());
+
+        memberService.modifySns(memberModifySnsRequest);
     }
 
     @PostMapping("/modifyProfileImg")

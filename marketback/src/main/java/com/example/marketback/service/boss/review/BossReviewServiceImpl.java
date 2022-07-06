@@ -95,16 +95,16 @@ public class BossReviewServiceImpl implements BossReviewService{
         List<BossReview> bossReviewEntity;
 
         if(num.charAt(0) == '0' && num.charAt(1) == '0') {
-            bossReviewEntity = bossReviewRepository.findByNearNo(Long.valueOf(num));
+            //indTop3ByNameOrderByIdDesc
+            bossReviewEntity = bossReviewRepository.findByNearNoOrderByCreatedDateDesc(Long.valueOf(num));
         }else{
-            bossReviewEntity = bossReviewRepository.findByBossNo(Long.valueOf(num));
+            bossReviewEntity = bossReviewRepository.findByBossAuthNoOrderByCreatedDateAsc(Long.valueOf(num));
         }
 
         List<ReviewResponse> response = new ArrayList<>();
 
         if(bossReviewEntity.size() != 0) {
             for (BossReview bossReview : bossReviewEntity) {
-                //log.info(bossReview.getBossReviewImagesList().get(0).getImageName() + "이미지");
                 response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), bossReview.getCreatedDate()));
             }
             return response;

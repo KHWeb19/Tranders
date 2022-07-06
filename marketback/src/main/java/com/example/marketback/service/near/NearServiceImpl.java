@@ -80,7 +80,7 @@ public class NearServiceImpl implements NearService{
             if(boss.getReviewCount() == 0) {
                 responses.add(null);
             }else {
-                List<BossReview> bossReview = bossReviewRepository.findTopByBossNoOrderByIdDesc(boss.getBossAuthNo());
+                List<BossReview> bossReview = bossReviewRepository.indTopByBossNoOrderByIdAsc(boss.getBossAuthNo());
                 responses.add(new NearReviewResponse(bossReview.get(0).getMember().getName(), bossReview.get(0).getMember().getRegion(), bossReview.get(0).getContent(), bossReview.get(0).getMember().getProfileImg(), bossReview.get(0).getState()));
             }
         }
