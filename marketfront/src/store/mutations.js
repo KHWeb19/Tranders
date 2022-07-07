@@ -32,7 +32,12 @@ import {
     FETCH_REPORT_IMAGE_READE,
     FETCH_REPORT_BOARD_READE,
     FETCH_MEMBER_LIST,
-    FETCH_TODAY_REGISTER, FETCH_TODAY_REPORT
+    FETCH_TODAY_REGISTER,
+    FETCH_TODAY_REPORT,
+    FETCH_SEARCH_PRODUCT,
+    FETCH_SEARCH_COMM,
+    FETCH_SHOW_COUPON,
+    FETCH_SHOW_MEMBER_COUPON
 } from './mutation-types'
 import cookies from "vue-cookies";
 import {ParsingInfo} from "@/views/Util/LoginUtil";
@@ -151,6 +156,18 @@ export default {
     },
     [FETCH_TODAY_REPORT] (state, todayReport) {
         state.todayReport = todayReport;
+    },
+    [FETCH_SEARCH_PRODUCT] (state, searchProduct){
+        state.searchProduct = searchProduct
+    },
+    [FETCH_SEARCH_COMM] (state, searchComm){
+        state.searchComm = searchComm
+    },
+    [FETCH_SHOW_COUPON] (state, coupon){
+        state.coupon = coupon;
+    },
+    [FETCH_SHOW_MEMBER_COUPON] (state, memberCoupon){
+        state.memberCoupon = memberCoupon;
     }
 
 }

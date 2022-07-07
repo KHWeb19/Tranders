@@ -1,5 +1,5 @@
 <template>
-  <div id="my_page_box" style="position: relative">
+  <div id="my_page_box" style="position: relative;">
     <div id="profile_back_img">
       <div style=" width: 100%; position: relative;">
         <div v-if="backProfileImgs === ''">
@@ -63,7 +63,7 @@
 
 
     <div v-if="home">
-      <boss-home-view :boss="boss"></boss-home-view>
+      <boss-home-view :boss="boss" @saveCoupon="saveCoupon" @modifyCoupon="modifyCoupon"></boss-home-view>
     </div>
 
     <div v-if="comm">
@@ -353,6 +353,12 @@ export default {
       formData.append('name', this.name)
       this.$emit('saveBackProfile', formData)
       this.backProfileImgDialog = false;
+    },
+    saveCoupon(payload){
+      this.$emit('saveCoupon', payload)
+    },
+    modifyCoupon(payload){
+      this.$emit('modifyCoupon', payload)
     }
   },
   computed: {
@@ -369,7 +375,8 @@ export default {
 #my_page_box{
   align-items: center;
   width: 100%;
-  max-width: 1250px;
+  max-width: 800px;
+  min-width: 800px;
   margin: 0 auto;
   padding: 0 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
 }

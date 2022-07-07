@@ -33,5 +33,9 @@ export default {
     page: null,
     member: [],
     todayMember: null,
-    todayReport: null
+    todayReport: null,
+    searchProduct: [],
+    searchComm: [],
+    coupon: [],
+    memberCoupon: [],
 }
