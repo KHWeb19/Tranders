@@ -208,22 +208,24 @@ export default {
             }
         },
         onSubmit () {
-            const { title, content, writer, usedSubject, region, createdDate, placeName, placeUrl } = this
+            // const { title, content, writer, usedSubject, region, createdDate, placeName, placeUrl } = this
+            const { title, content} = this
+            const { boardNo} = this.communityBoard
+            console.log(boardNo)
             let formData = new FormData();
 
-            for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
-                  formData.append('file',this.$refs.files.files[idx])
-            }
-
+            // for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
+            //       formData.append('file',this.$refs.files.files[idx])
+            // }
+            formData.append('boardNo',boardNo)
             formData.append('title',title)
             formData.append('content', content)
-            formData.append('writer', writer)
-            formData.append('usedSubject', usedSubject)
-            formData.append('region', region)
-            formData.append('createdDate', createdDate)
-            formData.append('placeName', placeName)
-            formData.append('placeUrl', placeUrl)
-            // formData.append('memberNo', memberNo)
+            // formData.append('writer', writer)
+            // formData.append('usedSubject', usedSubject)
+            // formData.append('region', region)
+            // formData.append('createdDate', createdDate)
+            // formData.append('placeName', placeName)
+            // formData.append('placeUrl', placeUrl)
             
             this.$emit('submit', {formData})
             console.log(formData)            

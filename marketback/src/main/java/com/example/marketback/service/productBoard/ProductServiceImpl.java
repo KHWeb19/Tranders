@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductBoard> productListOfMember(Long memberNo) {
         return productRepository.findByMemberNoInProductBoard(Long.valueOf(memberNo));
+    }
 
     @Override
     public List<ProductBoard> buyerList(Long memberNo) {
