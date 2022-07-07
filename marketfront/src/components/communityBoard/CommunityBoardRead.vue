@@ -17,7 +17,7 @@
                     </v-row>
                     <div id='user_profile'>
                         <h2 id='nickname'>{{communityBoard.member.name}}
-                            <span id='region_name'>{{communityBoard.member.address}}</span>
+                            <span id='region_name'>{{communityBoard.member.region}}</span>
                         </h2>
                         <div id='profile_detail'>매너온도 {{communityBoard.member.temperature}}°C</div>
                         <div id='profile_image'>
@@ -98,6 +98,7 @@ export default {
         return {
             login: {
                 id: cookies.get('id'),
+                memberNo: cookies.get("memberNo"),
                 name: cookies.get('name'),
                 region: cookies.get('region'),
                 access_token: cookies.get('access_token'),
@@ -105,6 +106,9 @@ export default {
         fileName1: this.communityBoard.fileName1,
         files:[],
         }
+    },
+    created () {
+        this.memberNo = this.communityBoard.memberNo
     },
     methods: {
         goPage () {
