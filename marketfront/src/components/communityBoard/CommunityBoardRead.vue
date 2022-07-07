@@ -1,11 +1,20 @@
 <template>
     <div id='community_read'>
             <v-form enctype="multipart/form-data">
-                <table>
+                <div>
                     <!-- <v-row wrap>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <v-btn @click="goPage" class="backBtn" color="grey darken-3" style="box-shadow:none" dark fab small><v-icon>mdi-arrow-left</v-icon></v-btn>
                     </v-row> -->
+                    <v-row>
+                        <v-carousel hide-delimiters height="auto">
+                            <v-carousel-item 
+                            v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
+                            <img
+                            :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
+                            </v-carousel-item>
+                        </v-carousel>
+                    </v-row>
                     <div id='user_profile'>
                         <h2 id='nickname'>{{communityBoard.member.name}}
                             <span id='region_name'>{{communityBoard.member.address}}</span>
@@ -33,18 +42,12 @@
                             </div>
                         </div>
                         <v-row>
-                            <v-carousel hide-delimiters height="auto">
-                                <v-carousel-item 
-                                v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
-                                <img 
-                                :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
-                                </v-carousel-item>
-                            </v-carousel>
-                        </v-row>
-                        <v-row>
                             <v-col>
-                                <div style="padding: 10px">
-                                    {{communityBoard.content}}
+                                <div>
+                                    <div v-if="communityBoard.placeName != ''">
+                                        <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="communityBoard.placeUrl" style="text-decoration:none"  target="_blank">{{communityBoard.placeName}}</a></b><br>
+                                    </div>
+                                    <div style="padding: 10px 5px">{{communityBoard.content}}</div>
                                     <div id='read_date_heart'>
                                         {{communityBoard.createdDate}}
                                         <div>
@@ -58,9 +61,7 @@
                             </v-col>
                         </v-row>
                     </div>
-                    <div v-if="communityBoard.placeName != ''">
-                    <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="communityBoard.placeUrl" style="text-decoration:none"  target="_blank">{{communityBoard.placeName}}</a></b><br>
-                    </div>
+                    
                     <!-- <div v-if="communityBoard.placeName == ''">
                     </div> -->
                         
@@ -72,7 +73,7 @@
                             {{ communityBoard.commentCnt }}
                     </div> -->
                                                  
-                </table>
+                </div>
             </v-form>
     </div>
 </template>
@@ -165,16 +166,14 @@ export default {
     width: 800px;
     margin: 0 auto;
     margin-bottom: 20px;
-    padding: 40px;
+    padding: 20px 40px;
     line-height: 24px;
     background: #fff;
 }
 #user_profile{
     display: block;
     position: relative;
-    border-bottom: 1px solid #eaebee;
-    /* margin-top: 40px;
-    margin-bottom: 40px; */
+    margin: 24px 0;
 }
 #nickname{
     text-align: left;
@@ -215,7 +214,8 @@ export default {
 }
 #read_title_content{
     padding: 32px 0 0 0;
-    width: 677px;
+
+    border-top: 1px solid #eaebee;
     /* margin: 0 auto; */
 }
 #read_date_heart{
@@ -226,6 +226,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 5px;
 }
 #my_button{
   letter-spacing: -2%;
@@ -311,7 +312,10 @@ hr {
     position: relative;
     margin-left: auto;
     margin-right:auto;
-    max-width:350px;
-    height:350px; 
+    /* max-width:350px;
+    height:350px;  */
+    width:100%;
+    height: auto;
+    border-radius: 8px;
 } 
 </style>
