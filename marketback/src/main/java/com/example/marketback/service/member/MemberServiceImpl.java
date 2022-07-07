@@ -5,6 +5,7 @@ import com.example.marketback.entity.member.Member;
 import com.example.marketback.repository.member.CityRepository;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.MemberLoginRequest;
+import com.example.marketback.request.MemberModifySnsRequest;
 import com.example.marketback.response.CityVillageInfoResponse;
 import com.example.marketback.response.MemberRegionResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -82,13 +83,25 @@ public class MemberServiceImpl implements MemberService {
     public void modify(Member member) {
         Member memberEntity = memberRepository.findByMemberId(member.getId());
 
-        if(member.getPassword() != null){
-            String encodePassword = passwordEncoder.encode(member.getPassword());
-            memberEntity.setPassword(encodePassword);
-        }
-
         memberEntity.setName(member.getName());
         memberEntity.setPhoneNumber(member.getPhoneNumber());
+
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void modifyPw(MemberLoginRequest memberLoginRequest) {
+        Member memberEntity = memberRepository.findByMemberId(memberLoginRequest.getId());
+        String encodePassword = passwordEncoder.encode(memberLoginRequest.getPassword());
+        memberEntity.setPassword(encodePassword);
+
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void modifySns(MemberModifySnsRequest memberModifySnsRequest) {
+        Member memberEntity = memberRepository.findByMemberId(memberModifySnsRequest.getId());
+        memberEntity.setName(memberModifySnsRequest.getName());
 
         memberRepository.save(memberEntity);
     }

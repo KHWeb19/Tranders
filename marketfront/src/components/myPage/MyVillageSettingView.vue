@@ -84,11 +84,11 @@ export default {
   computed: {
     ...mapState(['villageInfo'])
   },
-  created() {
-    this.fetchMyVillageSetting(this.id)
+  async created() {
+    await this.fetchMyVillageSetting(this.id);
+    this.model = this.villageInfo.searchId;
   },
   mounted() {
-    this.model = this.villageInfo.searchId
   }
 
 }

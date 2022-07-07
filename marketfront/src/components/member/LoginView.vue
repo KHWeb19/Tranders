@@ -14,7 +14,7 @@
 
         <v-row style="height: 70px">
           <v-col>
-            <input v-model="password" placeholder="Password"/>
+            <v-text-field v-model="password" type="password" solo placeholder="Password"> </v-text-field>
           </v-col>
         </v-row>
 

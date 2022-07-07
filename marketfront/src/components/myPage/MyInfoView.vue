@@ -13,25 +13,23 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="providerType === null">
+          <v-row v-if="providerType === 'undefined'">
             <v-col cols="3">비밀번호</v-col>
             <v-col cols="9">
-              <v-text-field solo v-model="password" style="width: 100%" placeholder="PASSWORD"> </v-text-field>
+              <v-text-field solo v-model="password" style="width: 100%" placeholder="PASSWORD" type="password"> </v-text-field>
             </v-col>
           </v-row>
 
-          <v-row v-else>
-            <v-col cols="3">인증번호</v-col> <!-- 카톡으로 인증하든, 메일로 인증하든 변경 -->
+<!--          <v-row v-else>
+            <v-col cols="3">인증번호</v-col> &lt;!&ndash; 카톡으로 인증하든, 메일로 인증하든 변경 &ndash;&gt;
             <v-col cols="9">
               <v-text-field solo v-model="password" style="width: 100%" placeholder="인증번호"> </v-text-field>
             </v-col>
-          </v-row>
-          <div class="pa-4" style="margin-top: 20px">
-            <v-row>
-              <v-btn @click="memberCheck" block depressed color="success" height="50"><h3><b>인증</b></h3></v-btn>
-            </v-row>
-          </div>
+          </v-row>-->
 
+          <v-row>
+            <v-btn @click="memberCheck" style="width: 100%; height: 50px; font-size: 20px; border-radius: 18px" class="light-green lighten-3">인증</v-btn>
+          </v-row>
           <v-row style="height: 35px"></v-row>
         </div>
 
@@ -69,8 +67,13 @@
 
             <v-row v-if="providerType === 'undefined'">
               <v-col cols="3">비밀번호</v-col>
-              <v-col cols="9">
-                <v-text-field v-model="password" solo style="width: 100%" placeholder="변경할 비밀번호를 적어주세요"> </v-text-field>
+              <v-col cols="7">
+                <v-form v-model="form" ref="form">
+                  <v-text-field v-model="password" solo style="width: 100%" :rules="[pwRules.required, pwRules.min, pwRules.max]" placeholder="변경할 비밀번호를 적어주세요"  type="password"> </v-text-field>
+                </v-form>
+              </v-col>
+              <v-col cols="2" class="pt-5">
+                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" :disabled="!form" @click="changePassword">확인</v-btn>
               </v-col>
             </v-row>
 
@@ -87,7 +90,7 @@
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
               <v-col cols="2" class="pt-5">
-                <v-btn style="width: 100%" class="success" id="checkDub" @click="checkPhoneNum"><b>번호 확인</b></v-btn>
+                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" @click="checkPhoneNum">확인</v-btn>
               </v-col>
             </v-row>
 
@@ -162,6 +165,7 @@ export default {
   name: "MyInfoView",
   data() {
     return {
+      form: false,
       isCheck: false, // false로 꼭 변경해두기!
       changeIsCheck: true,
       id: cookies.get("id"),
@@ -175,6 +179,11 @@ export default {
       },
       file: null,
       checkNum: '',
+      pwRules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        max: v => v.length <= 18 || 'Max 18 characters'
+      },
     }
   },
   props: {
@@ -187,9 +196,17 @@ export default {
   },
   methods: {
     registerBtn(){
-      const {password, name, phoneNumber} = this;
-      let id = this.id
-      this.$emit('modifyMember', {id, password, name, phoneNumber})
+      if(this.providerType === 'undefined') {
+        const {id, name, phoneNumber} = this;
+        this.$emit('modifyMember', {id, name, phoneNumber});
+      }else {
+        const {id, name} = this;
+        this.$emit('modifyMemberSns', {id, name});
+      }
+    },
+    changePassword(){
+      const {id, password} = this;
+      this.$emit('changePassword', {id, password});
     },
     memberCheck() {
       let id = this.userInfo.id;
@@ -235,7 +252,6 @@ export default {
         itemImage.onload = () => {
           window.URL.revokeObjectURL(this.src)  //나중에 반드시 해제해주어야 메모리 누수가 안생김.
         }
-
       }
     },
     dialogClose(){
