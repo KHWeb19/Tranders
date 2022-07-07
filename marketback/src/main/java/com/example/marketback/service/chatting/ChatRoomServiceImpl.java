@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Column;
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
@@ -113,6 +114,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 //        return maybeChatRoom.get();
 //    }
 
+
     @Override
     public void modify(ChatRoomRequest chatRoomRequest, Long roomNo) {
         Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
@@ -128,18 +130,16 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         chatRoomRepository.save(chatRoomEntity);
     }
 
+
+    static boolean realTime = false;
+
     @Override
     public void last(ChatRoomRequest chatRoomRequest, Long roomNo) {
-        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findById(Long.valueOf(roomNo));
-        ChatRoom chatRoomEntity = new ChatRoom(
-                roomNo,
-                maybeChatRoom.get().getMember1(),
-                maybeChatRoom.get().getMember2(),
-                maybeChatRoom.get().getProductBoard(),
-                maybeChatRoom.get().getAppointDate(),
-                maybeChatRoom.get().getAppointTime(),
-                chatRoomRequest.getLastMessage()
-        );
+        realTime = true;
+        ChatRoom chatRoomEntity = chatRoomRepository.findByRoomNo(roomNo);
+        chatRoomEntity.setLastMessage(chatRoomRequest.getLastMessage());
+        chatRoomEntity.setRealTime(realTime);
+
         chatRoomRepository.save(chatRoomEntity);
     }
 

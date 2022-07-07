@@ -73,6 +73,7 @@
               </div>
               <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
               <span v-if="login.memberNo==chatroom.member1.memberNo">{{chatroom.member2.name}} {{chatroom.member2.temperature}}°C</span>
+              {{chatroom.realTime}}
 
             <div id="right_button"  v-if="chatroom.productBoard.process==='판매중'">
             <v-layout>
@@ -351,10 +352,14 @@ export default {
       time: '00:00',
       menu2: false,
       priview: '',
+
+      // realTime: false,
     }
   },
   created() {
       this.getNewData();
+
+
   },
   methods: {
     async getNewData() {
@@ -377,7 +382,7 @@ export default {
     deletePriview() {
       this.priview = ''
     },
-    async onSubmit() {
+    onSubmit() {
         const { roomNo } = this.chatroom
         const { memberNo } = this.login
         const { message, now } = this
@@ -396,12 +401,14 @@ export default {
           this.newMessage.push({message:this.priview, now, image:true})
           this.priview=''
           this.lastMessage={roomNo, message:'사진을 전송 했습니다'}
+          // this.realTime=true
         }
         if(message!='\n' && message!=''){
           this.$emit('onSubmit', { roomNo, memberNo, message, now })
           this.newMessage.push({message, now})
           this.message=''
           this.lastMessage={roomNo, message}
+          // this.realTime=true
         }
     },
     onAppoint() {
@@ -427,6 +434,14 @@ export default {
       }
     }
   },
+  // beforeUpdate() {
+
+  //   console.log(this.realTime);
+  //     if(this.realTime) {
+
+  //       this.$router.go()
+  //     }
+  // }
 }
 </script>
 
