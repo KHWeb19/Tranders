@@ -32,7 +32,7 @@ export default {
         ...mapActions(['fetchCommunityBoard']),
         onSubmit (payload) {
             const {formData} = payload
-            axios.put(`http://localhost:7777/communityboard/${this.boardNo}`, formData, { headers: {
+            axios.put('http://localhost:7777/communityboard/boardModify', formData, { headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
                     .then(res => {
