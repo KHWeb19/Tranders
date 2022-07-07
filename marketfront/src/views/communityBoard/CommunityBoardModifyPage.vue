@@ -1,6 +1,6 @@
 <template>
     <div id='board_register'>
-        <community-board-modify :communityBoard="communityBoard" @submit="onSubmit"/>
+        <community-board-modify :communityBoard="communityBoard" :memberNo="memberNo" @submit="onSubmit"/>
     </div>
 </template>
 
@@ -8,6 +8,7 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import CommunityBoardModify from '@/components/communityBoard/CommunityBoardModify.vue'
+// import CommunityBoardRead from '@/components/communityBoard/CommunityBoardRead.vue'
 
 export default {
     name:'CommunityBoardModifyPage',
@@ -16,6 +17,10 @@ export default {
         },
     props: {
         boardNo: {
+            type: String,
+            required: true
+        },
+        memberNo: {
             type: String,
             required: true
         }

@@ -75,10 +75,18 @@
                                 <input type="file" id="files" ref="files" dense style="width:0px"
                                         multiple v-on:change="handleFileUpload()"/>
                                 <v-carousel hide-delimiters height="auto">    
-                                    <v-carousel-item 
+                                    <!-- <v-carousel-item 
                                     v-for="(file, index) in files" :key="index" style="text-align:center">
                                     <img :src=file.preview class="preview"/>
-                                    </v-carousel-item>         
+                                    </v-carousel-item>          -->
+                                    <v-carousel-item 
+                            v-for="(file, index) in files" :key="index" style="text-align:center">
+                            <img :src=file.preview class="preview"/>
+                            </v-carousel-item>
+                            <v-carousel-item 
+                            v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
+                            <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
+                            </v-carousel-item>  
                                 </v-carousel>
                             </div>
                         </v-col>
@@ -126,6 +134,7 @@
 <script>
 import EventBus from '@/eventBus.js'
 import KakaoMap from '../../views/KakaoMap.vue';
+import cookies from "vue-cookies";
 export default {
     components: { KakaoMap },
     name:'CommunityBoardModify,KaKaoMap',
@@ -151,6 +160,12 @@ export default {
                 '함께해요','동네질문', '동네맛집', '동네소식', '취미생활',  '분실/실종센터', '해주세요', '일상'
             ],
             selectSubject:[],
+        login: {
+        memberNo: cookies.get("memberNo"),
+        id: cookies.get("id"),
+        name: cookies.get("name"),
+        access_token: cookies.get("access_token"),
+      },
         }
     },
     created () {
@@ -167,6 +182,8 @@ export default {
         this.createdDate = this.communityBoard.createdDate
         this.placeName = this.communityBoard.placeName
         this.placeUrl = this.communityBoard.placeUrl
+        this.memberNo = this.communityBoard.member.memberNo
+        // this.file = this.communityBoard.file;
     },
     methods: {
         handleFileUpload () {
@@ -206,6 +223,7 @@ export default {
             formData.append('createdDate', createdDate)
             formData.append('placeName', placeName)
             formData.append('placeUrl', placeUrl)
+            // formData.append('memberNo', memberNo)
             
             this.$emit('submit', {formData})
             console.log(formData)            
