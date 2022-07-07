@@ -1,6 +1,7 @@
 package com.example.marketback.service.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.jpa.community.CommunityComment;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
@@ -141,6 +142,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     @Override
     public void modify(CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+        CommunityBoard boardEntity = repository.findByBoardNo(board.getBoardNo());
+        boardEntity.setTitle(board.getTitle());
+        boardEntity.setContent(board.getContent());
 
         try {
             if (file != null) {
