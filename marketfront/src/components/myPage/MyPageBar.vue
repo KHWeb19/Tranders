@@ -1,50 +1,38 @@
 <template>
-  <v-container>
-    <v-card width="100%">
-      <div style="padding-left: 50px; padding-right: 30px">
-
-      <v-row @click="myProfile" style="padding-top: 20px" >
-        <v-col cols="4">
-          <div>
-            <v-img v-if="profileImg === null" contain max-height="58" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>
-            <v-img v-else :src="require(`@/assets/profile/${profileImg}`)" id="img" max-width="80" min-height="80" style="height: 80px; width: 80px; border-radius: 70%"></v-img>
-          </div>
-        </v-col>
-
-        <v-col cols="6" style="padding-top: 35px">
-          <span style="font-size: 30px;">
-            {{name}}
-          </span>
-        </v-col>
-
-        <v-col cols="2" style="padding-top: 35px">
-          <v-btn style="margin-top: 5px" icon>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-col>
+  <div style="padding: 40px;">
+    <div>
+      <v-row>
+        <v-col><h3>프로필</h3></v-col><v-icon @click="myProfile" large color="black">mdi-chevron-right</v-icon>
       </v-row>
-
-        <v-row style="margin-top: 20px">
-          <div
-            style="
-              border: 1px solid green;
-              width: 100%;
-              height: 50px;
-              margin-right: 20px;
-              border-radius: 8px;
-              right: 0;
-            "
-            class="pa-3"
-          >
-            <div style="color: green">오이페이</div>
+      <div style="padding: 40px 0; border-bottom: 1px solid #e9ecef;">
+        <div>
+          <div id='user_profile'>
+              <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}</span></h2>
+              <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
+              <div id='profile_image'>
+                  <v-img id="image" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
+              </div>
           </div>
-        </v-row>
+        </div>
 
-        <v-row style="margin-top: 50px; margin-left: 2px">
-          <v-col>
-            <v-row>
+        <div
+          style="
+            border: 1px solid green;
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+            margin: 40px 0;
+          "
+          class="pa-3"
+        >
+          <div style="color: green">오이페이</div>
+        </div>
+
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+          <div>
               <v-btn
                 fab
+                depressed
                 style="
                   height: 70px;
                   width: 70px;
@@ -53,15 +41,14 @@
               >
                 <v-icon style="color: #008807">mdi-shopping</v-icon>
               </v-btn>
-            </v-row>
 
-            <v-row class="statementBtn"> 구매 내역 </v-row>
-          </v-col>
+            <div class="statementBtn"> 구매 내역 </div>
+          </div>
 
-          <v-col>
-            <v-row>
+          <div>
               <v-btn
                 fab
+                depressed
                 style="
                   height: 70px;
                   width: 70px;
@@ -71,15 +58,13 @@
               >
                 <v-icon style="color: #008807">mdi-receipt</v-icon>
               </v-btn>
-            </v-row>
+            <div class="statementBtn"> 판매 내역 </div>
+          </div>
 
-            <v-row class="statementBtn"> 판매 내역 </v-row>
-          </v-col>
-
-          <v-col>
-            <v-row>
+          <div>
               <v-btn
                 fab
+                depressed
                 style="
                   height: 70px;
                   width: 70px;
@@ -88,56 +73,42 @@
               >
                 <v-icon style="color: #008807">mdi-heart</v-icon>
               </v-btn>
-            </v-row>
 
-            <v-row class="statementBtn"> 관심 내역 </v-row>
-          </v-col>
-        </v-row>
+            <div class="statementBtn"> 관심 내역 </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <hr
-        style="
-          margin-top: 30px;
-          height: 10px;
-          background-color: rgba(94, 94, 94, 0.16);
-          border: none;
-        "
-      />
-
-      <div style="margin-left: 10px; margin-right: 10px; margin-top: 10px">
-        <v-row style="margin-top: 10px">
-          <v-card-text
-            style="font-size: 20px; font-weight: bold; margin-left: 12px"
-            >나의 활동</v-card-text
-          >
+      <div>
+        <v-row style="padding-top: 40px">
+          <v-col><h3>나의 활동</h3></v-col>
         </v-row>
+        <div style="padding: 40px 0; border-bottom: 1px solid #e9ecef;">
+          <v-list nav dense style="padding:0px">
+            <v-list-item-group v-model="selectedItem" color="green">
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                style="margin-bottom: 15px"
+                @click="moveMyPage(i)"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon" x-large></v-icon>
+                </v-list-item-icon>
 
-        <v-list nav dense style="margin-top: 20px">
-          <v-list-item-group v-model="selectedItem" color="green">
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              style="margin-bottom: 15px"
-              @click="moveMyPage(i)"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon" x-large></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="item.text"
-                  style="font-size: 18px"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="item.text"
+                    style="font-size: 18px"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
       </div>
-
-      <v-row style="height: 50px"> </v-row>
-    </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -153,7 +124,11 @@ export default {
       type: Number,
       default: null,
     },
+    userInfo: {
+      type: Object,
+    },
   },
+
   data() {
     return {
       id: cookies.get("id"),
@@ -265,7 +240,50 @@ export default {
 
 <style scoped>
 .statementBtn {
-  margin-top: 30px;
+  margin-top: 10px;
   padding-left: 5px;
+}
+#user_profile{
+    display: block;
+    position: relative;
+    /* margin-top: 40px; */
+    margin-bottom: 40px;
+}
+#nickname{
+    text-align: left;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    margin-left: 80px;
+}
+#region_name{
+    font-size: 17px;
+    color: #212529;
+    font-weight: normal;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+#profile_detail{
+    margin: 10px 0;
+    margin-left: 80px;
+    font-size: 15px;
+    letter-spacing: -0.6px;
+    color: #868e96;
+}
+#profile_image{
+    display: block;    
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#image{
+    width: 58px;
+    height: 58px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
 }
 </style>

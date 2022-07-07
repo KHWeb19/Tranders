@@ -1,8 +1,5 @@
 <template>
   <form @submit.prevent="onSubmit" >
-    <div id='top'>
-      <after-login-view/>
-    </div>
       <div id='full'>
         <div id='left'>
           <div id='image'>
@@ -53,7 +50,7 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="chatroom.productBoard.productImage" style="display: flex; margin-left: auto;">
+                  <div v-if="chatroom.productBoard" style="display: flex; margin-left: auto;">
                       <v-img style="margin-right: 4px;
                       border: 1px solid var(--profile-image-border);
                       border-radius: 4px;
@@ -172,7 +169,8 @@
                   </template>
               </v-dialog>
           </v-layout>
-          <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo">
+          <!-- <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo"> -->
+            <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
                       <v-btn id='my_button' depressed style="margin-left:15px" v-on="on">송금하기</v-btn>
@@ -223,7 +221,7 @@
           </v-layout>
           </div>
           </div>
-          <div id='product' style="position:relative;">
+          <div v-if="chatroom.productBoard" id='product' style="position:relative;">
             <div>
               <v-img style="margin-right: 12px;
               border: 1px solid var(--profile-image-border);
@@ -254,7 +252,7 @@
               <!-- <v-btn class='success' depressed @click="onReminder()"><b>알림 받기</b></v-btn>  -->
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:540px': 'height:625px'">
+          <div id='chatView' :style="chatroom.appointDate ? 'height:500px': 'height:585px' && chatroom.productBoard ? 'height:581px':'height:656px' ">
             <!-- <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
                 <div colspan="4">
                     {{chatroom.roomNo}} 채팅방에 입장하였습니다. 
@@ -315,13 +313,11 @@
 
 <script>
 import axios from 'axios'
-import AfterLoginView from '../home/AfterLoginView.vue';
 import Vue from 'vue'
 import cookies from "vue-cookies";
 Vue.use(cookies)
 
 export default {
-  components: { AfterLoginView },
   name: "ChattingRead",
   props: {
       userInfo: {
@@ -434,24 +430,23 @@ export default {
 </script>
 
 <style scoped>
-#top{
-  /* height: 70px;
-  display: flex;
-  justify-content: center; */
+/* #top{
   border-bottom: 1px solid #bcbcbc;
-}
+} */
 #logo{
   display: flex;
-  /* -webkit-box-pack: justify; */
-  /* justify-content: space-between; */
-  /* -webkit-box-align: center; */
   align-items: center;
   width: 1200px;
   padding: 0px 8px;
 }
 #full{
-	width: 1200px;
-	margin: auto; /* 중앙 맞춤 */
+  display: flex;
+  border-left: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  width: 1200px;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
 }
 #left{
 	width: 80px;
@@ -460,61 +455,55 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 938px;
+	height: 900px;
   display: flex; 
   justify-content: center;
-  border: 1px solid #bcbcbc;
-  border-top-style: none;
-  border-right-style: none;
 }
 #center{
 	width: 310px;
 	float: left;
-  border: 1px solid #bcbcbc;
+  border: 1px solid #e9ecef;
   border-top-style: none;
+  border-bottom-style: none;
 }
 #name{
-    border-bottom: 1px solid #bcbcbc;
+    border-bottom: 1px solid #e9ecef;
     position: relative;
     display: flex;
     height: 72px;
     min-height: 72px;
     padding: 0px 20px;
-    /* -webkit-box-align: center; */
     align-items: center;
 }
 #name_value{
-font-weight: bold;
+    font-weight: bold;
     font-size: 16px;
     line-height: 150%;
 }
 #chatList{
 	width: 310px;
-	height: 865px;
+	height: 825px;
 }
-#chatroom{
-  /* display: flex;    */
-  
-}
+
 #chatroom_link{
   display: flex;
-    padding: 16px;
-    height: 72px;
-    border-bottom: 1px solid #bcbcbc;
-    -webkit-box-align: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    background-position: center center;
-    contain: content;
-    color: inherit;
-    cursor: pointer;
-    text-decoration: none;
+  padding: 16px;
+  height: 72px;
+  border-bottom: 1px solid #e9ecef;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background-position: center center;
+  contain: content;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
 }
 #right{
 	width: 810px;
 	float: left;
-  border: 1px solid #bcbcbc;
+  border: 1px solid #e9ecef;
           border-top-style: none;
           border-left-style: none;
 }
@@ -523,7 +512,7 @@ font-weight: bold;
 	height: 72px;
   min-height: 72px;
   display: flex; 
-  border-bottom: 1px solid #bcbcbc;
+  border-bottom: 1px solid #e9ecef;
     /* -webkit-box-pack: justify; */
     /* justify-content: space-between; */
     /* -webkit-box-align: center; */
@@ -542,7 +531,7 @@ font-weight: bold;
     border-radius: 4px; */
 }
 #pay_box{
-  border: 1px solid #212124;;
+  border: 2px solid #e9ecef;;
   border-radius: 8px;
   height: 70px;
   display: flex;
@@ -559,7 +548,7 @@ font-weight: bold;
     justify-content: space-between;
     padding: 0px 20px;
     font-size: 14px;
-    border-bottom: 1px solid #bcbcbc;
+    border-bottom: 1px solid #e9ecef;
 }
 #notice{
   display: flex;
@@ -605,7 +594,7 @@ font-weight: bold;
     /* flex-direction: column; */
     /* position: relative; */
     margin: 16px;
-    border: 1px solid #868b94;
+    border: 2px solid #e9ecef;
     border-radius: 8px;
     /* -webkit-box-pack: justify; */
     /* justify-content: space-between; */

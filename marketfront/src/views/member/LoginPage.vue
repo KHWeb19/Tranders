@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id='login_page'>
     <login-view @login="login"></login-view>
   </div>
 </template>
@@ -62,5 +62,7 @@ export default {
 </script>
 
 <style scoped>
-
+#login_page {
+    background: #f8f9fa;
+}
 </style>

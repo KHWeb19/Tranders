@@ -1,9 +1,7 @@
 <template>
   <div id="login-wrap">
     <div id="login-box">
-      <span class="title_g" style="font-size: 50px">오이 마켓</span>
-      <br>
-      <span class="title_b">-</span><span class="title_g">오</span><span class="title_b">늘은</span><span class="title_g"> 이</span><span class="title_b">거 사자</span><span class="title_b">-</span>
+      <span class="title_g" style="font-size: 50px">오이마켓</span>
 
       <v-row style="height: 70px; margin-top: 25px">
         <v-col>

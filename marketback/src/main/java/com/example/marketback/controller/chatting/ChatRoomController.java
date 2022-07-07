@@ -29,6 +29,13 @@ public class ChatRoomController {
         chatRoomService.register(chatRoom, member1No, member2No, productNo);
     }
 
+    @PostMapping("/register/{member1No}/{member2No}")
+    public void bossRegister(@RequestBody ChatRoom chatRoom, @PathVariable("member1No") Long member1No, @PathVariable("member2No") Long member2No) {
+        log.info("chatRoomRegister()");
+
+        chatRoomService.bossRegister(chatRoom, member1No, member2No);
+    }
+
     @GetMapping("/list/{memberNo}")
     public List<ChatRoom> chatRoomList(@PathVariable("memberNo") Long memberNo) {
         log.info("chatRoomList()");

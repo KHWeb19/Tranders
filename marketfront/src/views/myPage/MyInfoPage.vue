@@ -2,22 +2,21 @@
   <div id="login-wrap">
     <after-login-view></after-login-view>
 
-    <div id="my_page_box">
-      <v-row no-gutters>
-        <v-col cols="4">
-          <my-profile-bar :index="index"></my-profile-bar>
-        </v-col>
+      <div id='content'>
+        <v-row no-gutters>
+          <v-col cols="4">
+            <my-profile-bar :index="index" :userInfo="userInfo"></my-profile-bar>
+          </v-col>
 
         <v-col cols="8">
           <div v-if="userInfo === null"> <v-btn>죄송합니다 다시 부탁드려요</v-btn></div>
           <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @modifyMemberSns="modifyMemberSns" @changePassword="changePassword" @saveProfileImg="saveProfileImg" @checkPhoneNum="checkPhoneNum"
                         @certification="certification" :ifCheck="ifCheck"></my-info-view>
         </v-col>
-
-        <v-col>
-        </v-col>
-      </v-row>
-    </div>
+          <v-col>
+          </v-col>
+        </v-row>
+      </div>
   </div>
 </template>
 
@@ -155,7 +154,7 @@ export default {
 </script>
 
 <style scoped>
-#login-wrap{
+/* #login-wrap{
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
@@ -167,6 +166,21 @@ export default {
   width: 100%;
   max-width: 1250px;
   margin: 0 auto;
-  padding: 15px 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 15px 7px 0 7px;
+} */
+#login-wrap{
+  background: #f8f9fa;
+  height: 100vh;
+}
+#content{
+  display: block;
+  margin-top: 72px;
+  margin: 30px auto 0 auto;
+  border-left: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  width: 1200px;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
 }
 </style>

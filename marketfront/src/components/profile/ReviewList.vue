@@ -10,7 +10,7 @@
                     params: { memberId: review.writer.id.toString() } }">
                     {{review.writer.name}}
                 </router-link>
-                <div id='review_writer_region_name'>{{review.writer.region}}동</div>
+                <div id='review_writer_region_name'>{{review.writer.region}}</div>
                 <div id='review_content'>{{review.message}}</div>
                 <div id='review_time'>{{review.regDate}}</div>
             </li>
@@ -46,7 +46,7 @@ export default {
 }
 #review{
     padding: 16px 0;
-    border-bottom: 2px solid #eaebee;
+    border-bottom: 1px solid #eaebee;
     position: relative;
 }
 #review_profile_image{

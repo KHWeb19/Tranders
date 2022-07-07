@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <after-login-view></after-login-view>
-    <near-page-view></near-page-view>
+  <div style="height: 100vh; background: #f8f9fa;">
+      <after-login-view></after-login-view>
+      <near-page-view></near-page-view>
   </div>
 </template>
 
@@ -15,5 +15,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
