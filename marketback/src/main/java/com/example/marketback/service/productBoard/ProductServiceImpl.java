@@ -60,8 +60,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductBoard> searchList(String keyWord) {
-        List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
+        /*List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
 
-        return findSearchList;
+        return findSearchList;*/
+        return null;
     }
 }

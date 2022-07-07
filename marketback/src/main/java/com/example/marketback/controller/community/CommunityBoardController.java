@@ -60,6 +60,7 @@ public class CommunityBoardController {
         CommunityBoard getFile = getFileName.get();
 
         if (getFile.getFileName1() != null ) {
+            System.out.println("testtest");
             Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName1());
             Files.delete(filePath);
         }
@@ -162,11 +163,4 @@ public class CommunityBoardController {
 
     }
 
-    @PostMapping("/search")
-    public List<CommunityBoard> CommunityBoardSearchList (@RequestBody KeyWordRequest keyWord) {
-        log.info("CommunityBoardSearchList()");
-        String word = keyWord.getKeyWord();
-
-        return service.searchList(word);
-    }
 }

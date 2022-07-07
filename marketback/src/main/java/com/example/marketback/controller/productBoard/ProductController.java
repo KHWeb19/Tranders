@@ -79,11 +79,4 @@ public class ProductController {
         return "Upload Success";
     }
 
-    @PostMapping("/search")
-    public List<ProductBoard> productBoardSearchList(@RequestBody KeyWordRequest keyWord) {
-        log.info("ProductBoardSearchList()");
-        String word = keyWord.getKeyWord();
-
-        return productService.searchList(word);
-    }
 }
