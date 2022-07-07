@@ -32,6 +32,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     public void register(ChatRoom chatRoom, Long member1No, Long member2No, Long productNo) {
         Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1No), Long.valueOf(member2No));
         Optional<ProductBoard> maybeProduct = productRepository.findById(Long.valueOf(productNo));
+        ProductBoard boardEntity = productRepository.findByProductNo(productNo);
         //서로의 채팅방이 없다는게 확인되면 생성
         if (maybeChatRoom.equals(Optional.empty())) {
             Optional<Member> maybeMember1 = memberRepository.findById(Long.valueOf(member1No));
@@ -39,6 +40,8 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             chatRoom.setMember1(maybeMember1.get());
             chatRoom.setMember2(maybeMember2.get());
             chatRoom.setProductBoard(maybeProduct.get());
+            boardEntity.setChatCnt(boardEntity.getChatCnt()+1);
+            productRepository.save(boardEntity);
             chatRoomRepository.save(chatRoom);
         }
         //존재하면 게시물만 변경
@@ -144,7 +147,26 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     public void charge(Member member) {
         Member memberEntity = memberRepository.findByMemberId(member.getId());
         memberEntity.setMoney(member.getMoney());
-
         memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void pay(Member member, Long productNo) {
+        //결제금액저장
+        Member memberEntity = memberRepository.findByMemberId(member.getId());
+        memberEntity.setMoney(member.getMoney());
+        memberRepository.save(memberEntity);
+
+        ProductBoard boardEntity = productRepository.findByProductNo(productNo);
+        Member buyerEntity = memberRepository.findByMemberId(boardEntity.getMember().getId());
+
+        //받은금액저장
+        buyerEntity.setMoney(buyerEntity.getMoney()+boardEntity.getPrice());
+        memberRepository.save(buyerEntity);
+
+        //구매자저장, 판매상태변경
+        boardEntity.setBuyer(memberEntity);
+        boardEntity.setProcess("판매완료");
+        productRepository.save(boardEntity);
     }
 }

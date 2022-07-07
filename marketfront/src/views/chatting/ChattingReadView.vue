@@ -81,16 +81,14 @@ export default {
             console.log(payload)
             const { access_token, date, time } = payload
             axios.post('http://127.0.0.1:5000/kakao-message', {access_token, date, time})
-            // axios.post('http://localhost:5000/kakao-message', {access_token, date, time})
         },
         onCharge(payload){
             const { id, money } = payload
             axios.put('http://localhost:7777/chatting/charge', {id, money})
         },
         onPay(payload){
-            const { id, money, memberId } = payload
-            axios.put('http://localhost:7777/chatting/charge', {id, money})
-            console.log(memberId)
+            const { id, money, memberId, productNo } = payload
+            axios.put(`http://localhost:7777/chatting/pay/${productNo}`, {id, money, productNo})
             this.$router.push({name: 'ReviewRegisterPage', params: {memberId:memberId.toString()} })
         }
     } 

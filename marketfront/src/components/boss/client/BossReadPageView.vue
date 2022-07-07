@@ -347,9 +347,9 @@ export default {
 #my_page_box{
   align-items: center;
   width: 100%;
-  max-width: 1250px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 40px;
 }
 #profile {
   padding: 15px 20px 20px 20px;

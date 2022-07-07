@@ -86,4 +86,11 @@ public class ProductController {
 
         return productService.searchList(word);
     }
+
+    @GetMapping("/list/{memberNo}")
+    public List<ProductBoard> buyerList(@PathVariable("memberNo") Long memberNo) {
+        log.info("buyerList()");
+
+        return productService.buyerList(memberNo);
+    }
 }
