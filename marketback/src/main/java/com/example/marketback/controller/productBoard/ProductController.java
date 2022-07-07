@@ -5,6 +5,7 @@ import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.productBoard.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,13 @@ public class ProductController {
         log.info("productList()");
 
         return productService.list();
+    }
+
+    @GetMapping("/list/{memberNo}")
+    public List<ProductBoard> productListOfMember(@PathVariable("memberNo") Long memberNo) {
+        log.info("productList()");
+
+        return productService.productListOfMember(memberNo);
     }
 
     @GetMapping("/{productNo}")

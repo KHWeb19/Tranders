@@ -11,6 +11,7 @@ public interface ProductService {
     public void modify(ProductBoard productBoard, Long memberNo);
     public void remove(Long productNo);
     public List<ProductBoard> searchList(String searchWord);
+    public List<ProductBoard> productListOfMember(Long memberNo);
     public List<ProductBoard> buyerList(Long memberNo);
 }
 

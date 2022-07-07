@@ -15,6 +15,9 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
     @Query("select p from ProductBoard p where p.productNo = :productNo")
     ProductBoard findByProductNo(Long productNo);
 
+    @Query("select p from ProductBoard p where p.member.memberNo = :memberNo")
+    public List<ProductBoard> findByMemberNoInProductBoard(Long memberNo);
+
     @Query("select p from ProductBoard p join p.buyer pb where pb.memberNo = :memberNo")
     List<ProductBoard> findByBuyer(@Param("memberNo") Long memberNo);
 }
