@@ -64,4 +64,9 @@ public class ProductServiceImpl implements ProductService {
 
         return findSearchList;
     }
+
+    @Override
+    public List<ProductBoard> buyerList(Long memberNo) {
+        return productRepository.findByBuyer(Long.valueOf(memberNo));
+    }
 }
