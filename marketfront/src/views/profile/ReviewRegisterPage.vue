@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id='review_register'>
         <review-register :userInfo="userInfo" @onSubmit="onSubmit"/>
     </div>
 </template>
@@ -37,3 +37,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#review_register {
+    background: #f8f9fa;
+}
+</style>

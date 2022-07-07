@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-card width="100%">
-      <div class="map_box" style="padding: 15px 20px 5px 20px;">
+  <div>
+    <!-- <v-card width="100%"> -->
+      <div class="map_box" style="padding: 40px; border-left: 1px solid #e9ecef;">
         <v-row justify="center">
           <v-card-title style="font-size: 30px;">내 동네 인증</v-card-title>
         </v-row>
@@ -30,12 +30,12 @@
           </v-card-text>
         </v-row>
 
-        <v-row justify="end" style="height: 60px">
-          <v-btn class="light-green lighten-3" @click="saveRegion">동네 인증 완료</v-btn>
+        <v-row justify="center" style="height: 60px">
+          <v-btn class="success" depressed @click="saveRegion"><b>동네 인증 완료</b></v-btn>
         </v-row>
       </div>
-    </v-card>
-  </v-container>
+    <!-- </v-card> -->
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
-  <div id="near_page_box" style="position: relative">
-      <v-card height="700px" width="100%">
-        <div class="pa-4" style="width: 100%">
+  <div id="near_page_box">
+      <!-- <v-card height="700px" width="100%"> -->
+        <div style="width: 100%">
           <div style="font-size: 35px; font-weight: bold">이웃과 함께 만드는 오이 지도</div>
           <div style="font-size: 20px;">이웃들이 소개한 맛집을 지도에 담았어요</div>
           <div class="map_wrap" style="position: relative; margin-top: 25px">
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-      </v-card>
+      <!-- </v-card> -->
   </div>
 </template>
 
@@ -340,13 +340,24 @@ export default {
 
 <style scoped>
 #near_page_box{
+    border-left: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 40px;
+    line-height: 24px;
+    background: #fff;
+}
+/* #near_page_box{
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 1250px;
   margin: 0 auto;
-  padding: 15px 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
-}
+  padding: 15px 7px 0 7px; 
+  position: relative
+} */
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{
   color:#000;text-decoration: none;
 }

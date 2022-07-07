@@ -160,7 +160,8 @@ export default {
 <style scoped>
 #community_read{
     /* border-radius: 8px; */
-    border: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
     width: 800px;
     margin: 0 auto;
     margin-bottom: 20px;

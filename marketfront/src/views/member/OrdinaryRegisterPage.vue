@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id='back_page'>
     <ordinary-register-view
         @register="register"
         @check="check"
@@ -88,6 +88,7 @@ export default {
 </script>
 
 <style scoped>
-
-
+#back_page {
+    background: #f8f9fa;
+}
 </style>

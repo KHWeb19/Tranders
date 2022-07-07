@@ -1,7 +1,6 @@
 <template>
-  <v-container>
-    <v-card width="100%" height="360px">
-      <div class="map_box" style="padding: 15px 20px 5px 20px;">
+  <div>
+      <div class="map_box" style="padding: 40px; border-left: 1px solid #e9ecef;">
         <v-row justify="center">
           <v-card-title style="font-size: 30px;">내 동네 설정</v-card-title>
         </v-row>
@@ -51,17 +50,13 @@
           </v-sheet>
         </v-expand-transition>-->
 
-        <div class="pa-4" style="margin-top: 20px">
-          <v-row justify="center" style="height: 60px;">
-            <v-btn class="light-green lighten-3" style="width: 90%; height: 50px" @click="saveRegion">동네 인증 완료</v-btn>
+
+          <v-row justify="center" style="height: 60px">
+            <v-btn depressed color="success" @click="saveRegion"><b>동네 인증 완료</b></v-btn>
           </v-row>
-        </div>
-
-
 
       </div>
-    </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>

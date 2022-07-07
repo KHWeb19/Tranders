@@ -1,6 +1,9 @@
 <template>
   <div>
+    <after-login-view/>
+    <div id='chat_list'>
     <chatting-list :chatrooms="chatrooms" @submit="onSubmit"/>
+    </div>
   </div>
 </template>
 
@@ -10,11 +13,15 @@ import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import Vue from 'vue'
 import cookies from "vue-cookies";
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 Vue.use(cookies)
 
 export default {
   name: "ChattingListPage",
-  components: { ChattingList },
+  components: { 
+    ChattingList,
+    AfterLoginView,
+   },
   data() {
     return {
       login: {
@@ -44,5 +51,8 @@ export default {
 </script>
 
 <style scoped>
-
+#chat_list{
+  background: #f8f9fa;
+  /* padding: 30px 0; */
+}
 </style>
