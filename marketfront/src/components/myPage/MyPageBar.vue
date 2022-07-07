@@ -17,6 +17,8 @@
 
         <div
           style="
+            display:flex;
+            justify-content: space-between;
             border: 1px solid green;
             width: 100%;
             height: 50px;
@@ -25,7 +27,7 @@
           "
           class="pa-3"
         >
-          <div style="color: green">오이페이</div>
+          <div style="color: green">오이페이 </div><div>{{userInfo.money}} 원</div>
         </div>
 
         <div style="display:flex; justify-content: space-between; align-items: center;">

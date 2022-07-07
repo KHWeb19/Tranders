@@ -74,7 +74,7 @@
               <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
               <span v-if="login.memberNo==chatroom.member1.memberNo">{{chatroom.member2.name}} {{chatroom.member2.temperature}}°C</span>
 
-            <div id="right_button">
+            <div id="right_button"  v-if="chatroom.productBoard.process==='판매중'">
             <v-layout>
               <v-dialog persisten max-width="400">
                   <template v-slot:activator="{ on }">
@@ -241,7 +241,7 @@
               <div>{{chatroom.productBoard.title}}</div>
               <div style="font-weight: bold;">{{chatroom.productBoard.price}}원</div>
             </div>
-            <div>거래 상황</div>
+            <div>{{chatroom.productBoard.process}}</div>
           </div>
           <div v-if="chatroom.appointDate" id='notice'>
             <div id='notice_box'>
@@ -421,8 +421,9 @@ export default {
     },
     onPay(){
       if(this.userInfo.money>=this.chatroom.productBoard.price) {
+        const { productNo } = this.chatroom.productBoard
         this.userInfo.money -= this.chatroom.productBoard.price
-        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id})
+        this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id, productNo})
       }
     }
   },
