@@ -48,11 +48,16 @@
               </div>
 
               <div id="profile-left">
-                <div id="userName"><router-link :to="{
-                    name: 'ProfileBasicPage',
-                    params: { memberId: productBoard.member.id.toString() } }">
+                <div id="userName">
+                  <router-link
+                    :to="{
+                      name: 'ProfileBasicPage',
+                      params: { memberId: productBoard.member.id.toString() },
+                    }"
+                  >
                     {{ productBoard.member.name }}
-                </router-link></div>
+                  </router-link>
+                </div>
                 <div id="region-name">{{ productBoard.member.address }}</div>
               </div>
             </div>
@@ -74,10 +79,8 @@
       </section>
 
       <section id="description">
-        <h2 style="margin-bottom: 5px">{{ productBoard.process }}</h2>
         <h1 property="schema:name" id="title" style="margin-top: 0px">
           {{ productBoard.title }}
-          {{ productBoard.process }}
         </h1>
 
         <p id="category">
@@ -154,6 +157,9 @@ export default {
       swiperOption: {
         effect: "coverflow",
         grabCursor: true,
+        pagination: {
+          el: ".swiper-pagination",
+        },
         swiperOption: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -165,23 +171,27 @@ export default {
         name: cookies.get("name"),
         access_token: cookies.get("access_token"),
       },
-      reportDialog: false
+      reportDialog: false,
     };
   },
   methods: {
     onChat() {
-        this.$emit('onChat', {member1No: this.login.memberNo, member2No: this.productBoard.member.memberNo, productNo: this.productBoard.productNo})
+      this.$emit("onChat", {
+        member1No: this.login.memberNo,
+        member2No: this.productBoard.member.memberNo,
+        productNo: this.productBoard.productNo,
+      });
     },
-    closeDialog(){
+    closeDialog() {
       this.reportDialog = false;
     },
-    sendReport(payload){
-      this.$emit('sendReport', payload)
+    sendReport(payload) {
+      this.$emit("sendReport", payload);
     },
-    sendImgReport(payload){
-      this.$emit('sendImgReport', payload)
-    }
-  }
+    sendImgReport(payload) {
+      this.$emit("sendImgReport", payload);
+    },
+  },
 };
 </script>
 
@@ -297,7 +307,6 @@ img {
   color: #868e96;
 }
 
-
 #repo {
   padding: 32px 0;
   width: 677px;
@@ -305,18 +314,6 @@ img {
   border-top: 1px solid #868e96;
   border-bottom: 1px solid #868e96;
   font-weight: bolder;
-}
-
-.slide-3d {
-  width: 650px;
-}
-
-.swiper-slide {
-  width: 650px;
-  height: 650px;
-  background-color: white;
-  background-position: center;
-  background-size: cover;
 }
 
 dl {
@@ -347,5 +344,18 @@ dl dd {
   margin-top: 1px;
   width: 100px;
   text-align: right;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+}
+
+.swiper-slide {
+  background-color: white;
+  background-position: center;
+  background-size: cover;
+  border-radius: 12px !important;
 }
 </style>

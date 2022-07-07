@@ -5,6 +5,7 @@ import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.repository.productBoard.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductBoard> list() {
-        return productRepository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
+        return productRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCnt"));
     }
 
 
@@ -63,5 +64,10 @@ public class ProductServiceImpl implements ProductService {
         List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
 
         return findSearchList;
+    }
+
+    @Override
+    public List<ProductBoard> productListOfMember(Long memberNo) {
+        return productRepository.findByMemberNoInProductBoard(Long.valueOf(memberNo));
     }
 }

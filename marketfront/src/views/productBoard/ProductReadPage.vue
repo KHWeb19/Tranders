@@ -13,29 +13,25 @@
     <router-link :to="{ name: 'ProductModifyPage' }">
       <v-btn>수정하기</v-btn>
     </router-link>
-    <router-link :to="{ name: 'ProductListPage' }">
-      <v-btn>리스트로 이동</v-btn>
-    </router-link>
   </div>
 </template>
 
 <script>
-
 import cookies from "vue-cookies";
 
 const config = {
   headers: {
-    'Authorization': 'Bearer '+ cookies.get('access_token'),
-    'Accept' : 'application/json',
-    'Content-Type': 'application/json'
-  }
+    Authorization: "Bearer " + cookies.get("access_token"),
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
 };
 
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
 import AfterLoginView from "../../components/home/AfterLoginView.vue";
 import axios from "axios";
-import {API_BASE_URL} from "@/constant/login";
+import { API_BASE_URL } from "@/constant/login";
 export default {
   name: "ProductReadPage",
   props: {
@@ -73,45 +69,63 @@ export default {
         });
     },
     onChat(payload) {
-      const {member1No, member2No, productNo} = payload
-      console.log(member1No, member2No, productNo)
-      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`, {member1No, member2No, productNo})
-          .then(() => {
-              this.$router.push({ name: "ChattingListPage" })
-          })
-          .catch(() => {
-              alert('문제 발생!')
-          })
+      const { member1No, member2No, productNo } = payload;
+      console.log(member1No, member2No, productNo);
+      axios
+        .post(
+          `http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`,
+          { member1No, member2No, productNo }
+        )
+        .then(() => {
+          this.$router.push({ name: "ChattingListPage" });
+        })
+        .catch(() => {
+          alert("문제 발생!");
+        });
     },
-    sendReport(payload){
-      const {category1, category2, content, banCheck, productNo, toId, fromId} = payload;
+    sendReport(payload) {
+      const {
+        category1,
+        category2,
+        content,
+        banCheck,
+        productNo,
+        toId,
+        fromId,
+      } = payload;
 
-      axios.post(API_BASE_URL+'/report/saveReport', {category1, category2, content, banCheck, productNo, toId, fromId}, config)
-          .then((res) => {
-            console.log(res);
-            this.$router.go();
-          })
-          .catch(() => {
-            alert('에러')
-          })
+      axios
+        .post(
+          API_BASE_URL + "/report/saveReport",
+          { category1, category2, content, banCheck, productNo, toId, fromId },
+          config
+        )
+        .then((res) => {
+          console.log(res);
+          this.$router.go();
+        })
+        .catch(() => {
+          alert("에러");
+        });
     },
-    sendImgReport(payload){
+    sendImgReport(payload) {
       // 이미지가 없을때 안받아지면.. sendReport 를 불러서 처리하자
-      axios.post(API_BASE_URL+'/report/saveImgText', payload, {
-        headers: {
-          'Authorization': 'Bearer '+ cookies.get('access_token'),
-          'Accept' : 'application/json',
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-          .then((res) => {
-            console.log(res)
-            this.$router.go()
-          })
-          .catch(() => {
-            alert('에러')
-          })
-    }
+      axios
+        .post(API_BASE_URL + "/report/saveImgText", payload, {
+          headers: {
+            Authorization: "Bearer " + cookies.get("access_token"),
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.$router.go();
+        })
+        .catch(() => {
+          alert("에러");
+        });
+    },
   },
 };
 </script>
