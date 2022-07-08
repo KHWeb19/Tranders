@@ -9,6 +9,7 @@
             !productBoards ||
             (Array.isArray(productBoards) && productBoards.length === 0)
           "
+          style="text-align: center; margin-top: 200px"
         >
           현재 등록된 상품이 없습니다!
         </v-col>
@@ -34,11 +35,18 @@
                 />
               </div>
               <div class="card-desc">
+                <p class="card-process">
+                  {{ productBoard.process }}
+                </p>
                 <div class="card-title">{{ productBoard.title }}</div>
-                <div class="card-title">{{ productBoard.price }}원</div>
+                <div class="card-price">
+                  {{ productBoard.price | makeComma }}원
+                </div>
+                <div class="card-region-name">
+                  {{ productBoard.member.region }}
+                </div>
                 <div class="card-counts">
-                  <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
-                  <span>조회수 {{ productBoard.viewCnt }}</span>
+                  <span> 관심 5 </span>∙ <span> 채팅 6 </span>
                 </div>
               </div>
             </router-link>
@@ -53,6 +61,7 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
+
 export default {
   name: "ProductListForm",
   components: {},
@@ -137,6 +146,24 @@ section#content {
   margin-bottom: 4px;
   line-height: 1.5;
   font-weight: normal;
+}
+.card-process {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: green;
+  max-width: 70px;
+  color: white;
+  margin-bottom: 5px;
+}
+.card-price {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  color: #212529;
 }
 .card-region-name {
   font-size: 13px;
