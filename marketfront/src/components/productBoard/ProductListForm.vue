@@ -1,51 +1,59 @@
 <template>
   <div>
-    <h2 class="head-title">중고거래 인기매물</h2>
-    <router-link :to="{ name: 'ProductRegisterPage' }">
-      게시물 작성
-    </router-link>
-    <button @click="viewSort">정렬</button>
-    <v-col
-      class="none-product"
-      v-if="
-        !productBoards ||
-        (Array.isArray(productBoards) && productBoards.length === 0)
-      "
-    >
-      현재 등록된 상품이 없습니다!
-    </v-col>
-    <v-col
-      v-else
-      v-for="productBoard in productBoards"
-      :key="productBoard.productNo"
-      cols="4"
-    >
-      <router-link
-        class="product-link"
-        :to="{
-          name: 'ProductReadPage',
-          params: { productNo: productBoard.productNo.toString() },
-        }"
-      >
-        <section class="card-wrap">
+    <section id="content">
+      <h2 class="head-title">중고거래 리스트</h2>
+      <section class="card-wrap">
+        <v-col
+          class="none-product"
+          v-if="
+            !productBoards ||
+            (Array.isArray(productBoards) && productBoards.length === 0)
+          "
+          style="text-align: center; margin-top: 200px"
+        >
+          현재 등록된 상품이 없습니다!
+        </v-col>
+
+        <v-col
+          v-else
+          v-for="productBoard in productBoards"
+          :key="productBoard.productNo"
+          cols="4"
+        >
           <article class="card-top">
-            <div class="card-photo">
-              <v-img
-                :src="require(`@/assets/pImage/${productBoard.productImage}`)"
-              />
-            </div>
-            <div class="card-desc">
-              <div class="card-title">{{ productBoard.title }}</div>
-              <div class="card-title">{{ productBoard.price }}원</div>
-              <div class="card-counts">
-                <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
-                <span>조회수 {{ productBoard.viewCnt }}</span>
+            <router-link
+              class="product-link"
+              :to="{
+                name: 'ProductReadPage',
+                params: { productNo: productBoard.productNo.toString() },
+              }"
+            >
+              <div class="card-photo">
+                <v-img
+                  style="height: 250px; width: 300px"
+                  :src="require(`@/assets/pImage/${productBoard.productImage}`)"
+                />
               </div>
-            </div>
+              <div class="card-desc">
+                <p class="card-process">
+                  {{ productBoard.process }}
+                </p>
+                <div class="card-title">{{ productBoard.title }}</div>
+                <div class="card-price">
+                  {{ productBoard.price | makeComma }}원
+                </div>
+                <div class="card-region-name">
+                  {{ productBoard.member.region }}
+                </div>
+                <div class="card-counts">
+                  <span> 관심 5 </span>∙ <span> 채팅 6 </span>
+                </div>
+              </div>
+            </router-link>
           </article>
-        </section>
-      </router-link>
-    </v-col>
+        </v-col>
+      </section>
+    </section>
   </div>
 </template>
 
@@ -98,6 +106,14 @@ export default {
   margin-bottom: 40px;
   margin-top: 40px;
 }
+section {
+  display: block;
+}
+section#content {
+  margin-top: 72px;
+  margin: 0;
+  padding: 0;
+}
 .card-wrap {
   width: 980px;
   margin: 0 auto;
@@ -106,13 +122,10 @@ export default {
   flex-wrap: wrap;
 }
 .card-top {
-  width: calc(25% - 44px);
   margin-right: 44px;
   margin-bottom: 56px;
 }
 .card-photo {
-  width: 100%;
-  padding-top: 100%;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
@@ -134,6 +147,24 @@ export default {
   line-height: 1.5;
   font-weight: normal;
 }
+.card-process {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: green;
+  max-width: 70px;
+  color: white;
+  margin-bottom: 5px;
+}
+.card-price {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  color: #212529;
+}
 .card-region-name {
   font-size: 13px;
   color: #212529;
@@ -149,5 +180,14 @@ export default {
 }
 .product-link {
   text-decoration: none !important;
+}
+img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid transparent;
 }
 </style>

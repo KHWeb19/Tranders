@@ -16,4 +16,5 @@ public interface ChatRoomService {
     public void modify (ChatRoomRequest chatRoomRequest, Long roomNo);
     public void last (ChatRoomRequest chatRoomRequest, Long roomNo);
     public void charge (Member member);
+    public void pay (Member member, Long productNo);
 }

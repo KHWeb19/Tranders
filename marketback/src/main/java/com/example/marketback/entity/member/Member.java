@@ -45,7 +45,7 @@ public class Member {
     @Column(nullable = false)
     private Boolean registerStatus;
 
-    private Long Money;
+    private Integer Money = 0;
 
     private String address;
 

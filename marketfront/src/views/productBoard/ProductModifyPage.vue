@@ -1,25 +1,16 @@
 <template>
-  <div>
-    <after-login-view></after-login-view>
-    <product-modify-form
-      v-if="productBoard"
-      :productBoard="productBoard"
-      @submit="onSubmit"
-    />
-    <p v-else>로딩중......</p>
-  </div>
+  <product-modify-form :productBoard="productBoard" @submit="onSubmit" />
 </template>
 
 <script>
 import axios from "axios";
 import { mapActions, mapState } from "vuex";
 import ProductModifyForm from "@/components/productBoard/ProductModifyForm.vue";
-import AfterLoginView from "../../components/home/AfterLoginView.vue";
+
 export default {
   name: "ProductModifyPage",
   components: {
     ProductModifyForm,
-    AfterLoginView,
   },
   props: {
     productNo: {
