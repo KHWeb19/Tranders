@@ -460,9 +460,19 @@ export default {
       }
     },
     onDelete() {
-        const { roomNo } = this.chatroom
-        this.$emit('onDelete', {roomNo})
+      const { roomNo } = this.chatroom
+      this.$emit('onDelete', {roomNo})
     },
+    goProfile() {
+      if(this.login.name==this.chatroom.member1.name){
+        this.$router.push({ name: "ProfileBasicPage",
+                            params: { memberId: this.chatroom.member2.id.toString() }})
+      }
+      if(this.login.name==this.chatroom.member2.name){
+        this.$router.push({ name: "ProfileBasicPage",
+                            params: { memberId: this.chatroom.member1.id.toString() }})
+      }
+    }
   },
   // beforeUpdate() {
 

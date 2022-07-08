@@ -63,15 +63,10 @@ export default {
           })
     },
     onChat(payload) {
-      const {member1No, member2No} = payload
-      console.log(member1No, member2No)
-      axios.post(`http://localhost:7777/chatting/register/${member1No}/${member2No}`, {member1No, member2No})
-          .then(() => {
-              this.$router.push({ name: "ChattingListPage" })
-          })
-          .catch(() => {
-              alert('문제 발생!')
-          })
+      const {registerNo} = payload;
+      this.$router.push({ name: "ChattingReadView",
+                          params: { roomNo: registerNo.toString() }})
+
     },
     saveNoImageReview(formData){
       axios.post(API_BASE_URL+'/boss/registerNoImgReview', formData, {
@@ -143,7 +138,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['boss'])
+    ...mapState(['boss']),
   },
   mounted() {
     this.fetchClientBossView(this.bossNo);

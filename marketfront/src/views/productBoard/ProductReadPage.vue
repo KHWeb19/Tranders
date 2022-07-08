@@ -50,7 +50,6 @@ export default {
   },
   computed: {
     ...mapState(["productBoard"]),
-
   },
   created() {
     this.fetchProductBoard(this.productNo).catch(() => {
@@ -73,14 +72,10 @@ export default {
           alert("삭제실패 문제 발생");
         });
     },
-    onChat() {
-      // const {member1No, member2No} = payload;
-      // this.fetchRegisterChat({member1No, member2No})
-      
-
-                              // this.$router.push({ name: "ChattingReadView",
-                              // params: { roomNo: registerNo.toString() }})
-
+    onChat(payload) {
+      const {registerNo} = payload;
+      this.$router.push({ name: "ChattingReadView",
+                          params: { roomNo: registerNo.toString() }})
     },
     sendReport(payload) {
       const {

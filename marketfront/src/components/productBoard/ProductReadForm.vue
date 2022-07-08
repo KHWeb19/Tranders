@@ -207,7 +207,7 @@ export default {
     ...mapState(['registerChat']),
   },
   mounted() {
-
+    this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
   },
   methods: {
     ...mapActions(["fetchProductLike"]),
@@ -218,17 +218,11 @@ export default {
           `http://localhost:7777/chatting/register/${this.login.memberNo}/${this.productBoard.member.memberNo}/${this.productBoard.productNo}`,
           { member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo, productNo:this.productBoard.productNo })
         .then(() => {
-            // this.$emit("onChat", {member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
-          // this.$router.push({ name: "ChattingReadView",
-          //                     params: { roomNo: this.registerChat.roomNo.toString() }})
+          if(!(this.registerChat)){
+          this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+          }
+          this.$emit("onChat", {registerNo: this.registerChat.roomNo})
         })
-            // this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
-            // console.log(this.registerChat.roomNo)
-      // this.$emit("onChat", {registerNo: this.registerChat.roomNo})
-      this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
-      this.$router.push({ name: "ChattingReadView",
-                          params: { roomNo: this.registerChat.roomNo.toString() }})
-
     },
     closeDialog() {
       this.reportDialog = false;

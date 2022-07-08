@@ -166,6 +166,7 @@
 <script>
 import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
+import axios from "axios";
 import 'swiper/css/swiper.css'
 import {Swiper, SwiperSlide} from "vue-awesome-swiper";
 import BossReadHomeView from "@/components/boss/client/BossReadHomeView";
@@ -320,8 +321,16 @@ export default {
     modifyReview(formData){
       this.$emit('modifyReview', formData)
     },
+    ...mapActions(['fetchRegisterChat']),
     onChat() {
-        this.$emit('onChat', {member1No: this.memberNo, member2No: this.boss.member.memberNo})
+      axios.post(`http://localhost:7777/chatting/register/${this.memberNo}/${this.boss.member.memberNo}`
+        ,{member1No: this.memberNo, member2No: this.boss.member.memberNo})
+        .then(() => {
+          if(!(this.registerChat)){
+            this.fetchRegisterChat({member1No: this.memberNo, member2No: this.boss.member.memberNo})
+          }
+          this.$emit('onChat', {registerNo: this.registerChat.roomNo})
+        })
     },
     modifyImgReview(formData){
       this.$emit('modifyImgReview', formData)
@@ -332,9 +341,11 @@ export default {
   },
   mounted() {
     this.phoneNum = this.boss.phoneNumber.substr(0,3) +'-'+ this.boss.phoneNumber.substr(3, 4) + '-' + this.boss.phoneNumber.substr(8, 4);
+    this.fetchRegisterChat({member1No: this.memberNo, member2No: this.boss.member.memberNo})
   },
   computed: {
     ...mapState(['backProfileImgs']),
+    ...mapState(['registerChat']),
   },
   created() {
     this.bossNo = this.boss.bossAuthNo;
