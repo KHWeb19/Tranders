@@ -255,4 +255,8 @@ export default {
   text-decoration: none;
 }
 
+#chatroom_link:hover{
+  background-color: #f2f3f6;
+}
+
 </style>
