@@ -40,20 +40,9 @@
           </v-slide-item>
         </v-slide-group>
 
-<!--        <v-expand-transition>
-          <v-sheet v-if="model != null" height="100" tile>
-            <v-row class="fill-height" align="center" justify="center">
-              <div style="font-size: 30px" v-if="model === 0 ? data = villageInfo.city : model === 1 ? data = villageInfo.district : data = villageInfo.villageName">
-                {{data}}
-              </div>
-            </v-row>
-          </v-sheet>
-        </v-expand-transition>-->
-
-
-          <v-row justify="center" style="height: 60px">
-            <v-btn depressed color="success" @click="saveRegion"><b>동네 인증 완료</b></v-btn>
-          </v-row>
+        <v-row justify="center" style="height: 60px">
+          <v-btn depressed color="success" @click="saveRegion"><b>동네 인증 완료</b></v-btn>
+        </v-row>
 
       </div>
   </div>
@@ -75,8 +64,9 @@ export default {
   methods: {
     ...mapActions(['fetchMyVillageSetting']),
     saveRegion(){
-      alert(this.data);
-      let data = this.data;
+      console.log(this.model)
+
+      let data = this.model === 0 ? data = this.illageInfo.city : this.model === 1 ? data = this.villageInfo.district : data = this.villageInfo.villageName
 
       this.$emit('saveRegion', {data});
     }

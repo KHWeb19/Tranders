@@ -124,7 +124,7 @@ export default {
     ...mapState(["profileImg"]),
   },
   mounted() {
-    alert(this.num)
+    //alert(this.num)
     this.id = cookies.get("id");
     this.fetchMemberProfile(this.id);
   },

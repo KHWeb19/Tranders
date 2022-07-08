@@ -1,7 +1,10 @@
 package com.example.marketback.repository.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.entity.review.BossReview;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,7 +39,11 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :commentId")
     CommunityBoard findByCommentId(Long commentId);
 
+    @Query("select cb from CommunityBoard cb where cb.region = :region and cb.content like %:keyWord%")
+    List<CommunityBoard> findAllByContentContain(String keyWord, String region, Pageable pageable);
+
     @Query("select cb from CommunityBoard cb where cb.boardNo = :boardNo")
     CommunityBoard findByBoardNo(@Param("boardNo") Long boardNo);
+
 }
 

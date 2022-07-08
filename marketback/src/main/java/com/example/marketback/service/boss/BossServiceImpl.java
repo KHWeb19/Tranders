@@ -16,10 +16,7 @@ import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.BossCouponRequest;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.request.MemberCouponRequest;
-import com.example.marketback.response.BossBackProfileImg;
-import com.example.marketback.response.BossCouponMemberResponse;
-import com.example.marketback.response.BossCouponResponse;
-import com.example.marketback.response.BossPriceMenuResponse;
+import com.example.marketback.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -181,7 +178,7 @@ public class BossServiceImpl implements BossService{
 
         if(bossCoupon.size() > 0) {
             for (Coupon coupon : bossCoupon) {
-                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon()));
+                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon(), coupon.getCouponState().name()));
             }
         }else {
             return null;
@@ -249,6 +246,28 @@ public class BossServiceImpl implements BossService{
 
         memberCouponRepository.deleteAll(memberCouponList);
         bossCouponRepository.delete(coupon);
+    }
+
+    @Override
+    public List<MyCouponResponse> myCouponList(String id, Integer page) {
+        Pageable pageable = PageRequest.of(page,4, Sort.Direction.DESC, "createDate");
+        Page<MemberCoupon> memberCoupon = memberCouponRepository.findPageByMemberId(id, pageable);
+
+        List<MyCouponResponse> memberName = new ArrayList<>();
+
+        for(MemberCoupon member : memberCoupon){
+            memberName.add(new MyCouponResponse(member.getCoupon().getCouponNo(), member.getCoupon().getCouponName(), member.getCoupon().getCouponInfo(), member.getCoupon().getCouponDate(), member.getCoupon().getCouponState().name()));
+        }
+
+        return memberName;
+    }
+
+    @Override
+    public Integer myCouponTotalPage(String id) {
+        Pageable pageable = PageRequest.of(0,4, Sort.Direction.DESC, "createDate");
+        Page<MemberCoupon> reportList = memberCouponRepository.findPageByMemberId(id, pageable);
+        System.out.println("totalPage!!!!!"+reportList.getTotalPages());
+        return reportList.getTotalPages();
     }
 
 }

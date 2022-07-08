@@ -6,10 +6,7 @@ import com.example.marketback.entity.boss.coupon.Coupon;
 import com.example.marketback.request.BossCouponRequest;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.request.MemberCouponRequest;
-import com.example.marketback.response.BossBackProfileImg;
-import com.example.marketback.response.BossCouponMemberResponse;
-import com.example.marketback.response.BossCouponResponse;
-import com.example.marketback.response.BossPriceMenuResponse;
+import com.example.marketback.response.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -50,4 +47,8 @@ public interface BossService {
     Integer getTotalPage(Long bossNo);
 
     void deleteCoupon(Long couponNo);
+
+    List<MyCouponResponse> myCouponList(String id, Integer page);
+
+    Integer myCouponTotalPage(String id);
 }

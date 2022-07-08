@@ -370,4 +370,18 @@ public class BossController {
         log.info("deleteCoupon");
         bossService.deleteCoupon(couponNo);
     }
+
+    @GetMapping("/MyCoupon/{id}/{page}")
+    public List<MyCouponResponse> myCouponList(@PathVariable String id, @PathVariable Integer page){
+        log.info("myCouponList");
+
+        return bossService.myCouponList(id, page);
+    }
+
+    @GetMapping("/MyCoupon/{id}")
+    public Integer myCouponTotalPage(@PathVariable String id){
+        log.info("myCouponTotalPage");
+
+        return bossService.myCouponTotalPage(id);
+    }
 }

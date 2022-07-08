@@ -161,11 +161,4 @@ public class CommunityBoardController {
 
     }
 
-    @PostMapping("/search")
-    public List<CommunityBoard> CommunityBoardSearchList (@RequestBody KeyWordRequest keyWord) {
-        log.info("CommunityBoardSearchList()");
-        String word = keyWord.getKeyWord();
-
-        return service.searchList(word);
-    }
 }
