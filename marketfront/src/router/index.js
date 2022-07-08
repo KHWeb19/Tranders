@@ -51,6 +51,8 @@ import ManagerPage from "@/views/Manger/ManagerPage";
 import ReportManagementPage from "@/views/Manger/ReportManagementPage";
 import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
 import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
+import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
+import MyCouponPage from "@/views/myPage/MyCouponPage";
 
 Vue.use(VueRouter)
 
@@ -366,6 +368,21 @@ const routes = [
     path: '/mangerMember',
     name: 'ManagerMemberPage',
     component: ManagerMemberPage
+  },
+  {
+    path: '/search',
+    name: 'SearchKeyWordListPage',
+    components: {
+      default: SearchKeyWordListPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: 'myCoupon',
+    name: "MyCouponPage",
+    component: MyCouponPage
   }
 ]
 

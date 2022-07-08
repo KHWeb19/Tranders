@@ -1,6 +1,7 @@
 package com.example.marketback.service.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
+import com.example.marketback.entity.jpa.community.CommunityComment;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
@@ -141,45 +142,48 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     @Override
     public void modify(CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception {
+        CommunityBoard boardEntity = repository.findByBoardNo(board.getBoardNo());
+        boardEntity.setTitle(board.getTitle());
+        boardEntity.setContent(board.getContent());
 
-        try {
-            if (file != null) {
-                for (MultipartFile multipartFile : file) {
-                    UUID uuid = UUID.randomUUID();
-                    String fileName = uuid + "_" + multipartFile.getOriginalFilename();
-                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
-
-                    saveFile.write(multipartFile.getBytes());
-                    saveFile.close();
-
-                    if (multipartFile == file.get(0)) {
-                        board.setFileName1(fileName);
-                    } else if ( multipartFile == file.get(1)){
-                        board.setFileName2(fileName);
-                    } else if (multipartFile == file.get(2)) {
-                        board.setFileName3(fileName);
-                    } else if (multipartFile == file.get(3)) {
-                        board.setFileName4(fileName);
-                    } else if (multipartFile == file.get(4)) {
-                        board.setFileName5(fileName);
-                    } else if (multipartFile == file.get(5)) {
-                        board.setFileName6(fileName);
-                    } else if (multipartFile == file.get(6)) {
-                        board.setFileName7(fileName);
-                    } else if ( multipartFile == file.get(7)){
-                        board.setFileName8(fileName);
-                    } else if (multipartFile == file.get(8)) {
-                        board.setFileName9(fileName);
-                    } else {
-                        board.setFileName10(fileName);
-                    }
-
-                }
-            }
-        } catch (Exception e) {
-            log.info("Upload Fail!!!");
-        }
-        repository.save(board);
+//        try {
+//            if (file != null) {
+//                for (MultipartFile multipartFile : file) {
+//                    UUID uuid = UUID.randomUUID();
+//                    String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+//                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
+//
+//                    saveFile.write(multipartFile.getBytes());
+//                    saveFile.close();
+//
+//                    if (multipartFile == file.get(0)) {
+//                        board.setFileName1(fileName);
+//                    } else if ( multipartFile == file.get(1)){
+//                        board.setFileName2(fileName);
+//                    } else if (multipartFile == file.get(2)) {
+//                        board.setFileName3(fileName);
+//                    } else if (multipartFile == file.get(3)) {
+//                        board.setFileName4(fileName);
+//                    } else if (multipartFile == file.get(4)) {
+//                        board.setFileName5(fileName);
+//                    } else if (multipartFile == file.get(5)) {
+//                        board.setFileName6(fileName);
+//                    } else if (multipartFile == file.get(6)) {
+//                        board.setFileName7(fileName);
+//                    } else if ( multipartFile == file.get(7)){
+//                        board.setFileName8(fileName);
+//                    } else if (multipartFile == file.get(8)) {
+//                        board.setFileName9(fileName);
+//                    } else {
+//                        board.setFileName10(fileName);
+//                    }
+//
+//                }
+//            }
+//        } catch (Exception e) {
+//            log.info("Upload Fail!!!");
+//        }
+        repository.save(boardEntity);
     }
 
     @Override
@@ -189,9 +193,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     @Override
     public List<CommunityBoard> searchList(String keyWord) {
-        List<CommunityBoard> findSearchList = repository.findByContentContaining(keyWord);
 
-        return findSearchList;
+        return repository.findByContentContaining(keyWord);
     }
 
 }

@@ -34,7 +34,7 @@ import {
     FETCH_REPORT_IMAGE_READE,
     FETCH_REPORT_BOARD_READE,
     FETCH_TODAY_REGISTER,
-    FETCH_TODAY_REPORT,
+    FETCH_TODAY_REPORT, FETCH_SHOW_COUPON, FETCH_SHOW_MEMBER_COUPON,
 } from './mutation-types'
 
 import axios from 'axios'
@@ -422,6 +422,30 @@ export default {
         })
             .then((res) => {
                 commit(FETCH_TODAY_REPORT, res.data)
+            })
+    },
+    fetchShowCoupon({commit}, bossNo){
+        return axios.post(`http://localhost:7777/boss/showCoupon/${bossNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_SHOW_COUPON, res.data)
+            })
+    },
+    fetchShowCouponMember({commit}, bossNo){
+        return axios.post(`http://localhost:7777/boss/couponMember/${bossNo}`, {}, {
+            headers: {
+                'Authorization': 'Bearer '+ cookies.get('access_token'),
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                commit(FETCH_SHOW_MEMBER_COUPON, res.data)
             })
     }
 }

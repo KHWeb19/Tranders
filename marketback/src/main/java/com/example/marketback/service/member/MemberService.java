@@ -2,6 +2,7 @@ package com.example.marketback.service.member;
 
 import com.example.marketback.entity.member.City;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.request.MemberCouponRequest;
 import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.request.MemberModifySnsRequest;
 import com.example.marketback.response.CityVillageInfoResponse;
@@ -34,6 +35,8 @@ public interface MemberService {
     CityVillageInfoResponse getVillageInfo(String id);
 
     Integer saveVillageSetting(String id, String data);
+
+    void couponUse(MemberCouponRequest memberCouponRequest);
 
 
     //String phoneNumCheck(String phoneNumber) throws CoolsmsException;

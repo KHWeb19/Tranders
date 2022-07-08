@@ -1,6 +1,6 @@
 <template>
     <div>
-        <after-login-view/>
+        <after-login-view :num="2"/>
         <div id='board_list'>
             <div >
                 <community-board-list :communityBoards="communityBoards"/>

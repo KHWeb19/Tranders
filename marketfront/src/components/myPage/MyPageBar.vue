@@ -160,6 +160,7 @@ export default {
         { text: "동네 인증하기", icon: "mdi-target" },
         { text: "사장님 프로필", icon: "mdi-bookmark-outline" },
         { text: "모아보기", icon: "mdi-archive-outline" },
+        { text: "쿠폰보기", icon: "mdi-ticket-percent-outline" },
       ],
     };
   },
@@ -183,6 +184,9 @@ export default {
           break;
         case 4:
           this.$router.push({ name: "MyPageGathering" });
+          break;
+        case 5:
+          this.$router.push({ name: "MyCouponPage" });
           break;
       }
     },

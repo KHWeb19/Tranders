@@ -17,9 +17,14 @@
           </div>
           <div id='chatList'>
             <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-              <router-link id='chatroom_link' :to="{
-                        name: 'ChattingReadView',
-                        params: {roomNo: chatroom.roomNo.toString()}}">
+              <button @click="goLink()" style="width:100%">
+                <router-link id='chatroom_link' 
+                  :style="isBackground ? 'background-color: #f2f3f6;' : ''"
+                  :to="{
+                    name: 'ChattingReadView',
+                    params: {roomNo: chatroom.roomNo.toString()}}"
+
+                  >
                 <div>
                     <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
                         <v-img src="@/assets/profile.jpg"/>
@@ -58,7 +63,7 @@
                       height: 40px;
                       object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
                   </div>
-                </router-link>
+                </router-link></button>
             </div>
           </div>
         </div>
@@ -351,10 +356,15 @@ export default {
       time: '00:00',
       menu2: false,
       priview: '',
+      isBackground: false,
+
+      // realTime: false,
     }
   },
   created() {
       this.getNewData();
+
+
   },
   methods: {
     async getNewData() {
@@ -377,7 +387,7 @@ export default {
     deletePriview() {
       this.priview = ''
     },
-    async onSubmit() {
+    onSubmit() {
         const { roomNo } = this.chatroom
         const { memberNo } = this.login
         const { message, now } = this
@@ -396,12 +406,14 @@ export default {
           this.newMessage.push({message:this.priview, now, image:true})
           this.priview=''
           this.lastMessage={roomNo, message:'사진을 전송 했습니다'}
+          // this.realTime=true
         }
         if(message!='\n' && message!=''){
           this.$emit('onSubmit', { roomNo, memberNo, message, now })
           this.newMessage.push({message, now})
           this.message=''
           this.lastMessage={roomNo, message}
+          // this.realTime=true
         }
     },
     onAppoint() {
@@ -425,8 +437,20 @@ export default {
         this.userInfo.money -= this.chatroom.productBoard.price
         this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id, productNo})
       }
+    },
+    goLink() {
+      this.isBackground=!this.isBackground
+      console.log(this.isBackground)
     }
   },
+  // beforeUpdate() {
+
+  //   console.log(this.realTime);
+  //     if(this.realTime) {
+
+  //       this.$router.go()
+  //     }
+  // }
 }
 </script>
 
@@ -500,6 +524,9 @@ export default {
   color: inherit;
   cursor: pointer;
   text-decoration: none;
+}
+#chatroom_link:hover{
+  background-color: #f2f3f6;
 }
 #right{
 	width: 810px;

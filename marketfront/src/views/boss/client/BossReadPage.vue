@@ -1,8 +1,16 @@
 <template>
   <div>
     <div v-if="boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
-<!--    <boss-page-view v-else @savePrice="savePrice" @saveBackProfile="saveBackProfile" @saveBossProfileImg="saveBossProfileImg" @modifySave="modifySave" @deletePrice="deletePrice"></boss-page-view>-->
-    <boss-read-page-view v-else :boss="boss" @saveReview="saveReview" @saveNoImageReview="saveNoImageReview" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview" @onChat="onChat"></boss-read-page-view>
+    <boss-read-page-view v-else
+                         :boss="boss"
+                         @saveReview="saveReview"
+                         @saveNoImageReview="saveNoImageReview"
+                         @modifyReview="modifyReview"
+                         @modifyImgReview="modifyImgReview"
+                         @deleteReview="deleteReview"
+                         @onChat="onChat">
+
+    </boss-read-page-view>
   </div>
 </template>
 
@@ -132,7 +140,7 @@ export default {
           .catch(() => {
             alert('삭제 에러')
           })
-    }
+    },
   },
   computed: {
     ...mapState(['boss'])

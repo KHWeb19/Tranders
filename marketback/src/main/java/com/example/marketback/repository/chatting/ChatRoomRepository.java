@@ -2,6 +2,7 @@ package com.example.marketback.repository.chatting;
 
 import com.example.marketback.entity.chatting.ChatRoom;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.productBoard.ProductBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
+
+    @Query("select c from ChatRoom c where c.roomNo = :roomNo")
+    ChatRoom findByRoomNo(Long roomNo);
 
     @Query("select c from ChatRoom c join c.member1 cm join c.member2 cm2 where cm.memberNo = :memberNo or cm2.memberNo = :memberNo order by c.roomNo desc ")
     List<ChatRoom> findChatRoomByMemberNo(@Param("memberNo") Long memberNo);

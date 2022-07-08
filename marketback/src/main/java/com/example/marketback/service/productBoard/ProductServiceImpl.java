@@ -61,14 +61,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductBoard> searchList(String keyWord) {
-        List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
+        /*List<ProductBoard> findSearchList = productRepository.findByContentContaining(keyWord);
 
-        return findSearchList;
+        return findSearchList;*/
+        return null;
     }
 
     @Override
     public List<ProductBoard> productListOfMember(Long memberNo) {
         return productRepository.findByMemberNoInProductBoard(Long.valueOf(memberNo));
+    }
 
     @Override
     public List<ProductBoard> buyerList(Long memberNo) {

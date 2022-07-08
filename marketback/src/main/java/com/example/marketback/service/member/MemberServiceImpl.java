@@ -1,9 +1,14 @@
 package com.example.marketback.service.member;
 
+import com.example.marketback.entity.boss.coupon.CouponState;
+import com.example.marketback.entity.boss.coupon.MemberCoupon;
 import com.example.marketback.entity.member.City;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.repository.boss.coupon.BossCouponRepository;
+import com.example.marketback.repository.boss.coupon.MemberCouponRepository;
 import com.example.marketback.repository.member.CityRepository;
 import com.example.marketback.repository.member.MemberRepository;
+import com.example.marketback.request.MemberCouponRequest;
 import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.request.MemberModifySnsRequest;
 import com.example.marketback.response.CityVillageInfoResponse;
@@ -34,12 +39,20 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private CityRepository cityRepository;
 
+    @Autowired
+    private BossCouponRepository bossCouponRepository;
+
+    @Autowired
+    private MemberCouponRepository memberCouponRepository;
+
     @Override
     public void register(Member member) {
         String encodePassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodePassword);
-        System.out.println("유저 정보!!!! 매니저인가?!"+ member.getRoles());
+
         Member memberEntity = member.memberSetting(member);
+        City city = cityRepository.findByRegion(member.getRegion());
+        memberEntity.setCity(city);
 
         memberRepository.save(memberEntity);
     }
@@ -178,6 +191,14 @@ public class MemberServiceImpl implements MemberService {
         }else {
             return 0;
         }
+    }
+
+    @Override
+    public void couponUse(MemberCouponRequest memberCouponRequest) {
+        MemberCoupon memberCoupon = memberCouponRepository.findOneByMemberIdAndCouponNo(memberCouponRequest.getId(), memberCouponRequest.getCouponNo());
+
+        memberCoupon.getCoupon().setCouponState(CouponState.USE);
+        memberCouponRepository.save(memberCoupon);
     }
 
     /*@Override
