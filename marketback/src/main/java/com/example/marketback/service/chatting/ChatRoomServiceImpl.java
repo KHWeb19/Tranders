@@ -130,16 +130,10 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         chatRoomRepository.save(chatRoomEntity);
     }
 
-
-    static boolean realTime = false;
-
     @Override
     public void last(ChatRoomRequest chatRoomRequest, Long roomNo) {
-        realTime = true;
         ChatRoom chatRoomEntity = chatRoomRepository.findByRoomNo(roomNo);
         chatRoomEntity.setLastMessage(chatRoomRequest.getLastMessage());
-        chatRoomEntity.setRealTime(realTime);
-
         chatRoomRepository.save(chatRoomEntity);
     }
 

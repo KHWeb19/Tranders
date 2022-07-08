@@ -17,9 +17,14 @@
           </div>
           <div id='chatList'>
             <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-              <router-link id='chatroom_link' :to="{
-                        name: 'ChattingReadView',
-                        params: {roomNo: chatroom.roomNo.toString()}}">
+              <button @click="goLink()" style="width:100%">
+                <router-link id='chatroom_link' 
+                  :style="isBackground ? 'background-color: #f2f3f6;' : ''"
+                  :to="{
+                    name: 'ChattingReadView',
+                    params: {roomNo: chatroom.roomNo.toString()}}"
+
+                  >
                 <div>
                     <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
                         <v-img src="@/assets/profile.jpg"/>
@@ -58,7 +63,7 @@
                       height: 40px;
                       object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
                   </div>
-                </router-link>
+                </router-link></button>
             </div>
           </div>
         </div>
@@ -73,7 +78,6 @@
               </div>
               <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
               <span v-if="login.memberNo==chatroom.member1.memberNo">{{chatroom.member2.name}} {{chatroom.member2.temperature}}°C</span>
-              {{chatroom.realTime}}
 
             <div id="right_button"  v-if="chatroom.productBoard.process==='판매중'">
             <v-layout>
@@ -352,6 +356,7 @@ export default {
       time: '00:00',
       menu2: false,
       priview: '',
+      isBackground: false,
 
       // realTime: false,
     }
@@ -432,6 +437,10 @@ export default {
         this.userInfo.money -= this.chatroom.productBoard.price
         this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id, productNo})
       }
+    },
+    goLink() {
+      this.isBackground=!this.isBackground
+      console.log(this.isBackground)
     }
   },
   // beforeUpdate() {
@@ -515,6 +524,9 @@ export default {
   color: inherit;
   cursor: pointer;
   text-decoration: none;
+}
+#chatroom_link:hover{
+  background-color: #f2f3f6;
 }
 #right{
 	width: 810px;

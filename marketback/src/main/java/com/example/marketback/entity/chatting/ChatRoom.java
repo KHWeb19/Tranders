@@ -42,9 +42,6 @@ public class ChatRoom {
     @Column(length = 64)
     private String lastMessage;
 
-    @Column(length = 16)
-    private boolean realTime;
-
     public ChatRoom(Long roomNo, Member member1, Member member2, ProductBoard productBoard, String appointDate, String appointTime, String lastMessage){
         this.roomNo = roomNo;
         this.member1 = member1;
