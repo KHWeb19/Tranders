@@ -108,4 +108,11 @@ public class ChatRoomController {
         chatRoomService.charge(member);
     }
 
+    @PutMapping("/pay/{productNo}")
+    public void payModify(@RequestBody Member member, @PathVariable("productNo") Long productNo){
+        log.info("chargeModify" + member.getMoney() + productNo);
+
+        chatRoomService.pay(member, productNo);
+    }
+
 }
