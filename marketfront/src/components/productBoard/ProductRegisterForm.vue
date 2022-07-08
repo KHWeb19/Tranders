@@ -99,7 +99,7 @@
               />
               <swiper class="swiper" :options="swiperOption">
                 <swiper-slide
-                  ><v-img width="300px" height="300px" :src="preview"
+                  ><v-img width="100%" height="100%" :src="preview"
                 /></swiper-slide>
                 <swiper-slide v-if="preview2"
                   ><v-img width="300px" height="300px" :src="preview2"
@@ -141,7 +141,7 @@ export default {
   data() {
     return {
       selectProcess: ["판매중", "판매완료"],
-      process: "",
+      process: 0,
       productImage: "",
       productImage1: null,
       productImage2: null,
@@ -281,8 +281,8 @@ export default {
 }
 .swiper {
   .swiper-slide {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     background-color: white;
     background-position: center;
     background-size: cover;
@@ -340,7 +340,7 @@ textarea {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  max-width: 350px;
+  width: 300px;
   height: 350px;
 }
 </style>
