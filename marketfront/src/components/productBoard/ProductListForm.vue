@@ -2,7 +2,7 @@
   <div>
     <section id="content">
       <h2 class="head-title">중고거래 리스트</h2>
-      <section class="card-wrap">
+      <section class="card-wrap" style="justify-content: left">
         <v-col
           class="none-product"
           v-if="
@@ -46,7 +46,9 @@
                   {{ productBoard.member.region }}
                 </div>
                 <div class="card-counts">
-                  <span> 관심 5 </span>∙ <span> 채팅 6 </span>
+                  <span> 관심 {{ productBoard.productLike.length }}</span
+                  >∙ <span> 채팅 {{ productBoard.chatCnt }} </span>∙
+                  <span> 조회수 {{ productBoard.viewCnt }} </span>
                 </div>
               </div>
             </router-link>

@@ -1,6 +1,10 @@
 import {
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
+    FETCH_LIKE,
+    FETCH_LIKES_LIST,
+    FETCH_MY_LIKES_LIST,
+
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_REVIEW_LIST,
@@ -35,7 +39,7 @@ import {
     FETCH_TODAY_REGISTER, FETCH_TODAY_REPORT
 } from './mutation-types'
 import cookies from "vue-cookies";
-import {ParsingInfo} from "@/views/Util/LoginUtil";
+import { ParsingInfo } from "@/views/Util/LoginUtil";
 
 export default {
     [FETCH_PRODUCT_BOARD](state, productBoard) {
@@ -44,11 +48,21 @@ export default {
     [FETCH_PRODUCT_BOARD_LIST](state, productBoards) {
         state.productBoards = productBoards
     },
-    [FETCH_LOGIN_TOKEN] (state, token){
+    [FETCH_LIKE](state, like) {
+        state.like = like
+    },
+    [FETCH_LIKES_LIST](state, likes) {
+        state.likes = likes
+    },
+    [FETCH_MY_LIKES_LIST](state, myLikes) {
+        state.myLikes = myLikes
+    },
+
+    [FETCH_LOGIN_TOKEN](state, token) {
         state.accessToken = token.accessToken;
         state.refreshToken = token.refreshToken;
     },
-    [FETCH_REFRESH_TOKEN] (state, token){
+    [FETCH_REFRESH_TOKEN](state, token) {
         /*state.accessToken = token.accessToken;
         state.refreshToken = token.refreshToken;*/
 
@@ -58,98 +72,98 @@ export default {
         ParsingInfo(token.access_token);
 
     },
-    [FETCH_CHATROOM] (state, chatroom) {
+    [FETCH_CHATROOM](state, chatroom) {
         state.chatroom = chatroom
     },
-    [FETCH_CHATROOM_LIST] (state, chatrooms) {
+    [FETCH_CHATROOM_LIST](state, chatrooms) {
         state.chatrooms = chatrooms
     },
-    [FETCH_REVIEW_LIST] (state, reviews) {
+    [FETCH_REVIEW_LIST](state, reviews) {
         state.reviews = reviews
     },
-    [FETCH_MANNER] (state, manner) {
+    [FETCH_MANNER](state, manner) {
         state.manner = manner
     },
-    [FETCH_MEMBER_PROFILE] (state, profileImg) {
+    [FETCH_MEMBER_PROFILE](state, profileImg) {
         console.log(profileImg);
         state.profileImg = profileImg;
     },
-    [FETCH_COMMUNITY_BOARD_LIST] (state, communityBoards) {
+    [FETCH_COMMUNITY_BOARD_LIST](state, communityBoards) {
         state.communityBoards = communityBoards
     },
-    [FETCH_COMMUNITY_BOARD] (state, communityBoard) {
+    [FETCH_COMMUNITY_BOARD](state, communityBoard) {
         state.communityBoard = communityBoard
     },
     [FETCH_COMMUNITY_COMMENTS_LIST](state, communityComments) {
         state.communityComments = communityComments
     },
-    [FETCH_BOSS_PAGE] (state, boss){
+    [FETCH_BOSS_PAGE](state, boss) {
         state.boss = boss;
     },
-    [FETCH_MY_PAGE] (state, userInfo) {
+    [FETCH_MY_PAGE](state, userInfo) {
         state.userInfo = userInfo;
     },
-    [FETCH_MY_REGION] (state, mapOption){
+    [FETCH_MY_REGION](state, mapOption) {
         state.mapOption = mapOption;
     },
-    [FETCH_BOSS_BACK_PROFILE] (state, backProfileImg){
+    [FETCH_BOSS_BACK_PROFILE](state, backProfileImg) {
         state.backProfileImgs = backProfileImg;
     },
-    [FETCH_BOSS_MENU_LIST] (state, bossMenu) {
+    [FETCH_BOSS_MENU_LIST](state, bossMenu) {
         state.bossMenu = bossMenu;
     },
-    [FETCH_BOSS_MARKET_INFO] (state, marketInfo) {
+    [FETCH_BOSS_MARKET_INFO](state, marketInfo) {
         state.marketInfo = marketInfo;
     },
-    [FETCH_MY_VILLAGE_SETTING] (state, villageInfo){
+    [FETCH_MY_VILLAGE_SETTING](state, villageInfo) {
         state.villageInfo = villageInfo;
     },
-    [FETCH_NEAR_MAP] (state, nearMap){
+    [FETCH_NEAR_MAP](state, nearMap) {
         state.nearMap = nearMap;
     },
-    [FETCH_CLIENT_BOSS_VIEW] (state, boss){
+    [FETCH_CLIENT_BOSS_VIEW](state, boss) {
         state.boss = boss;
     },
-    [FETCH_NEAR_REVIEW] (state, nearReview){
+    [FETCH_NEAR_REVIEW](state, nearReview) {
         state.nearReview = nearReview;
     },
-    [FETCH_BOSS_REVIEW] (state, review) {
+    [FETCH_BOSS_REVIEW](state, review) {
         state.bossReview = review;
     },
-    [FETCH_BOSS_REVIEW_IMAGE] (state, reviewImg){
+    [FETCH_BOSS_REVIEW_IMAGE](state, reviewImg) {
         state.bossReviewImg = reviewImg;
     },
-    [FETCH_NEAR_COMMUNITY_MAP] (state, nearMapComm){
+    [FETCH_NEAR_COMMUNITY_MAP](state, nearMapComm) {
         state.nearMapComm = nearMapComm;
     },
-    [FETCH_NEAR_COMM] (state, nearComm){
+    [FETCH_NEAR_COMM](state, nearComm) {
         state.nearComm = nearComm;
     },
-    [FETCH_NEAR_COMM_PAGE] (state, near){
+    [FETCH_NEAR_COMM_PAGE](state, near) {
         state.near = near;
     },
-    [FETCH_REPORT_RECENT] (state, recentReport){
+    [FETCH_REPORT_RECENT](state, recentReport) {
         state.recentReport = recentReport;
     },
-    [FETCH_TOTAL_PAGE] (state, page){
+    [FETCH_TOTAL_PAGE](state, page) {
         state.page = page;
     },
-    [FETCH_REPORT_READE] (state, reportRead){
+    [FETCH_REPORT_READE](state, reportRead) {
         state.reportRead = reportRead;
     },
-    [FETCH_REPORT_IMAGE_READE] (state, reportImg){
+    [FETCH_REPORT_IMAGE_READE](state, reportImg) {
         state.reportImageRead = reportImg;
     },
-    [FETCH_REPORT_BOARD_READE] (state, reportBoard){
+    [FETCH_REPORT_BOARD_READE](state, reportBoard) {
         state.reportBoardRead = reportBoard;
     },
-    [FETCH_MEMBER_LIST] (state, member) {
+    [FETCH_MEMBER_LIST](state, member) {
         state.member = member;
     },
-    [FETCH_TODAY_REGISTER] (state, todayMember) {
+    [FETCH_TODAY_REGISTER](state, todayMember) {
         state.todayMember = todayMember;
     },
-    [FETCH_TODAY_REPORT] (state, todayReport) {
+    [FETCH_TODAY_REPORT](state, todayReport) {
         state.todayReport = todayReport;
     }
 

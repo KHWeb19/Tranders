@@ -3,22 +3,28 @@
     <v-app>
       <v-container>
         <v-card width="100%">
-          <div style="padding-left: 50px; padding-right: 30px">
-            <h2 class="head-title">판매 리스트</h2>
+          <div
+            style="
+              padding-left: 50px;
+              padding-right: 30px;
+              padding-bottom: 720px;
+            "
+          >
+            <h2 class="head-title">관심 리스트</h2>
             <section class="card-wrap">
               <v-col
                 class="none-product"
                 v-if="
-                  !productBoards ||
-                  (Array.isArray(productBoards) && productBoards.length === 0)
+                  !myLikes || (Array.isArray(myLikes) && myLikes.length === 0)
                 "
+                style="text-align: center"
               >
                 현재 등록된 상품이 없습니다!
               </v-col>
               <v-col
                 v-else
-                v-for="productBoard in productBoards"
-                :key="productBoard.productNo"
+                v-for="myLike in myLikes"
+                :key="myLike.productBoard.productNo"
                 cols="4"
               >
                 <article class="card-top">
@@ -27,7 +33,7 @@
                     :to="{
                       name: 'ProductReadPage',
                       params: {
-                        productNo: productBoard.productNo.toString(),
+                        productNo: myLike.productBoard.productNo.toString(),
                       },
                     }"
                   >
@@ -35,28 +41,31 @@
                       <v-img
                         style="height: 150px; width: 250px"
                         :src="
-                          require(`@/assets/pImage/${productBoard.productImage}`)
+                          require(`@/assets/pImage/${myLike.productBoard.productImage}`)
                         "
                       />
                     </div>
                     <div class="card-desc">
                       <div class="card-process">
-                        {{ productBoard.process }}
+                        {{ myLike.productBoard.process }}
                       </div>
                       <div class="card-title">
-                        {{ productBoard.title }}
+                        {{ myLike.productBoard.title }}
                       </div>
 
                       <div class="card-price">
-                        {{ productBoard.price | makeComma }}원
+                        {{ myLike.productBoard.price | makeComma }}원
                       </div>
                       <div class="card-region-name">
-                        {{ productBoard.member.region }}
+                        {{ myLike.member.region }}
                       </div>
                       <div class="card-counts">
-                        <span> 관심 {{ productBoard.productLike.length }} </span
-                        >∙ <span> 채팅 {{ productBoard.chatCnt }} </span>∙
-                        <span> 조회수 {{ productBoard.viewCnt }}</span>
+                        <span>
+                          관심
+                          {{ myLike.productBoard.productLike.length }} </span
+                        >∙
+                        <span> 채팅 {{ myLike.productBoard.chatCnt }} </span>∙
+                        <span> 조회수 {{ myLike.productBoard.viewCnt }}</span>
                       </div>
                     </div>
                   </router-link>
@@ -79,23 +88,28 @@ export default {
   data() {
     return {
       id: cookies.get("id"),
+      memberNo: cookies.get("memberNo"),
     };
-  },
-  props: {
-    productBoards: {
-      type: Array,
-    },
   },
   methods: {
     ...mapActions(["fetchMemberProfile"]),
+    ...mapActions(["fetchMyLikesList"]),
   },
   computed: {
     ...mapState(["profileImg"]),
+    ...mapState(["myLikes"]),
+  },
+  created() {
+    this.fetchMyLikesList(this.memberNo).catch(() => {
+      alert("좋아요 정보 요청 실패");
+      this.$router.push();
+    });
   },
   mounted() {
     this.id = cookies.get("id");
     this.fetchMemberProfile(this.id);
     this.active_tab = "info";
+    this.fetchMyLikesList(this.memberNo);
   },
 };
 </script>
