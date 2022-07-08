@@ -54,10 +54,63 @@
       <span style="font-size: 30px; font-weight: bold;"> 쿠폰 </span>
       <!--   정보가 없을 경우에     -->
       <div style="margin-top: 20px">
-        <div style="height: 50px">
+        <div v-if="!coupon || (Array.isArray(coupon) && coupon.length === 0)" style="height: 50px">
           <span style="font-size: 25px; opacity: 0.5;">아직 쿠폰이 없어요.</span>
         </div>
 
+        <div v-else>
+          <div style="padding-top: 20px">
+            <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
+              <div v-if="coupon.couponMax - coupon.giveCoupon > 0" style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+                <div style="width: 80%; padding: 5px 10px 5px 15px;">
+                  <div style="display: flex; align-items: center">
+                    <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
+                    <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
+                  </div>
+
+                  <div style="font-weight: bolder; font-size: 30px">
+                    {{coupon.couponName}}
+                  </div>
+
+                  <div style="font-weight: lighter">
+                    {{coupon.couponDate}}까지
+                  </div>
+                </div>
+
+                <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+                  <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="getCoupon(coupon)">
+                    <v-icon large>mdi-download-outline</v-icon>
+                    <div style="font-size: 18px">쿠폰 받기</div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-else style="width: 100%; background-color: rgba(145,145,145,0.37); border-radius: 8px; border: 1px solid black; min-height: 150px; display: flex; align-items: center">
+                <div style="width: 80%; padding: 5px 10px 5px 15px;">
+                  <div style="display: flex; align-items: center">
+                    <v-chip style="margin-right: 20px">발급완료</v-chip>
+                    <div style="color: black" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
+                  </div>
+
+                  <div style="font-weight: bolder; font-size: 30px">
+                    {{coupon.couponName}}
+                  </div>
+
+                  <div style="font-weight: lighter">
+                    {{coupon.couponDate}}까지
+                  </div>
+                </div>
+
+                <div style="background-color: #b9b9b9; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+                  <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px">
+                    <v-icon large>mdi-download-outline</v-icon>
+                    <div style="font-size: 18px">쿠폰 발급 완료</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div> <!-- 쿠폰 부분 -->
@@ -90,6 +143,17 @@
     </div> <!-- 가격 부분 -->
 
 
+    <v-dialog persisten max-width="400" v-model="getCouponDialog">
+      <v-card>
+        <v-card-title class="headline">쿠폰을 발급받았습니다</v-card-title>
+        <v-card-text>발급 받은 쿠폰을 보러갈까요?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="getCouponDialog = false">아니요</v-btn>
+          <v-btn text color="green" @click="moveCouponList">네</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -98,6 +162,16 @@
 
 import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
+import axios from "axios";
+import {API_BASE_URL} from "@/constant/login";
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer '+ cookies.get('access_token'),
+    'Accept' : 'application/json',
+    'Content-Type': 'application/json'
+  }
+};
 
 let kakao = window.kakao;
 
@@ -115,6 +189,7 @@ export default {
       id: cookies.get("id"),
       name: cookies.get("name"),
       reviewDialog: false,
+      getCouponDialog: false,
       selection: [],
       reviewTag: [
         '친절해요',
@@ -126,6 +201,7 @@ export default {
   },
   methods: {
     ...mapActions(['fetchBossMenuList']),
+    ...mapActions(['fetchShowCoupon']),
     addImg(){
       this.$refs.files.click()
     },
@@ -190,15 +266,37 @@ export default {
 
       this.markInstance.setMap(this.mapInstance);
     },
+    getCoupon(coupon){
+      let id = this.id;
+      let couponNo = coupon.couponNo;
+
+      axios.post(API_BASE_URL+'/boss/getCoupon', {id, couponNo}, config)
+          .then((res) => {
+            console.log('성공')
+            if(res.data === false){
+              alert('이미 발급받은 쿠폰입니다.')
+            }else{
+              this.getCouponDialog = true;
+            }
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    moveCouponList(){
+
+    }
   },
   mounted() {
     this.initMap();
   },
   computed: {
-    ...mapState(['bossMenu'])
+    ...mapState(['bossMenu']),
+    ...mapState(['coupon'])
   },
   created() {
-    this.fetchBossMenuList(this.id)
+    this.fetchBossMenuList(this.id);
+    this.fetchShowCoupon(this.boss.bossAuthNo);
   }
 }
 </script>

@@ -2,7 +2,14 @@
   <div>
 <!--    <after-login-view></after-login-view> // 없는게 더 괜찮아 보이는데 다른분들은 어떤지 물어보기!-->
     <div v-if="this.boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
-    <boss-page-view v-else :boss="boss" @savePrice="savePrice" @saveBackProfile="saveBackProfile" @saveBossProfileImg="saveBossProfileImg" @modifySave="modifySave" @deletePrice="deletePrice"></boss-page-view>
+    <boss-page-view v-else :boss="boss"
+                    @savePrice="savePrice"
+                    @saveBackProfile="saveBackProfile"
+                    @saveBossProfileImg="saveBossProfileImg"
+                    @modifySave="modifySave"
+                    @deletePrice="deletePrice"
+                    @saveCoupon="saveCoupon"
+                    @modifyCoupon="modifyCoupon"></boss-page-view>
   </div>
 </template>
 
@@ -101,6 +108,29 @@ export default {
           })
           .catch(() => {
             alert('에러')
+          })
+    },
+    saveCoupon(payload){
+      const {bossNo, couponName, couponInfo, couponMax, couponDate}= payload;
+
+      axios.post(API_BASE_URL+'/boss/addCoupon', {bossNo, couponName, couponInfo, couponMax, couponDate}, config)
+          .then(() => {
+            console.log('성공')
+          })
+          .catch(() => {
+            alert('쿠폰 생성 에러')
+          })
+    },
+    modifyCoupon(payload){
+      const {couponNo, couponName, couponInfo, couponMax, couponDate} = payload;
+
+      axios.post(API_BASE_URL+'/boss/modifyCoupon', {couponNo, couponName, couponDate, couponMax, couponInfo}, config)
+          .then(() => {
+            console.log('성공')
+            this.$router.go();
+          })
+          .catch((res) => {
+            console.log(res)
           })
     }
   },

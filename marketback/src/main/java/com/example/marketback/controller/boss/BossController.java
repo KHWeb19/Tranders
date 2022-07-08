@@ -2,10 +2,13 @@ package com.example.marketback.controller.boss;
 
 import com.example.marketback.entity.boss.Boss;
 import com.example.marketback.entity.boss.BossPrice;
+import com.example.marketback.entity.boss.coupon.Coupon;
 import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.entity.review.BossReview;
 import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
+import com.example.marketback.request.BossCouponRequest;
 import com.example.marketback.request.BossMarketInfoRequest;
+import com.example.marketback.request.MemberCouponRequest;
 import com.example.marketback.response.*;
 import com.example.marketback.service.boss.BossService;
 import com.example.marketback.service.boss.review.BossReviewService;
@@ -318,5 +321,53 @@ public class BossController {
         log.info("deleteReview" + entityNo +"!!!!!!!!!!!!!!!!!!!!!!!");
 
         bossReviewService.deleteReview(reviewNo, entityNo);
+    }
+
+    @PostMapping("/addCoupon")
+    public void addCoupon(@RequestBody BossCouponRequest bossCouponRequest){
+        log.info("addCoupon");
+
+        bossService.addCoupon(bossCouponRequest);
+    }
+
+    @PostMapping("/showCoupon/{bossNo}")
+    public List<BossCouponResponse> showCoupon(@PathVariable Long bossNo){
+        log.info("showCoupon");
+
+        return bossService.showCoupon(bossNo);
+    }
+
+    @PostMapping("/modifyCoupon")
+    public void modifyCoupon(@RequestBody Coupon coupon){
+        log.info("modifyCoupon");
+
+        bossService.modifyCoupon(coupon);
+    }
+
+    @PostMapping("/getCoupon")
+    public ResponseEntity<Boolean> getCoupon(@RequestBody MemberCouponRequest memberCouponRequest){
+        log.info("getCoupon");
+
+        return bossService.getCoupon(memberCouponRequest);
+    }
+
+    @GetMapping("/couponMember/{bossNo}/{page}")
+    public List<BossCouponMemberResponse> couponMember(@PathVariable Long bossNo, @PathVariable Integer page){
+        log.info("couponMember");
+
+        return bossService.couponMember(bossNo, page);
+    }
+
+    @PostMapping("/memberCoupon/totalPage/{bossNo}")
+    public Integer memberCouponTotalPage(@PathVariable Long bossNo){
+        log.info("memberCouponTopTotalPage");
+
+        return bossService.getTotalPage(bossNo);
+    }
+
+    @DeleteMapping("/deleteCoupon/{couponNo}")
+    public void deleteCoupon(@PathVariable Long couponNo){
+        log.info("deleteCoupon");
+        bossService.deleteCoupon(couponNo);
     }
 }
