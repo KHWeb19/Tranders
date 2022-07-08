@@ -38,54 +38,71 @@
           </div>
         </div>
       </section>
-
-      <section id="article-profile">
-        <div id="article-profile-link">
-          <div class="space-between">
-            <div style="display: flex">
-              <div id="article-profile-image">
-                <img src="@/assets/profile/Tranders_base_profile_img.png" />
-              </div>
-
-              <div id="profile-left">
-                <div id="userName">
-                  <router-link
-                    :to="{
-                      name: 'ProfileBasicPage',
-                      params: { memberId: productBoard.member.id.toString() },
-                    }"
-                  >
-                    {{ productBoard.member.name }}
-                  </router-link>
+      <router-link
+        :to="{
+          name: 'ProfileBasicPage',
+          params: { memberId: productBoard.member.id.toString() },
+        }"
+        style="text-decoration: none"
+      >
+        <section id="article-profile">
+          <div id="article-profile-link">
+            <div class="space-between">
+              <div style="display: flex">
+                <div id="article-profile-image">
+                  <img src="@/assets/profile/Tranders_base_profile_img.png" />
                 </div>
-                <div id="region-name">{{ productBoard.member.address }}</div>
-              </div>
-            </div>
 
-            <div id="profile-right">
-              <dl id="temperature-wrap">
-                <dt>매너온도</dt>
-                <dd class="text-color-03">
-                  {{ productBoard.member.temperature }}
-                  <span>°C</span>
-                </dd>
-              </dl>
-              <div class="meters">
-                <div class="bar bar-color-03" style="width: 37%"></div>
+                <div id="profile-left">
+                  <div id="userName">
+                    {{ productBoard.member.name }}
+                  </div>
+                  <div id="region-name">{{ productBoard.member.region }}</div>
+                </div>
+              </div>
+
+              <div id="profile-right">
+                <dl id="temperature-wrap">
+                  <dt>매너온도</dt>
+                  <dd class="text-color-03">
+                    {{ productBoard.member.temperature }}
+                    <span>°C</span>
+                  </dd>
+                </dl>
+                <v-row>
+                  <v-col style="padding: 0 6px">
+                    <v-slider
+                      max="100"
+                      min="0"
+                      :label="ex1.label"
+                      :color="ex1.color"
+                      :track-color="ex1.color"
+                      readonly
+                      :value="productBoard.member.temperature"
+                      class="slider"
+                    ></v-slider>
+                  </v-col>
+                </v-row>
+                <div class="meters">
+                  <div class="bar bar-color-03" style="width: 37%"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </router-link>
 
       <section id="description">
+        <p id="process">
+          {{ productBoard.process }}
+        </p>
         <h1 property="schema:name" id="title" style="margin-top: 0px">
           {{ productBoard.title }}
         </h1>
 
         <p id="category">
           {{ productBoard.category }} •
-          {{ productBoard.regDate }}
+          {{ productBoard.updDate | timeForToday }}
         </p>
         <p
           id="price"
@@ -93,14 +110,19 @@
           content
           style="font-size: 18px; font-weight: bold"
         >
-          <span class="text-light-gray">{{ productBoard.price }}원</span>
+          <span class="text-light-gray"
+            >{{ productBoard.price | makeComma }}원</span
+          >
         </p>
 
         <div property="schema:content" id="detail">
           <p>{{ productBoard.content }}</p>
         </div>
 
-        <p id="counts">관심 5 ∙ 채팅 11 ∙ 조회 {{ productBoard.viewCnt }}</p>
+        <p id="counts">
+          관심 5 ∙ 채팅 {{ productBoard.chatCnt }} ∙ 조회
+          {{ productBoard.viewCnt }}
+        </p>
 
         <v-btn
           v-if="login.memberNo != productBoard.member.memberNo"
@@ -136,8 +158,10 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
+
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ProductReadPage",
@@ -172,9 +196,16 @@ export default {
         access_token: cookies.get("access_token"),
       },
       reportDialog: false,
+      ex1: {
+        color: "green",
+      },
     };
   },
+  computed: {
+    ...mapState(["myProductLikes"]),
+  },
   methods: {
+    ...mapActions(["fetchProductLike"]),
     onChat() {
       this.$emit("onChat", {
         member1No: this.login.memberNo,
@@ -196,6 +227,11 @@ export default {
 </script>
 
 <style scoped>
+.hide {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
 #content {
   margin-top: 94px;
   padding-bottom: 0;
@@ -214,8 +250,8 @@ export default {
 #article-profile {
   width: 677px;
   margin: 0 auto;
+  text-decoration: none;
 }
-
 #article-profile-link {
   text-decoration: none;
   display: block;
@@ -229,7 +265,6 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-
 #profile-left {
   display: inline-block;
   margin-left: 8px;
@@ -237,28 +272,25 @@ export default {
 #article-profile-image {
   display: inline-block;
 }
-
 img {
   width: 40px;
   height: 40px;
   object-fit: cover;
 }
-
 #userName {
   font-size: 15px;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.6px;
   color: #212529;
+  text-decoration: none;
 }
-
 #region-name {
   font-size: 13px;
   line-height: 1.46;
   letter-spacing: -0.6px;
   color: #212529;
 }
-
 #profile-right {
   position: absolute;
   right: 0;
@@ -266,7 +298,7 @@ img {
   padding-right: 30px;
 }
 #description {
-  padding: 32px 0;
+  padding: 15px 0;
   width: 677px;
   margin: 0 auto;
   border-bottom: 1px solid #e9ecef;
@@ -276,24 +308,36 @@ img {
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.6px;
+  margin-bottom: 0;
+}
+#process {
+  max-width: 80px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.6px;
+  margin-top: 0;
+  border: 0px solid white;
+  background-color: green;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
 }
 #category {
-  margin-top: 4px;
+  margin-top: 0px;
   font-size: 13px;
   line-height: 1.46;
   letter-spacing: -0.6px;
   color: #868e96;
 }
 #price {
-  margin-top: 4px;
+  margin-top: 0px;
   font-size: 18px;
   font-weight: bold;
   line-height: 1.76;
   letter-spacing: -0.6px;
 }
 #detail p {
-  margin-bottom: 16px;
-  margin-top: 8px;
   font-size: 17px;
   line-height: 1.6;
   letter-spacing: -0.6px;
@@ -306,7 +350,6 @@ img {
   letter-spacing: -0.6px;
   color: #868e96;
 }
-
 #repo {
   padding: 32px 0;
   width: 677px;
@@ -315,12 +358,10 @@ img {
   border-bottom: 1px solid #868e96;
   font-weight: bolder;
 }
-
 dl {
   display: block;
   width: 100px;
 }
-
 dl dt {
   position: absolute;
   top: 25px;
@@ -330,32 +371,38 @@ dl dt {
   letter-spacing: -0.6px;
   color: #868e96;
 }
-
 .text-color-03 {
-  color: lightgreen;
+  color: green;
 }
-
 dl dd {
   position: relative;
   font-size: 16px;
   font-weight: bold;
   line-height: 1;
   letter-spacing: -0.5px;
-  margin-top: 1px;
+  margin-top: 0px;
   width: 100px;
   text-align: right;
 }
-
 .swiper {
   width: 100%;
   height: 100%;
   border-radius: 18px;
 }
-
 .swiper-slide {
   background-color: white;
   background-position: center;
   background-size: cover;
-  border-radius: 12px !important;
+}
+.dark {
+  background: #444;
+}
+.light {
+  background: #fff;
+}
+.slider {
+  clear: both;
+  display: block;
+  position: relative;
 }
 </style>

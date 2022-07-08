@@ -2,20 +2,19 @@
   <div id="login-wrap">
     <after-login-view></after-login-view>
 
-      <div id='content'>
-        <v-row no-gutters>
-          <v-col cols="4">
-            <my-profile-bar :userInfo="userInfo"></my-profile-bar>
-          </v-col>
+    <div id="content">
+      <v-row no-gutters>
+        <v-col cols="4">
+          <my-profile-bar :userInfo="userInfo"></my-profile-bar>
+        </v-col>
 
-          <v-col cols="8">
-            <my-purchase-history-view
-              :productBoards="productBoards"
-            ></my-purchase-history-view>
-          </v-col>
-        </v-row>
-      </div>
-
+        <v-col cols="8">
+          <my-purchase-history-view
+            :productBoards="productBoards"
+          ></my-purchase-history-view>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 <script>
@@ -24,7 +23,6 @@ import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
 import MyPurchaseHistoryView from "@/components/myPage/MyPurchaseHistoryView";
 import cookies from "vue-cookies";
-
 export default {
   components: {
     MyPurchaseHistoryView,
@@ -34,20 +32,20 @@ export default {
   name: "MyPurchaseHistory",
   data() {
     return {
-      memberId: cookies.get("id")
-    }
+      memberId: cookies.get("id"),
+    };
   },
   computed: {
     ...mapState(["productBoards"]),
-    ...mapState(['userInfo']),
+    ...mapState(["userInfo"]),
   },
   mounted() {
     this.fetchProductBoardList();
-    this.fetchMyPage(this.memberId)
+    this.fetchMyPage(this.memberId);
   },
   methods: {
     ...mapActions(["fetchProductBoardList"]),
-    ...mapActions(['fetchMyPage']),
+    ...mapActions(["fetchMyPage"]),
   },
 };
 </script>
@@ -67,11 +65,11 @@ export default {
   margin: 0 auto;
   padding: 15px 7px 0 7px; 
 } */
-#login-wrap{
+#login-wrap {
   background: #f8f9fa;
   height: 100vh;
 }
-#content{
+#content {
   display: block;
   margin-top: 72px;
   margin: 30px auto 0 auto;

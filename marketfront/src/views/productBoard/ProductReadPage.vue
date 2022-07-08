@@ -8,7 +8,7 @@
       @sendReport="sendReport"
       @sendImgReport="sendImgReport"
     />
-    <p v-else>로딩중 ........</p>
+
     <v-btn @click="onDelete">삭제</v-btn>
     <router-link :to="{ name: 'ProductModifyPage' }">
       <v-btn>수정하기</v-btn>
@@ -18,7 +18,6 @@
 
 <script>
 import cookies from "vue-cookies";
-
 const config = {
   headers: {
     Authorization: "Bearer " + cookies.get("access_token"),
@@ -26,7 +25,6 @@ const config = {
     "Content-Type": "application/json",
   },
 };
-
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
 import AfterLoginView from "../../components/home/AfterLoginView.vue";
@@ -93,7 +91,6 @@ export default {
         toId,
         fromId,
       } = payload;
-
       axios
         .post(
           API_BASE_URL + "/report/saveReport",
