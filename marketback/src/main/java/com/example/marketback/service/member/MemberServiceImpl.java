@@ -49,8 +49,10 @@ public class MemberServiceImpl implements MemberService {
     public void register(Member member) {
         String encodePassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodePassword);
-        System.out.println("유저 정보!!!! 매니저인가?!"+ member.getRoles());
+
         Member memberEntity = member.memberSetting(member);
+        City city = cityRepository.findByRegion(member.getRegion());
+        memberEntity.setCity(city);
 
         memberRepository.save(memberEntity);
     }

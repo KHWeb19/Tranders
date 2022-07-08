@@ -66,6 +66,10 @@ public class Member {
     @CreatedDate
     private String createDate = String.valueOf(LocalDateTime.now());
 
+    @ManyToOne
+    @JoinColumn(name = "CITY_NO")
+    private City city;
+
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);
         member.setBossAuth(Boolean.FALSE);

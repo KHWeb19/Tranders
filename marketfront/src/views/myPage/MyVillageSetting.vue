@@ -23,7 +23,7 @@ import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
 import MyVillageSettingView from "@/components/myPage/MyVillageSettingView";
 import axios from "axios";
-import {API_BASE_URL} from "@/constant/login";
+import {API_BASE_URL, SAVE_COOKIE_ACCESS} from "@/constant/login";
 import cookies from "vue-cookies";
 import { mapState, mapActions } from "vuex";
 
@@ -52,7 +52,8 @@ export default {
 
       axios.post(API_BASE_URL + '/member/saveVillage', {data, id}, config)
           .then((res) => {
-            console.log(res)
+            console.log(res);
+            cookies.set('region', data, SAVE_COOKIE_ACCESS);
           })
           .catch(() => {
             alert('에러')

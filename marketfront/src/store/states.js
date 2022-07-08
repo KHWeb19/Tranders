@@ -38,4 +38,5 @@ export default {
     searchComm: [],
     coupon: [],
     memberCoupon: [],
+    searchAllTotalPage: []
 }

@@ -8,6 +8,7 @@ import com.example.marketback.service.productBoard.ProductService;
 import com.example.marketback.service.search.SearchKeyWordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +49,16 @@ public class SearchController {
     }
 
     @PostMapping("/all/product")
-    public List<ProductBoard> searchProductBoard(@RequestBody KeyWordRequest keyWordRequest){
-        log.info("searchProductBoard");
+    public List<ProductBoard> searchAllProductBoard(@RequestBody KeyWordRequest keyWordRequest){
+        log.info("searchAllProductBoard");
 
         return searchKeyWordService.searchProduct(keyWordRequest);
+    }
+
+    @PostMapping("/all/comm")
+    public List<CommunityBoard> searchAllComm(@RequestBody KeyWordRequest keyWordRequest){
+        log.info("searchAllComm");
+
+        return searchKeyWordService.searchAllComm(keyWordRequest);
     }
 }
