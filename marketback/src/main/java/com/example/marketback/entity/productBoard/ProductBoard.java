@@ -51,6 +51,9 @@ public class ProductBoard {
     private Integer viewCnt = 0;
 
     @Column(nullable = false)
+    private Integer chatCnt = 0;
+
+    @Column(nullable = false)
     private String process;
 
     @CreatedDate
@@ -62,6 +65,10 @@ public class ProductBoard {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private Member buyer;
 
     public void increaseViewCnt() {
         this.viewCnt++;

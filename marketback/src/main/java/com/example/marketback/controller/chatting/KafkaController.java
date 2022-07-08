@@ -19,7 +19,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "/kafka")
-//@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class KafkaController {
     private final KafkaProducer producer;
 
@@ -29,7 +28,6 @@ public class KafkaController {
     }
 
     @PostMapping
-//    public String sendMessage(@RequestParam("message") String message) {
     public String sendMessage(@RequestBody String message) {
         this.producer.sendMessage(message);
 

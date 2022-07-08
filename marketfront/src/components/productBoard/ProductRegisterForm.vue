@@ -1,84 +1,126 @@
 <template>
-  <div>
-    <after-login-view></after-login-view>
+  <div id="content">
     <v-form enctype="multipart/form-data" @submit.prevent="onSubmit">
+      <div id="title">
+        <div>
+          <v-layout>
+            <v-dialog persistent max-width="400">
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" large color="black">mdi-chevron-left</v-icon>
+              </template>
+              <template v-slot:default="dialog">
+                <v-card>
+                  <v-card-title class="headline">
+                    글쓰기를 취소하시겠습니까?
+                  </v-card-title>
+                  <v-card-text> * 작성하던 내용이 사라져요 </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="ted" @click="goBack()"> 안쓸래요 </v-btn>
+                    <v-btn text @click="dialog.value = false">
+                      계속 쓸래요
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-layout>
+        </div>
+        <div>
+          <h2 style="margin-top: 6px; margin-left: 5px">
+            중고거래 상품등록하기
+          </h2>
+        </div>
+      </div>
       <table>
-        <tr>
-          <td v-if="!preview">
-            <label for="files">
-              <span>사진 선택</span>
-            </label>
+        <v-row>
+          <v-col>
+            <v-col cols="3">
+              <v-select
+                class="checkProcess"
+                v-model="process"
+                :items="selectProcess"
+                label="판매 현황"
+              >
+              </v-select>
+            </v-col>
+            <h3>상품명</h3>
+          </v-col>
+          <v-col cols="12">
             <input
-              type="file"
-              id="files"
-              ref="files"
-              multiple
-              v-on:change="handleFileUpload()"
+              id="input"
+              placeholder="상품명을 입력해주세요."
+              v-model="title"
             />
-          </td>
-
-          <td v-else rowspan="2">
-            <div class="slide-3d">
-              <v-container style="padding: 0px">
-                <swiper class="swiper" :options="swiperOption">
-                  <swiper-slide
-                    ><v-img width="300px" height="300px" :src="preview"
-                  /></swiper-slide>
-                  <swiper-slide v-if="preview2"
-                    ><v-img width="300px" height="300px" :src="preview2"
-                  /></swiper-slide>
-                  <swiper-slide v-if="preview3"
-                    ><v-img width="300px" height="300px" :src="preview3"
-                  /></swiper-slide>
-                  <div class="swiper-pagination" slot="pagination"></div>
-                  <div class="swiper-button-prev" slot="button-prev"></div>
-                  <div class="swiper-button-next" slot="button-next"></div>
-                </swiper>
-              </v-container>
-            </div>
-          </td>
-        </tr>
-
-        <v-col>
-          <v-select
-            class="checkProcess"
-            v-model="process"
-            :items="selectProcess"
-            label="판매상황 체크"
-          ></v-select>
-        </v-col>
-        <tr>
-          <td>카테고리</td>
-          <td>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>카테고리</h3></v-col>
+          <v-col cols="12">
             <input
-              type="text"
-              solo
-              style="width: 100%"
+              id="input"
+              placeholder="카테고리를 입력해주세요."
               v-model="category"
-              placeholder="카테고리를 설정해주세요"
             />
-          </td>
-        </tr>
-        <tr>
-          <td>제목</td>
-          <td>
-            <input type="text" v-model="title" />
-          </td>
-        </tr>
-        <tr>
-          <td>가격</td>
-          <td>
-            <input type="text" v-model="price" />
-          </td>
-        </tr>
-        <tr>
-          <td>설명</td>
-          <td>
-            <textarea cols="50" rows="20" v-model="content"> </textarea>
-          </td>
-        </tr>
-
-        <v-btn text color="primary" type="submit">올리기</v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>가격</h3></v-col>
+          <v-col cols="12">
+            <input
+              id="input"
+              placeholder="가격을 입력해주세요."
+              v-model="price"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>설명</h3></v-col>
+          <v-col cols="12">
+            <textarea
+              placeholder="상품에 관련된 상세 설명을 작성해주세요."
+              v-model="content"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>사진</h3></v-col>
+          <v-col cols="12">
+            <div id="image">
+              <label for="files"><v-icon large>mdi-camera</v-icon></label>
+              <input
+                type="file"
+                id="files"
+                ref="files"
+                dense
+                style="width: 0px"
+                multiple
+                v-on:change="handleFileUpload()"
+              />
+              <swiper class="swiper" :options="swiperOption">
+                <swiper-slide
+                  ><v-img width="300px" height="300px" :src="preview"
+                /></swiper-slide>
+                <swiper-slide v-if="preview2"
+                  ><v-img width="300px" height="300px" :src="preview2"
+                /></swiper-slide>
+                <swiper-slide v-if="preview3"
+                  ><v-img width="300px" height="300px" :src="preview3"
+                /></swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+                <div class="swiper-button-prev" slot="button-prev"></div>
+                <div class="swiper-button-next" slot="button-next"></div>
+              </swiper>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn block depressed color="success" height="50" type="submit"
+              ><h3>작성 완료</h3>
+            </v-btn>
+          </v-col>
+        </v-row>
       </table>
     </v-form>
   </div>
@@ -90,11 +132,9 @@ import cookies from "vue-cookies";
 Vue.use(cookies);
 import axios from "axios";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import AfterLoginView from "../home/AfterLoginView.vue";
 export default {
   name: "ProductRegisterForm",
   components: {
-    AfterLoginView,
     Swiper,
     SwiperSlide,
   },
@@ -165,6 +205,7 @@ export default {
                 title,
                 price,
                 content,
+                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -176,6 +217,7 @@ export default {
                 title,
                 price,
                 content,
+                regDate,
               });
             } else {
               const {
@@ -186,6 +228,7 @@ export default {
                 title,
                 price,
                 content,
+                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -196,11 +239,19 @@ export default {
                 title,
                 price,
                 content,
+                regDate,
               });
             }
           } else {
-            const { process, productImage, category, title, price, content } =
-              this;
+            const {
+              process,
+              productImage,
+              category,
+              title,
+              price,
+              content,
+              regDate,
+            } = this;
             this.$emit("submit", {
               memberNo: this.login.memberNo,
               process,
@@ -209,12 +260,16 @@ export default {
               title,
               price,
               content,
+              regDate,
             });
           }
         })
         .catch((res) => {
           alert("처리 결과: " + res.message);
         });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };
@@ -233,5 +288,62 @@ export default {
     background-size: cover;
   }
 }
+table {
+  width: 100%;
+}
+#content {
+  display: block;
+  margin-top: 72px;
+  margin: 30px auto 0 auto;
+  border: 1px solid #e9ecef;
+  width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  line-height: 24px;
+  background: #fff;
+}
+#title {
+  display: flex;
+  padding-bottom: 20px;
+}
+#input {
+  width: 100%;
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 16px;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 16px;
+}
+textarea {
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: 100%;
+  height: 300px;
+  padding: 16px;
+  resize: none;
+}
+#image {
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: 100%;
+  padding: 16px;
+  resize: none;
+}
+
+.preview {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 350px;
+  height: 350px;
+}
 </style>
+
+
 

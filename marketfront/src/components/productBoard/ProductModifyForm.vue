@@ -1,50 +1,108 @@
 <template>
-  <div>
+  <div id="content">
     <v-form enctype="multipart/form-data" @submit.prevent="onSubmit">
-      <table>
+      <div id="title">
         <div>
-          <div v-if="productBoard.productImage === null"></div>
-          <v-img
-            v-else
-            height="300px"
-            width="300px"
-            :src="require(`@/assets/pImage/${productBoard.productImage}`)"
-          />
+          <v-layout>
+            <v-dialog persistent max-width="400">
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" large color="black">mdi-chevron-left</v-icon>
+              </template>
+              <template v-slot:default="dialog">
+                <v-card>
+                  <v-card-title class="headline">
+                    수정하기를 취소하시겠습니까?
+                  </v-card-title>
+                  <v-card-text> * 작성하던 내용이 사라져요 </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="ted" @click="goBack()">
+                      수정 안할래요
+                    </v-btn>
+                    <v-btn text @click="dialog.value = false">
+                      계속 수정할래요
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-layout>
         </div>
-        <v-col>
-          <v-select
-            class="checkProcess"
-            v-model="process"
-            :items="selectProcess"
-            label="판매상황 체크"
-          ></v-select>
-        </v-col>
-        <tr>
-          <td>카테고리</td>
-          <td>
-            <input type="text" v-model="category" />
-          </td>
-        </tr>
-        <tr>
-          <td>제목</td>
-          <td>
-            <input type="text" v-model="title" />
-          </td>
-        </tr>
-        <tr>
-          <td>가격</td>
-          <td>
-            <input type="text" v-model="price" />
-          </td>
-        </tr>
-        <tr>
-          <td>설명</td>
-          <td>
-            <textarea cols="50" rows="20" v-model="content"> </textarea>
-          </td>
-        </tr>
-
-        <v-btn text color="primary" type="submit">올리기</v-btn>
+        <div>
+          <h2 style="margin-top: 6px; margin-left: 5px">등록상품 수정하기</h2>
+        </div>
+      </div>
+      <table>
+        <v-row>
+          <v-col>
+            <v-col cols="3">
+              <v-select
+                class="checkProcess"
+                v-model="process"
+                :items="selectProcess"
+                label="판매 현황"
+              ></v-select>
+            </v-col>
+            <h3>상품명</h3>
+          </v-col>
+          <v-col cols="12">
+            <input
+              id="input"
+              placeholder="상품명을 입력해주세요."
+              v-model="title"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>카테고리</h3></v-col>
+          <v-col cols="12">
+            <input
+              id="input"
+              placeholder="카테고리를 입력해주세요."
+              v-model="category"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>가격</h3></v-col>
+          <v-col cols="12">
+            <input
+              id="input"
+              placeholder="가격을 입력해주세요."
+              v-model="price"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>설명</h3></v-col>
+          <v-col cols="12">
+            <textarea
+              placeholder="상품에 관련된 상세 설명을 작성해주세요."
+              v-model="content"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><h3>사진</h3></v-col>
+          <v-col cols="12">
+            <div id="image">
+              <div v-if="productBoard.productImage === null"></div>
+              <v-img
+                v-else
+                height="100%"
+                width="100%"
+                :src="require(`@/assets/pImage/${productBoard.productImage}`)"
+              />
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn block depressed color="success" height="50" type="submit"
+              ><h3>작성 완료</h3>
+            </v-btn>
+          </v-col>
+        </v-row>
       </table>
     </v-form>
   </div>
@@ -112,6 +170,66 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+table {
+  width: 100%;
+}
+#content {
+  display: block;
+  margin-top: 72px;
+  margin: 30px auto 0 auto;
+  border: 1px solid #e9ecef;
+  width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  line-height: 24px;
+  background: #fff;
+}
+#title {
+  display: flex;
+  padding-bottom: 20px;
+}
+#input {
+  width: 100%;
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-size: 16px;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 16px;
+}
+textarea {
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: 100%;
+  height: 300px;
+  padding: 16px;
+  resize: none;
+}
+#image {
+  border: 2px solid #eaebee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  width: 100%;
+  padding: 16px;
+  resize: none;
+}
+
+.preview {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 350px;
+  height: 350px;
+}
+</style>
+
+
+
 
 
 

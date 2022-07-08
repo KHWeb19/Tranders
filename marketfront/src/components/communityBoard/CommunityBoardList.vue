@@ -30,7 +30,10 @@
          <b> {{communityBoard.title}}</b>      
       </p>
       <div id='community_title_content'>
+        <router-link id=sj style=text-decoration:none; :to="{ name: 'CommunityBoardReadPage',
+        params: { boardNo: communityBoard.boardNo.toString() } }">
         <p>{{ communityBoard.content}}</p>
+        </router-link>
       </div>
       <div id="community_writer">
         <span>{{communityBoard.writer}}</span>
@@ -168,7 +171,11 @@ p {
   display: block;
   margin: 0px;
 }
-/* .search{
+#sj{
+  font-size: 17px;
+  color:black;
+}
+.search{
   border-bottom: 3px solid rgb(187, 246, 202);
   width: 100px;
   outline: none;
@@ -190,5 +197,5 @@ p {
 }
 .btn-cover .page-count {
   padding: 0 1rem;
-} */
+}
 </style>

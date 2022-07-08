@@ -23,6 +23,7 @@ export default {
         title,
         price,
         content,
+        regDate,
       } = payload;
       axios
         .post(`http://localhost:7777/product/register/${memberNo}`, {
@@ -35,6 +36,7 @@ export default {
           title,
           price,
           content,
+          regDate,
         })
         .then(() => {
           alert("상품 등록 성공!");
