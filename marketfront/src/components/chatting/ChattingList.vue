@@ -27,10 +27,10 @@
                 <div style="display: flex; ">
                   <div>
                     <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
                     </div>
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">00동</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
                     </div>
                       <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
                       -webkit-box-align: center;
@@ -66,7 +66,7 @@
     justify-content: center;
     align-items: center;
     width: 800px;
-    height: 100%;
+    height: 944px;
     flex-direction: column;"><v-icon x-large>mdi-chat</v-icon><span style="margin-top: 34px;">채팅할 상대를 선택해주세요.</span></div>
           
         </div>
@@ -184,9 +184,6 @@ export default {
 </script>
 
 <style scoped>
-/* #top{
-  border-bottom: 1px solid #e9ecef;
-} */
 #logo{
   display: flex;
   align-items: center;
@@ -195,9 +192,8 @@ export default {
 }
 #full{
   display: flex;
-  border-left: 1px solid #e9ecef;
-  border-right: 1px solid #e9ecef;
   width: 1200px;
+  height: 100%;
   margin: 0 auto;
   line-height: 24px;
   background: #fff;
@@ -209,19 +205,17 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 900px;
+	height: 100%;
   display: flex; 
   justify-content: center;
 }
 #center{
 	width: 310px;
 	float: left;
-  border: 1px solid #e9ecef;
-  border-top-style: none;
-  border-bottom-style: none;
+  border-right: 2px solid #e9ecef;
 }
 #name{
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 2px solid #e9ecef;
     position: relative;
     display: flex;
     height: 72px;
@@ -236,14 +230,13 @@ export default {
 }
 #chatList{
 	width: 310px;
-	height: 825px;
+	/* height: 825px; */
 }
-
 #chatroom_link{
   display: flex;
   padding: 16px;
   height: 72px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 2px solid #e9ecef;
   -webkit-box-align: center;
   align-items: center;
   position: relative;

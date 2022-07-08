@@ -162,6 +162,7 @@ Vue.use(cookies);
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
 import { mapActions, mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "ProductReadPage",
@@ -203,15 +204,31 @@ export default {
   },
   computed: {
     ...mapState(["myProductLikes"]),
+    ...mapState(['registerChat']),
+  },
+  mounted() {
+
   },
   methods: {
     ...mapActions(["fetchProductLike"]),
+    ...mapActions(['fetchRegisterChat']),
     onChat() {
-      this.$emit("onChat", {
-        member1No: this.login.memberNo,
-        member2No: this.productBoard.member.memberNo,
-        productNo: this.productBoard.productNo,
-      });
+      axios
+        .post(
+          `http://localhost:7777/chatting/register/${this.login.memberNo}/${this.productBoard.member.memberNo}/${this.productBoard.productNo}`,
+          { member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo, productNo:this.productBoard.productNo })
+        .then(() => {
+            // this.$emit("onChat", {member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+          // this.$router.push({ name: "ChattingReadView",
+          //                     params: { roomNo: this.registerChat.roomNo.toString() }})
+        })
+            // this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+            // console.log(this.registerChat.roomNo)
+      // this.$emit("onChat", {registerNo: this.registerChat.roomNo})
+      this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+      this.$router.push({ name: "ChattingReadView",
+                          params: { roomNo: this.registerChat.roomNo.toString() }})
+
     },
     closeDialog() {
       this.reportDialog = false;

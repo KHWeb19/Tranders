@@ -4,6 +4,7 @@ import {
     FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_REGISTER_CHAT,
     FETCH_REVIEW_LIST,
     FETCH_MANNER,
     FETCH_MEMBER_PROFILE,
@@ -82,6 +83,12 @@ export default {
             .then((res) => {
                 commit(FETCH_CHATROOM_LIST, res.data)
             })
+    },
+    fetchRegisterChat ({ commit }, {member1No, member2No}) {
+        return axios.get(`http://localhost:7777/chatting/${member1No}/${member2No}`)
+                .then((res) => {
+                    commit(FETCH_REGISTER_CHAT, res.data)
+                })
     },
     fetchReviewList ({ commit }, id) {
         return axios.get(`http://localhost:7777/review/list/${id}`)

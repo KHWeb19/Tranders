@@ -103,16 +103,15 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return maybeChatRoom.get();
     }
 
-//    public ChatRoom move(Long member1, Long member2) {
-//        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMember(Long.valueOf(member1), Long.valueOf(member2));
-//
-//        if (maybeChatRoom.equals(Optional.empty())) {
-//            //없으면 생성하는거 추가하자
-//            return null;
-//        }
-//
-//        return maybeChatRoom.get();
-//    }
+    public ChatRoom move(Long member1, Long member2) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1), Long.valueOf(member2));
+
+        if (maybeChatRoom.equals(Optional.empty())) {
+            return null;
+        }
+
+        return maybeChatRoom.get();
+    }
 
 
     @Override
@@ -128,6 +127,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 maybeChatRoom.get().getLastMessage()
         );
         chatRoomRepository.save(chatRoomEntity);
+    }
+
+    @Override
+    public void remove(Long roomNo) {
+        chatRoomRepository.deleteById(Long.valueOf(roomNo));
     }
 
     @Override

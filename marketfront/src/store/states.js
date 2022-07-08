@@ -5,6 +5,7 @@ export default {
     refreshToken: null,
     chatroom: null,
     chatrooms: [],
+    registerChat: null,
     reviews: [],
     manner: null,
     profileImg: null,

@@ -13,6 +13,7 @@
     <router-link :to="{ name: 'ProductModifyPage' }">
       <v-btn>수정하기</v-btn>
     </router-link>
+
   </div>
 </template>
 
@@ -25,10 +26,10 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+import axios from "axios";
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
 import AfterLoginView from "../../components/home/AfterLoginView.vue";
-import axios from "axios";
 import { API_BASE_URL } from "@/constant/login";
 export default {
   name: "ProductReadPage",
@@ -38,12 +39,18 @@ export default {
       required: true,
     },
   },
+  data() {
+    return{
+      // registerChat: mapState(['registerChat'])
+    }
+  },
   components: {
     ProductReadForm,
     AfterLoginView,
   },
   computed: {
     ...mapState(["productBoard"]),
+
   },
   created() {
     this.fetchProductBoard(this.productNo).catch(() => {
@@ -66,20 +73,14 @@ export default {
           alert("삭제실패 문제 발생");
         });
     },
-    onChat(payload) {
-      const { member1No, member2No, productNo } = payload;
-      console.log(member1No, member2No, productNo);
-      axios
-        .post(
-          `http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`,
-          { member1No, member2No, productNo }
-        )
-        .then(() => {
-          this.$router.push({ name: "ChattingListPage" });
-        })
-        .catch(() => {
-          alert("문제 발생!");
-        });
+    onChat() {
+      // const {member1No, member2No} = payload;
+      // this.fetchRegisterChat({member1No, member2No})
+      
+
+                              // this.$router.push({ name: "ChattingReadView",
+                              // params: { roomNo: registerNo.toString() }})
+
     },
     sendReport(payload) {
       const {

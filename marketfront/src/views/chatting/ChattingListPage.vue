@@ -1,9 +1,7 @@
 <template>
-  <div>
+  <div id='back_page'>
     <after-login-view/>
-    <div id='chat_list'>
     <chatting-list :chatrooms="chatrooms" @submit="onSubmit"/>
-    </div>
   </div>
 </template>
 
@@ -51,8 +49,8 @@ export default {
 </script>
 
 <style scoped>
-#chat_list{
-  background: #f8f9fa;
-  /* padding: 30px 0; */
+#back_page{
+    background: #f8f9fa; 
+    min-height:100vh;
 }
 </style>

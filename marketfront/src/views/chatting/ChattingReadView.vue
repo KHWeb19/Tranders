@@ -1,11 +1,8 @@
 <template>
-<div>
-    <after-login-view/>
-    <div id='chat_read'>
-        <chatting-read :userInfo="userInfo" :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay"/>
-
+    <div id='back_page'>
+        <after-login-view/>
+        <chatting-read :userInfo="userInfo" :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay" @onDelete="onDelete"/>
     </div>
-</div>
 </template>
 
 <script>
@@ -90,14 +87,26 @@ export default {
             const { id, money, memberId, productNo } = payload
             axios.put(`http://localhost:7777/chatting/pay/${productNo}`, {id, money, productNo})
             this.$router.push({name: 'ReviewRegisterPage', params: {memberId:memberId.toString()} })
-        }
+        },
+        onDelete(payload) {
+            const {roomNo} = payload
+            axios.delete(`http://localhost:7777/chatting/${roomNo}`)
+                .then(()=> {
+                    alert('삭제 성공')
+                    this.$router.push({name: 'ChattingListPage'})
+                })
+                .catch(()=> {
+                    alert('삭제실패 문제발생')
+                })
+        },
+
     } 
 }
 </script>
 
 <style scoped>
-#chat_read{
-  background: #f8f9fa;
-  /* padding: 30px 0; */
+#back_page{
+    background: #f8f9fa; 
+    min-height:100vh;
 }
 </style>

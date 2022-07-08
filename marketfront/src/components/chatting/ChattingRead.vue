@@ -17,14 +17,11 @@
           </div>
           <div id='chatList'>
             <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-              <button @click="goLink()" style="width:100%">
-                <router-link id='chatroom_link' 
-                  :style="isBackground ? 'background-color: #f2f3f6;' : ''"
-                  :to="{
-                    name: 'ChattingReadView',
-                    params: {roomNo: chatroom.roomNo.toString()}}"
-
-                  >
+              <router-link id='chatroom_link' 
+                :to="{
+                  name: 'ChattingReadView',
+                  params: {roomNo: chatroom.roomNo.toString()}}"
+                >
                 <div>
                     <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
                         <v-img src="@/assets/profile.jpg"/>
@@ -33,10 +30,10 @@
                 <div style="display: flex; ">
                   <div>
                     <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
                     </div>
                     <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member2.region}}</span>
+                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member2.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
                     </div>
                       <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
                       -webkit-box-align: center;
@@ -63,14 +60,13 @@
                       height: 40px;
                       object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
                   </div>
-                </router-link></button>
+                </router-link>
             </div>
           </div>
         </div>
         
         <div id='right'>
           <div id='right1'>
-
               <div>
                   <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
                       <v-img src="@/assets/profile.jpg"/>
@@ -79,151 +75,173 @@
               <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
               <span v-if="login.memberNo==chatroom.member1.memberNo">{{chatroom.member2.name}} {{chatroom.member2.temperature}}°C</span>
 
-            <div id="right_button"  v-if="chatroom.productBoard.process==='판매중'">
-            <v-layout>
-              <v-dialog persisten max-width="400">
-                  <template v-slot:activator="{ on }">
-                      <v-btn id='my_button' depressed v-on="on">약속잡기</v-btn>
-                  </template>
-                  <template v-slot:default="dialog">
-                      <v-card>
-                          <v-card-title class="headline">
-                              약속 설정
-                          </v-card-title>
-                          <v-card-text>
-                              <v-menu
-                                ref="menu"
-                                v-model="menu"
-                                :close-on-content-click="false"
-                                :return-value.sync="date"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
-                                    v-model="date"
-                                    label="날짜 선택"
-                                    prepend-icon="mdi-calendar"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="date"
-                                  no-title
-                                  scrollable
+            <div id="right_button" >
+              <v-layout v-if="chatroom.productBoard && chatroom.productBoard.process==='판매중'">
+                <v-dialog persisten max-width="400">
+                    <template v-slot:activator="{ on }">
+                        <v-btn id='my_button' depressed v-on="on">약속잡기</v-btn>
+                    </template>
+                    <template v-slot:default="dialog">
+                        <v-card>
+                            <v-card-title class="headline">
+                                약속 설정
+                            </v-card-title>
+                            <v-card-text>
+                                <v-menu
+                                  ref="menu"
+                                  v-model="menu"
+                                  :close-on-content-click="false"
+                                  :return-value.sync="date"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
                                 >
-                                  <v-spacer></v-spacer>
-                                  <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menu.save(date)"
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="date"
+                                      label="날짜 선택"
+                                      prepend-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
+                                    v-model="date"
+                                    no-title
+                                    scrollable
                                   >
-                                    선택
-                                  </v-btn>
-                                  <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
-                                  >
-                                    닫기
-                                  </v-btn>
-                                </v-date-picker>
-                              </v-menu>
-                              <v-menu
-                                ref="menu2"
-                                v-model="menu2"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                :return-value.sync="time"
-                                transition="scale-transition"
-                                offset-y
-                                max-width="290px"
-                                min-width="290px"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      text
+                                      color="primary"
+                                      @click="$refs.menu.save(date)"
+                                    >
+                                      선택
+                                    </v-btn>
+                                    <v-btn
+                                      text
+                                      color="primary"
+                                      @click="menu = false"
+                                    >
+                                      닫기
+                                    </v-btn>
+                                  </v-date-picker>
+                                </v-menu>
+                                <v-menu
+                                  ref="menu2"
+                                  v-model="menu2"
+                                  :close-on-content-click="false"
+                                  :nudge-right="40"
+                                  :return-value.sync="time"
+                                  transition="scale-transition"
+                                  offset-y
+                                  max-width="290px"
+                                  min-width="290px"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="time"
+                                      label="시간 선택"
+                                      prepend-icon="mdi-clock-time-four-outline"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-time-picker
+                                    v-if="menu2"
                                     v-model="time"
-                                    label="시간 선택"
-                                    prepend-icon="mdi-clock-time-four-outline"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-time-picker
-                                  v-if="menu2"
-                                  v-model="time"
-                                  full-width
-                                  @click:minute="$refs.menu2.save(time)"
-                                ></v-time-picker>
-                              </v-menu>
-                          </v-card-text>
-                          <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue" text @click.native="onAppoint($event)">
-                                  완료
-                              </v-btn>
-                              <v-btn text @click="dialog.value=false">
-                                  닫기
-                              </v-btn>
-                          </v-card-actions>
-                      </v-card>
-                  </template>
-              </v-dialog>
-          </v-layout>
-          <!-- <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo"> -->
-            <v-layout>
-              <v-dialog persisten max-width="400">
-                  <template v-slot:activator="{ on }">
-                      <v-btn id='my_button' depressed style="margin-left:15px" v-on="on">송금하기</v-btn>
-                  </template>
-                  <template v-slot:default="dialog">
-                                <v-card>
-                                    <v-card-title class="headline">
-                                        Pay
-                                    </v-card-title>
-                                    <v-card-text>
-                                      <div id="pay_box">결제금액: {{chatroom.productBoard.price}} 원</div>
-                                    </v-card-text>
-                                    <v-card-text >
-                                      <div id="pay_box" >
-                                        <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
-                                        <div style="display: inline-flex;
-  margin-left: auto;"><v-btn style="
+                                    full-width
+                                    @click:minute="$refs.menu2.save(time)"
+                                  ></v-time-picker>
+                                </v-menu>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue" text @click.native="onAppoint($event)">
+                                    완료
+                                </v-btn>
+                                <v-btn text @click="dialog.value=false">
+                                    닫기
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-dialog>
+            </v-layout>
+            <!-- <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo"> -->
+              <v-layout v-if="chatroom.productBoard && chatroom.productBoard.process==='판매중'">
+                <v-dialog persisten max-width="400">
+                    <template v-slot:activator="{ on }">
+                        <v-btn id='my_button' depressed style="margin-left:15px" v-on="on">송금하기</v-btn>
+                    </template>
+                    <template v-slot:default="dialog">
+                                  <v-card>
+                                      <v-card-title class="headline">
+                                          Pay
+                                      </v-card-title>
+                                      <v-card-text>
+                                        <div id="pay_box">결제금액: {{chatroom.productBoard.price}} 원</div>
+                                      </v-card-text>
+                                      <v-card-text >
+                                        <div id="pay_box" >
+                                          <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
+                                          <div style="display: inline-flex;
+    margin-left: auto;"><v-btn style="
+                                            
+      border-radius: 24px;
+      min-width: 80px;
+      height: 36px;
+      padding: 0px 9px;
+      margin: 0px 5px
+      letter-spacing: -0.1px;
+      position: relative;
+      overflow: hidden;
+      color: rgb(25, 28, 32);
+      background-color: rgb(255, 235, 0);" 
+                                          @click="onCharge()">
+                                              충전
+                                          </v-btn></div></div>
+                                          <br/>
+                                          * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
+                                      </v-card-text>
+                                      <v-card-actions>
+                                          <v-spacer></v-spacer>
                                           
-    border-radius: 24px;
-    min-width: 80px;
-    height: 36px;
-    padding: 0px 9px;
-    margin: 0px 5px
-    letter-spacing: -0.1px;
-    position: relative;
-    overflow: hidden;
-    color: rgb(25, 28, 32);
-    background-color: rgb(255, 235, 0);" 
-                                        @click="onCharge()">
-                                            충전
-                                        </v-btn></div></div>
-                                        <br/>
-                                        * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
-                                    </v-card-text>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        
-                                        <v-btn text color="blue" @click="onPay()">
-                                            결제
-                                        </v-btn>
-                                        <v-btn text @click="dialog.value=false">
-                                            취소
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </template>
-              </v-dialog>
-          </v-layout>
+                                          <v-btn text color="blue" @click="onPay()">
+                                              결제
+                                          </v-btn>
+                                          <v-btn text @click="dialog.value=false">
+                                              취소
+                                          </v-btn>
+                                      </v-card-actions>
+                                  </v-card>
+                              </template>
+                </v-dialog>
+            </v-layout>
+            <v-menu offset-y>
+              <template v-slot:activator="{on}">
+                <v-btn small depressed fab v-on="on" style="margin-left:15px">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item link @click="goProfile">
+                  <v-list-item-title>
+                    프로필 이동
+                  </v-list-item-title>
+                </v-list-item>
+
+                <v-list-item @click="onDelete()">
+                  <v-list-item-title>
+                    채팅방 나가기
+                  </v-list-item-title>
+                </v-list-item>
+
+              </v-list>
+            </v-menu>
           </div>
           </div>
           <div v-if="chatroom.productBoard" id='product' style="position:relative;">
@@ -248,39 +266,43 @@
             </div>
             <div>{{chatroom.productBoard.process}}</div>
           </div>
-          <div v-if="chatroom.appointDate" id='notice'>
+          <div v-if="chatroom.appointDate" id='notice' style="      padding: 20px 20px 0px 20px;">
             <div id='notice_box'>
               <div>
-              <span style="font-weight: 700; margin-right: 4px;">알림</span>
-              <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}} 거래 약속을 만들었어요.</span>
+                <span style="font-weight: 700; margin-right: 4px;">알림</span>
+                <span>{{chatroom.appointDate}}&nbsp;{{chatroom.appointTime}} 거래 약속을 만들었어요.</span>
               </div>
-              <!-- <v-btn class='success' depressed @click="onReminder()"><b>알림 받기</b></v-btn>  -->
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:500px': 'height:585px' && chatroom.productBoard ? 'height:581px':'height:656px' ">
-            <!-- <div v-if="!new_data || (Array.isArray(new_data) && new_data.length === 0)">
-                <div colspan="4">
-                    {{chatroom.roomNo}} 채팅방에 입장하였습니다. 
+          <div id='chatView' :style="chatroom.appointDate ? 'height:500px': 'height:585px' && chatroom.productBoard ? 'height:623px':'height:698px' "> 
+            <!-- +42px -->
+            <div v-if="!chatroom.productBoard" id='notice' style="padding-bottom:20px">
+              <div id='notice_box'>
+                <div>
+                <span style="font-weight: 700; margin-right: 4px;">알림</span>오이마켓 속 내 가게, 사장님과의 문의를 시작해보세요.
+                <div>[ 채팅 문의시간 ]</div>
+                <div>평일 10시 ~ 17시 (점심시간: 12시 ~ 13시)</div>
                 </div>
-            </div> -->
-            <!-- <div v-else> -->
+              </div>
+
+            </div>
             <div>
               <div v-for="msg in new_data" :key="msg.messageNo">
                 <div style="display: flex; justify-content: flex-end;" v-if="login.memberNo==msg.content.memberNo">
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.now}}</div>
-                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="require(`@/assets/chatting/${msg.content.message}`)"/></div>
-                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image"><b>{{msg.content.message}}</b></div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img style="border-radius:10px" width="200px" height="200" :src="require(`@/assets/chatting/${msg.content.message}`)"/></div>
+                  <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.message}}</div>
                 </div>
                 <div style="display: flex;" v-else>
-                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo"><b>{{msg.content.message}}</b></div>
-                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img width="200px" height="200" :src="msg.content.message"/></div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img style="border-radius:10px" width="200px" height="200" :src="msg.content.message"/></div>
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.now}}</div>
                 </div>
               </div>
               <div style="display: flex; justify-content: flex-end;" v-for="msg in newMessage" :key="msg.messageNo">
                 <div id='message_date'>{{msg.now}}</div>
-                <div v-if="msg.image" id='message_greenBox'><v-img width="200px" height="200" :src="msg.message"/></div>
-                <div v-else id='message_greenBox'><b>{{msg.message}}</b></div>
+                <div v-if="msg.image"><v-img style="border-radius:10px" width="200px" height="200" :src="msg.message"/></div>
+                <div v-else id='message_greenBox'>{{msg.message}}</div>
               </div>
             </div>
             
@@ -356,7 +378,6 @@ export default {
       time: '00:00',
       menu2: false,
       priview: '',
-      isBackground: false,
 
       // realTime: false,
     }
@@ -438,10 +459,10 @@ export default {
         this.$emit('onPay', {id:this.login.id, money: this.userInfo.money, memberId:this.chatroom.productBoard.member.id, productNo})
       }
     },
-    goLink() {
-      this.isBackground=!this.isBackground
-      console.log(this.isBackground)
-    }
+    onDelete() {
+        const { roomNo } = this.chatroom
+        this.$emit('onDelete', {roomNo})
+    },
   },
   // beforeUpdate() {
 
@@ -466,9 +487,8 @@ export default {
 }
 #full{
   display: flex;
-  border-left: 1px solid #e9ecef;
-  border-right: 1px solid #e9ecef;
   width: 1200px;
+  height: 100%;
   margin: 0 auto;
   line-height: 24px;
   background: #fff;
@@ -480,19 +500,17 @@ export default {
 #image{
   background-color: #ededed;
 	width: 80px;
-	height: 900px;
+	height: 100%;
   display: flex; 
   justify-content: center;
 }
 #center{
 	width: 310px;
 	float: left;
-  border: 1px solid #e9ecef;
-  border-top-style: none;
-  border-bottom-style: none;
+  border-right: 2px solid #e9ecef;
 }
 #name{
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 2px solid #e9ecef;
     position: relative;
     display: flex;
     height: 72px;
@@ -507,14 +525,14 @@ export default {
 }
 #chatList{
 	width: 310px;
-	height: 825px;
+	/* height: 825px; */
 }
 
 #chatroom_link{
   display: flex;
   padding: 16px;
   height: 72px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 2px solid #e9ecef;
   -webkit-box-align: center;
   align-items: center;
   position: relative;
@@ -531,16 +549,13 @@ export default {
 #right{
 	width: 810px;
 	float: left;
-  border: 1px solid #e9ecef;
-          border-top-style: none;
-          border-left-style: none;
 }
 #right1{
 	width: 810px;
 	height: 72px;
   min-height: 72px;
   display: flex; 
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 2px solid #e9ecef;
     /* -webkit-box-pack: justify; */
     /* justify-content: space-between; */
     /* -webkit-box-align: center; */
@@ -576,17 +591,12 @@ export default {
     justify-content: space-between;
     padding: 0px 20px;
     font-size: 14px;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 2px solid #e9ecef;
 }
 #notice{
   display: flex;
-      -webkit-box-align: center;
     align-items: center;
-    -webkit-box-pack: center;
     justify-content: center;
-      padding: 20px 20px 0px 20px;
-    
-
 }
 #notice_box{
     display: flex;
@@ -604,7 +614,7 @@ export default {
 }
 #chatView{
 	width: 810px;
-	/* height: 555px; */
+
   overflow-y:auto; 
   /* overflow-x:hidden;  */
   /* overflow: hidden auto; */
@@ -659,7 +669,7 @@ display: inline-flex;
 #message_date{
   color: #868b94;
   font-size: 12px;
-  /* line-height: 150%; */
+  line-height: 150%;
   letter-spacing: -0.02em;
   display: flex;
   flex-direction: column;
@@ -670,13 +680,13 @@ textarea{
   margin: 12px 12px 0px;
   width: calc(100% - 24px);
   height: 63px;
-  /* line-height: 150%; */
+  line-height: 150%;
   padding: 0px;
   /* resize: none; */
   font-size: 14px;
   border: none;
   outline: none;
-
+  resize: none;
 }
 #files {
     visibility: hidden;
