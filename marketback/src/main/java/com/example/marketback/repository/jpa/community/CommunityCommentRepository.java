@@ -4,6 +4,7 @@ import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.entity.jpa.community.CommunityComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface CommunityCommentRepository extends JpaRepository<CommunityComme
     List<CommunityComment> findCommunityCommentByCommunityBoard(CommunityBoard communityBoard);
 
     @Query("select cc from CommunityComment cc where cc.commentId = :commentId")
-    CommunityComment findByCommentId(Long commentId);
+    CommunityComment findByCommentId(@Param("commentId")Long commentId);
 }

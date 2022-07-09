@@ -27,12 +27,12 @@ public class CommunityCommentController {
     }
 
     @PutMapping("/{boardNo}/{commentId}/comment/register")
-    public void modify (@RequestParam("comment") String comment, @PathVariable("commentId") Long commentId, @PathVariable("boardNo") Long boardNo, @RequestParam(required = false) MultipartFile file) throws Exception {
+    public void modify (@RequestParam("comment") String comment, @RequestParam("placeName") String placeName, @RequestParam("placeUrl") String placeUrl, @PathVariable("commentId") Long commentId, @PathVariable("boardNo") Long boardNo, @RequestParam(required = false) MultipartFile file) throws Exception {
 
-        log.info("Comment modify(): ");
+        log.info("Comment modify():" + comment, file);
 
 //        return CommunityCommentServiceImpl.modify(commentId, communityComment);
-        service.modify(commentId, boardNo, comment, file);
+        service.modify(commentId, boardNo, comment, placeName, placeUrl, file);
     }
 
     @GetMapping("/{boardNo}/comment/list")

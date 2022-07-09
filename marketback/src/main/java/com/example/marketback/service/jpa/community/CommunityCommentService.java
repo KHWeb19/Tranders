@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CommunityCommentService {
     public void register (Integer boardNo, CommunityComment communityComment,@RequestParam(required = false) MultipartFile file) throws Exception;
-    public void modify (Long commentId, Long boardNo, String comment, @RequestParam(required = false) MultipartFile file) throws Exception;
+    public void modify (Long commentId, Long boardNo, String comment, String placeName, String placeUrl,  @RequestParam(required = false) MultipartFile file) throws Exception;
     public List<CommunityComment> list (Integer boardNo);
     public void delete (Long commentId);
 }
