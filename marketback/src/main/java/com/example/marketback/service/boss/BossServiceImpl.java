@@ -7,9 +7,13 @@ import com.example.marketback.entity.boss.coupon.Coupon;
 import com.example.marketback.entity.boss.coupon.MemberCoupon;
 import com.example.marketback.entity.manager.Report;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.review.BossReview;
+import com.example.marketback.entity.review.BossReviewImage;
 import com.example.marketback.repository.boss.BossImgRepository;
 import com.example.marketback.repository.boss.BossPriceRepository;
 import com.example.marketback.repository.boss.BossRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewImageRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
 import com.example.marketback.repository.boss.coupon.BossCouponRepository;
 import com.example.marketback.repository.boss.coupon.MemberCouponRepository;
 import com.example.marketback.repository.member.MemberRepository;
@@ -53,6 +57,12 @@ public class BossServiceImpl implements BossService{
 
     @Autowired
     private MemberCouponRepository memberCouponRepository;
+
+    @Autowired
+    private BossReviewImageRepository bossReviewImageRepository;
+
+    @Autowired
+    private BossReviewRepository bossReviewRepository;
 
     @Override
     public boolean checkBossMember(String id) {
@@ -268,6 +278,50 @@ public class BossServiceImpl implements BossService{
         Page<MemberCoupon> reportList = memberCouponRepository.findPageByMemberId(id, pageable);
         System.out.println("totalPage!!!!!"+reportList.getTotalPages());
         return reportList.getTotalPages();
+    }
+
+    @Override
+    public void removeBoss(Long bossNo) {
+        Boss boss = bossRepository.findByBossNo(bossNo);
+        System.out.println("여기까지 들어와!?");
+
+        List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
+        List<BossPrice> bossPrice = bossPriceRepository.findByBossNo(bossNo);
+
+        if (bossImages.size() != 0) {
+            bossImgRepository.deleteAll(bossImages);
+        }
+
+        if (bossImages.size() != 0) {
+            bossPriceRepository.deleteAll(bossPrice);
+        }
+
+        List<MemberCoupon> memberCouponList = memberCouponRepository.findRemoveByBossNo(bossNo);
+                  //필요없음. 발급받으면 생기는 테이블이기때문.
+        if(memberCouponList.size() != 0){
+            memberCouponRepository.deleteAll(memberCouponList);
+        }
+
+        List<Coupon> coupons = bossCouponRepository.findByBossNo(bossNo);
+        System.out.println("여기까지와 1");
+        if(coupons.size() != 0){
+            bossCouponRepository.deleteAll(coupons);
+        }
+
+        System.out.println("여기까지와 2");
+        List<BossReviewImage> bossReviewImages = bossReviewImageRepository.findRemoveByBossNo(bossNo);
+        List<BossReview> bossReviews = bossReviewRepository.findByBossNo(bossNo);
+
+        if(bossReviewImages.size() != 0 ){
+            bossReviewImageRepository.deleteAll(bossReviewImages);
+        }
+
+        if(bossReviews.size() != 0 ){
+            bossReviewRepository.deleteAll(bossReviews);
+        }
+        System.out.println("여기까지와 4");
+        bossRepository.delete(boss);
+
     }
 
 }

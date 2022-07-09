@@ -61,7 +61,7 @@
         <div v-else>
           <div style="padding-top: 20px">
             <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
-              <div v-if="coupon.couponMax - coupon.giveCoupon > 0" style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+              <div v-if="state[index]" style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
                 <div style="width: 80%; padding: 5px 10px 5px 15px;">
                   <div style="display: flex; align-items: center">
                     <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
@@ -197,6 +197,7 @@ export default {
         '만족스러워요',
         '아쉬워요'
       ],
+      state: []
     }
   },
   methods: {
@@ -284,7 +285,37 @@ export default {
           })
     },
     moveCouponList(){
+      this.$router.push({name: 'MyCouponPage'})
+    },
+    day(){
+      let today = new Date();
 
+      let year = today.getFullYear();
+      let month = ('0' + (today.getMonth() + 1)).slice(-2);
+      let day = ('0' + today.getDate()).slice(-2);
+
+      console.log(this.coupon)
+
+      for(let i = 0;  i < this.coupon.length; i++){
+        let date = this.coupon[i].couponDate.split('/');
+        console.log(date[0])
+        console.log(date[1])
+        console.log(date[2])
+
+        if(date[0] - year > 0){
+          this.state.push(true)
+        }else if(date[1] - month > 0){
+          this.state.push(true)
+        }else if(date[2] - day > 0){
+          this.state.push(true)
+        }else{
+          this.state.push(false)
+        }
+
+        console.log(this.state[i])
+      }
+      let dateString = year + '-' + month  + '-' + day;
+      console.log(dateString)
     }
   },
   mounted() {
@@ -294,9 +325,10 @@ export default {
     ...mapState(['bossMenu']),
     ...mapState(['coupon'])
   },
-  created() {
-    this.fetchBossMenuList(this.id);
-    this.fetchShowCoupon(this.boss.bossAuthNo);
+  async created() {
+    await this.fetchBossMenuList(this.id);
+    await this.fetchShowCoupon(this.boss.bossAuthNo);
+    await this.day();
   }
 }
 </script>

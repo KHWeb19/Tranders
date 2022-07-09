@@ -51,4 +51,6 @@ public interface BossService {
     List<MyCouponResponse> myCouponList(String id, Integer page);
 
     Integer myCouponTotalPage(String id);
+
+    void removeBoss(Long bossNo);
 }

@@ -144,7 +144,6 @@ export default {
       axios.get(`http://localhost:7777/boss/MyCoupon/${id}`, config)
           .then((res) => {
             this.$store.state.page = res.data;
-
           })
     },
     useCoupon(coupon){
@@ -161,12 +160,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['coupon']),
     ...mapState(['page']),
+    ...mapState(['coupon']),
   },
   async created() {
     await this.fetchMyCouponTotalPage();
-    await this.fetchMyCoupon(0)
+    this.fetchMyCoupon(0)
   }
 }
 </script>

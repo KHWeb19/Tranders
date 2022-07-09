@@ -418,22 +418,29 @@ export default {
       this.$emit('sendReport', {category1, category2, content, banCheck, productNo, toId, fromId});
     },
     sendImgReport(){
-      alert(this.category2)
-      let formData = new FormData;
+      //alert(this.files.length)
 
-      for(let i = 0; i < this.files.length; i++){
-        formData.append('fileList', this.files[i].file)
+      if(this.files.length !== 0) {
+
+        let formData = new FormData;
+
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('fileList', this.files[i].file)
+        }
+
+        formData.append('category1', this.category1);
+        formData.append('category2', this.category2);
+        formData.append('content', this.content);
+        formData.append('banCheck', this.banCheck);
+        formData.append('productNo', this.productNo);
+        formData.append('toId', this.productBoard.member.id);
+        formData.append('fromId', this.id);
+
+        this.$emit('sendImgReport', formData)
+      }else {
+        this.sendReport();
       }
 
-      formData.append('category1', this.category1);
-      formData.append('category2', this.category2);
-      formData.append('content', this.content);
-      formData.append('banCheck', this.banCheck);
-      formData.append('productNo', this.productNo);
-      formData.append('toId', this.productBoard.member.id);
-      formData.append('fromId', this.id);
-
-      this.$emit('sendImgReport', formData)
     }
   },
   computed: {

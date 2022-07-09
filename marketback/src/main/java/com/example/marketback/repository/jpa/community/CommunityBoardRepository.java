@@ -45,5 +45,7 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :boardNo")
     CommunityBoard findByBoardNo(@Param("boardNo") Long boardNo);
 
+    @Query("select cb from CommunityBoard cb where cb.member.id = :id")
+    List<CommunityBoard> findByMemberId(String id);
 }
 

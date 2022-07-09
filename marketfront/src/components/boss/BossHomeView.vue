@@ -66,7 +66,7 @@
 
         <div v-else style="padding-top: 30px">
           <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
-            <div v-if="coupon.couponMax - coupon.giveCoupon > 0">
+            <div v-if="state[index]">
               <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
                 <div style="width: 80%; padding: 5px 10px 5px 15px;">
                   <div style="display: flex; align-items: center">
@@ -358,7 +358,7 @@
 
           <div>
             <v-radio-group v-model="radioGroup" row>
-              <v-radio value="0" label="제한없음" @click="radioCheck"></v-radio>
+              <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
               <v-radio value="1" label="제한있음" @click="radioCheck">
               </v-radio>
             </v-radio-group>
@@ -410,7 +410,7 @@
 
         <div>
           <v-radio-group v-model="radioModifyGroup" row>
-            <v-radio value="0" label="제한없음" @click="radioCheck"></v-radio>
+            <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
             <v-radio value="1" label="제한있음" @click="radioCheck">
             </v-radio>
           </v-radio-group>
@@ -428,7 +428,7 @@
         </div>
 
         <div style="display: flex; justify-content: end">
-          <v-btn style="margin-right: 8px" @click="addCouponDialog = false">close</v-btn>
+          <v-btn style="margin-right: 8px" @click="modifyCouponDialog = false">close</v-btn>
           <v-btn class="light-green lighten-3" @click="modifyCoupon">변경</v-btn>
         </div>
 
@@ -578,12 +578,14 @@ export default {
       couponMax: '',
       radioGroup: 0,
       radioField: false,
-      radioModifyGroup: 1,
+      radioModifyGroup: '',
       couponNo: '',
       couponDetailDialog: false,
       couponDetail: [],
       totalPage: '',
       pageNum: 1,
+      nowDay: '',
+      state: []
     }
   },
   methods: {
@@ -685,8 +687,11 @@ export default {
       this.$emit('deletePrice', {menuNo})
       this.modifyCheck = true
     },
+    radioCheckNoLimit(){
+      this.radioField = false;
+    },
     radioCheck(){
-      this.radioField = !this.radioField
+      this.radioField = true;
     },
     saveCoupon(){
       const {couponName, couponInfo, couponMax} = this;
@@ -701,13 +706,14 @@ export default {
       if (!date) return null
 
       const [year, month, day] = date.split('-')
-      return `${year}년 ${month}월 ${day}일`
+      return `${year}/ ${month}/ ${day}`
     },
     modifyCouponData(coupon){
       this.couponName = coupon.couponName;
       this.couponInfo = coupon.couponInfo;
       this.dateFormatted = coupon.couponDate;
-      this.radioModifyGroup = coupon.couponMax === null ? 0 : 1;
+      this.radioModifyGroup = coupon.remain_coupon === null ? 0 : 1
+      alert(this.radioModifyGroup)
       this.couponMax = coupon.couponMax;
       this.couponNo = coupon.couponNo;
       this.modifyCouponDialog = true;
@@ -776,6 +782,36 @@ export default {
           .catch(() => {
             alert('에러')
           })
+    },
+    day(){
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = ('0' + (today.getMonth() + 1)).slice(-2);
+      let day = ('0' + today.getDate()).slice(-2);
+
+      console.log(this.coupon)
+
+      for(let i = 0;  i < this.coupon.length; i++){
+        let date = this.coupon[i].couponDate.split('/');
+        console.log(date[0])
+        console.log(date[1])
+        console.log(date[2])
+
+        if(date[0] - year > 0){
+          this.state.push(true)
+        }else if(date[1] - month > 0){
+          this.state.push(true)
+        }else if(date[2] - day > 0){
+          this.state.push(true)
+        }else{
+          this.state.push(false)
+        }
+
+        console.log(this.state[i])
+      }
+      let dateString = year + '-' + month  + '-' + day;
+      console.log(dateString)
     }
   },
   mounted() {
@@ -789,11 +825,12 @@ export default {
   watch: {
     date () {
       this.dateFormatted = this.formatDate(this.date)
-    }
+    },
   },
-  created() {
-    this.fetchBossMenuList(this.id)
-    this.fetchShowCoupon(this.boss.bossAuthNo)
+  async created() {
+    await this.fetchBossMenuList(this.id)
+    await this.fetchShowCoupon(this.boss.bossAuthNo)
+    await this.day()
   }
 }
 </script>

@@ -9,7 +9,8 @@
                     @modifySave="modifySave"
                     @deletePrice="deletePrice"
                     @saveCoupon="saveCoupon"
-                    @modifyCoupon="modifyCoupon"></boss-page-view>
+                    @modifyCoupon="modifyCoupon"
+                    @removeBoss="removeBoss"></boss-page-view>
   </div>
 </template>
 
@@ -116,6 +117,7 @@ export default {
       axios.post(API_BASE_URL+'/boss/addCoupon', {bossNo, couponName, couponInfo, couponMax, couponDate}, config)
           .then(() => {
             console.log('성공')
+            this.$router.go()
           })
           .catch(() => {
             alert('쿠폰 생성 에러')
@@ -128,6 +130,18 @@ export default {
           .then(() => {
             console.log('성공')
             this.$router.go();
+          })
+          .catch((res) => {
+            console.log(res)
+          })
+    },
+    removeBoss(payload){
+      const {bossNo} = payload;
+
+      axios.delete(`http://localhost:7777/boss/${bossNo}`, config)
+          .then(() => {
+            console.log('성공')
+            this.$router.push({name: 'MyPageProfile'});
           })
           .catch((res) => {
             console.log(res)

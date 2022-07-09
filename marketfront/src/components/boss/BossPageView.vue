@@ -31,11 +31,14 @@
         <v-img :src="require(`@/assets/bossProfile/front/${boss.profileImg}`)" height="200px" width="200px" @click="changeImg" style="border-radius: 70%"></v-img>
         <input type=file class="file-input" id="files" ref="files" multiple v-on:change="fileUpload()" style="display: none">
       </div>
-      <div style="padding-left: 55px; font-size: 40px; width: 100%" class="pa-5">
+      <div style="padding-left: 55px; font-size: 40px; width: 100%;" class="pa-5">
         {{ boss.placeName }}
         <div style="font-size: 20px" class="pa-2">
           {{ boss.region }} ㆍ {{boss.category}} ㆍ 단골 0
         </div>
+      </div>
+      <div>
+        <v-btn @click="removeBoss">사장님 프로필 삭제</v-btn>
       </div>
     </div>
 
@@ -359,6 +362,11 @@ export default {
     },
     modifyCoupon(payload){
       this.$emit('modifyCoupon', payload)
+    },
+    removeBoss(){
+      let bossNo = this.boss.bossAuthNo;
+
+      this.$emit('removeBoss', {bossNo})
     }
   },
   computed: {
