@@ -125,6 +125,19 @@ export default {
           alert("에러");
         });
     },
+    onLikes(payload) {
+      const { productNo, memberNo } = payload;
+      axios
+        .post(`http://localhost:7777/productLike/${productNo}/${memberNo}`, {
+          productNo,
+        })
+        .then(() => {
+          history.go(0);
+        })
+        .catch(() => {
+          alert("문제 발생!");
+        });
+    },
   },
 };
 </script>
