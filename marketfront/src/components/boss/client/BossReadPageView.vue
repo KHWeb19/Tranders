@@ -331,6 +331,7 @@ export default {
           }
           this.$emit('onChat', {registerNo: this.registerChat.roomNo})
         })
+        this.fetchRegisterChat({member1No: this.memberNo, member2No: this.boss.member.memberNo})
     },
     modifyImgReview(formData){
       this.$emit('modifyImgReview', formData)

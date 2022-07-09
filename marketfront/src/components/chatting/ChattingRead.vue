@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" >
-      <div id='full'>
+      <!-- <div id='full'>
         <div id='left'>
           <div id='image'>
               <div>
@@ -9,60 +9,13 @@
                   </div>
               </div>
           </div>
-        </div>
+        </div> -->
         
         <div id='center'>
           <div id='name'>
-            <div id='name_value'>{{userInfo.name}}</div>
+            <div id='name_value'>{{this.login.name}}</div>
           </div>
-          <div id='chatList'>
-            <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-              <router-link id='chatroom_link' 
-                :to="{
-                  name: 'ChattingReadView',
-                  params: {roomNo: chatroom.roomNo.toString()}}"
-                >
-                <div>
-                    <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
-                        <v-img src="@/assets/profile.jpg"/>
-                    </div>
-                </div>
-                <div style="display: flex; ">
-                  <div>
-                    <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
-                    </div>
-                    <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member2.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
-                    </div>
-                      <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
-                      -webkit-box-align: center;
-                      align-items: center;
-                      height: 20px;
-                      font-size: 13px;
-                      color: var(--seed-scale-color-gray-700);">{{lastMessage.message}}
-                      </div>
-                      <div v-else style="display: flex;
-                      -webkit-box-align: center;
-                      align-items: center;
-                      height: 20px;
-                      font-size: 13px;
-                      color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
-                      <!-- {{new_data.slice(-1)[0].content.message}} -->
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="chatroom.productBoard" style="display: flex; margin-left: auto;">
-                      <v-img style="margin-right: 4px;
-                      border: 1px solid var(--profile-image-border);
-                      border-radius: 4px;
-                      width: 40px;
-                      height: 40px;
-                      object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
-                  </div>
-                </router-link>
-            </div>
-          </div>
+          <chatting-select :chatrooms="chatrooms" :lastMessage="lastMessage"/>
         </div>
         
         <div id='right'>
@@ -170,8 +123,7 @@
                     </template>
                 </v-dialog>
             </v-layout>
-            <!-- <v-layout v-if="login.memberNo!=chatroom.productBoard.member.memberNo"> -->
-              <v-layout v-if="chatroom.productBoard && chatroom.productBoard.process==='판매중'">
+            <v-layout v-if="chatroom.productBoard && chatroom.productBoard.process==='판매중'">
                 <v-dialog persisten max-width="400">
                     <template v-slot:activator="{ on }">
                         <v-btn id='my_button' depressed style="margin-left:15px" v-on="on">송금하기</v-btn>
@@ -188,23 +140,25 @@
                                         <div id="pay_box" >
                                           <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
                                           <div style="display: inline-flex;
-    margin-left: auto;"><v-btn style="
-                                            
-      border-radius: 24px;
-      min-width: 80px;
-      height: 36px;
-      padding: 0px 9px;
-      margin: 0px 5px
-      letter-spacing: -0.1px;
-      position: relative;
-      overflow: hidden;
-      color: rgb(25, 28, 32);
-      background-color: rgb(255, 235, 0);" 
-                                          @click="onCharge()">
-                                              충전
-                                          </v-btn></div></div>
-                                          <br/>
-                                          * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
+                                            margin-left: auto;">
+                                            <v-btn style="                      
+                                                border-radius: 24px;
+                                                min-width: 80px;
+                                                height: 36px;
+                                                padding: 0px 9px;
+                                                margin: 0px 5px
+                                                letter-spacing: -0.1px;
+                                                position: relative;
+                                                overflow: hidden;
+                                                color: rgb(25, 28, 32);
+                                                background-color: rgb(255, 235, 0);" 
+                                                @click="onCharge()">
+                                                충전
+                                            </v-btn>
+                                          </div>
+                                        </div>
+                                        <br/>
+                                        * 결제 버튼 클릭 시 바로 결제가 진행됩니다.
                                       </v-card-text>
                                       <v-card-actions>
                                           <v-spacer></v-spacer>
@@ -254,13 +208,13 @@
               object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
             </div>
             <div style="flex-direction: column;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-    font-size: 14px;
-    line-height: 150%;
-    letter-spacing: -0.02em;">
+              -webkit-box-pack: center;
+              justify-content: center;
+              -webkit-box-flex: 1;
+              flex-grow: 1;
+              font-size: 14px;
+              line-height: 150%;
+              letter-spacing: -0.02em;">
               <div>{{chatroom.productBoard.title}}</div>
               <div style="font-weight: bold;">{{chatroom.productBoard.price}}원</div>
             </div>
@@ -315,13 +269,13 @@
             <div id='submit_form'>
               <textarea @keyup.enter="onSubmit" v-model="message" placeholder="메시지를 입력해주세요"></textarea>
               <div style="display: flex; 
-              -webkit-box-pack: justify;
-              justify-content: space-between;
-              margin: 8px 10px;">
-                <div style="display: flex;
-                -webkit-box-align: center;
-                align-items: center;
-                ">
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+                margin: 8px 10px;">
+                  <div style="display: flex;
+                  -webkit-box-align: center;
+                  align-items: center;
+                  ">
                       <label for="files">
                           <v-icon large style="margin-top:4px">mdi-camera</v-icon>
                       </label>
@@ -333,18 +287,21 @@
             </div>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
   </form>
 
 </template>
 
 <script>
+import ChattingSelect from './ChattingSelect.vue';
+
 import axios from 'axios'
 import Vue from 'vue'
 import cookies from "vue-cookies";
 Vue.use(cookies)
 
 export default {
+  components: { ChattingSelect },
   name: "ChattingRead",
   props: {
       userInfo: {
@@ -427,14 +384,12 @@ export default {
           this.newMessage.push({message:this.priview, now, image:true})
           this.priview=''
           this.lastMessage={roomNo, message:'사진을 전송 했습니다'}
-          // this.realTime=true
         }
         if(message!='\n' && message!=''){
           this.$emit('onSubmit', { roomNo, memberNo, message, now })
           this.newMessage.push({message, now})
           this.message=''
           this.lastMessage={roomNo, message}
-          // this.realTime=true
         }
     },
     onAppoint() {
@@ -474,27 +429,10 @@ export default {
       }
     }
   },
-  // beforeUpdate() {
-
-  //   console.log(this.realTime);
-  //     if(this.realTime) {
-
-  //       this.$router.go()
-  //     }
-  // }
 }
 </script>
 
 <style scoped>
-/* #top{
-  border-bottom: 1px solid #bcbcbc;
-} */
-#logo{
-  display: flex;
-  align-items: center;
-  width: 1200px;
-  padding: 0px 8px;
-}
 #full{
   display: flex;
   width: 1200px;
@@ -516,6 +454,7 @@ export default {
 }
 #center{
 	width: 310px;
+  height: 100%;
 	float: left;
   border-right: 2px solid #e9ecef;
 }

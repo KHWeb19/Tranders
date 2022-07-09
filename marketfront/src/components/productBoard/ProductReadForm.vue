@@ -223,6 +223,7 @@ export default {
           }
           this.$emit("onChat", {registerNo: this.registerChat.roomNo})
         })
+        this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
     },
     closeDialog() {
       this.reportDialog = false;

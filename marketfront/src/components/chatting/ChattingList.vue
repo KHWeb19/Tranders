@@ -1,6 +1,7 @@
 <template>
-      <div id='full'>
-        <div id='left'>
+      <!-- <div id='full'> -->
+      <form>
+        <!-- <div id='left'>
           <div id='image'>
               <div>
                   <div style="border-radius: 50%; overflow: hidden; margin-top: 20px">
@@ -8,69 +9,26 @@
                   </div>
               </div>
           </div>
-        </div>
+        </div> -->
         
         <div id='center'>
           <div id='name'>
             <div id='name_value'>{{this.login.name}}</div>
           </div>
-          <div id='chatList'>
-            <div id='chatroom' v-for="chatroom in chatrooms" :key="chatroom.roomNo">
-              <router-link id='chatroom_link' :to="{
-                        name: 'ChattingReadView',
-                        params: {roomNo: chatroom.roomNo.toString()}}">
-                <div>
-                    <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
-                        <v-img src="@/assets/profile.jpg"/>
-                    </div>
-                </div>
-                <div style="display: flex; ">
-                  <div>
-                    <div v-if="login.memberNo==chatroom.member2.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member1.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
-                    </div>
-                    <div v-if="login.memberNo==chatroom.member1.memberNo" style="display: flex; align-items: center; height: 20px;">
-                      <span  style="font-weight: bold; font-size: 13px;">{{chatroom.member2.name}}</span>&nbsp;<span style="font-size: 12px;">{{chatroom.member1.region}}</span><v-icon v-if="!chatroom.productBoard" small color="green">mdi-storefront-outline</v-icon>
-                    </div>
-                      <div v-if="lastMessage.roomNo==chatroom.roomNo" style="display: flex;
-                      -webkit-box-align: center;
-                      align-items: center;
-                      height: 20px;
-                      font-size: 13px;
-                      color: var(--seed-scale-color-gray-700);">{{lastMessage.message}}
-                      </div>
-                      <div v-else style="display: flex;
-                      -webkit-box-align: center;
-                      align-items: center;
-                      height: 20px;
-                      font-size: 13px;
-                      color: var(--seed-scale-color-gray-700);">{{chatroom.lastMessage}}
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="chatroom.productBoard" style="display: flex; margin-left: auto;">
-                      <v-img style="margin-right: 4px;
-                      border: 1px solid var(--profile-image-border);
-                      border-radius: 4px;
-                      width: 40px;
-                      height: 40px;
-                      object-fit: cover;" :src="require(`@/assets/pImage/${chatroom.productBoard.productImage}`)"/>
-                  </div>
-                </router-link>
-            </div>
-          </div>
+          <chatting-select :chatrooms="chatrooms" :lastMessage="lastMessage"/>
         </div>
         
         <div id='right'>
           <div style="display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 800px;
-    height: 944px;
-    flex-direction: column;"><v-icon x-large>mdi-chat</v-icon><span style="margin-top: 34px;">채팅할 상대를 선택해주세요.</span></div>
-          
+          justify-content: center;
+          align-items: center;
+          width: 800px;
+          height: 944px;
+          flex-direction: column;"><v-icon x-large>mdi-chat</v-icon><span style="margin-top: 34px;">채팅할 상대를 선택해주세요.</span>
         </div>
+                
       </div>
+    </form>
 
 </template>
 
@@ -78,9 +36,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import cookies from "vue-cookies";
+import ChattingSelect from './ChattingSelect.vue';
 Vue.use(cookies)
 
 export default {
+  components: { ChattingSelect },
   name: "ChattingList",
   props: {
       chatroom: {
@@ -184,33 +144,9 @@ export default {
 </script>
 
 <style scoped>
-#logo{
-  display: flex;
-  align-items: center;
-  width: 1200px;
-  padding: 0px 8px;
-}
-#full{
-  display: flex;
-  width: 1200px;
-  height: 100%;
-  margin: 0 auto;
-  line-height: 24px;
-  background: #fff;
-}
-#left{
-	width: 80px;
-	float: left;	
-}
-#image{
-  background-color: #ededed;
-	width: 80px;
-	height: 100%;
-  display: flex; 
-  justify-content: center;
-}
 #center{
 	width: 310px;
+  height: 100%;
 	float: left;
   border-right: 2px solid #e9ecef;
 }
@@ -228,28 +164,9 @@ export default {
     font-size: 16px;
     line-height: 150%;
 }
-#chatList{
-	width: 310px;
-	/* height: 825px; */
-}
-#chatroom_link{
-  display: flex;
-  padding: 16px;
-  height: 72px;
-  border-bottom: 2px solid #e9ecef;
-  -webkit-box-align: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  background-position: center center;
-  contain: content;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-#chatroom_link:hover{
-  background-color: #f2f3f6;
+#right{
+	width: 810px;
+	float: left;
 }
 
 </style>
