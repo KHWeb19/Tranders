@@ -2,9 +2,9 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style="width: 100%; position: relative;">
-        <div v-if="backProfileImgs === ''" style="width: 100%; height: 500px;">
+        <div v-if="backProfileImgs === ''" style="width: 100%; height: 400px;">
           <div style="width: 100%; position: relative;">
-            <div id="img" style="width: 100%; height: 500px; background-color: #a0c5a0"></div>
+            <div id="img" style="width: 100%; height: 400px; background-color: #a0c5a0"></div>
           </div>
         </div>
         <swiper v-else class="swiper" :options="swiperOption" style="height: 500px">
@@ -16,7 +16,7 @@
         </swiper>
       </div>
 
-      <div style="top: 25px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style="top: 65px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
     </div>
@@ -32,7 +32,7 @@
           {{ boss.region }} ㆍ {{boss.category}} ㆍ 단골 0
         </div>
         <div>
-          <v-btn class="white--text" style="font-weight: bold; background-color: #4c7732"> + 단골 맺기</v-btn>
+          <v-btn depressed color="success" height="40" type="submit"><b> + 단골 맺기</b></v-btn>
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@
     </div>
 
     <v-dialog v-model="phoneNumDialog" width="500px">
-      <v-card width="500px" height="150px" style="padding: 35px 30px 20px 30px">
+      <v-card width="500px" min-height="160px" style="padding: 35px 30px 20px 30px">
         <v-row justify="center">
           <div>
             <span class="light-green--text lighten-3" style="font-weight: bolder; font-size: 30px">{{boss.placeName}}</span>
@@ -106,7 +106,7 @@
         </v-row>
 
         <v-row justify="end">
-          <v-btn @click="phoneNumDialog=false">확인</v-btn>
+          <v-btn depressed color="success" height="40" type="submit" @click="phoneNumDialog=false"><b>확인</b></v-btn>
         </v-row>
       </v-card>
     </v-dialog>
@@ -152,8 +152,8 @@
           </div>
 
           <div style="padding-top: 25px; padding-bottom: 10px; display: flex; justify-content: end">
-            <v-btn style="margin-right: 15px" @click="reviewClose">취소</v-btn>
-            <v-btn class="light-green lighten-2" @click="saveReview" v-bind:disabled="selection.length === 0">저장</v-btn>
+            <v-btn depressed height="40" type="submit" style="margin-right: 8px"><b>취소</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="saveReview" v-bind:disabled="selection.length === 0"><b>저장</b></v-btn>
           </div>
         </div>
       </v-card>

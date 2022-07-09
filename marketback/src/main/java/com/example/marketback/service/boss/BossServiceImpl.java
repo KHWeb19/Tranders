@@ -283,6 +283,8 @@ public class BossServiceImpl implements BossService{
     @Override
     public void removeBoss(Long bossNo) {
         Boss boss = bossRepository.findByBossNo(bossNo);
+        Member member = memberRepository.findByMemberNo(boss.getMember().getMemberNo());
+
         System.out.println("여기까지 들어와!?");
 
         List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
@@ -321,6 +323,9 @@ public class BossServiceImpl implements BossService{
         }
         System.out.println("여기까지와 4");
         bossRepository.delete(boss);
+
+        member.setBossAuth(Boolean.FALSE);
+        memberRepository.save(member);
 
     }
 

@@ -1,9 +1,9 @@
 <template>
   <div id="my_page_box" style="position: relative;">
     <div id="profile_back_img">
-      <div style=" width: 100%; position: relative;">
+      <div style="width: 100%; height: 400px; position: relative;">
         <div v-if="backProfileImgs === ''">
-          <v-img src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 500px;"  @click="backProfileImgDialog = true"></v-img>
+          <v-img src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 400px;"  @click="backProfileImgDialog = true"></v-img>
         </div>
         <div v-else>
         <swiper class="swiper" :options="swiperOption" style="height: 500px">
@@ -17,10 +17,10 @@
         </div>
       </div>
 
-      <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style=" top: 65px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div style="top: 25px; position: absolute; left: 88%; z-index: 1">
+      <div style="top: 65px; position: absolute; left: 80%; z-index: 1">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
     </div>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div>
-        <v-btn @click="removeBoss">사장님 프로필 삭제</v-btn>
+        <v-btn depressed color="success" height="40" type="submit" @click="removeBoss"><b>사장님 프로필 삭제</b></v-btn>
       </div>
     </div>
 
@@ -66,7 +66,7 @@
 
 
     <div v-if="home">
-      <boss-home-view :boss="boss" @saveCoupon="saveCoupon" @modifyCoupon="modifyCoupon"></boss-home-view>
+      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifyCoupon="modifyCoupon"></boss-home-view>
     </div>
 
     <div v-if="comm">
@@ -90,7 +90,7 @@
         <v-row style="height: 300px; width: 500px;" justify="center">
           <div style="width: 300px; height: 250px; justify-content: center; display: flex; align-items: center">
             <v-btn @click="onClickFile" icon v-if="changeIsCheck">
-              <v-img src="@/assets/plus.png" style="height: 300px; width: 350px"> </v-img>
+              <v-img src="@/assets/plus.png" style="height: 200px; width: 250px"> </v-img>
             </v-btn>
 
             <div class="itemFileBox" ref="itemFileBox">
@@ -106,8 +106,8 @@
 
         <v-row justify="end" no-gutters>
           <v-card-actions>
-            <v-btn class="light-green lighten-3" @click="saveProfile">Save</v-btn>
-            <v-btn @click="changeImgDialog = false">Close</v-btn>
+            <v-btn depressed height="40" type="submit" @click="changeImgDialog = false"><b>Close</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="saveProfile"><b>Save</b></v-btn>
           </v-card-actions>
         </v-row>
       </v-card>
@@ -166,7 +166,8 @@
           </div>
 
           <div style="padding: 20px 20px 20px 20px">
-            <v-btn style="width: 100%; height: 50px; font-size: 30px" class="light-green lighten-3"  @click="saveBackProfile">저장</v-btn>
+            <v-btn block depressed color="success" height="50" type="submit" @click="saveBackProfile"><h3><b>저장</b></h3></v-btn>
+<!--            <v-btn style="width: 100%; height: 50px; font-size: 30px" class="light-green lighten-3"  @click="saveBackProfile">저장</v-btn>-->
           </div>
 
         </div>
@@ -236,7 +237,7 @@ export default {
       this.$router.push({name: 'MyPageProfile'})
     },
     modify(){
-      alert('사진을 변경하겠다!')
+      //alert('사진을 변경하겠다!')
       this.backProfileImgDialog = true
     },
     savePrice(payload) {
@@ -374,7 +375,8 @@ export default {
   },
   created() {
     this.bossNo = this.boss.bossAuthNo;
-    this.fetchBossBackProfile(this.bossNo)
+    alert(this.bossNo)
+    this.fetchBossBackProfile(this.boss.bossAuthNo)
   }
 }
 </script>
@@ -386,7 +388,7 @@ export default {
   max-width: 800px;
   min-width: 800px;
   margin: 0 auto;
-  padding: 0 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 40px
 }
 #profile {
   padding: 15px 20px 20px 20px;

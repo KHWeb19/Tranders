@@ -1,7 +1,9 @@
 <template>
   <div>
-<!--    <after-login-view></after-login-view> // 없는게 더 괜찮아 보이는데 다른분들은 어떤지 물어보기!-->
-    <div v-if="this.boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
+    <after-login-view></after-login-view>
+    <div v-if="!boss || (Array.isArray(boss) && boss.length === 0)">
+      <v-btn>죄송합니다 다시 시도해주세요</v-btn>
+    </div>
     <boss-page-view v-else :boss="boss"
                     @savePrice="savePrice"
                     @saveBackProfile="saveBackProfile"
@@ -16,6 +18,7 @@
 
 <script>
 
+import AfterLoginView from "@/components/home/AfterLoginView";
 const config = {
   headers: {
     'Authorization': 'Bearer '+ cookies.get('access_token'),
@@ -31,7 +34,7 @@ import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 export default {
   name: "BossPage",
-  components: {BossPageView},
+  components: {AfterLoginView, BossPageView},
   data() {
     return {
       memberNo: cookies.get('memberNo'),
@@ -77,7 +80,7 @@ export default {
     },
     savePrice(payload){
       const {menuName, menuPrice, menuInfo, bossNo} = payload;
-      alert(bossNo)
+      //alert(bossNo)
       axios.post(`http://localhost:7777/boss/addPrice/${bossNo}`, {menuName, menuPrice, menuInfo}, config)
           .then((res) => {
             console.log(res);
