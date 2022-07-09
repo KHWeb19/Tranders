@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 40px;">
+  <div style="padding: 40px; border-right: 1px solid #e9ecef;">
     <div>
       <v-row>
         <v-col><h3>프로필</h3></v-col><v-icon @click="myProfile" large color="black">mdi-chevron-right</v-icon>
@@ -40,6 +40,7 @@
                   width: 70px;
                   background-color: rgb(202, 227, 164);
                 "
+                :to="{ name: 'MyBuyHistoryList' }"
               >
                 <v-icon style="color: #008807">mdi-shopping</v-icon>
               </v-btn>

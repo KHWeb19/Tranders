@@ -8,6 +8,7 @@ import ProductReadPage from '@/views/productBoard/ProductReadPage'
 import ProductModifyPage from '@/views/productBoard/ProductModifyPage'
 import ProductSearchListPage from '@/views/productBoard/ProductSearchListPage'
 import MyPurchaseHistory from '@/views/myPage/MyPurchaseHistory'
+import MyBuyHistoryList from '@/views/myPage/MyBuyHistoryList'
 
 import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
 import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
@@ -99,6 +100,11 @@ const routes = [
     path: '/myPurchase',
     name: 'MyPurchaseHistory',
     component: MyPurchaseHistory
+  },
+  {
+    path: '/myBuy',
+    name: 'MyBuyHistoryList',
+    component: MyBuyHistoryList
   },
   {
     path: '/productModify/:productNo',

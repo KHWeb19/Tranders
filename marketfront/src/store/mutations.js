@@ -3,6 +3,7 @@ import {
     FETCH_PRODUCT_BOARD_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_BUYER_LIST,
     FETCH_REGISTER_CHAT,
     FETCH_REVIEW_LIST,
     FETCH_MANNER,
@@ -69,6 +70,9 @@ export default {
     },
     [FETCH_CHATROOM_LIST] (state, chatrooms) {
         state.chatrooms = chatrooms
+    },
+    [FETCH_BUYER_LIST] (state, buys) {
+        state.buys = buys
     },
     [FETCH_REGISTER_CHAT] (state, registerChat) {
         state.registerChat = registerChat

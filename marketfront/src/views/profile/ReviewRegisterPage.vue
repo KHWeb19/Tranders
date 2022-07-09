@@ -1,6 +1,6 @@
 <template>
     <div id='review_register'>
-        <review-register :userInfo="userInfo" @onSubmit="onSubmit"/>
+        <review-register :userInfo="userInfo" @onSubmit="onSubmit" :memberId="memberId"/>
     </div>
 </template>
 

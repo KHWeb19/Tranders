@@ -2,6 +2,7 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
+    FETCH_BUYER_LIST,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_REGISTER_CHAT,
@@ -57,6 +58,12 @@ export default {
         return axios.get('http://localhost:7777/product/list')
             .then((res) => {
                 commit(FETCH_PRODUCT_BOARD_LIST, res.data)
+            })
+    },
+    fetchBuyerList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/product/buyerList/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_BUYER_LIST, res.data)
             })
     },
     refreshToken ({commit}) {

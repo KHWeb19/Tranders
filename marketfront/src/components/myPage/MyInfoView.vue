@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div style="padding: 40px 100px; border-left: 1px solid #e9ecef;">
+      <div style="padding: 40px 100px;">
         <div v-if="!isCheck && providerType === 'undefined'">
           <v-row justify="center">
             <v-card-title style="font-size: 30px">비밀번호를 입력해주세요</v-card-title>

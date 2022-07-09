@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="map_box" style="padding: 40px; border-left: 1px solid #e9ecef;">
+      <div class="map_box" style="padding: 40px;">
         <v-row justify="center">
           <v-card-title style="font-size: 30px;">내 동네 설정</v-card-title>
         </v-row>

@@ -1,10 +1,12 @@
 <template>
   <div>
-    <v-app>
-      <v-container>
-        <v-card width="100%">
-          <div style="padding-left: 50px; padding-right: 30px">
-            <h2 class="head-title">판매 리스트</h2>
+    <!-- <v-app> -->
+      <!-- <v-container> -->
+        <!-- <v-card width="100%"> -->
+          <div style="padding:40px">
+            <v-row justify="center" style="padding-bottom: 20px">
+              <v-card-title style="font-size: 30px;">판매 내역</v-card-title>
+            </v-row>
             <section class="card-wrap">
               <v-col
                 class="none-product"
@@ -63,9 +65,9 @@
               </v-col>
             </section>
           </div>
-        </v-card>
-      </v-container>
-    </v-app>
+        <!-- </v-card> -->
+      <!-- </v-container> -->
+    <!-- </v-app> -->
   </div>
 </template>
 
@@ -100,14 +102,14 @@ export default {
 </script>
 
 <style scoped>
-.head-title {
+/* .head-title {
   font-size: 32px;
   font-weight: 600;
   letter-spacing: -0.6px;
   text-align: center;
   counter-reset: #212529;
   padding-top: 30px;
-}
+} */
 section {
   display: block;
 }
@@ -118,7 +120,8 @@ section#content {
 }
 .card-wrap {
   width: 700px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  margin: 0 33px;
   display: flex;
   justify-content: left;
   flex-wrap: wrap;

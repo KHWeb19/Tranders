@@ -143,6 +143,10 @@ export default {
         userInfo: {
             type: Object,
         },
+        memberId: {
+            type: String,
+            required: true
+        }
     },
     data() {
         return {
@@ -207,6 +211,7 @@ export default {
             this.good4 = 1
         },
         onSubmit() {
+            console.log(this.memberId)
             const { memberId, button, good1, good2, good3, good4, bad1, bad2, bad3, bad4, message } = this
             if (button == -1) {
                 this.sum = (bad1 + bad2 + bad3 + bad4)*button*0.025
