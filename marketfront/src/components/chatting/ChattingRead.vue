@@ -134,11 +134,11 @@
                                           Pay
                                       </v-card-title>
                                       <v-card-text>
-                                        <div id="pay_box">결제금액: {{chatroom.productBoard.price}} 원</div>
+                                        <div id="pay_box">결제금액: {{chatroom.productBoard.price | makeComma}} 원</div>
                                       </v-card-text>
                                       <v-card-text >
                                         <div id="pay_box" >
-                                          <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money}} </span>원</div>
+                                          <div>페이머니: <span :style="chatroom.productBoard.price>userInfo.money ? 'color:red' : ''">{{userInfo.money | makeComma}} </span>원</div>
                                           <div style="display: inline-flex;
                                             margin-left: auto;">
                                             <v-btn style="                      
@@ -216,7 +216,7 @@
               line-height: 150%;
               letter-spacing: -0.02em;">
               <div>{{chatroom.productBoard.title}}</div>
-              <div style="font-weight: bold;">{{chatroom.productBoard.price}}원</div>
+              <div style="font-weight: bold;">{{chatroom.productBoard.price | makeComma}}원</div>
             </div>
             <div>{{chatroom.productBoard.process}}</div>
           </div>
@@ -228,10 +228,10 @@
               </div>
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:500px': 'height:585px' && chatroom.productBoard ? 'height:623px':'height:698px' "> 
+          <div id='chatView' :style="chatroom.appointDate ? 'height:498px': 'height:583px' && chatroom.productBoard ? 'height:582px':'height:654px' "> 
             <!-- +42px -->
-            <div v-if="!chatroom.productBoard" id='notice' style="padding-bottom:20px">
-              <div id='notice_box'>
+            <div v-if="!chatroom.productBoard" id='' style="padding-bottom:20px">
+              <div id='message_box'>
                 <div>
                 <span style="font-weight: 700; margin-right: 4px;">알림</span>오이마켓 속 내 가게, 사장님과의 문의를 시작해보세요.
                 <div>[ 채팅 문의시간 ]</div>

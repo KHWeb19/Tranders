@@ -18,7 +18,7 @@
         <v-row style="height: 70px;">
           <v-col>
             <div id='id' style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">            
-              <div><input v-model="id" :rules="rules" solo style="width: 100%; outline-style: none;" placeholder="ID"/></div>
+              <div><input v-model="id" :rules="rules" solo style="width: 350px; outline-style: none;" placeholder="ID"/></div>
               <div><v-btn id="checkDub" @click="checkDub" outlined>중복 확인</v-btn></div>
             </div>
           </v-col>
@@ -68,7 +68,7 @@
         <v-row style="height: 70px;">
           <v-col>
             <div id='id' style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">            
-              <div><input v-model="region" :rules="rules" solo style="width: 100%; outline-style: none;" placeholder="ADDRESS" readonly/></div>
+              <div><input v-model="region" :rules="rules" solo style="width: 350px; outline-style: none;" placeholder="ADDRESS" readonly/></div>
               <div><v-btn id="checkDub" @click="whereami" outlined>위치 등록</v-btn></div>
             </div>
           </v-col>
