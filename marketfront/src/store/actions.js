@@ -2,6 +2,9 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
+    FETCH_REGION_PRODUCT_BOARD_LIST,
+    FETCH_MY_PRODUCT_BOARD_LIST,
+
     FETCH_LIKE,
     FETCH_LIKES_LIST,
     FETCH_MY_LIKES_LIST,
@@ -57,11 +60,24 @@ export default {
             })
     },
     fetchProductBoardList({ commit }) {
-        return axios.get('http://localhost:7777/product/list')
+        return axios.get('http://localhost:7777/product/list/')
             .then((res) => {
                 commit(FETCH_PRODUCT_BOARD_LIST, res.data)
             })
     },
+    fetchRegionProductBoardList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/product/list/region/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_REGION_PRODUCT_BOARD_LIST, res.data)
+            })
+    },
+    fetchMyProductBoardList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/product/list/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_MY_PRODUCT_BOARD_LIST, res.data)
+            })
+    },
+
     fetchLike({ commit }, { productNo, memberNo }) {
         return axios.get(`http://localhost:7777/productLike/${productNo}/${memberNo}`)
             .then((res) => {
@@ -424,11 +440,11 @@ export default {
                 commit(FETCH_TODAY_REPORT, res.data)
             })
     },
-    fetchShowCoupon({commit}, bossNo){
+    fetchShowCoupon({ commit }, bossNo) {
         return axios.post(`http://localhost:7777/boss/showCoupon/${bossNo}`, {}, {
             headers: {
-                'Authorization': 'Bearer '+ cookies.get('access_token'),
-                'Accept' : 'application/json',
+                'Authorization': 'Bearer ' + cookies.get('access_token'),
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
@@ -436,11 +452,11 @@ export default {
                 commit(FETCH_SHOW_COUPON, res.data)
             })
     },
-    fetchShowCouponMember({commit}, bossNo){
+    fetchShowCouponMember({ commit }, bossNo) {
         return axios.post(`http://localhost:7777/boss/couponMember/${bossNo}`, {}, {
             headers: {
-                'Authorization': 'Bearer '+ cookies.get('access_token'),
-                'Accept' : 'application/json',
+                'Authorization': 'Bearer ' + cookies.get('access_token'),
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
