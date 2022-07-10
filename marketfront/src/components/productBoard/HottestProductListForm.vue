@@ -1,12 +1,13 @@
 <template>
   <div>
-    <section class="card-wrap">
+    <section class="card-wrap" style="justify-content: left">
       <v-col
         class="none-product"
         v-if="
           !productBoards ||
           (Array.isArray(productBoards) && productBoards.length === 0)
         "
+        style="text-align: center"
       >
         현재 등록된 상품이 없습니다!
       </v-col>
@@ -40,7 +41,8 @@
                 {{ productBoard.member.region }}
               </div>
               <div class="card-counts">
-                <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
+                <span> 관심 {{ productBoard.productLike.length }} </span>∙
+                <span> 채팅 {{ productBoard.chatCnt }} </span>∙
                 <span>조회수 {{ productBoard.viewCnt }}</span>
               </div>
             </div>
@@ -79,6 +81,15 @@ export default {
 </script>
 
 <style scoped>
+.head-title {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  text-align: center;
+  counter-reset: #212529;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
 section {
   display: block;
 }
@@ -119,6 +130,17 @@ section#content {
   margin-bottom: 4px;
   line-height: 1.5;
   font-weight: normal;
+}
+.card-process {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: green;
+  max-width: 70px;
+  color: white;
+  margin-bottom: 5px;
 }
 .card-price {
   font-size: 15px;

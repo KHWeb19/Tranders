@@ -1,6 +1,9 @@
 import {
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
+    FETCH_REGION_PRODUCT_BOARD_LIST,
+    FETCH_MY_PRODUCT_BOARD_LIST,
+
     FETCH_LIKE,
     FETCH_LIKES_LIST,
     FETCH_MY_LIKES_LIST,
@@ -52,6 +55,12 @@ export default {
     },
     [FETCH_PRODUCT_BOARD_LIST](state, productBoards) {
         state.productBoards = productBoards
+    },
+    [FETCH_REGION_PRODUCT_BOARD_LIST](state, regionProductBoards) {
+        state.regionProductBoards = regionProductBoards
+    },
+    [FETCH_MY_PRODUCT_BOARD_LIST](state, myProductBoards) {
+        state.myProductBoards = myProductBoards
     },
     [FETCH_LIKE](state, like) {
         state.like = like
@@ -171,16 +180,16 @@ export default {
     [FETCH_TODAY_REPORT](state, todayReport) {
         state.todayReport = todayReport;
     },
-    [FETCH_SEARCH_PRODUCT] (state, searchProduct){
+    [FETCH_SEARCH_PRODUCT](state, searchProduct) {
         state.searchProduct = searchProduct
     },
-    [FETCH_SEARCH_COMM] (state, searchComm){
+    [FETCH_SEARCH_COMM](state, searchComm) {
         state.searchComm = searchComm
     },
-    [FETCH_SHOW_COUPON] (state, coupon){
+    [FETCH_SHOW_COUPON](state, coupon) {
         state.coupon = coupon;
     },
-    [FETCH_SHOW_MEMBER_COUPON] (state, memberCoupon){
+    [FETCH_SHOW_MEMBER_COUPON](state, memberCoupon) {
         state.memberCoupon = memberCoupon;
     }
 

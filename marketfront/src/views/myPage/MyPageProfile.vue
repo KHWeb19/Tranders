@@ -2,56 +2,52 @@
   <div id="login-wrap">
     <after-login-view></after-login-view>
 
-      <div id='content'>
-        <v-row no-gutters>
-          <v-col cols="4">
-            <my-profile-bar :userInfo="userInfo"></my-profile-bar>
-          </v-col>
+    <div id="content">
+      <v-row no-gutters>
+        <v-col cols="4">
+          <my-profile-bar :userInfo="userInfo"></my-profile-bar>
+        </v-col>
 
-          <v-col cols="8">
-            <my-page-view :userInfo="userInfo"></my-page-view>
-          </v-col>
-        </v-row>
-      </div>
+        <v-col cols="8">
+          <my-page-view :userInfo="userInfo"></my-page-view>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
 <script>
-
 import AfterLoginView from "@/components/home/AfterLoginView";
 import MyProfileBar from "@/components/myPage/MyPageBar";
 import MyPageView from "@/components/myPage/MyProfileView";
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from "vuex";
 import cookies from "vue-cookies";
 
 export default {
-  components: {MyPageView, MyProfileBar, 
-  AfterLoginView,
-  },
+  components: { MyPageView, MyProfileBar, AfterLoginView },
   name: "MyPageProfile",
   data() {
     return {
-      memberId: cookies.get("id")
-    }
+      memberId: cookies.get("id"),
+    };
   },
   computed: {
-      ...mapState(['userInfo']),
+    ...mapState(["userInfo"]),
   },
   created() {
-      this.fetchMyPage(this.memberId)
+    this.fetchMyPage(this.memberId);
   },
   methods: {
-      ...mapActions(['fetchMyPage']),
-  }
+    ...mapActions(["fetchMyPage"]),
+  },
 };
 </script>
 
 <style scoped>
-#login-wrap{
+#login-wrap {
   background: #f8f9fa;
-  height: 100vh;
 }
-#content{
+#content {
   display: block;
   margin-top: 72px;
   margin: 30px auto 0 auto;

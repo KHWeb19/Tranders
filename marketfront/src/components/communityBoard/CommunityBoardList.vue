@@ -1,20 +1,5 @@
 <template>
-  <div>
-   <!-- <div class="btn-cover">
-    <input type="text" 
-           class="search" 
-           v-model="keyWord" 
-           cols="70" 
-           placeholder="Search" />
-    <v-btn @click="searchstart()" 
-            class="search-btn"
-            color="light green accent-2"
-            style="box-shadow:none"
-            dark fab small>
-            <v-icon>mdi-magnify</v-icon>
-    </v-btn>
-    </div>
-    <br> -->
+  <div> 
     <div id='community_list' v-if="!communityBoards || (Array.isArray(communityBoards) && communityBoards.length === 0)" elevation="10" outlined width="75%" class="mx-auto">
       <br>
       <div>
@@ -38,7 +23,7 @@
       <div id="community_writer">
         <span>{{communityBoard.writer}}</span>
         <span> &bull; {{communityBoard.region}}</span>
-        <span id='community_date'>{{communityBoard.createdDate}}</span>
+        <span id='community_date'>{{communityBoard.updDate | timeForToday}}</span>
       </div>
       <hr id='community_hr'>
       <div id='community_icon'>
@@ -64,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import cookies from "vue-cookies";
 
 export default {
   name: 'CommunityBoardList',
@@ -79,6 +65,13 @@ export default {
   },
   data () {
     return {
+      login: {
+                id: cookies.get('id'),
+                memberNo: cookies.get("memberNo"),
+                name: cookies.get('name'),
+                region: cookies.get('region'),
+                access_token: cookies.get('access_token'),
+            },
       pageNum: 0,
       searchList:[],
       keyWord:''

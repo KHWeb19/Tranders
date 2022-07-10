@@ -35,15 +35,6 @@
       <table>
         <v-row>
           <v-col>
-            <v-col cols="3">
-              <v-select
-                class="checkProcess"
-                v-model="process"
-                :items="selectProcess"
-                label="판매 현황"
-              >
-              </v-select>
-            </v-col>
             <h3>상품명</h3>
           </v-col>
           <v-col cols="12">
@@ -140,8 +131,7 @@ export default {
   },
   data() {
     return {
-      selectProcess: ["판매중", "판매완료"],
-      process: 0,
+      process: "판매중",
       productImage: "",
       productImage1: null,
       productImage2: null,
@@ -205,7 +195,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -217,7 +206,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               });
             } else {
               const {
@@ -228,7 +216,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -239,19 +226,11 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               });
             }
           } else {
-            const {
-              process,
-              productImage,
-              category,
-              title,
-              price,
-              content,
-              regDate,
-            } = this;
+            const { process, productImage, category, title, price, content } =
+              this;
             this.$emit("submit", {
               memberNo: this.login.memberNo,
               process,
@@ -260,7 +239,6 @@ export default {
               title,
               price,
               content,
-              regDate,
             });
           }
         })
