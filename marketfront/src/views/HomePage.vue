@@ -1,7 +1,7 @@
 <template>
   <div>
-    <home-view></home-view>
-    <after-login-view></after-login-view>
+    <home-view v-if="id === null"></home-view>
+    <after-login-view v-else></after-login-view>
     <div id="home">
       <div id="top">
         <div>
@@ -31,6 +31,7 @@ import HomeView from "@/components/home/HomeView";
 import AfterLoginView from "@/components/home/AfterLoginView";
 import FooterView from "@/components/home/FooterView.vue";
 import HottestProductListPage from "./productBoard/HottestProductListPage.vue";
+import cookies from "vue-cookies";
 
 export default {
   name: "HomePage",
@@ -39,6 +40,11 @@ export default {
     HomeView,
     FooterView,
     HottestProductListPage,
+  },
+  data() {
+    return {
+      id: cookies.get('id')
+    }
   },
 };
 </script>

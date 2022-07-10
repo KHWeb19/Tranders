@@ -35,13 +35,16 @@ export default {
   },
   methods: {
     modifyMarketInfo(payload){
-      const {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng} = payload;
+      const {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng} = payload;
       let id = this.id;
 
-      axios.post(API_BASE_URL+'/boss/modifyMarketInfo',{id, phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng}, config)
+      axios.post(API_BASE_URL+'/boss/modifyMarketInfo',{id, phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng}, config)
           .then((res) => {
             console.log(res)
-            this.$router.push({name: 'BossPage'})
+
+            setTimeout(() => {
+              this.$router.push({name: 'BossPage'})
+            }, 120)
           })
           .catch(() => {
             alert('에러')

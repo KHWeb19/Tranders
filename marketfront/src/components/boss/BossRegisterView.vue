@@ -46,7 +46,7 @@
         <v-row>
           <v-col cols="3">카테고리</v-col>
           <v-col cols="9">
-            <v-text-field solo style="width: 100%" v-model="category" placeholder="카테고리를 설정해 주세를."> </v-text-field>
+            <v-text-field solo style="width: 100%" v-model="category" placeholder="카테고리를 설정해 주세요."> </v-text-field>
           </v-col>
         </v-row>
 
@@ -137,7 +137,7 @@ export default {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 0 40px 0 40px;
 }
 #card_box{
   padding-right: 20px;

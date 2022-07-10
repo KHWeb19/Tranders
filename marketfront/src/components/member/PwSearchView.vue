@@ -31,13 +31,13 @@
 
         <v-row style="height: 70px; margin-top: 15px">
           <v-col>
-            <v-btn @click="searchPw" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">비밀번호 찾기</v-btn>
+            <v-btn @click="searchPw"  depressed color="success" height="50" type="submit"><b>비밀번호 찾기</b></v-btn>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px; margin-top: 5px">
           <v-col>
-            <v-btn @click="loginForm" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">로그인</v-btn>
+            <v-btn @click="loginForm"  depressed color="success" height="50" type="submit"><b>로그인</b></v-btn>
           </v-col>
         </v-row>
       </v-container>

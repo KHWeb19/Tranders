@@ -16,9 +16,9 @@ export default {
 
       axios.post('http://localhost:7777/search/pw', {id, name, phoneNumber})
         .then((res) => {
-          console.log(res)
+          console.log(res.data)
           if(res.data !== ""){
-            alert(res.data)
+            //alert(res.data)
             this.$router.push({name: 'ChangePwPage', params: {id: res.data}})
           }else {
             alert('에러!')

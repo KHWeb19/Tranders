@@ -37,7 +37,7 @@
         <div class="kmap" ref="map" style="position: relative; overflow: hidden"></div>
 
         <div style="padding-top: 30px">
-          <span style="font-size: 25px;"><v-icon x-large>mdi-map-marker-outline</v-icon> {{ boss.address }}</span>
+          <span style="font-size: 25px;"><v-icon x-large>mdi-map-marker-outline</v-icon> {{ boss.address }} {{boss.detailAddress}}</span>
         </div>
 
         <div style="padding-top: 15px">
@@ -268,8 +268,8 @@
             </div>
 
             <div style="display: flex; justify-content: end">
-              <v-btn style="margin-right: 8px" @click="modifyCheck = true">close</v-btn>
-              <v-btn class="light-green lighten-3" @click="modifySave">save</v-btn>
+              <v-btn depressed color="success" height="40" type="submit" style="margin-right: 8px" @click="modifyCheck = true"><b>close</b></v-btn>
+              <v-btn depressed color="success" height="40" type="submit" @click="modifySave"><b>save</b></v-btn>
             </div>
           </div>
         </div>
@@ -358,8 +358,8 @@
 
           <div>
             <v-radio-group v-model="radioGroup" row>
-              <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
-              <v-radio value="1" label="제한있음" @click="radioCheck">
+              <v-radio :value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
+              <v-radio :value="1" label="제한있음" @click="radioCheck">
               </v-radio>
             </v-radio-group>
 
@@ -410,8 +410,8 @@
 
         <div>
           <v-radio-group v-model="radioModifyGroup" row>
-            <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
-            <v-radio value="1" label="제한있음" @click="radioCheck">
+            <v-radio :value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
+            <v-radio :value="1" label="제한있음" @click="radioCheck">
             </v-radio>
           </v-radio-group>
 
@@ -714,6 +714,7 @@ export default {
       this.couponInfo = coupon.couponInfo;
       this.dateFormatted = coupon.couponDate;
       this.radioModifyGroup = coupon.remain_coupon === null ? 0 : 1
+      this.radioField = coupon.remain_coupon !== null
       alert(this.radioModifyGroup)
       this.couponMax = coupon.couponMax;
       this.couponNo = coupon.couponNo;
@@ -829,7 +830,7 @@ export default {
     },
   },
   async created() {
-    await this.fetchBossMenuList(this.id)
+    await this.fetchBossMenuList(this.boss.bossAuthNo)
     await this.fetchShowCoupon(this.boss.bossAuthNo)
     await this.day()
   }

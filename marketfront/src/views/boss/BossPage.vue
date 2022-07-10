@@ -12,7 +12,9 @@
                     @deletePrice="deletePrice"
                     @saveCoupon="saveCoupon"
                     @modifyCoupon="modifyCoupon"
-                    @removeBoss="removeBoss"></boss-page-view>
+                    @removeBoss="removeBoss"
+                    @modifyAddBackProfile="modifyAddBackProfile"
+                    @modifyADeleteBackProfile="modifyADeleteBackProfile"></boss-page-view>
   </div>
 </template>
 
@@ -148,6 +150,45 @@ export default {
           })
           .catch((res) => {
             console.log(res)
+          })
+    },
+    modifyAddBackProfile(formData){ //fileList 가 있다.
+      axios.post(API_BASE_URL+'/boss/modifyAddBackProfile', formData, {
+        headers: {
+          'Authorization': 'Bearer '+ cookies.get('access_token'),
+          'Accept' : 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+          .then(() => {
+            setTimeout(() => {
+              this.$router.go()
+            }, 120)
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    modifyADeleteBackProfile(formData){ // fileList 가 없다.
+      axios.post(API_BASE_URL+'/boss/modifyDeleteBackProfile', formData, {
+        headers: {
+          'Authorization': 'Bearer '+ cookies.get('access_token'),
+          'Accept' : 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+          .then((res) => {
+            console.log(res);
+            if(res.data === false){
+              alert('에러 발생')
+            }else{
+              setTimeout(() => {
+                this.$router.go()
+              }, 120)
+            }
+          })
+          .catch(() => {
+            alert('에러')
           })
     }
   },

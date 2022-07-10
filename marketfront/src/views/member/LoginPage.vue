@@ -20,8 +20,6 @@ export default {
   },
   mounted() {
     this.isLogin = !(cookies.get('access_token') === null && cookies.get('refresh_token') === null);
-
-    alert(this.isLogin)
   },
   methods: {
     async login(payload){

@@ -121,11 +121,12 @@ export default {
     },
     saveMarketInfo() {
       const { phoneNumber, marketInfo, marketHomePage, startTime, endTime} = this;
-      let address = document.getElementById("addrInputText").value +' '+ this.address1;
+      let address = document.getElementById("addrInputText").value;
+      let detailAddress = this.address1;
       let lat = document.getElementById("lat").value
       let lng = document.getElementById("lng").value
       console.log(lat +", "+lng)
-      this.$emit('saveMarketInfo', {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng})
+      this.$emit('saveMarketInfo', {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng})
     },
     test(test){
       this.address1 = test;

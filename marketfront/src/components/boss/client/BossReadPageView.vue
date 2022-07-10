@@ -361,7 +361,7 @@ export default {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 0 40px 0 40px;
 }
 #profile {
   padding: 15px 20px 20px 20px;

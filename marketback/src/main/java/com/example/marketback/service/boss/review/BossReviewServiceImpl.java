@@ -1,6 +1,7 @@
 package com.example.marketback.service.boss.review;
 
 import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.boss.BossImage;
 import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.near.Near;
@@ -106,7 +107,8 @@ public class BossReviewServiceImpl implements BossReviewService{
 
         if(bossReviewEntity.size() != 0) {
             for (BossReview bossReview : bossReviewEntity) {
-                response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), bossReview.getCreateDate()));
+                String date = bossReview.getCreateDate().substring(0, 10);
+                response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), date));
             }
             return response;
         }else {

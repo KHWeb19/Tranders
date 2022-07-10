@@ -27,6 +27,8 @@ public class Boss {
 
     private String address;
 
+    private String detailAddress;
+
     private String category;
 
     @Lob

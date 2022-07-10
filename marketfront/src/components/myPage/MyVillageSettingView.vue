@@ -64,9 +64,9 @@ export default {
   methods: {
     ...mapActions(['fetchMyVillageSetting']),
     saveRegion(){
-      console.log(this.model)
+      //alert(this.model)
 
-      let data = this.model === 0 ? data = this.illageInfo.city : this.model === 1 ? data = this.villageInfo.district : data = this.villageInfo.villageName
+      let data = this.model === 0 ? data = this.villageInfo.city : this.model === 1 ? data = this.villageInfo.district : data = this.villageInfo.villageName
 
       this.$emit('saveRegion', {data});
     }
