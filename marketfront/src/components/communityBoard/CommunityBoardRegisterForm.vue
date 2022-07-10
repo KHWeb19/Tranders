@@ -34,20 +34,6 @@
             </div>
             <table>
                 <v-row>
-                    <!-- <v-col cols="1"><h3>주제</h3></v-col>
-                    <v-col cols="11">
-                        <v-combobox
-                            class="titleFloat"
-                            v-model="selectSubject"
-                            :items="items"
-                            label="말머리"
-                            filled
-                            style="width:150px; zoom:1"
-                            outlined
-                            dense
-                            color="indigo darken-4"
-                        ></v-combobox>
-                    </v-col> -->
                     <v-col v-if="!selectSubject[0]">
                         <v-chip style="margin-right:12px"  @click="selectedSubject(item)" v-model="usedSubject" v-for="(item, i) in subject" :key="i" >
                             <b>{{item}}</b>
@@ -164,8 +150,6 @@ export default {
             this.category = payload[4]
             this.phoneNumber = payload[5]
             this.storeRegion = payload[6];
-
-          //rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name
             console.log(payload) 
         })
         this.writer = this.login.id
@@ -282,44 +266,6 @@ textarea{
     padding: 16px;
     resize: none;
 }
-/* table{
-    position: relative;
-    background-color: rgb(191, 246, 201);
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 0.5%;
-    padding-bottom: 2.5%;
-    margin-left:auto;
-    margin-right:auto;
-    zoom:80%;
-} */
-/* .v-combobox, .v-text-field, .v-textarea, #files{
-    font-family: 'Noto Sans KR', sans-serif;
-} */
-/* .writeBtn {
-    position: relative;
-    margin-top:0.5%;
-    margin-left:1%;
-    zoom:1;
-    float:left;
-}
-.writeBtn2 {
-    position: absolute;
-    zoom:1;
-    margin-top:0.5%;
-    margin-left:82%;
-    float:left;
-} */
-/* .titleFloat {
-    float:left;
-    margin-top:-1%;
-    margin-right:3%;
-} */
-/* .subject {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin-right:1.5%;
-    zoom:110%;
-} */
 .preview {
     position: relative;
     margin-left: auto;

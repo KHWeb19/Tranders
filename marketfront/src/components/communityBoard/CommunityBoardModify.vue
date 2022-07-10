@@ -75,10 +75,6 @@
                                 <input type="file" id="files" ref="files" dense style="width:0px"
                                         multiple v-on:change="handleFileUpload()"/>
                                 <v-carousel hide-delimiters height="auto">    
-                                    <!-- <v-carousel-item 
-                                    v-for="(file, index) in files" :key="index" style="text-align:center">
-                                    <img :src=file.preview class="preview"/>
-                                    </v-carousel-item>          -->
                                     <v-carousel-item 
                             v-for="(file, index) in files" :key="index" style="text-align:center">
                             <img :src=file.preview class="preview"/>
@@ -91,36 +87,6 @@
                             </div>
                         </v-col>
                     </v-row>
-                    <!-- <v-row>
-                        <v-carousel hide-delimiters  height="auto">
-                            <v-carousel-item 
-                            v-for="(file, index) in files" :key="index" style="text-align:center">
-                            <img :src=file.preview class="preview"/>
-                            </v-carousel-item>
-                            <v-carousel-item 
-                            v-for="(file, index) in checkFile()" :key="index" style="text-align:center">
-                            <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>
-                            </v-carousel-item>                              
-                        </v-carousel>
-                    </v-row>                 
-                        <v-icon large>mdi-image-outline</v-icon>
-                        <input type="file" id="files" ref="files"  dense style="width:193px"
-                                multiple v-on:change="handleFileUpload()"/>
-                            <v-dialog v-model="dialog" persisten max-width="1000">
-                                <template v-slot:activator="{ on }">
-                                    <v-btn v-on="on"  onclick="" color="blue-grey" text>
-                                        <v-icon large>mdi-map-marker-outline</v-icon>
-                                        <v-text-field style="width:200px" placeholder="장소를 등록하세요." v-model="placeName"/>
-                                    </v-btn>                              
-                                </template>
-                                <v-card>
-                                    <kakao-map></kakao-map>        
-                                </v-card>
-                            </v-dialog>      
-                    <div align="left">
-                    <span style="color:red; font-size:12pt">최대 10개의 이미지 등록 가능({{files.length}}/10)</span>
-                    </div> -->
-
                     <v-row>
                         <v-col>
                             <v-btn block depressed color="success" height="50" type="submit"><h3><b>수정 완료</b></h3></v-btn>
@@ -179,11 +145,9 @@ export default {
         this.title = this.communityBoard.title
         this.content = this.communityBoard.content
         this.usedSubject = this.communityBoard.usedSubject
-        this.createdDate = this.communityBoard.createdDate
         this.placeName = this.communityBoard.placeName
         this.placeUrl = this.communityBoard.placeUrl
         this.memberNo = this.communityBoard.member.memberNo
-        // this.file = this.communityBoard.file;
     },
     methods: {
         handleFileUpload () {
@@ -200,7 +164,6 @@ export default {
                     {
                         file: this.$refs.files.files[i],
                         preview: URL.createObjectURL(this.$refs.files.files[i])
-                    
                     }
                 ]
             }
@@ -208,25 +171,18 @@ export default {
             }
         },
         onSubmit () {
-            // const { title, content, writer, usedSubject, region, createdDate, placeName, placeUrl } = this
             const { title, content} = this
             const { boardNo} = this.communityBoard
             console.log(boardNo)
             let formData = new FormData();
 
-            // for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
-            //       formData.append('file',this.$refs.files.files[idx])
-            // }
+            for (let idx = 0; idx <  this.$refs.files.files.length; idx++) {
+                  formData.append('file',this.$refs.files.files[idx])
+                  console.log(this.$refs.files.files[idx])  
+            }
             formData.append('boardNo',boardNo)
             formData.append('title',title)
-            formData.append('content', content)
-            // formData.append('writer', writer)
-            // formData.append('usedSubject', usedSubject)
-            // formData.append('region', region)
-            // formData.append('createdDate', createdDate)
-            // formData.append('placeName', placeName)
-            // formData.append('placeUrl', placeUrl)
-            
+            formData.append('content', content)         
             this.$emit('submit', {formData})
             console.log(formData)            
         },
@@ -243,18 +199,7 @@ export default {
             }
             return files
         },
-        selectedSubject (item) {
-            if(this.usedSubject.length >0 && this.usedSubject != item ){
-                alert("게시글의 주제는 하나만 선택 가능합니다.")
-                return false
-            } 
-                const el = this.selectSubject.findIndex(el => el === item);
-                el < 0 ? this.selectSubject.push(item) : this.selectSubject.splice(el, 1);
-                const el2 = this.usedSubject.findIndex(el2 => el2 === item);
-                el2 < 0 ? this.usedSubject.push(item) : this.usedSubject.splice(el2,1) 
-                console.log(this.usedSubject)
-            
-        },
+
         goBack() {
             this.$router.go(-1);
         }
@@ -309,52 +254,6 @@ textarea{
     padding: 16px;
     resize: none;
 }
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
-.label{
-    margin-right:3%;
-    text-align: center;
-    padding-top: 10px;
-    font-size:18pt;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-table{
-    position: relative;
-    background-color: rgb(191, 246, 201);
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 0.5%;
-    padding-bottom: 2.5%;
-    margin-left:auto;
-    margin-right:auto;
-    zoom:80%;
-}
-.v-combobox, .v-text-field, .v-textarea, #files{
-    font-family: 'Noto Sans KR', sans-serif;
-}
-.writeBtn {
-    position: relative;
-    margin-top:0.5%;
-    margin-left:1%;
-    zoom:1;
-    float:left;
-}
-.writeBtn2 {
-    position: absolute;
-    zoom:1;
-    margin-top:0.5%;
-    margin-left:82%;
-    float:left;
-}
-.titleFloat {
-    float:left;
-    margin-top:-1%;
-    margin-right:3%;
-}
-.subject {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin-right:1.5%;
-    zoom:130%;
-} */
 .preview {
     position: relative;
     margin-left: auto;

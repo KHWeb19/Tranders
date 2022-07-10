@@ -1,47 +1,39 @@
 <template>
 <v-container>
-    <v-row wrap>
-        <v-btn @click="goPage" class="backBtn" color="grey darken-3" style="box-shadow:none" dark fab small><v-icon>mdi-arrow-left</v-icon></v-btn>
-    </v-row> 
-    <br><br>
-    <v-card v-if="!searchList || (Array.isArray(searchList) && searchList.length === 0)" elevation="10" outlined width="75%" class="mx-auto">
+    <div id='community_list' v-if="!searchList || (Array.isArray(communityBoards) && communityBoards.length === 0)" elevation="10" outlined width="75%" class="mx-auto">
       <br>
-      <v-card-text>
+      <div>
         <span class="mr-2">작성된 게시글이 없습니다.</span>
-      </v-card-text>
+      </div>
       <br>
-    </v-card>
-    <v-card v-else v-for="communityBoard in searchList" :key="communityBoard.boardNo" elevation="10" outlined width="75%" class="mx-auto">
-      <v-card-text>
-         <v-chip color="light green accent-1">
+    </div>
+    <div id='community_list' v-else v-for="communityBoard in paginatedData" :key="communityBoard.boardNo" @click="goRead(communityBoard.boardNo)">
+      <p>
+         <v-chip color="#E6F3E6">
            <b>{{communityBoard.usedSubject}}</b>
-         </v-chip>               
-      </v-card-text>
-      <v-card-text>
+         </v-chip>         
+         <b> {{communityBoard.title}}</b>      
+      </p>
+      <div id='community_title_content'>
         <router-link id=sj style=text-decoration:none; :to="{ name: 'CommunityBoardReadPage',
         params: { boardNo: communityBoard.boardNo.toString() } }">
-        {{ communityBoard.title}}
-        </router-link>        
-        <br>
-      </v-card-text>
-      <v-card-actions>
-          <span class="mr-2">{{communityBoard.writer}}</span>
-          <span class="mr-2">&bull;&nbsp;{{communityBoard.region}}</span>
-      </v-card-actions>
-      <hr>
-      <v-icon>
-              mdi-heart
-      </v-icon>
-      &nbsp;
-      <span class="mr-1">{{communityBoard.likeCnt}}</span>
-      &nbsp;
-      <v-icon>
-              mdi-comment
-      </v-icon>
-      &nbsp;
-      <span class="mr-1">{{communityBoard.commentCnt}}</span>
-      <span id="cd" class="mr-2">{{communityBoard.createdDate}}</span>
-    </v-card>
+        <p>{{ communityBoard.content}}</p>
+        </router-link>
+      </div>
+      <div id="community_writer">
+        <span>{{communityBoard.writer}}</span>
+        <span> &bull; {{communityBoard.region}}</span>
+        <span id='community_date'>{{communityBoard.createdDate}}</span>
+      </div>
+      <hr id='community_hr'>
+      <div id='community_icon'>
+        <v-icon>mdi-heart-outline</v-icon>
+        <span> {{communityBoard.likeCnt}}</span>
+        &nbsp;
+        <v-icon>mdi-comment-outline</v-icon>
+        <span> {{communityBoard.commentCnt}}</span>
+      </div>
+    </div>
     <div class="btn-cover">
       <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
         prev             
@@ -56,7 +48,7 @@
 
 <script>
 export default {
-  name: 'SearchList',
+  name: 'SearchList,AfterLoginView',
   props: {
     searchList:{
       type: Array,
@@ -98,17 +90,65 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+#community_list{
+    /* border-radius: 8px; */
+    border-left: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 40px;
+    line-height: 24px;
+    background: #fff;
+    cursor: pointer;
+}
+#community_title_content{
+  padding-top: 20px;
+}
+#community_writer{
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 6px;
+  padding: 10px 0px;
+  color: #868e96;
+  position: relative;
+}
+#community_date{
+  position: absolute;
+  padding: 10px 0px;
+  right: 0;
+  bottom: 0;
+}
+#community_hr{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #e9ecef;
+  padding: 0;
+}
+#community_icon{
+  padding: 10px 0px;
+  color: #868e96;
+}
+p {
+  display: block;
+  margin: 0px;
+}
 #sj{
   font-size: 17px;
   color:black;
 }
-#cd{
-  margin-left:68%;
+.search{
+  border-bottom: 3px solid rgb(187, 246, 202);
+  width: 100px;
+  outline: none;
+  margin-left: 730px;   
 }
-.backBtn {
-  margin-top:3%;
-  margin-left:13.5%;
+.search-btn{
+  margin-left:5px;
   zoom:0.8;
+  color:black;
 }
 .btn-cover {
   margin-top: 1.5rem;
