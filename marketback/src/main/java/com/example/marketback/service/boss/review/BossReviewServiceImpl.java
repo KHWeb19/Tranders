@@ -107,7 +107,7 @@ public class BossReviewServiceImpl implements BossReviewService{
 
         if(bossReviewEntity.size() != 0) {
             for (BossReview bossReview : bossReviewEntity) {
-                String date = bossReview.getCreateDate().substring(0, 10);
+                String date = bossReview.getCreateDate();
                 response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), date));
             }
             return response;

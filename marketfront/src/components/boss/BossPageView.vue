@@ -20,7 +20,7 @@
       <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div v-if="backProfileImgs !== ''" style="top: 65px; position: absolute; left: 80%; z-index: 1">
+      <div v-if="backProfileImgs !== ''" style="top: 25px; position: absolute; left: 80%; z-index: 1">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
     </div>
@@ -473,7 +473,6 @@ export default {
   },
   created() {
     this.bossNo = this.boss.bossAuthNo;
-    alert(this.bossNo)
     this.fetchBossBackProfile(this.boss.bossAuthNo)
   }
 }

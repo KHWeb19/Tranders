@@ -28,7 +28,7 @@
           </v-row>-->
 
           <v-row>
-            <v-btn @click="memberCheck" style="width: 100%; height: 50px; font-size: 20px; border-radius: 18px" class="light-green lighten-3">인증</v-btn>
+            <v-btn @click="memberCheck" block depressed color="success" height="50" type="submit"><h3><b>인증</b></h3></v-btn>
           </v-row>
           <v-row style="height: 35px"></v-row>
         </div>

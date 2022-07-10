@@ -13,13 +13,13 @@
             </div>
             <div>
               <div style="font-size: 22px; font-weight: bolder">{{boss.name}}</div>
-              <div> {{boss.region}} ㆍ {{boss.date}}</div>
+              <div> {{boss.region}} ㆍ {{ boss.date | timeForToday }}</div>
             </div>
           </div>
 
           <div style="display: flex; justify-content: end; width: 50%">
             <v-btn v-if="id === boss.id" style="margin-right: 10px" @click="modify(boss, index)">수정</v-btn>
-            <v-btn v-if="id === boss.id" @click="deleteReview(boss)">삭제</v-btn>
+            <v-btn v-if="id === boss.id" color="success" @click="deleteReview(boss)">삭제</v-btn>
           </div>
 
         </div>

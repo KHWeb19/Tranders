@@ -155,7 +155,7 @@ export default {
       let couponNo = this.modifyCoupon.couponNo;
       console.log(this.modifyCoupon)
       let id = this.id;
-      alert(couponNo)
+      //alert(couponNo)
       this.$emit('useCoupon', {couponNo, id})
     }
   },

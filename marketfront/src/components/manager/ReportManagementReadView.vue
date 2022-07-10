@@ -113,18 +113,21 @@
                   </h1>
                   <p id="category">
                     {{ reportBoardRead.category }} •
-                    {{ reportBoardRead.regDate }}
+                    {{ reportBoardRead.updDate | timeForToday }}
                   </p>
                   <p id="price" property="schema:price" content style="font-size: 18px; font-weight: bold">
-                    <span class="text-light-gray">{{ reportBoardRead.price }}원</span>
+                    <span class="text-light-gray">{{ reportBoardRead.price | makeComma }}원</span>
                   </p>
 
                   <div property="schema:content" id="detail">
                     <p>{{ reportBoardRead.content }}</p>
                   </div>
 
-                  <p id="counts">관심 8 ∙ 채팅 11 ∙ 조회 111</p>
-
+                  <p id="counts">
+                    관심 {{ reportBoardRead.productLike }}∙ 채팅
+                    {{ reportBoardRead.chatCnt }} ∙ 조회
+                    {{ reportBoardRead.viewCnt }}
+                  </p>
                 </section>
               </article>
             </div>

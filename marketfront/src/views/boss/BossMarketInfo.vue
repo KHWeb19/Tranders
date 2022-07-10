@@ -37,7 +37,7 @@ export default {
             console.log(res)
             setTimeout(() => {
               this.$router.push({name: 'BossPage'})
-            }, 120)
+            }, 500)
           })
           .catch(() => {
             alert('에러')

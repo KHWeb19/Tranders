@@ -16,7 +16,7 @@
         </swiper>
       </div>
 
-      <div style="top: 65px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style="top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
     </div>
