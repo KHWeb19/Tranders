@@ -163,7 +163,7 @@ export default {
           .then(() => {
             setTimeout(() => {
               this.$router.go()
-            }, 80)
+            }, 120)
           })
           .catch(() => {
             alert('에러')
@@ -184,7 +184,7 @@ export default {
             }else{
               setTimeout(() => {
                 this.$router.go()
-              }, 80)
+              }, 120)
             }
           })
           .catch(() => {

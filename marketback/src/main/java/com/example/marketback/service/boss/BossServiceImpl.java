@@ -96,6 +96,7 @@ public class BossServiceImpl implements BossService{
         bossEntity.setStartTime(bossMarketInfoRequest.getStartTime());
         bossEntity.setEndTime(bossMarketInfoRequest.getEndTime());
         bossEntity.setAddress(bossMarketInfoRequest.getAddress());
+        bossEntity.setDetailAddress(bossMarketInfoRequest.getDetailAddress());
         bossEntity.setMarketHomePage(bossMarketInfoRequest.getMarketHomePage());
         bossEntity.setLat(bossMarketInfoRequest.getLat());
         bossEntity.setLng(bossMarketInfoRequest.getLng());
@@ -146,8 +147,8 @@ public class BossServiceImpl implements BossService{
     }
 
     @Override
-    public List<BossPriceMenuResponse> getMenu(String id) {
-        List<BossPrice> bossPriceEntity = bossPriceRepository.findByMemberId(id);
+    public List<BossPriceMenuResponse> getMenu(Long bossNo) {
+        List<BossPrice> bossPriceEntity = bossPriceRepository.findByBossNo(bossNo);
 
         List<BossPriceMenuResponse> responses = new ArrayList<>();
 

@@ -132,10 +132,12 @@ export default {
     saveMarketInfo() {
       const { phoneNumber, marketInfo, marketHomePage, startTime, endTime} = this;
       let address = '';
+      let detailAddress = '';
       let lat = '';
       let lng = '';
       if(this.addAddress === true) {
-        address = document.getElementById("addrInputText").value + ' ' + this.address2;
+        address = document.getElementById("addrInputText").value;
+        detailAddress = this.address2;
         lat = document.getElementById("lat").value
         lng = document.getElementById("lng").value
       }else {
@@ -145,7 +147,7 @@ export default {
       }
 
       console.log(lat +", "+lng)
-      this.$emit('modifyMarketInfo', {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng})
+      this.$emit('modifyMarketInfo', {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng})
     },
     test(test){
       this.address1 = test;
@@ -227,7 +229,7 @@ export default {
   },
   created() {
     this.phoneNumber = this.boss.phoneNumber;
-    this.address1 = this.boss.address;
+    this.address1 = this.boss.address + this.boss.detailAddress;
     this.marketInfo = this.boss.marketInfo;
     this.marketHomePage = this.boss.marketHomePage;
     this.startTime = this.boss.startTime;

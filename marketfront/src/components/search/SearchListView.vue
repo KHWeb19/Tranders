@@ -10,10 +10,10 @@
         <div v-else>
           <div style="padding: 40px;">
             <v-row>
-              <v-col v-for="product in searchProduct" :key="product.productNo" style="max-width: 33%; height: 300px;">
+              <v-col v-for="product in searchProduct" :key="product.productNo" style="max-width: 33%; height: 350px;">
                 <div class="card-top" @click="moveProduct(product.productNo)">
                   <div class="card-photo">
-                    <v-img :src="require(`@/assets/pImage/${product.productImage}`)"/>
+                    <v-img height="200" :src="require(`@/assets/pImage/${product.productImage}`)"/>
                   </div>
 
                   <div class="card-desc">

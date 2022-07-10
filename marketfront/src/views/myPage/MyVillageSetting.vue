@@ -55,6 +55,7 @@ export default {
           .then((res) => {
             console.log(res);
             cookies.set('region', data, SAVE_COOKIE_ACCESS);
+            alert('동네 설정 변경 완료')
           })
           .catch(() => {
             alert('에러')

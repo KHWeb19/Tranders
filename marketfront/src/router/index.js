@@ -53,6 +53,7 @@ import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
 import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
 import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
 import MyCouponPage from "@/views/myPage/MyCouponPage";
+import BossReadPage from "@/views/boss/client/BossReadPage";
 
 Vue.use(VueRouter)
 
@@ -323,6 +324,16 @@ const routes = [
     name: 'BossMarketInfoModify',
     components: {
       default: BossMarketInfoModify
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/bossRead',
+    name: 'BossReadPage',
+    components: {
+      default: BossReadPage
     },
     props: {
       default: true

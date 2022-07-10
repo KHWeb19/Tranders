@@ -13,10 +13,11 @@ public class BossMarketInfoRequest {
     private String startTime;
     private String endTime;
     private String address;
+    private String detailAddress;
     private String lat;
     private String lng;
 
-    public BossMarketInfoRequest(String id, String phoneNumber, String marketInfo, String marketHomePage, String startTime, String endTime, String address, String lat, String lng) {
+    public BossMarketInfoRequest(String id, String phoneNumber, String marketInfo, String marketHomePage, String startTime, String endTime, String address, String detailAddress, String lat, String lng) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.marketInfo = marketInfo;
@@ -24,6 +25,7 @@ public class BossMarketInfoRequest {
         this.startTime = startTime;
         this.endTime = endTime;
         this.address = address;
+        this.detailAddress = detailAddress;
         this.lat = lat;
         this.lng = lng;
     }

@@ -162,11 +162,11 @@ public class BossController {
         bossService.addPrice(bossPrice, bossNo);
     }
 
-    @PostMapping("/getMenu/{id}")
-    public List<BossPriceMenuResponse> getMenu(@PathVariable String id){
+    @PostMapping("/getMenu/{bossNo}")
+    public List<BossPriceMenuResponse> getMenu(@PathVariable Long bossNo){
         log.info("get Menu");
 
-        return bossService.getMenu(id);
+        return bossService.getMenu(bossNo);
     }
 
     @PostMapping("/modifyMenu")

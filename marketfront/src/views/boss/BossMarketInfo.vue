@@ -29,15 +29,15 @@ export default {
   },
   methods: {
     saveMarketInfo(payload) {
-      const {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng} = payload;
+      const {phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng} = payload;
       let id = this.id;
 
-      axios.post(API_BASE_URL+'/boss/saveMarketInfo',{id, phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng}, config)
+      axios.post(API_BASE_URL+'/boss/saveMarketInfo',{id, phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, detailAddress, lat, lng}, config)
           .then((res) => {
             console.log(res)
             setTimeout(() => {
               this.$router.push({name: 'BossPage'})
-            }, 80)
+            }, 120)
           })
           .catch(() => {
             alert('에러')

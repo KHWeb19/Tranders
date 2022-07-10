@@ -196,8 +196,8 @@ export default {
                 commit(FETCH_BOSS_BACK_PROFILE, res.data)
             ])
     },
-    fetchBossMenuList({ commit }, id) {
-        return axios.post(`http://localhost:7777/boss/getMenu/${id}`, {}, {
+    fetchBossMenuList({ commit }, bossNo) {
+        return axios.post(`http://localhost:7777/boss/getMenu/${bossNo}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookies.get('access_token'),
                 'Accept': 'application/json',

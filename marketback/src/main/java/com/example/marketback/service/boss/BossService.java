@@ -28,7 +28,7 @@ public interface BossService {
 
     void addPrice(BossPrice bossPrice, Long bossNo);
 
-    List<BossPriceMenuResponse> getMenu(String id);
+    List<BossPriceMenuResponse> getMenu(Long id);
 
     void modifyMenu(BossPrice bossPrice);
 

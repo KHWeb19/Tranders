@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div style=" top: 65px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
       <div v-if="backProfileImgs !== ''" style="top: 65px; position: absolute; left: 80%; z-index: 1">
@@ -66,7 +66,7 @@
 
 
     <div v-if="home">
-      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifyCoupon="modifyCoupon"></boss-home-view>
+      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifySave="modifySave" @modifyCoupon="modifyCoupon"></boss-home-view>
     </div>
 
     <div v-if="comm">
@@ -172,7 +172,7 @@
 
         </div>
       </v-card>
-    </v-dialog>  뒷 배경 변경
+    </v-dialog>  <!--뒷 배경 변경-->
 
     <v-dialog v-model="backProfileImgModifyDialog" width="1500px">
       <v-card width="1500px" height="auto" class="pa-4">
@@ -339,14 +339,14 @@ export default {
       this.$emit('savePrice', payload)
     },
     modifySave(payload) {
-      alert('modify')
+      //alert('modify')
       this.$emit('modifySave', payload)
     },
     deletePrice(payload){
       this.$emit('deletePrice', payload)
     },
     changeImg(){
-      alert('changeImg')
+      //alert('changeImg')
       this.changeImgDialog = true;
     },
     onClickFile(){
@@ -486,7 +486,7 @@ export default {
   max-width: 800px;
   min-width: 800px;
   margin: 0 auto;
-  padding: 40px
+  padding: 0 40px 0 40px;
 }
 #profile {
   padding: 15px 20px 20px 20px;

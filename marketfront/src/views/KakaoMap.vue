@@ -7,7 +7,6 @@
       <input type="text" style="width:160px; border: 0; background-color: rgb(191, 246, 201)" value="" placeholder="장소를 검색해주세요." @keyup.enter="searchPlace"/>
       <div class="results">
         <div class="place" v-for="rs in search.results" :key="rs.id">
-          {{rs}}
           <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister((rs),$event); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
           <div class="addr">{{rs.road_address_name}}
           </div>
