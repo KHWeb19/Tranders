@@ -10,7 +10,7 @@
         <div v-else>
           <div style="padding: 40px;">
             <v-row>
-              <v-col v-for="product in searchProduct" :key="product.productNo" style="max-width: 33%; height: 250px;">
+              <v-col v-for="product in searchProduct" :key="product.productNo" style="max-width: 33%; height: 300px;">
                 <div class="card-top" @click="moveProduct(product.productNo)">
                   <div class="card-photo">
                     <v-img :src="require(`@/assets/pImage/${product.productImage}`)"/>
@@ -18,10 +18,14 @@
 
                   <div class="card-desc">
                     <div class="card-title">{{ product.title }}</div>
-                    <div class="card-title">{{ product.price }}원</div>
+                    <div class="card-title">{{ product.price | makeComma }}원</div>
+                    <div class="card-region-name">
+                      {{ product.member.region }}
+                    </div>
                     <div class="card-counts">
-                      <span> 관심 5 </span>∙
-                      <span> 채팅 6 </span>
+                      <span> 관심 {{ product.productLike }}</span
+                      >∙ <span> 채팅 {{ product.chatCnt }} </span>∙
+                      <span> 조회수 {{ product.viewCnt }} </span>
                     </div>
                   </div>
                 </div>
@@ -253,6 +257,15 @@ export default {
   background-color: #f8f9fa;
   box-shadow: inset 0 0 0 1px rgb(0, 0, 0, 15%);
   box-sizing: border-box;
+}
+.card-region-name {
+  font-size: 13px;
+  color: #212529;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  line-height: 1.5;
 }
 .card-desc {
   margin-top: 12px;

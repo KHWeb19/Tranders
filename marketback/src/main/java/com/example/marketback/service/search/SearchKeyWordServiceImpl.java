@@ -38,6 +38,9 @@ public class SearchKeyWordServiceImpl implements SearchKeyWordService{
         }else if(keyWordRequest.getRegion().charAt(keyWordRequest.getRegion().length() -1) == '구'){
             return productRepository.findAllByDistrictContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
         }else {
+            System.out.println("==============");
+            System.out.println("서울");
+            System.out.println("==============");
             return productRepository.findAllByCityContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
         }
     }

@@ -49,6 +49,7 @@ export default {
     saveRegion(payload) {
       const {data} = payload;
       let id = this.id;
+      //alert(data)
 
       axios.post(API_BASE_URL + '/member/saveVillage', {data, id}, config)
           .then((res) => {

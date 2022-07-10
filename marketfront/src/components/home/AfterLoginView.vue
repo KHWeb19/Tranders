@@ -90,7 +90,11 @@ export default {
     },
     logout() {
       logout();
-      this.$router.push({name: 'HomePage'})
+      if (this.$route.path === '/'){
+        this.$router.go()
+      } else {
+        this.$router.push({name: 'HomePage'})
+      }
     },
     test() {
       alert("test");

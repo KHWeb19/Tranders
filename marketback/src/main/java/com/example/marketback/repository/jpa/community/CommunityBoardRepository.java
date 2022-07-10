@@ -39,13 +39,13 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :commentId")
     CommunityBoard findByCommentId(Long commentId);
 
-    @Query("select cb from CommunityBoard cb where cb.member.city.villageName  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    @Query("select cb from CommunityBoard cb where cb.member.city.villageName  = :region and (cb.content like %:keyWord% or cb.title like %:keyWord%)")
     List<CommunityBoard> findAllByVillageNameContentContain(String keyWord, String region, Pageable pageable);
 
-    @Query("select cb from CommunityBoard cb where cb.member.city.district  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    @Query("select cb from CommunityBoard cb where cb.member.city.district  = :region and (cb.content like %:keyWord% or cb.title like %:keyWord%)")
     List<CommunityBoard> findAllByDistrictContentContain(String keyWord, String region, Pageable pageable);
 
-    @Query("select cb from CommunityBoard cb where cb.member.city.city  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    @Query("select cb from CommunityBoard cb where cb.member.city.city  = :region and (cb.content like %:keyWord% or cb.title like %:keyWord%)")
     List<CommunityBoard> findAllByCityContentContain(String keyWord, String region, Pageable pageable);
 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :boardNo")
