@@ -146,8 +146,8 @@ export default {
                 commit(FETCH_MEMBER_PROFILE, res.data)
             })
     },
-    fetchCommunityBoardList({ commit }) {
-        return axios.get('http://localhost:7777/communityboard/list')
+    fetchCommunityBoardList({ commit },memberNo) {
+        return axios.get(`http://localhost:7777/communityboard/list/${memberNo}`)
             .then((res) => {
                 commit(FETCH_COMMUNITY_BOARD_LIST, res.data)
             })

@@ -7,7 +7,7 @@
       <input type="text" style="width:160px; border: 0; background-color: rgb(191, 246, 201)" value="" placeholder="장소를 검색해주세요." @keyup.enter="searchPlace"/>
       <div class="results">
         <div class="place" v-for="rs in search.results" :key="rs.id">
-          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister((rs),$event); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
+          <h4 style="color:rgb(38,140,250);"><a href="#" @click="placeRegister1((rs.place_url),$event); return false;" style="text-decoration:none">{{rs.place_name}}</a></h4>
           <div class="addr">{{rs.road_address_name}}
           </div>
         </div>
@@ -15,7 +15,7 @@
     </v-col>
     <v-col cols="9">
       <v-text-field style="width:230px" v-model="placeName"/><v-btn @click="registerAlert(checkBatchimEnding)" class="rsBtn" color="light green accent-4" style="box-shadow:none" dark fab small><v-icon>mdi-send</v-icon></v-btn>
-      <section class="KakaoMap">   
+      <section class="cKakaoMap">   
         <div id="map">
         </div>
       </section>
@@ -57,7 +57,7 @@ export default {
     }
   },
   created () {
-        EventBus.$on('placeRegister', (payload) => {
+        EventBus.$on('placeRegister1', (payload) => {
             this.placeUrl = payload[0]
             this.placeName = payload[1]
             console.log(payload) 
@@ -163,10 +163,12 @@ export default {
       var map = new kakao.maps.Map(mapContainer, mapOption);
     },
 
-    placeRegister(rs) {
-      const payload = [ rs.place_url, rs.place_name, rs.x, rs.y, rs.category_name, rs.phone, rs.address_name]
-      EventBus.$emit('placeRegister', payload)
-      console.log(rs)
+    placeRegister1(placeUrl,$event) {
+      const payload = [ placeUrl, $event.target.innerHTML ]
+      const placeName = $event.target.innerHTML
+      EventBus.$emit('placeRegister1', payload)
+      console.log(placeName) 
+      console.log(placeUrl)
     },
 
     checkBatchimEnding(word) {

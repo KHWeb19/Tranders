@@ -62,7 +62,7 @@
                 <v-img v-else :src="require(`@/assets/uploadImg/community/${commentList.fileName}`)"></v-img>
                 </div>               
                 <template v-if="commentList.commentWriter == commentWriter">
-                    <v-dialog persisten max-width="350">
+                    <v-dialog persisten max-width="330">
                             <template v-slot:activator="{ on }">
                                 <v-btn @click="modifyComment(commentList)" v-on="on" type="button" class="comModifyBtn" color="blue-grey darken-1" style="box-shadow:none" fab x-small dark>
                                     <v-icon>mdi-eraser</v-icon>    
@@ -73,12 +73,11 @@
                                   <v-icon large>mdi-image-outline</v-icon>
                         <input type="file" id="files1" ref="files1" dense style="width:193px"
                                 multiple v-on:change="handleFileUpload1()"/>
-                        <!-- <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>                  -->
                                 <v-dialog v-model="dialog" persisten max-width="1000">
                             <template v-slot:activator="{ on }">
                                 <v-btn v-on="on"  onclick="" color="blue-grey" text>
                                     <v-icon large>mdi-map-marker-outline</v-icon>
-                                    <v-text-field style="width:200px" v-model="ediPlaceName"/>
+                                    <v-text-field style="width:210px" v-model="ediPlaceName"/>
                                 </v-btn>
                             </template>
                             <v-card>
@@ -132,7 +131,6 @@ export default {
             placeName:'',
             placeUrl:'',
             image :'',
-            image1:'',
             files:'',
             comment:'',
             response: '',
@@ -141,6 +139,7 @@ export default {
             ediPlaceName:'',
             ediPlaceUrl:'',
             ediFileName:'',
+            files1:null,
             ediImage:'',
             files1: null,
         }
@@ -161,10 +160,7 @@ export default {
        this.ediComment = this.commentList.comment
        this.ediPlaceName = this.commentList.placeName
        this.ediPlaceUrl = this.commentList.placeUrl
-
        this.ediFileName = this.commentList.FileName
-       this.ediFile = this.commentList.File
-       this.ediImage = this.commentList.image
     },
     computed: {
         ...mapState(['CommunityCommentsList']),
@@ -185,7 +181,6 @@ export default {
         onCommentSubmit () {
             const { comment, commentWriter, commentRegion, placeName, placeUrl } = this
             const file =  this.$refs.files.files[0]
-
             this.$emit('submit', {comment, commentWriter, commentRegion, placeName, placeUrl, file})
             console.log(comment, commentWriter, commentRegion, file)
             },
@@ -200,58 +195,39 @@ export default {
 
          handleFileUpload1 () {
             console.log('이미지 수정')
-           this.files1 = this.$refs.files1[0].files
-           console.log(this.files1[0])
+
+            this.files1 = this.$refs.files1[0].files
+            console.log(this.files1[0])
+
            /* var ediImage = this.$refs['files1'].files[0]
             const url = URL.createObjectURL(ediImage)
             this.ediImage = url
             this.files1 = this.$refs.files1.files1[0]*/
+
         },
       modifyComment(commentList){
         this.ediComment = commentList.comment;
         this.ediPlaceName = commentList.placeName;
         this.ediPlaceUrl = commentList.placeUrl;
         this.ediFileName = commentList.fileName;
-        this.ediFile = commentList.file;
-
         this.commentId = commentList.commentId;
-
-        // this.edifileName = commentList.fileName
       },
             onModifySubmit () {
             const comment = this.ediComment
             const placeName = this.ediPlaceName
             const placeUrl = this.ediPlaceUrl
-
             const fileName =  this.ediFileName
-            
-            // const fileName = this.ediFileName
-            
-            
             const file =  this.files1[0]
             console.log(this.$refs.files1.files)
-            // this.$emit('submit', { file,fileName })
-            
-            // alert(comment)
             
             let formData = new FormData()
             // if (fileName != null ){formData.append('fileName', fileName)}
-
             // if (file != null ){formData.append('file', file)}
+            
             if (file.length !== 0 ){
             formData.append('file',this.files1[0])}
             console.log(this.$refs.files1.files)  
-
-            // formData.append('file',this.$refs.files1.files1[0])
-            
-            // console.log(this.$refs.files.files[0])  
-
-            
-
-            // formData.append('file', file)
-
             formData.append('fileName', fileName)
-
             formData.append('comment', comment)
             formData.append('placeName', placeName)
             formData.append('placeUrl', placeUrl)
@@ -296,7 +272,8 @@ table {
     font-family: 'Noto Sans KR', sans-serif;
 }
 .commentList {
-    font-family: 'Cute Font', cursive;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
 }
 .commentBtn{
     position:absolute;
@@ -317,9 +294,9 @@ table {
 }
 .writeBtn {
     position:absolute;
-    margin-top:-14%;
+    margin-top:0%;
     margin-left:auto;
-    left:90%; 
+    left:85%; 
 }
 .preview {
     position: relative;
@@ -336,7 +313,7 @@ table {
 }
 .imgArea {
     position: relative;
-    margin-top:-8%;
+    margin-top:-6%;
     margin-left: 35%;
     margin-right:auto;
     max-height: 150px;
