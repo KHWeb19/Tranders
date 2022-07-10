@@ -40,4 +40,16 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
     @Query("select p from ProductBoard p where p.member.city.city = :region")
     List<ProductBoard> findByCityMemberContain(String region);
 
+
+    List<ProductBoard> findByContentContaining(String keyWord);
+
+    @Query("select p from ProductBoard p where p.member.city.villageName = :region and p.content like %:keyWord%")
+    List<ProductBoard> findAllByVillageNameProductKeywordContain(String keyWord, String region);
+
+    @Query("select p from ProductBoard p where p.member.city.district = :region and p.content like %:keyWord%")
+    List<ProductBoard> findAllByDistrictProductKeyWordContain(String keyWord, String region);
+
+    @Query("select p from ProductBoard p where p.member.city.city = :region and p.content like %:keyWord%")
+    List<ProductBoard> findAllByCityProductKeywordContain(String keyWord, String region);
+
 }

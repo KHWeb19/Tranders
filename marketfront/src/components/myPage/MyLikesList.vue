@@ -153,6 +153,7 @@ section#content {
 }
 .card-desc {
   margin-top: 12px;
+  text-align: left;
 }
 .card-process {
   font-size: 18px;

@@ -8,11 +8,22 @@
       @sendReport="sendReport"
       @sendImgReport="sendImgReport"
     />
-
-    <v-btn @click="onDelete">삭제</v-btn>
-    <router-link :to="{ name: 'ProductModifyPage' }">
-      <v-btn>수정하기</v-btn>
-    </router-link>
+    <div class="delete-modify-button">
+      <v-btn
+        v-if="login.memberNo == productBoard.member.memberNo"
+        @click="onDelete"
+        text
+        >삭제</v-btn
+      >
+      <router-link
+        style="text-decoration: none"
+        :to="{ name: 'ProductModifyPage' }"
+      >
+        <v-btn v-if="login.memberNo == productBoard.member.memberNo" text
+          >수정하기</v-btn
+        >
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -32,6 +43,16 @@ import axios from "axios";
 import { API_BASE_URL } from "@/constant/login";
 export default {
   name: "ProductReadPage",
+  data() {
+    return {
+      login: {
+        memberNo: cookies.get("memberNo"),
+        id: cookies.get("id"),
+        name: cookies.get("name"),
+        access_token: cookies.get("access_token"),
+      },
+    };
+  },
   props: {
     productNo: {
       type: String,
@@ -139,3 +160,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.delete-modify-button {
+  padding-left: 1050px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+</style>

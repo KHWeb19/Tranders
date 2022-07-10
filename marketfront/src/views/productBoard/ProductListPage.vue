@@ -1,6 +1,6 @@
 <template>
   <div>
-    <after-login-view :num="1"></after-login-view>
+    <after-login-view :num="2"></after-login-view>
     <product-list-form :regionProductBoards="regionProductBoards" />
     <v-btn
       id="writeBtn"

@@ -3,7 +3,13 @@
     <v-app>
       <v-container>
         <v-card width="95%">
-          <div style="padding-left: 50px; padding-right: 30px">
+          <div
+            style="
+              padding-left: 50px;
+              padding-right: 30px;
+              padding-bottom: 320px;
+            "
+          >
             <h2 class="head-title">판매 리스트</h2>
             <section class="card-wrap">
               <v-col
@@ -13,6 +19,7 @@
                   (Array.isArray(myProductBoards) &&
                     myProductBoards.length === 0)
                 "
+                style="text-align: center"
               >
                 현재 등록된 상품이 없습니다!
               </v-col>

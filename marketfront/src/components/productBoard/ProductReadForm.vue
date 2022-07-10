@@ -119,21 +119,22 @@
           <p>{{ productBoard.content }}</p>
         </div>
 
-        <td v-if="like">
-          <v-btn icon @click="onLikes(productBoard.productNo)">
-            <v-icon color="red"> mdi-cards-heart </v-icon>
-          </v-btn>
-        </td>
-        <td v-else>
-          <v-btn icon @click="onLikes(productBoard.productNo)">
-            <v-icon color="black"> mdi-cards-heart-outline </v-icon>
-          </v-btn>
-        </td>
-        <p id="counts">
-          관심 {{ productBoard.productLike.length }}∙ 채팅
-          {{ productBoard.chatCnt }} ∙ 조회
-          {{ productBoard.viewCnt }}
-        </p>
+        <span id="counts">
+          <span v-if="like">
+            <v-btn icon @click="onLikes(productBoard.productNo)">
+              <v-icon color="red"> mdi-cards-heart </v-icon>
+            </v-btn>
+          </span>
+          <span v-else>
+            <v-btn icon @click="onLikes(productBoard.productNo)">
+              <v-icon color="black"> mdi-cards-heart-outline </v-icon>
+            </v-btn>
+          </span>
+          <span>관심 {{ productBoard.productLike.length }}</span
+          >∙ <span>채팅 {{ productBoard.chatCnt }}</span
+          >∙
+          <span>조회 {{ productBoard.viewCnt }}</span>
+        </span>
 
         <v-btn
           v-if="login.memberNo != productBoard.member.memberNo"
