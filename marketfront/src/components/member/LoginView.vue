@@ -14,7 +14,7 @@
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field v-model="password" type="password" solo placeholder="Password"> </v-text-field>
+            <input v-model="password" type="password" placeholder="Password">
           </v-col>
         </v-row>
 
@@ -109,7 +109,6 @@ export default {
 input{
     width: 100%;
     border: 2px solid #EAEBEE;
-    /* border: 1px solid #d1d3d8; */
     box-sizing: border-box;
     border-radius: 6px;
     font-size: 16px;

@@ -162,7 +162,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public CityVillageInfoResponse getVillageInfo(String id) {
         Member memberEntity = memberRepository.findByMemberId(id);
-        City cityEntity = cityRepository.findByRegion(memberEntity.getRegion());
         int searchNum;
 
         if(memberEntity.getSearchRegion().charAt(memberEntity.getSearchRegion().length() -1) == '동'){
@@ -173,8 +172,7 @@ public class MemberServiceImpl implements MemberService {
             searchNum = 0;
         }
 
-        CityVillageInfoResponse response = new CityVillageInfoResponse(cityEntity.getCity(), cityEntity.getDistrict(), cityEntity.getVillageName(), searchNum);
-        return response;
+        return new CityVillageInfoResponse(memberEntity.getCity().getCity(), memberEntity.getCity().getDistrict(), memberEntity.getCity().getVillageName(), searchNum);
     }
 
     @Override
