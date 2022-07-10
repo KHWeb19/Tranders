@@ -1,15 +1,11 @@
 package com.example.marketback.repository.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
-import com.example.marketback.entity.productBoard.ProductBoard;
-import com.example.marketback.entity.review.BossReview;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -23,27 +19,32 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query(value = "update CommunityBoard lc set lc.likeCount = lc.likeCount + 1 where lc.boardNo = :boardNo",nativeQuery = true)
     void updateLikeCount(Long boardNo);
 
-//    @Query(value = "update CommunityBoard cb set lc.likeCount = lc.likeCount + 1 where lc.boardNo = :boardNo",nativeQuery = true)
-//    CommunityBoard findByBoardNo(Long boardNo);
-
-
     @Query("select cb from CommunityBoard cb where cb.near.nearNo = :nearNo")
-    List<CommunityBoard> findTopByBossNoOrderByIdDesc(Long nearNo);
+    List<CommunityBoard> findTopByBossNoOrderByIdDesc(@Param("nearNo")Long nearNo);
 
     @Query("select cb from CommunityBoard cb where cb.boss.bossAuthNo = :bossNo")
-    List<CommunityBoard> findByBossNo(Long bossNo);
+    List<CommunityBoard> findByBossNo(@Param("bossNo")Long bossNo);
 
     @Query("select cb from CommunityBoard cb where cb.near.nearNo = :nearNo")
-    List<CommunityBoard> findByNearNo(Long nearNo);
+    List<CommunityBoard> findByNearNo(@Param("nearNo")Long nearNo);
 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :commentId")
-    CommunityBoard findByCommentId(Long commentId);
+    CommunityBoard findByCommentId(@Param("commentId")Long commentId);
 
     @Query("select cb from CommunityBoard cb where cb.region = :region and cb.content like %:keyWord%")
     List<CommunityBoard> findAllByContentContain(String keyWord, String region, Pageable pageable);
 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :boardNo")
     CommunityBoard findByBoardNo(@Param("boardNo") Long boardNo);
+
+    @Query("select cb from CommunityBoard cb where cb.member.city.villageName = :region order by boardNo desc")
+    List<CommunityBoard> findByVillageNameMemberContain(@Param("region") String region);
+
+    @Query("select cb from CommunityBoard cb where cb.member.city.district = :region order by boardNo desc")
+    List<CommunityBoard> findByDistrictMemberContain(@Param("region") String region);
+
+    @Query("select cb from CommunityBoard cb where cb.member.city.city = :region order by boardNo desc")
+    List<CommunityBoard> findByCityMemberContain(@Param("region") String region);
 
 }
 
