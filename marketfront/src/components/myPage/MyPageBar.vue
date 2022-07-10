@@ -194,7 +194,7 @@ export default {
       this.$router.push({ name: "MyPageProfile" });
     },
     registerBoss() {
-      alert("사장님 만들기!");
+      //alert("사장님 만들기!");
       let id = this.id;
 
       axios

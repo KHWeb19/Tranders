@@ -68,28 +68,27 @@
       <span style="font-size: 30px; font-weight: bold;"> 가격 </span>
       <!--   메뉴가 없을 경우에     -->
       <div style="margin-top: 20px">
-        <div style="padding-top: 30px">
+        <div>
           <span style="font-size: 25px; opacity: 0.5;">추가된 메뉴가 없습니다.</span>
         </div>
+
+<!--        <div v-else>
+          <div v-for="(menu, index) in bossMenu" :key="index" style="padding-top: 20px">
+            <div style="display: flex">
+              <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>
+              <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>
+              <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>
+            </div>
+
+            <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">
+              {{menu.menuInfo}}
+            </div>
+          </div>
+        </div>-->
+
       </div>
 
-<!--      <div v-else>-->
-<!--        <div v-for="(menu, index) in bossMenu" :key="index" style="padding-top: 20px">-->
-<!--          <div style="display: flex">-->
-<!--            <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>-->
-<!--            <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>-->
-<!--            <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>-->
-<!--          </div>-->
-
-<!--          <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">-->
-<!--            {{menu.menuInfo}}-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
     </div> <!-- 가격 부분 -->
-
-
 
   </div>
 </template>

@@ -5,82 +5,82 @@
 
       <!-- <v-container > -->
         <v-form ref="form" v-model="form" style="padding-top: 80px">
-        <v-row style="height: 80px">
-          <v-col>
-            <v-btn @click="btnI" depressed style="width: 100%; height: 100%; font-size: 20px" :class="{'success': isIndividual, 'gray': true}">개인</v-btn>
-          </v-col>
-
-          <v-col>
-            <v-btn @click="btnM" depressed style="width: 100%; height: 100%; font-size: 18px"  :class="{'success': isManager, 'gray': true}">관리자</v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row style="height: 80px;">
-          <v-col style="display: flex; height: 80px;">
-            <v-text-field v-model="id" :rules="rules" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="ID"/>
-            <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="checkDub" outlined>중복 확인</v-btn></div>
-          </v-col>
-        </v-row>
-
-        <v-row style="height: 80px">
-          <v-col>
-            <v-text-field id='id' v-model="password"
-                          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                          :rules="[pwRules.required, pwRules.min, pwRules.max]"
-                          :type="show ? 'text' : 'password'"
-                          placeholder="PW"
-                          @click:append="show = !show" outlined style="width: 100%"/>
-          </v-col>
-        </v-row>
-
-        <v-row style="height: 80px">
-          <v-col>
-            <v-text-field id='id' outlined style="width: 100%" v-model="name" placeholder="NAME"/>
-          </v-col>
-        </v-row>
-
-        <!--        <v-row style="height: 70px">
-                  <v-col cols="10">
-                    <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
-                  </v-col>
-                  <v-col cols="2" class="pt-5">
-                    <v-btn style="width: 100%" id="checkDub" @click="checkPhoneNum" outlined>번호 확인</v-btn>
-                  </v-col>
-                </v-row>-->
-
-        <v-row style="height: 80px">
-          <v-col>
-            <v-text-field id='id' outlined v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"/>
-          </v-col>
-        </v-row>
-
-        <v-row style="height: 80px" v-if="ifCheck">
-          <v-col>
-            <v-text-field id='id' outlined v-model="checkNum" style="width: 100%" placeholder="인증번호"/>
-          </v-col>
-          <v-col cols="2" class="pt-5">
-            <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row style="height: 80px;">
-            <v-col style="display: flex; height: 80px;">
-              <v-text-field v-model="region" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="ADDRESS" readonly/>
-              <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="whereami" outlined>위치 등록</v-btn></div>
+          <v-row style="height: 80px">
+            <v-col>
+              <v-btn @click="btnI" depressed style="width: 100%; height: 100%; font-size: 20px" :class="{'success': isIndividual, 'gray': true}">개인</v-btn>
             </v-col>
-        </v-row>
 
-        <!--        <v-row style="height: 70px; margin-top: 35px">
-                  <v-col>
-                    <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="!(checkDoubleId === true && checkDoublePhoneNum === true)">오이 마켓 시작하기</v-btn>
-                  </v-col>
-                </v-row>-->
+            <v-col>
+              <v-btn @click="btnM" depressed style="width: 100%; height: 100%; font-size: 18px"  :class="{'success': isManager, 'gray': true}">관리자</v-btn>
+            </v-col>
+          </v-row>
 
-        <v-row style="height: 80px; padding-top: 12px">
-          <v-col>
-            <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
-          </v-col>
-        </v-row>
+          <v-row style="height: 80px;">
+            <v-col style="display: flex; height: 80px;">
+              <v-text-field v-model="id" :rules="rules" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="ID"/>
+              <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="checkDub" outlined>중복 확인</v-btn></div>
+            </v-col>
+          </v-row>
+
+          <v-row style="height: 80px">
+            <v-col>
+              <v-text-field id='id' v-model="password"
+                            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                            :rules="[pwRules.required, pwRules.min, pwRules.max]"
+                            :type="show ? 'text' : 'password'"
+                            placeholder="PW"
+                            @click:append="show = !show" outlined style="width: 100%"/>
+            </v-col>
+          </v-row>
+
+          <v-row style="height: 80px">
+            <v-col>
+              <v-text-field id='id' outlined style="width: 100%" v-model="name" placeholder="NAME"/>
+            </v-col>
+          </v-row>
+
+          <!--        <v-row style="height: 70px">
+                    <v-col cols="10">
+                      <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
+                    </v-col>
+                    <v-col cols="2" class="pt-5">
+                      <v-btn style="width: 100%" id="checkDub" @click="checkPhoneNum" outlined>번호 확인</v-btn>
+                    </v-col>
+                  </v-row>-->
+
+          <v-row style="height: 80px">
+            <v-col>
+              <v-text-field id='id' outlined v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"/>
+            </v-col>
+          </v-row>
+
+          <v-row style="height: 80px" v-if="ifCheck">
+            <v-col>
+              <v-text-field id='id' outlined v-model="checkNum" style="width: 100%" placeholder="인증번호"/>
+            </v-col>
+            <v-col cols="2" class="pt-5">
+              <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
+            </v-col>
+          </v-row>
+
+          <v-row style="height: 80px;">
+              <v-col style="display: flex; height: 80px;">
+                <v-text-field v-model="region" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="ADDRESS" readonly/>
+                <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="whereami" outlined>위치 등록</v-btn></div>
+              </v-col>
+          </v-row>
+
+          <!--        <v-row style="height: 70px; margin-top: 35px">
+                    <v-col>
+                      <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="!(checkDoubleId === true && checkDoublePhoneNum === true)">오이 마켓 시작하기</v-btn>
+                    </v-col>
+                  </v-row>-->
+
+          <v-row style="height: 80px; padding-top: 12px">
+            <v-col>
+              <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
+            </v-col>
+          </v-row>
 
         </v-form>
 

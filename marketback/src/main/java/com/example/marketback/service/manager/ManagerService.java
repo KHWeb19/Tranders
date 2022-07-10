@@ -33,4 +33,6 @@ public interface ManagerService {
     Integer todayRegisterMember();
 
     Integer todayReport();
+
+    void removeMember(String id, Integer num);
 }

@@ -29,4 +29,9 @@ public interface ProductLikesRepository extends JpaRepository<ProductLikes, Long
     @Query("select l from ProductLikes l join l.member lm where lm.memberNo = :memberNo")
     List<ProductLikes> findAllLikesMemberNo(@Param("memberNo") Long memberNo);
 
+    @Query("select l from ProductLikes l where l.member.id = :id")
+    List<ProductLikes> findByMemberId(String id);
+
+    @Query("select l from ProductLikes l where l.productBoard.productNo =:productNo")
+    List<ProductLikes> findRemoveByProductNo(Long productNo);
 }

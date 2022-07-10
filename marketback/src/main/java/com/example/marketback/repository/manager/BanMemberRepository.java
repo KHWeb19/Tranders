@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BanMemberRepository extends JpaRepository<BanMember, Long> {
-
+    @Query("select bm from BanMember bm where bm.fromMember.id = :id or bm.toMember.id = :id")
+    List<BanMember> findByMemberId(String id);
 }

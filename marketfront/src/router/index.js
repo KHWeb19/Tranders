@@ -380,7 +380,7 @@ const routes = [
     }
   },
   {
-    path: 'myCoupon',
+    path: '/myCoupon',
     name: "MyCouponPage",
     component: MyCouponPage
   }

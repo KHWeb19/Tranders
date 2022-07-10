@@ -58,16 +58,21 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
             Files.delete(filePath);
         }
         if (file != null) {
-
+            System.out.println("=================");
+            System.out.println("modify");
+            System.out.println("=================");
             UUID uuid = UUID.randomUUID();
             String fileName = uuid + "_" + file.getOriginalFilename();
             FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
-
+            System.out.println("=================");
+            System.out.println(fileName);
+            System.out.println("=================");
             saveFile.write(file.getBytes());
             saveFile.close();
 
             boardItem.setFileName(fileName);
         }
+
 
         repository.save(boardItem);
         //        communityComment.setCommunityBoard(boardItem.get());

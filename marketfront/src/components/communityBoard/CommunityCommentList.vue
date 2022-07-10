@@ -104,7 +104,7 @@ import cookies from "vue-cookies";
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import KakaoMap from '../../views/KakaoMap.vue';
-import cKakaoMap from '../../views/cKakaoMap.vue';
+import cKakaoMap from '../../views/KakaoMap.vue';
 export default {
     components: { KakaoMap,cKakaoMap },
     name:'CommentList,CommunityBoardReadPage',
@@ -142,7 +142,7 @@ export default {
             ediPlaceUrl:'',
             ediFileName:'',
             ediImage:'',
-            files1:'',
+            files1: null,
         }
     },
     created () {
@@ -200,10 +200,12 @@ export default {
 
          handleFileUpload1 () {
             console.log('이미지 수정')
-            var ediImage = this.$refs['files1'].files[0]
+           this.files1 = this.$refs.files1[0].files
+           console.log(this.files1[0])
+           /* var ediImage = this.$refs['files1'].files[0]
             const url = URL.createObjectURL(ediImage)
             this.ediImage = url
-            this.files1 = this.$refs.files1.files1[0]
+            this.files1 = this.$refs.files1.files1[0]*/
         },
       modifyComment(commentList){
         this.ediComment = commentList.comment;
@@ -226,7 +228,7 @@ export default {
             // const fileName = this.ediFileName
             
             
-            const file =  this.$refs.files1.files
+            const file =  this.files1[0]
             console.log(this.$refs.files1.files)
             // this.$emit('submit', { file,fileName })
             
@@ -236,8 +238,8 @@ export default {
             // if (fileName != null ){formData.append('fileName', fileName)}
 
             // if (file != null ){formData.append('file', file)}
-            if (file != null ){
-            formData.append('file',this.$refs.files1.files)}
+            if (file.length !== 0 ){
+            formData.append('file',this.files1[0])}
             console.log(this.$refs.files1.files)  
 
             // formData.append('file',this.$refs.files1.files1[0])

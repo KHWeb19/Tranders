@@ -4,6 +4,8 @@ import com.example.marketback.entity.boss.Boss;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface BossRepository extends JpaRepository<Boss, Long> {
     @Query("select b from Boss b where b.member.memberNo = :memberNo")
     Boss findByMemberNo(Long memberNo);
@@ -13,4 +15,7 @@ public interface BossRepository extends JpaRepository<Boss, Long> {
 
     @Query("select b from Boss b where b.bossAuthNo = :bossNo")
     Boss findByBossNo(Long bossNo);
+
+    @Query("select b from Boss b where b.member.id = :id")
+    Optional<Boss> findOptByMemberId(String id);
 }

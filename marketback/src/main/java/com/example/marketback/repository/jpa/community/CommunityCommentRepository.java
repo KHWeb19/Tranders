@@ -13,4 +13,9 @@ public interface CommunityCommentRepository extends JpaRepository<CommunityComme
 
     @Query("select cc from CommunityComment cc where cc.commentId = :commentId")
     CommunityComment findByCommentId(@Param("commentId")Long commentId);
+    
+    @Query("select cc from CommunityComment cc where cc.commentWriter = :id")
+    List<CommunityComment> findByMemberId(String id);
+
+
 }

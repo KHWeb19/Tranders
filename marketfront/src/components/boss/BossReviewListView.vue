@@ -20,15 +20,16 @@
         {{boss.content}}
       </div>
 
-      <div v-if="bossReviewImg">
+      <div v-if="bossReviewImg[index][0]">
         <swiper class="swiper" :options="swiperOption" style="height: 500px">
-          <swiper-slide v-for="(img,index) in bossReviewImg[index]" :key="index">
-            <v-img max-height="550px" :src="require(`@/assets/bossReview/${img}`)" id="img"></v-img>
+          <swiper-slide v-for="(img) in bossReviewImg[index]" :key="img.no">
+            <v-img max-height="550px" :src="require(`@/assets/bossReview/${img.imgName}`)" id="img"></v-img>
           </swiper-slide>
 
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
+      <div v-else></div>
 
       <div style="padding-bottom: 8px">
         <v-chip-group multiple v-model="selection[index]" active-class="light-green lighten-2 white--text">
@@ -106,7 +107,7 @@ export default {
     }, 80)
     await this.parsingState();
 
-    alert(this.bossReview)
+    //alert(this.bossReview)
   }
 }
 </script>

@@ -10,7 +10,6 @@ public class ManagerReportRecentResponse {
     private String category1;
     private String category2;
     private String writer;
-
     private String state;
 
     public ManagerReportRecentResponse(Long reportNo, String category1, String category2, String writer, String state) {
