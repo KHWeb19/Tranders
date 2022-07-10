@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class KeyWordRequest {
 
+    private String id;
     private Integer page;
     private String keyWord;
     private String region;
