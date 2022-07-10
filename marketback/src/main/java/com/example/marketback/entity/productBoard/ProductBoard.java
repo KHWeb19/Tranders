@@ -1,17 +1,16 @@
 package com.example.marketback.entity.productBoard;
 
 import com.example.marketback.entity.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -50,27 +49,31 @@ public class ProductBoard {
     @Column(nullable = false)
     private Integer viewCnt = 0;
 
+    public void increaseViewCnt() {
+        this.viewCnt++;
+    }
+
     @Column(nullable = false)
     private Integer chatCnt = 0;
 
     @Column(nullable = false)
     private String process;
 
-    @CreatedDate
-    private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+    @CreationTimestamp
+    private Date regDate;
 
-    @UpdateTimestamp
-    private Date updDate;
-
+    @JsonIgnoreProperties({"productBoards"})
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MEMBER_NO")
+    @JoinColumn(name = "member_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Member buyer;
 
-    public void increaseViewCnt() {
-        this.viewCnt++;
-    }
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnoreProperties({"productBoards", "productBoard"})
+    @OneToMany(mappedBy = "productBoard", fetch = FetchType.EAGER)
+    private Set<ProductLike> productLike = new HashSet<>();
 }

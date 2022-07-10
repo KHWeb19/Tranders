@@ -102,7 +102,7 @@
 
         <p id="category">
           {{ productBoard.category }} •
-          {{ productBoard.updDate | timeForToday }}
+          {{ productBoard.regDate | timeForToday }}
         </p>
         <p
           id="price"

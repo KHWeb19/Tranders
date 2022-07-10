@@ -1,6 +1,9 @@
 export default {
     productBoard: null,
     productBoards: [],
+    regionProductBoards: [],
+    myProductBoards: [],
+
     like: null,
     likes: [],
     myLikes: [],
