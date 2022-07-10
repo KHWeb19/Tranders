@@ -53,4 +53,8 @@ public interface BossService {
     Integer myCouponTotalPage(String id);
 
     void removeBoss(Long bossNo);
+
+    void modifyDeleteBackProfile(List<String> deleteImg, Long bossNo);
+
+    void addBackProfile(List<String> fileName, List<String> deleteImg, Long bossNo);
 }

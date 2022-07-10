@@ -34,7 +34,9 @@
         </div>
 
         <div v-else>
-          <v-row justify="end"> <v-btn id="checkDub" @click="leave">회원탈퇴</v-btn></v-row>
+          <v-row justify="end">
+            <v-btn depressed color="success" height="40" type="submit" @click="memberRemoveDialog = true"><b>작성 완료</b></v-btn>
+          </v-row>
           <v-row>
             <v-col v-for="count in 4" :key="count"></v-col>
             <v-col>
@@ -52,29 +54,29 @@
           </v-row>
 
           <div id="userInfo">
-            <v-row>
+            <v-row style="height: 80px">
               <v-col cols="3">아이디</v-col>
               <v-col cols="9">
                 <v-text-field v-model="id" solo style="width: 100%" readonly disabled></v-text-field>
               </v-col>
             </v-row>
 
-            <v-row>
+            <v-row style="height: 80px">
               <v-col cols="3">이름</v-col>
               <v-col cols="9">
                 <v-text-field v-model="name" solo style="width: 100%" ></v-text-field>
               </v-col>
             </v-row>
 
-            <v-row v-if="providerType === 'undefined'">
-              <v-col cols="3">비밀번호</v-col>
-              <v-col cols="7">
-                <v-form v-model="form" ref="form">
+            <v-row v-if="providerType === 'undefined'" style="height: 80px;">
+              <v-col cols="3" style="height: 80px; display: flex; align-items: center">비밀번호</v-col>
+              <v-col cols="7" style="height: 80px;">
+                <v-form v-model="form" ref="form" style="display: flex; align-items: center;">
                   <v-text-field v-model="password" solo style="width: 100%" :rules="[pwRules.required, pwRules.min, pwRules.max]" placeholder="변경할 비밀번호를 적어주세요"  type="password"> </v-text-field>
                 </v-form>
               </v-col>
-              <v-col cols="2" class="pt-5">
-                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" :disabled="!form" @click="changePassword">확인</v-btn>
+              <v-col cols="2" style="height: 80px; display: flex; align-items: center;">
+                <v-btn depressed color="success" height="45" type="submit" :disabled="!form" @click="changePassword"><b>확인</b></v-btn>
               </v-col>
             </v-row>
 
@@ -91,7 +93,7 @@
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
               <v-col cols="2" class="pt-5">
-                <v-btn style="width: 100%" class="light-green lighten-2" id="checkDub" @click="checkPhoneNum">확인</v-btn>
+                <v-btn depressed color="success" height="40" type="submit" @click="checkPhoneNum"><b>확인</b></v-btn>
               </v-col>
             </v-row>
 
@@ -144,6 +146,28 @@
           </v-dialog>
 
         </div>
+
+        <v-dialog width="500" style="max-height: 400px" v-model="memberRemoveDialog">
+          <v-card style="width: 500px; position: relative; max-height: 400px">
+            <v-row justify="center" style="width: 500px; padding-top: 30px">
+              <v-card-title>사장님 탈퇴</v-card-title>
+            </v-row>
+
+            <v-row style="width: 500px; height: 100px" justify="center">
+              <div style="width: 450px; justify-content: center; display: flex; align-items: center">
+                경고: 회원 탈퇴는 취소할 수 없습니다.<br/>
+                회원의 모든 정보가 삭제됩니다. 탈퇴하시겠습니까?
+              </div>
+            </v-row>
+
+            <v-row justify="end" no-gutters>
+              <v-card-actions>
+                <v-btn depressed height="40" type="submit" @click="memberRemoveDialog = false"><b>취소</b></v-btn>
+                <v-btn depressed color="red" class="white--text" height="40" type="submit" @click="leave"><b>삭제</b></v-btn>
+              </v-card-actions>
+            </v-row>
+          </v-card>
+        </v-dialog> <!-- 탈퇴 경고 -->
       </div>
   </div>
 </template>
@@ -175,6 +199,7 @@ export default {
       name: '',
       phoneNumber: '',
       changeImgDialog: false,
+      memberRemoveDialog: false,
       itemImageInfo: {
         uploadImages: ''
       },

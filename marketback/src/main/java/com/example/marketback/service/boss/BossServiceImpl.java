@@ -5,7 +5,6 @@ import com.example.marketback.entity.boss.BossImage;
 import com.example.marketback.entity.boss.BossPrice;
 import com.example.marketback.entity.boss.coupon.Coupon;
 import com.example.marketback.entity.boss.coupon.MemberCoupon;
-import com.example.marketback.entity.manager.Report;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.review.BossReview;
 import com.example.marketback.entity.review.BossReviewImage;
@@ -33,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -129,7 +129,7 @@ public class BossServiceImpl implements BossService{
 
         if(bossImages.size() != 0) {
             for (BossImage bossImage : bossImages) {
-                response.add(new BossBackProfileImg(bossImage.getImageName()));
+                response.add(new BossBackProfileImg(bossImage.getImageName(), bossImage.getBossImageNo()));
             }
             return response;
         }else {
@@ -329,4 +329,30 @@ public class BossServiceImpl implements BossService{
 
     }
 
+    @Override
+    public void modifyDeleteBackProfile(List<String> deleteImg, Long bossNo) {
+        for (String number : deleteImg) {
+            BossImage bossImage = bossImgRepository.findByImageNo(Long.valueOf(number));
+            bossImgRepository.delete(bossImage);
+        }
+    }
+
+    @Override
+    public void addBackProfile(List<String> fileName, List<String> deleteImg, Long bossNo) {
+        Boss bossEntity = bossRepository.findByBossNo(bossNo);
+
+        if (!Objects.equals(deleteImg.get(0), "noImg")) {
+            for (String number : deleteImg) {
+                System.out.println(number);
+
+                BossImage bossImage = bossImgRepository.findByImageNo(Long.valueOf(number));
+                bossImgRepository.delete(bossImage);
+            }
+        }
+
+        for (String imgName : fileName) {
+            BossImage bri = new BossImage(imgName, bossEntity);
+            bossImgRepository.save(bri);
+        }
+    }
 }
