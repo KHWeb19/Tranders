@@ -19,4 +19,9 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findReportListByProductNo(Long productNo);
 
     List<Report> findByCreateDateStartingWith(String toString);
+
+    @Query("select r from Report r where r.fromMember.id = :id")
+    List<Report> findByFromMemberId(String id);
+    @Query("select r from Report r where r.toMember.id = :id")
+    List<Report> findByToMemberId(String id);
 }

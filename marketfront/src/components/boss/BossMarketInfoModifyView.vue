@@ -1,7 +1,7 @@
 <template>
   <div id="my_page_box" style="position: relative; border: 1px solid rgba(0,0,0,0.4); height: auto;">
-    <div style="background-color: rgba(156,182,137,0.8); height: 60px; display: flex;">
-      <span style="width: 10%; padding: 10px 0 10px 20px;"><v-btn icon @click="back"><v-icon x-large>mdi-arrow-left</v-icon></v-btn></span>
+    <div style="background-color: rgba(43,152,48,0.93); height: 60px; display: flex">
+      <span style="width: 10%; padding: 10px 0 10px 20px;"><v-btn icon @click="back"><v-icon x-large>mdi-chevron-left</v-icon></v-btn></span>
       <span style="width: 80%; text-align: center; font-size: 25px; font-weight: bold" class="pa-2">정보 관리</span>
       <span style="width: 10%; text-align: end; padding: 10px 5px 20px 0; margin-right: 10px"><v-btn text style="font-size: 22px" @click="saveMarketInfo">변경 완료</v-btn></span>
     </div>
@@ -11,7 +11,7 @@
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;">
         <v-text-field id="addrInputText" disabled readonly solo style="width: 50%; font-size: 20px" v-model="address1"></v-text-field>
-        <v-btn @click="search" style="width: 10%; margin-left: 10px; height: auto"><v-icon>mdi-magnify</v-icon></v-btn>
+        <v-btn @click="search" style="width: 10%; margin-left: 10px; height: auto" text><v-icon>mdi-magnify</v-icon></v-btn>
       </div>
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;" v-if="addAddress">
@@ -49,7 +49,7 @@
       </div>
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;">
-        <v-btn width="100%" height="auto" style="font-size: 20px" @click="businessHoursDialog = true"> 입력하기 </v-btn>
+        <v-btn block depressed color="success" height="50" type="submit" style="font-size: 20px" @click="businessHoursDialog = true"><h3><b>입력하기</b></h3></v-btn>
       </div>
     </div>
 

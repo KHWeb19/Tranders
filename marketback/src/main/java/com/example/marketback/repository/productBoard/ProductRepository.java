@@ -17,10 +17,10 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
 
     @Query("select p from ProductBoard p where p.member.city.villageName = :region and p.content like %:keyWord%")
     List<ProductBoard> findAllByVillageNameContentContain(String keyWord, String region, Pageable pageable);
-  
+
     @Query("select p from ProductBoard p where p.member.city.district = :region and p.content like %:keyWord%")
     List<ProductBoard> findAllByDistrictContentContain(String keyWord, String region, Pageable pageable);
-  
+
     @Query("select p from ProductBoard p where p.member.city.city = :region and p.content like %:keyWord%")
     List<ProductBoard> findAllByCityContentContain(String keyWord, String region, Pageable pageable);
 
@@ -29,7 +29,6 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
 
     @Query("select p from ProductBoard p join p.buyer pb where pb.memberNo = :memberNo")
     List<ProductBoard> findByBuyer(@Param("memberNo") Long memberNo);
-
 
     @Query("select p from ProductBoard p where p.member.city.villageName = :region")
     List<ProductBoard> findByVillageNameMemberContain(String region);
@@ -40,4 +39,6 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
     @Query("select p from ProductBoard p where p.member.city.city = :region")
     List<ProductBoard> findByCityMemberContain(String region);
 
+    @Query("select p from ProductBoard p where p.member.id = :id")
+    List<ProductBoard> findByMemberId(String id);
 }

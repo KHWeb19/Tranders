@@ -159,7 +159,7 @@
         @closeDialog="closeDialog"
         @sendReport="sendReport"
         @sendImgReport="sendImgReport"
-        :productNo="this.productBoard.productNo"
+        :productNo="productBoard.productNo"
       ></report-dialog-view>
     </article>
   </div>
