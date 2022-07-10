@@ -31,8 +31,14 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :commentId")
     CommunityBoard findByCommentId(@Param("commentId")Long commentId);
 
-    @Query("select cb from CommunityBoard cb where cb.region = :region and cb.content like %:keyWord%")
-    List<CommunityBoard> findAllByContentContain(String keyWord, String region, Pageable pageable);
+    @Query("select cb from CommunityBoard cb where cb.member.city.villageName  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    List<CommunityBoard> findAllByVillageNameContentContain(String keyWord, String region, Pageable pageable);
+
+    @Query("select cb from CommunityBoard cb where cb.member.city.district  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    List<CommunityBoard> findAllByDistrictContentContain(String keyWord, String region, Pageable pageable);
+
+    @Query("select cb from CommunityBoard cb where cb.member.city.city  = :region and cb.content like %:keyWord% and cb.title like %:keyWord%")
+    List<CommunityBoard> findAllByCityContentContain(String keyWord, String region, Pageable pageable);
 
     @Query("select cb from CommunityBoard cb where cb.boardNo = :boardNo")
     CommunityBoard findByBoardNo(@Param("boardNo") Long boardNo);
@@ -46,5 +52,7 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
     @Query("select cb from CommunityBoard cb where cb.member.city.city = :region order by boardNo desc")
     List<CommunityBoard> findByCityMemberContain(@Param("region") String region);
 
+    @Query("select cb from CommunityBoard cb where cb.member.id = :id")
+    List<CommunityBoard> findByMemberId(String id);
 }
 

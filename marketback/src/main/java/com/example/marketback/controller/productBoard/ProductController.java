@@ -1,5 +1,6 @@
 package com.example.marketback.controller.productBoard;
 
+import com.example.marketback.controller.productBoard.request.ProductRequest;
 import com.example.marketback.entity.productBoard.ProductBoard;
 import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.productBoard.ProductService;
@@ -30,17 +31,24 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public List<ProductBoard> productList() {
+    public List<ProductBoard> list() {
         log.info("productList()");
 
         return productService.list();
     }
 
     @GetMapping("/list/{memberNo}")
-    public List<ProductBoard> productListOfMember(@PathVariable("memberNo") Long memberNo) {
+    public List<ProductBoard> memberOfProductList(@PathVariable("memberNo") Long memberNo) {
         log.info("productList()");
 
-        return productService.productListOfMember(memberNo);
+        return productService.memberOfProductList(memberNo);
+    }
+
+    @GetMapping("/list/region/{memberNo}")
+    public List<ProductBoard> regionOfProductList(@PathVariable("memberNo") Long memberNo) {
+        log.info("productList()" + memberNo);
+
+        return productService.regionOfProductList(memberNo);
     }
 
     @GetMapping("/{productNo}")
@@ -85,14 +93,6 @@ public class ProductController {
 
         log.info("requestUploadFile(): Success!!");
         return "Upload Success";
-    }
-
-    @PostMapping("/search")
-    public List<ProductBoard> productBoardSearchList(@RequestBody KeyWordRequest keyWord) {
-        log.info("ProductBoardSearchList()");
-        String word = keyWord.getKeyWord();
-
-        return productService.searchList(word);
     }
 
     @GetMapping("/buyerList/{memberNo}")

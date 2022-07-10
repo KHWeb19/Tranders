@@ -10,7 +10,6 @@ import ProductSearchListPage from '@/views/productBoard/ProductSearchListPage'
 import MyPurchaseHistory from '@/views/myPage/MyPurchaseHistory'
 import MyLikesPage from '@/views/myPage/MyLikesPage'
 
-
 import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
 import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
 import CommunityBoardReadPage from '@/views/communityBoard/CommunityBoardReadPage.vue'
@@ -46,6 +45,7 @@ import BossMarketInfo from "@/views/boss/BossMarketInfo";
 import BossMarketInfoModify from "@/views/boss/BossMarketInfoModify";
 import MyVillageSetting from "@/views/myPage/MyVillageSetting";
 import NearPage from "@/views/near/NearPage";
+import BossReadPage from "@/views/boss/client/BossReadPage";
 import NearReadPage from "@/views/near/NearReadPage";
 import ManagerPage from "@/views/Manger/ManagerPage";
 import ReportManagementPage from "@/views/Manger/ReportManagementPage";
@@ -53,6 +53,7 @@ import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
 import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
 import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
 import MyCouponPage from "@/views/myPage/MyCouponPage";
+
 
 Vue.use(VueRouter)
 
@@ -103,11 +104,10 @@ const routes = [
     component: MyPurchaseHistory
   },
   {
-    path: '/myLikesPage',
+    path: '/myLikes',
     name: 'MyLikesPage',
     component: MyLikesPage
   },
-
   {
     path: '/productModify/:productNo',
     name: 'ProductModifyPage',
@@ -333,7 +333,16 @@ const routes = [
     name: 'NearPage',
     component: NearPage
   },
-
+  {
+    path: '/bossRead',
+    name: 'BossReadPage',
+    components: {
+      default: BossReadPage
+    },
+    props: {
+      default: true
+    }
+  },
   {
     path: '/nearRead',
     name: 'NearReadPage',
@@ -380,7 +389,7 @@ const routes = [
     }
   },
   {
-    path: 'myCoupon',
+    path: '/myCoupon',
     name: "MyCouponPage",
     component: MyCouponPage
   }
@@ -394,8 +403,3 @@ const router = new VueRouter({
 
 
 export default router
-
-
-
-
-

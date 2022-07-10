@@ -102,7 +102,7 @@
 
         <p id="category">
           {{ productBoard.category }} •
-          {{ productBoard.updDate | timeForToday }}
+          {{ productBoard.regDate | timeForToday }}
         </p>
         <p
           id="price"
@@ -159,7 +159,7 @@
         @closeDialog="closeDialog"
         @sendReport="sendReport"
         @sendImgReport="sendImgReport"
-        :productNo="this.productBoard.productNo"
+        :productNo="productBoard.productNo"
       ></report-dialog-view>
     </article>
   </div>

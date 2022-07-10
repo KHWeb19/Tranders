@@ -1,7 +1,7 @@
 <template>
   <div id="my_page_box" style="position: relative; border: 1px solid rgba(0,0,0,0.4); height: auto;">
-    <div style="background-color: rgba(156,182,137,0.8); height: 60px; display: flex">
-      <span style="width: 10%; padding: 10px 0 10px 20px;"><v-btn icon @click="back"><v-icon x-large>mdi-arrow-left</v-icon></v-btn></span>
+    <div style="background-color: rgba(43,152,48,0.93); height: 60px; display: flex">
+      <span style="width: 10%; padding: 10px 0 10px 20px;"><v-btn icon @click="back"><v-icon x-large>mdi-chevron-left</v-icon></v-btn></span>
       <span style="width: 80%; text-align: center; font-size: 25px; font-weight: bold" class="pa-2">정보 관리</span>
       <span style="width: 10%; text-align: end; padding: 10px 25px 20px 0;"><v-btn text style="font-size: 22px" @click="saveMarketInfo">저장</v-btn></span>
     </div>
@@ -11,11 +11,11 @@
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;">
         <v-text-field id="addrInputText" disabled readonly solo style="width: 50%; font-size: 20px"></v-text-field>
-        <v-btn @click="search" style="width: 10%; margin-left: 10px; height: auto"><v-icon>mdi-magnify</v-icon></v-btn>
+        <v-btn @click="search" style="width: 10%; margin-left: 10px; height: auto" text><v-icon>mdi-magnify</v-icon></v-btn>
       </div>
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;">
-        <v-text-field label="상세주소 입력해주세요." v-model="address1" solo style="width: 60%; font-size: 20px"></v-text-field>
+        <v-text-field label="상세주소 입력해주세요." v-model="address1" solo style="width: 45%; font-size: 20px"></v-text-field>
         <span style="margin-left: 20px; padding-top: 15px; opacity: 0.5">* 주소를 입력하면 활동 지역이 주소에 따라 변경돼요.</span>
       </div>
 
@@ -49,7 +49,7 @@
       </div>
 
       <div style="display: flex; padding: 10px 0 10px 0; width: 100%; height: 70px;">
-        <v-btn width="100%" height="auto" style="font-size: 20px" @click="businessHoursDialog = true"> 입력하기 </v-btn>
+        <v-btn block depressed color="success" height="50" type="submit" style="font-size: 20px" @click="businessHoursDialog = true"><h3><b>입력하기</b></h3></v-btn>
       </div>
     </div>
 
@@ -70,18 +70,18 @@
         <v-row style="height: 500px; width: 900px;" justify="center">
           <v-col style="width: 290px; flex: 0 1 auto;">
             <h2>Start:</h2>
-            <v-time-picker v-model="startTime" :max="endTime"></v-time-picker>
+            <v-time-picker v-model="startTime" :max="endTime" color="success"></v-time-picker>
           </v-col>
           <v-col style="width: 290px; flex: 0 1 auto;">
             <h2>End:</h2>
-            <v-time-picker v-model="endTime" :min="startTime"></v-time-picker>
+            <v-time-picker v-model="endTime" :min="startTime" color="success"></v-time-picker>
           </v-col>
         </v-row>
 
         <v-row justify="end" no-gutters>
           <v-card-actions>
-            <v-btn class="light-green lighten-3" @click="saveBusinessHours">Save</v-btn>
-            <v-btn @click="businessHoursDialog = false">Close</v-btn>
+            <v-btn depressed height="40" type="submit" @click="businessHoursDialog = false"><b>Close</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="saveBusinessHours"><b>Save</b></v-btn>
           </v-card-actions>
         </v-row>
       </v-card>
@@ -193,7 +193,7 @@ export default {
 #my_page_box{
   align-items: center;
   width: 100%;
-  max-width: 1050px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 0 0 0; /*위, 오른쪽, 아래, 왼쪽 */
 }

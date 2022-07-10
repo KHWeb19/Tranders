@@ -29,4 +29,10 @@ public interface MemberCouponRepository extends JpaRepository<MemberCoupon, Long
 
     @Query("select mc from MemberCoupon mc where mc.member.id = :id and mc.coupon.couponNo = :couponNo")
     MemberCoupon findOneByMemberIdAndCouponNo(String id, Long couponNo);
+
+    @Query("select mc from MemberCoupon mc where mc.member.id = :id")
+    List<MemberCoupon> findRemoveByMemberId(String id);
+
+    @Query("select mc from MemberCoupon mc where mc.coupon.boss.bossAuthNo = :bossNo")
+    List<MemberCoupon> findRemoveByBossNo(Long bossNo);
 }

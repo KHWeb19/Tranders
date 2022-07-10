@@ -14,6 +14,7 @@ import com.example.marketback.service.boss.BossService;
 import com.example.marketback.service.boss.review.BossReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -301,9 +302,9 @@ public class BossController {
         List<BossReview> bossReviewEntity;
 
         if(num.get("num").charAt(0) == '0' && num.get("num").charAt(1) == '0') {
-            bossReviewEntity = bossReviewRepository.findByNearNo(Long.valueOf(num.get("num")));
+            bossReviewEntity = bossReviewRepository.findByNearNoOrderByDateDesc(Long.valueOf(num.get("num")), Sort.by(Sort.Order.desc("createDate")));
         }else{
-            bossReviewEntity = bossReviewRepository.findByBossNo(Long.valueOf(num.get("num")));
+            bossReviewEntity = bossReviewRepository.findByBossAuthNoOrderByIdDesc(Long.valueOf(num.get("num")), Sort.by(Sort.Order.desc("createDate")));
         }
 
         return bossReviewService.getReviewImg(bossReviewEntity, num.get("num"));
@@ -383,5 +384,12 @@ public class BossController {
         log.info("myCouponTotalPage");
 
         return bossService.myCouponTotalPage(id);
+    }
+
+    @DeleteMapping("{bossNo}")
+    public void removeBoss(@PathVariable Long bossNo){
+        log.info("removeBoss");
+
+        bossService.removeBoss(bossNo);
     }
 }

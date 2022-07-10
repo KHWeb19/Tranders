@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BossPriceRepository extends JpaRepository<BossPrice, Long> {
 
@@ -14,4 +15,7 @@ public interface BossPriceRepository extends JpaRepository<BossPrice, Long> {
 
     @Query("select bp from BossPrice bp where bp.bossPriceNo = :bossPriceNo")
     BossPrice findBossByBossId(Long bossPriceNo);
+
+    @Query("select bp from BossPrice bp where bp.boss.bossAuthNo = :bossNo")
+    List<BossPrice> findByBossNo(Long bossNo);
 }
