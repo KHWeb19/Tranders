@@ -64,7 +64,7 @@
 
         <div v-else style="padding-top: 30px">
           <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
-            <div v-if="state[index]">
+            <div v-if="!state[index]">
               <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
                 <div style="width: 80%; padding: 5px 10px 5px 15px;">
                   <div style="display: flex; align-items: center">
@@ -286,11 +286,44 @@
 
         <div style="min-height: 400px">
         <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 0 10px 10px 10px">
-          <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+          <div v-if="!state[index]">
+            <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+              <div style="width: 80%; padding: 5px 10px 5px 15px;">
+                <div style="display: flex; align-items: center">
+                  <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
+                  <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax}}</div>
+                </div>
+
+                <div style="font-weight: bolder; font-size: 30px">
+                  {{coupon.couponName}}
+                </div>
+
+                <div style="font-weight: lighter">
+                  {{coupon.couponDate}}까지
+                </div>
+              </div>
+
+              <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(coupon)">
+                  <v-icon large>mdi-pencil-outline</v-icon>
+                  <div style="font-size: 18px">쿠폰 수정</div>
+                </div>
+              </div>
+            </div>
+
+<!--            <v-divider style="height: 5px; margin-top: 20px"></v-divider>
+
+            <div style="display: flex; flex-direction: row-reverse; padding: 10px 10px 10px 10px;">
+              <div style="padding-right: 40px; font-weight: bolder;" @click="deleteCoupon(coupon)">삭제</div>
+              <div style="padding-right: 40px; font-weight: bolder;" @click="showDetail(coupon)">상세보기</div>
+            </div>-->
+          </div>
+
+          <div v-else style="width: 100%; background-color: rgba(145,145,145,0.37); border-radius: 8px; border: 1px solid black; min-height: 150px; display: flex; align-items: center">
             <div style="width: 80%; padding: 5px 10px 5px 15px;">
               <div style="display: flex; align-items: center">
-                <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
-                <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax}}</div>
+                <v-chip style="margin-right: 20px">발급완료</v-chip>
+                <div style="color: black" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
               </div>
 
               <div style="font-weight: bolder; font-size: 30px">
@@ -302,16 +335,15 @@
               </div>
             </div>
 
-            <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
-              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(coupon)">
-                <v-icon large>mdi-pencil-outline</v-icon>
-                <div style="font-size: 18px">쿠폰 수정</div>
+            <div style="background-color: #b9b9b9; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px">
+                <v-icon large>mdi-download-outline</v-icon>
+                <div style="font-size: 18px">쿠폰 발급 완료</div>
               </div>
             </div>
           </div>
 
           <v-divider style="height: 5px; margin-top: 20px"></v-divider>
-
           <div style="display: flex; flex-direction: row-reverse; padding: 10px 10px 10px 10px;">
             <div style="padding-right: 40px; font-weight: bolder;" @click="deleteCoupon(coupon)">삭제</div>
             <div style="padding-right: 40px; font-weight: bolder;" @click="showDetail(coupon)">상세보기</div>
@@ -699,8 +731,8 @@ export default {
       let couponDate = this.dateFormatted;
       let bossNo = this.boss.bossAuthNo;
 
-      alert(couponMax)
-      alert(this.couponMax)
+      //alert(couponMax)
+      //alert(this.couponMax)
       this.$emit('saveCoupon', {bossNo, couponName, couponInfo, couponMax, couponDate})
     },
     formatDate (date) {
@@ -715,7 +747,7 @@ export default {
       this.dateFormatted = coupon.couponDate;
       this.radioModifyGroup = coupon.remain_coupon === null ? 0 : 1
       this.radioField = coupon.remain_coupon !== null
-      alert(this.radioModifyGroup)
+      //alert(this.radioModifyGroup)
       this.couponMax = coupon.couponMax;
       this.couponNo = coupon.couponNo;
       this.modifyCouponDialog = true;
@@ -800,11 +832,11 @@ export default {
         console.log(date[1])
         console.log(date[2])
 
-        if(date[0] - year > 0){
+        if(date[0] - year < 0){
           this.state.push(true)
-        }else if(date[1] - month > 0){
+        }else if(date[1] - month < 0){
           this.state.push(true)
-        }else if(date[2] - day > 0){
+        }else if(date[2] - day < 0){
           this.state.push(true)
         }else{
           this.state.push(false)

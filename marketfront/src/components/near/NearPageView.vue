@@ -6,7 +6,7 @@
       <div class="map_wrap" style="position: relative; margin-top: 25px">
         <div class="infoBox" id="infoBox1" ref="mapDiv" style="border-radius: 8px; display: none; padding-top: 5px; padding-left: 5px"> <!-- boss 정보 -->
           <div style="display: flex; align-items: center; padding-left: 8px; height: 30px;">
-            <div style="font-size: 20px; font-weight: bold; padding-right: 10px; width: 30%"><input v-model="storeName" readonly style="width: 100%;"></div>
+            <div style="font-size: 20px; font-weight: bold; padding-right: 10px; width: 35%"><input v-model="storeName" readonly style="width: 100%;"></div>
             <div style="font-size: 15px; font-weight: normal; width: 40%"> <input v-model="category" style="width: 100%" readonly> </div>
           </div>
 
@@ -44,7 +44,7 @@
 
         <div class="infoBox" id="infoBox2" style="border-radius: 8px; display: none; padding-top: 5px; padding-left: 5px"> <!--near 정보 -->
           <div style="display: flex; align-items: center; padding-left: 8px; height: 30px">
-            <div style="font-size: 20px; font-weight: bold; padding-right: 10px; width: 30%"><input v-model="storeName" readonly style="width: 100%;"></div>
+            <div style="font-size: 20px; font-weight: bold; padding-right: 10px; width: 35%"><input v-model="storeName" readonly style="width: 100%;"></div>
             <div style="font-size: 15px; font-weight: normal; width: 40%"> <input v-model="category" style="width: 100%" readonly> </div>
           </div>
 
