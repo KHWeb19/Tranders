@@ -33,6 +33,8 @@ import ReviewRegisterPage from '@/views/profile/ReviewRegisterPage'
 import ReviewListPage from '@/views/profile/ReviewListPage'
 import MannerReadPage from '@/views/profile/MannerReadPage'
 import ProfileBasicPage from '@/views/profile/ProfileBasicPage'
+import MyBuyHistoryList from '@/views/myPage/MyBuyHistoryList'
+import MyFollowBoardList from '@/views/myPage/MyFollowBoardList'
 
 import MyPageProfile from "@/views/myPage/MyPageProfile";
 import MyInfoPage from "@/views/myPage/MyInfoPage";
@@ -51,10 +53,10 @@ import ManagerPage from "@/views/Manger/ManagerPage";
 import ReportManagementPage from "@/views/Manger/ReportManagementPage";
 import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
 import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
+// import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
 import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
 import MyCouponPage from "@/views/myPage/MyCouponPage";
 import BossReadPage from "@/views/boss/client/BossReadPage";
-
 
 Vue.use(VueRouter)
 
@@ -103,6 +105,16 @@ const routes = [
     path: '/myPurchase',
     name: 'MyPurchaseHistory',
     component: MyPurchaseHistory
+  },
+  {
+    path: '/myBuy',
+    name: 'MyBuyHistoryList',
+    component: MyBuyHistoryList
+  },
+  {
+    path: '/myFollowBoardList',
+    name: 'MyFollowBoardList',
+    component: MyFollowBoardList
   },
   {
     path: '/myLikes',
@@ -389,6 +401,16 @@ const routes = [
     name: 'ManagerMemberPage',
     component: ManagerMemberPage
   },
+  // {
+  //   path: '/search',
+  //   name: 'SearchKeyWordListPage',
+  //   components: {
+  //     default: SearchKeyWordListPage
+  //   },
+  //   props: {
+  //     default: true
+  //   }
+  // }
   {
     path: '/search',
     name: 'SearchKeyWordListPage',

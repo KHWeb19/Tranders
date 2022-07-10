@@ -1,6 +1,9 @@
 <template>
     <div id='user_reviews'>
-        <ul id='review_list' v-for="review in reviews" :key="review.reviewNo">
+        <ul id='review_list' v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">
+                거래 후기가 존재하지 않습니다!
+        </ul>
+        <ul id='review_list' v-else v-for="review in reviews" :key="review.reviewNo">
             <li id='review' v-if="review.message">
                 <div id='review_profile_image'>
                     <v-img id="image" :src="require(`@/assets/profile/${review.writer.profileImg}`)"/>
@@ -33,7 +36,7 @@ export default {
 #user_reviews{
     display: block;
     position: relative;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
 }
 #review_list{
     list-style-type: none;

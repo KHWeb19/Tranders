@@ -31,13 +31,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 
     @Override
     public void register(ChatRoom chatRoom, Long member1No, Long member2No, Long productNo) {
-        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1No), Long.valueOf(member2No));
-        Optional<ProductBoard> maybeProduct = productRepository.findById(Long.valueOf(productNo));
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(member1No, member2No);
+        Optional<ProductBoard> maybeProduct = productRepository.findById(productNo);
         ProductBoard boardEntity = productRepository.findByProductNo(productNo);
         //서로의 채팅방이 없다는게 확인되면 생성
         if (maybeChatRoom.equals(Optional.empty())) {
-            Optional<Member> maybeMember1 = memberRepository.findById(Long.valueOf(member1No));
-            Optional<Member> maybeMember2 = memberRepository.findById(Long.valueOf(member2No));
+            Optional<Member> maybeMember1 = memberRepository.findById(member1No);
+            Optional<Member> maybeMember2 = memberRepository.findById(member2No);
             chatRoom.setMember1(maybeMember1.get());
             chatRoom.setMember2(maybeMember2.get());
             chatRoom.setProductBoard(maybeProduct.get());
@@ -103,16 +103,15 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return maybeChatRoom.get();
     }
 
-//    public ChatRoom move(Long member1, Long member2) {
-//        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMember(Long.valueOf(member1), Long.valueOf(member2));
-//
-//        if (maybeChatRoom.equals(Optional.empty())) {
-//            //없으면 생성하는거 추가하자
-//            return null;
-//        }
-//
-//        return maybeChatRoom.get();
-//    }
+    public ChatRoom move(Long member1, Long member2) {
+        Optional<ChatRoom> maybeChatRoom = chatRoomRepository.findChatRoomByMembers(Long.valueOf(member1), Long.valueOf(member2));
+
+        if (maybeChatRoom.equals(Optional.empty())) {
+            return null;
+        }
+
+        return maybeChatRoom.get();
+    }
 
 
     @Override
@@ -128,6 +127,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 maybeChatRoom.get().getLastMessage()
         );
         chatRoomRepository.save(chatRoomEntity);
+    }
+
+    @Override
+    public void remove(Long roomNo) {
+        chatRoomRepository.deleteById(Long.valueOf(roomNo));
     }
 
     @Override
@@ -164,3 +168,5 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         productRepository.save(boardEntity);
     }
 }
+
+

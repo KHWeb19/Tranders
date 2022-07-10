@@ -1,27 +1,35 @@
 <template>
-<div>
-    <after-login-view/>
-    <div id='chat_read'>
-        <chatting-read :userInfo="userInfo" :chatrooms="chatrooms" :chatroom="chatroom" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay"/>
-
+    <div id='back_page'>
+        <after-login-view/>
+        <div id='full'>
+            <div id='left'>
+                <div id='image'>
+                    <div>
+                        <div style="border-radius: 50%; overflow: hidden; margin-top: 20px">
+                            <v-img width="44" height="44" src="@/assets/profile.jpg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <chatting-read :userInfo="userInfo" :chatroom="chatroom" :chatrooms="chatrooms" @onSubmit="onSubmit" @onAppoint="onAppoint" @onReminder="onReminder" @onCharge="onCharge" @onPay="onPay" @onDelete="onDelete"/>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
-import ChattingRead from '@/components/chatting/ChattingRead.vue'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import Vue from 'vue'
 import cookies from "vue-cookies";
 import AfterLoginView from '../../components/home/AfterLoginView.vue'
+import ChattingRead from '../../components/chatting/ChattingRead.vue';
 Vue.use(cookies)
 
 export default {
     name: "ChattingReadView",
     components: { 
-      ChattingRead,
-        AfterLoginView
+        AfterLoginView,
+        ChattingRead,
     },
     props: {
         roomNo: {
@@ -90,14 +98,56 @@ export default {
             const { id, money, memberId, productNo } = payload
             axios.put(`http://localhost:7777/chatting/pay/${productNo}`, {id, money, productNo})
             this.$router.push({name: 'ReviewRegisterPage', params: {memberId:memberId.toString()} })
-        }
+        },
+        onDelete(payload) {
+            const {roomNo} = payload
+            axios.delete(`http://localhost:7777/chatting/${roomNo}`)
+                .then(()=> {
+                    alert('삭제 성공')
+                    this.$router.push({name: 'ChattingListPage'})
+                })
+                .catch(()=> {
+                    alert('삭제실패 문제발생')
+                })
+        },
+
     } 
 }
 </script>
 
 <style scoped>
-#chat_read{
-  background: #f8f9fa;
-  /* padding: 30px 0; */
+#back_page{
+    background: #f8f9fa; 
+    min-height:100vh;
 }
+
+/* #top{
+  border-bottom: 1px solid #bcbcbc;
+} */
+#logo{
+  display: flex;
+  align-items: center;
+  width: 1200px;
+  padding: 0px 8px;
+}
+#full{
+  display: flex;
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
+}
+#left{
+	width: 80px;
+	float: left;	
+}
+#image{
+  background-color: #ededed;
+	width: 80px;
+	height: 100%;
+  display: flex; 
+  justify-content: center;
+}
+
 </style>
