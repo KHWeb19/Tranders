@@ -124,10 +124,10 @@
           {{ productBoard.viewCnt }}
         </p>
 
-        <v-btn
+        <v-btn depressed class="success"
           v-if="login.memberNo != productBoard.member.memberNo"
           @click="onChat"
-          >채팅하기</v-btn
+          ><b>채팅하기</b></v-btn
         >
       </section>
 

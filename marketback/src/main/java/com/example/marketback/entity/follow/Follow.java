@@ -25,3 +25,5 @@ public class Follow {
     @JoinColumn
     private Member your;
 }
+
+

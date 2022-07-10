@@ -15,11 +15,14 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     @Query("select c from ChatRoom c where c.roomNo = :roomNo")
     ChatRoom findByRoomNo(Long roomNo);
 
-    @Query("select c from ChatRoom c join c.member1 cm join c.member2 cm2 where cm.memberNo = :memberNo or cm2.memberNo = :memberNo order by c.updDate desc ")
+    @Query("select c from ChatRoom c join c.member1 cm join c.member2 cm2 " +
+            "where cm.memberNo = :memberNo or cm2.memberNo = :memberNo order by c.updDate desc ")
     List<ChatRoom> findChatRoomByMemberNo(@Param("memberNo") Long memberNo);
 
     //서로의 채팅방이 존재하는지
-    @Query("select c from ChatRoom c join c.member1 cm1 join c.member2 cm2 where (cm1.memberNo = :member1No and cm2.memberNo = :member2No) or (cm1.memberNo = :member2No and cm2.memberNo = :member1No)")
+    @Query("select c from ChatRoom c join c.member1 cm1 join c.member2 cm2 " +
+            "where (cm1.memberNo = :member1No and cm2.memberNo = :member2No) " +
+            "or (cm1.memberNo = :member2No and cm2.memberNo = :member1No)")
     Optional<ChatRoom> findChatRoomByMembers(@Param("member1No") Long member1No, @Param("member2No") Long member2No);
 
 //    @Query("select c from ChatRoom c where c.member1 = :member1 and c.member2 = :member2")
