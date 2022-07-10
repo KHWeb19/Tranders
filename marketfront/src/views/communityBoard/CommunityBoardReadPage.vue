@@ -84,6 +84,5 @@ export default {
 <style scoped>
 #board_read {
     background: #f8f9fa;
-    /* padding-top: 30px; */
 }
 </style>

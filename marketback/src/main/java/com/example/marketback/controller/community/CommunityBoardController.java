@@ -3,7 +3,6 @@ package com.example.marketback.controller.community;
 import com.example.marketback.entity.jpa.community.CommunityBoard;
 import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
-import com.example.marketback.request.KeyWordRequest;
 import com.example.marketback.service.jpa.community.CommunityBoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +35,14 @@ public class CommunityBoardController {
         service.register(board, near, file);
     }
 
-    @GetMapping("/list")
-    public List<CommunityBoard> communityBoardList () {
+    @GetMapping("/list/{memberNo}")
+    public List<CommunityBoard> communityBoardList (
+            @PathVariable("memberNo") Long memberNo
+    ) {
         log.info("communityBoardList()");
+        log.info(String.valueOf(memberNo));
 
-        return service.list();
+        return service.list(memberNo);
     }
 
     @GetMapping("/{boardNo}")
@@ -55,53 +57,7 @@ public class CommunityBoardController {
     public CommunityBoard communityBoardModify (
             CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception  {
 
-//        Optional<CommunityBoard> getFileName = repository.findById(Long.valueOf(boardNo));
-//        CommunityBoard getFile = getFileName.get();
-//
-//        if (getFile.getFileName1() != null ) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName1());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName2() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName2());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName3() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName3());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName4() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName4());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName5() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName5());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName6() != null ) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName6());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName7() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName7());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName8() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName8());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName9() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName9());
-//            Files.delete(filePath);
-//        }
-//        if (getFile.getFileName10() != null) {
-//            Path filePath = Paths.get("D:\\khweb19\\Tranders\\marketfront\\src\\assets\\uploadImg\\community\\" + getFile.getFileName10());
-//            Files.delete(filePath);
-//        }
-
-        log.info("modify(): " + board);
-//        board.setBoardNo(Long.valueOf(boardNo));
-        service.modify(board, file);
+        service.modify(board,file);
 
         return board;
     }

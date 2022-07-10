@@ -1,6 +1,5 @@
 package com.example.marketback.entity.jpa.community;
 
-import com.example.marketback.entity.member.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;

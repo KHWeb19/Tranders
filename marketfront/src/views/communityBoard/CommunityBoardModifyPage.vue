@@ -8,7 +8,6 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import CommunityBoardModify from '@/components/communityBoard/CommunityBoardModify.vue'
-// import CommunityBoardRead from '@/components/communityBoard/CommunityBoardRead.vue'
 
 export default {
     name:'CommunityBoardModifyPage',

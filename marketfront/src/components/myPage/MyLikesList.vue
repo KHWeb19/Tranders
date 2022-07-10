@@ -2,12 +2,12 @@
   <div>
     <v-app>
       <v-container>
-        <v-card width="100%">
+        <v-card width="95%" height="95%">
           <div
             style="
               padding-left: 50px;
               padding-right: 30px;
-              padding-bottom: 720px;
+              padding-bottom: 320px;
             "
           >
             <h2 class="head-title">관심 리스트</h2>
@@ -137,6 +137,7 @@ section#content {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
+  text-align: center;
 }
 .card-top {
   margin-right: 44px;

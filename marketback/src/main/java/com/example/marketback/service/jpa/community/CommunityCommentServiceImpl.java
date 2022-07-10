@@ -75,27 +75,6 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
 
         repository.save(boardItem);
-        //        communityComment.setCommunityBoard(boardItem.get());
-
-        //pass
-
-
-//                if (file != null) {
-//                    UUID uuid = UUID.randomUUID();
-//                    String fileName = uuid + "_" + file.getOriginalFilename();
-//                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
-//
-//                    saveFile.write(file.getBytes());
-//                    saveFile.close();
-//
-//                    communityComment.setFileName(fileName);
-//                }
-
-        //        communityComment.setCommentId(Long.valueOf(commentId));
-        //
-        //        repository.save(communityComment);
-
-        //        return communityComment;
     }
 
     @Override

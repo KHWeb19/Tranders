@@ -36,8 +36,8 @@
               <div class="card-title">{{ productBoard.title }}</div>
               <div class="card-title">{{ productBoard.price }}원</div>
               <div class="card-counts">
-                <span> 관심 5 </span>∙
-                <span> 채팅 6 </span>
+                <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
+                <span> 조회수 {{ productBoard.viewCnt }}</span>
               </div>
             </div>
           </article>
