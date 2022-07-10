@@ -141,7 +141,6 @@ export default {
             ediFileName:'',
             files1:null,
             ediImage:'',
-            files1: null,
         }
     },
     created () {
