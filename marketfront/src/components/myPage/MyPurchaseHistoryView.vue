@@ -7,6 +7,7 @@
             <v-row justify="center" style="padding-bottom: 20px">
               <v-card-title style="font-size: 30px;">판매 내역</v-card-title>
             </v-row>
+
             <section class="card-wrap">
               <v-col
                 class="none-product"
@@ -15,6 +16,7 @@
                   (Array.isArray(myProductBoards) &&
                     myProductBoards.length === 0)
                 "
+                style="text-align: center"
               >
                 현재 등록된 상품이 없습니다!
               </v-col>

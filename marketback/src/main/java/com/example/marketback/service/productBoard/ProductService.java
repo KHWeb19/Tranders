@@ -1,6 +1,7 @@
 package com.example.marketback.service.productBoard;
 
 import com.example.marketback.entity.productBoard.ProductBoard;
+import com.example.marketback.request.KeyWordRequest;
 
 import java.util.List;
 

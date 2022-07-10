@@ -1,9 +1,6 @@
 <template>
   <div>
     <h2 class="head-title">중고거래 인기매물</h2>
-    <router-link :to="{ name: 'ProductRegisterPage' }">
-      게시물 작성
-    </router-link>
     <v-col
       class="none-product"
       v-if="
