@@ -204,7 +204,7 @@ public class ManagerServiceImpl implements ManagerService{
 
     @Override
     public List<ManagerMemberListResponse> memberList(Integer page) {
-        Pageable pageable = PageRequest.of(page,3, Sort.Direction.DESC, "memberNo");
+        Pageable pageable = PageRequest.of(page,10, Sort.Direction.DESC, "memberNo");
         Page<Member> memberList = memberRepository.findAll(pageable);
 
         List<ManagerMemberListResponse> responses = new ArrayList<>();
@@ -218,7 +218,7 @@ public class ManagerServiceImpl implements ManagerService{
 
     @Override
     public Integer getMemberTotalPage() {
-        Pageable pageable = PageRequest.of(0,3, Sort.Direction.DESC, "memberNo");
+        Pageable pageable = PageRequest.of(0,10, Sort.Direction.DESC, "memberNo");
         Page<Member> memberList = memberRepository.findAll(pageable);
 
         return memberList.getTotalPages();

@@ -54,7 +54,7 @@ export default {
       })
           .then((res) => {
             console.log(res)
-            setTimeout(() => {this.$router.go()}, 500);
+            setTimeout(() => {this.$router.go()}, 1000);
           })
           .catch(() => {
             alert('에러')

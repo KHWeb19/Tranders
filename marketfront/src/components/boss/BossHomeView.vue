@@ -139,7 +139,7 @@
           <div style="display: flex">
             <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>
             <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>
-            <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>
+            <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{ menu.menuPrice | makeComma }}원</div>
           </div>
 
           <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">
