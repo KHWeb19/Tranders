@@ -1,5 +1,6 @@
 <template>
   <div>
+    <after-login-view></after-login-view>
     <div v-if="near === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn><div> 넘어왔다 {{nearNo}}</div></div>
     <near-read-page-view v-else :near="near" @saveReview="saveReview" @saveNoImageReview="saveNoImageReview" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview"></near-read-page-view>
   </div>
@@ -12,6 +13,7 @@ import {API_BASE_URL} from "@/constant/login";
 import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
 import NearReadPageView from "@/components/near/NearReadPageView";
+import AfterLoginView from "@/components/home/AfterLoginView";
 
 const config = {
   headers: {
@@ -23,7 +25,7 @@ const config = {
 
 export default {
   name: "NearReadPage",
-  components: {NearReadPageView},
+  components: {AfterLoginView, NearReadPageView},
   data() {
     return {
       nearNo: this.$route.query.nearNo,

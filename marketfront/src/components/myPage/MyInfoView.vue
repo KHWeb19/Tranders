@@ -34,6 +34,7 @@
         </div>
 
         <div v-else>
+          <v-row justify="end"> <v-btn id="checkDub" @click="leave">회원탈퇴</v-btn></v-row>
           <v-row>
             <v-col v-for="count in 4" :key="count"></v-col>
             <v-col>
@@ -280,6 +281,11 @@ export default {
       let num = this.checkNum;
 
       this.$emit('certification', {num})
+    },
+    leave(){
+      const {id} = this;
+
+      this.$emit('leave', {id})
     }
   },
   created() {

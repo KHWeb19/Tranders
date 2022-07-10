@@ -43,16 +43,16 @@
                     &nbsp;&nbsp;{{ commentList.commentWriter}}
                 </v-col>
                 <v-col cols="2">
-                    {{ commentList.commentRegion }}
+                    {{ commentList.commentRegion }} 
                 </v-col>        
-                <v-col cols="4">
+                <v-col cols="5">
                     {{ commentList.comment}} 
                 </v-col>
-                <v-col cols="4">
-                    {{ commentList.date}}
+                <v-col cols="3">
+                    {{ commentList.updDate | timeForToday}}
                 </v-col>
                 <v-container v-if="commentList.placeName != ''">
-                    <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="commentList.placeUrl" style="text-decoration:none"  target="_blank">{{commentList.placeName}}</a></b><br>
+                    <v-icon>mdi-map-marker-outline</v-icon><b><a v-bind:href="commentList.placeUrl" style="text-decoration:none"  target="_blank" >{{commentList.placeName}}</a></b><br>
                 </v-container>
                 <v-container v-if="commentList.placeName == ''">
                 </v-container>
@@ -70,20 +70,21 @@
                             </template>
                             <v-card>
                                  <v-text-field style="width:300px" v-model="ediComment" />
-                                  <!-- <v-icon large>mdi-image-outline</v-icon>
-                        <input type="file" id="files" ref="files"  dense style="width:193px"
-                                multiple v-on:change="handleFileUpload()"/>
+                                  <v-icon large>mdi-image-outline</v-icon>
+                        <input type="file" id="files1" ref="files1" dense style="width:193px"
+                                multiple v-on:change="handleFileUpload1()"/>
+                        <!-- <img :src="require(`@/assets/uploadImg/community/${file}`)" class="preview"/>                  -->
                                 <v-dialog v-model="dialog" persisten max-width="1000">
                             <template v-slot:activator="{ on }">
                                 <v-btn v-on="on"  onclick="" color="blue-grey" text>
                                     <v-icon large>mdi-map-marker-outline</v-icon>
-                                    <v-text-field style="width:200px" v-model="commentList.placeName"/>
+                                    <v-text-field style="width:200px" v-model="ediPlaceName"/>
                                 </v-btn>
                             </template>
                             <v-card>
-                                <kakao-map></kakao-map>
+                                <c-kakao-map></c-kakao-map>
                             </v-card>
-                        </v-dialog>           -->
+                        </v-dialog>          
                         <v-btn @click=onModifySubmit() class="writeBtn" color="light green accent-4" style="box-shadow:none" dark fab x-small><v-icon> mdi-check</v-icon></v-btn>
                             </v-card>
                     </v-dialog>         
@@ -103,14 +104,15 @@ import cookies from "vue-cookies";
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import KakaoMap from '../../views/KakaoMap.vue';
+import cKakaoMap from '../../views/KakaoMap.vue';
 export default {
-    components: { KakaoMap },
+    components: { KakaoMap,cKakaoMap },
     name:'CommentList,CommunityBoardReadPage',
     props: {
         communityComments : {
             type:Array
         },
-        boardNo: {
+          boardNo: {
             type: String,
             required: true
         }
@@ -130,11 +132,17 @@ export default {
             placeName:'',
             placeUrl:'',
             image :'',
+            image1:'',
             files:'',
             comment:'',
             response: '',
             fileName: '',
             ediComment:'',
+            ediPlaceName:'',
+            ediPlaceUrl:'',
+            ediFileName:'',
+            ediImage:'',
+            files1: null,
         }
     },
     created () {
@@ -143,15 +151,23 @@ export default {
             this.placeName = payload[1]
             console.log(payload) 
         })
+        EventBus.$on('placeRegister1', (payload) => {
+            this.ediPlaceUrl = payload[0]
+            this.ediPlaceName = payload[1]
+            console.log(payload) 
+        })
        this.commentWriter = this.login.name
        this.commentRegion = this.login.region
        this.ediComment = this.commentList.comment
-    //    this.commentId = this.commentList.commentId
-    //    this.placeName = this.commentList.placeName
-    //    this.placeUrl = this.commentList.placeUrl
+       this.ediPlaceName = this.commentList.placeName
+       this.ediPlaceUrl = this.commentList.placeUrl
+
+       this.ediFileName = this.commentList.FileName
+       this.ediFile = this.commentList.File
+       this.ediImage = this.commentList.image
     },
     computed: {
-        ...mapState(['CommunityCommentsList'])
+        ...mapState(['CommunityCommentsList']),
     },
     methods: {
         ...mapActions(['fetchCommunityCommentsList']),
@@ -181,35 +197,66 @@ export default {
             this.image = url
             this.files = this.$refs.files.files[0]
         },
+
+         handleFileUpload1 () {
+            console.log('이미지 수정')
+           this.files1 = this.$refs.files1[0].files
+           console.log(this.files1[0])
+           /* var ediImage = this.$refs['files1'].files[0]
+            const url = URL.createObjectURL(ediImage)
+            this.ediImage = url
+            this.files1 = this.$refs.files1.files1[0]*/
+        },
       modifyComment(commentList){
         this.ediComment = commentList.comment;
+        this.ediPlaceName = commentList.placeName;
+        this.ediPlaceUrl = commentList.placeUrl;
+        this.ediFileName = commentList.fileName;
+        this.ediFile = commentList.file;
+
         this.commentId = commentList.commentId;
-        // this.boardNo = commentList.boardNo;
+
+        // this.edifileName = commentList.fileName
       },
-    //     onSubmit () {
-    //         const comment  = this.commentList.comment
-    //         axios.post(`http://localhost:7777/communityboard/${this.boardNo}/comment/register`, { comment }).then(() => {
-    //     alert('수정이 완료되었습니다')
-    //     this.fetchCommunityCommentsList(this.boardNo)
-    //     this.dialog = false
-    //     console.log(comment)
-    //   })
-    // },
-    // onSubmit () {
-    //         const comment  = this.commentList.comment
-    //         this.$emit('submit', {comment})
-    //         console.log(this.commentList.comment)  
-    //   },
             onModifySubmit () {
             const comment = this.ediComment
-            // const { boardNo } = this.communityBoard
-            alert(comment)
+            const placeName = this.ediPlaceName
+            const placeUrl = this.ediPlaceUrl
+
+            const fileName =  this.ediFileName
+            
+            // const fileName = this.ediFileName
+            
+            
+            const file =  this.files1[0]
+            console.log(this.$refs.files1.files)
+            // this.$emit('submit', { file,fileName })
+            
+            // alert(comment)
+            
             let formData = new FormData()
-            // this.fetchCommunityCommentsList(this.boardNo)
+            // if (fileName != null ){formData.append('fileName', fileName)}
+
+            // if (file != null ){formData.append('file', file)}
+            if (file.length !== 0 ){
+            formData.append('file',this.files1[0])}
+            console.log(this.$refs.files1.files)  
+
+            // formData.append('file',this.$refs.files1.files1[0])
+            
+            // console.log(this.$refs.files.files[0])  
+
+            
+
+            // formData.append('file', file)
+
+            formData.append('fileName', fileName)
+
             formData.append('comment', comment)
+            formData.append('placeName', placeName)
+            formData.append('placeUrl', placeUrl)
             console.log(formData)
             console.log(this.boardNo)
-            console.log(this.communityBoard)
             
             axios.put(`http://localhost:7777/communityboard/${this.boardNo}/${this.commentId}/comment/register`,formData, { headers: {
                     'Content-Type': 'multipart/form-data'
@@ -237,7 +284,7 @@ table {
     padding-left: 0%;
     padding-right: 0%;
     padding-top:0%;
-    padding-bottom:0%;
+    padding-bottom:3%;
     margin-left:auto;
     margin-right:auto;
 }

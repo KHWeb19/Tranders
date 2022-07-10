@@ -11,7 +11,7 @@
         <v-col cols="8">
           <div v-if="userInfo === null"> <v-btn>죄송합니다 다시 부탁드려요</v-btn></div>
           <my-info-view v-else :userInfo="userInfo" @modifyMember="modifyMember" @modifyMemberSns="modifyMemberSns" @changePassword="changePassword" @saveProfileImg="saveProfileImg" @checkPhoneNum="checkPhoneNum"
-                        @certification="certification" :ifCheck="ifCheck"></my-info-view>
+                        @certification="certification" @leave="leave" :ifCheck="ifCheck"></my-info-view>
         </v-col>
           <v-col>
           </v-col>
@@ -29,6 +29,7 @@ import cookies from "vue-cookies";
 import {mapActions, mapState} from "vuex";
 import axios from "axios";
 import {API_BASE_URL, SAVE_COOKIE_ACCESS} from "@/constant/login";
+import {logout} from "@/views/Util/LoginUtil";
 
 const config = {
   headers: {
@@ -142,6 +143,19 @@ export default {
         alert('error!')
         this.checkDoublePhoneNum = false;
       }
+    },
+    leave(payload){
+      const {id} = payload;
+      let num = 1;
+      axios.get(`http://localhost:7777/manager/removeMember/${id}/${num}`, config)
+          .then((res) => {
+            console.log(res)
+            logout();
+            this.$router.push({name: 'HomePage'})
+          })
+          .catch(() => {
+            alert('에러')
+          })
     }
   },
   computed: {

@@ -23,7 +23,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 public class BossReview {
 
     @Id
@@ -54,7 +53,8 @@ public class BossReview {
     @OneToMany(mappedBy = "review")
     private List<BossReviewImage> bossReviewImagesList = new ArrayList<>();
 
-    private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+    @CreatedDate
+    private String createDate = String.valueOf(LocalDateTime.now());
 
     public BossReview(String content, String state, Member member, Boss boss, Near near) {
         this.content = content;

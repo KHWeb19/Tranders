@@ -109,4 +109,11 @@ public class ManagerController {
 
        return managerService.todayReport();
     }
+
+    @GetMapping("/removeMember/{id}/{num}")
+    public void removeMember(@PathVariable String id, @PathVariable Integer num){
+        log.info("removeMember");
+
+        managerService.removeMember(id, num);
+    }
 }

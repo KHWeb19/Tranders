@@ -96,7 +96,8 @@ export default {
       word: '',
       productPage: 0,
       commPage: 0,
-      region: cookies.get('region')
+      region: cookies.get('region'),
+      id: cookies.get('id')
     }
   },
   methods: {
@@ -109,9 +110,11 @@ export default {
     fetchSearchProduct(keyWord){
       let page = this.productPage;
       let region = this.region;
+      let id = this.id;
+
       this.word = keyWord;
 
-      axios.post(API_BASE_URL+'/search/all/product', {page, keyWord, region}, {
+      axios.post(API_BASE_URL+'/search/all/product', {id, page, keyWord, region}, {
         headers: {
           'Authorization': 'Bearer '+ cookies.get('access_token'),
           'Accept' : 'application/json',
@@ -127,9 +130,10 @@ export default {
     addProduct(){
       let page = this.productPage;
       let region = this.region;
+      let id = this.id;
       let keyWord = this.word;
 
-      axios.post(API_BASE_URL+'/search/all/product', {page, keyWord, region}, {
+      axios.post(API_BASE_URL+'/search/all/product', {id, page, keyWord, region}, {
         headers: {
           'Authorization': 'Bearer '+ cookies.get('access_token'),
           'Accept' : 'application/json',
@@ -149,9 +153,10 @@ export default {
     addComm(){
       let page = this.commPage;
       let region = this.region;
+      let id = this.id;
       let keyWord = this.word;
 
-      axios.post(API_BASE_URL+'/search/all/comm', {page, keyWord, region}, {
+      axios.post(API_BASE_URL+'/search/all/comm', {id, page, keyWord, region}, {
         headers: {
           'Authorization': 'Bearer '+ cookies.get('access_token'),
           'Accept' : 'application/json',
@@ -171,7 +176,9 @@ export default {
     fetchSearchComm(keyWord){
       let page = this.commPage;
       let region = this.region;
-      axios.post(API_BASE_URL+'/search/all/comm', {page, keyWord, region}, {
+      let id = this.id;
+
+      axios.post(API_BASE_URL+'/search/all/comm', {id, page, keyWord, region}, {
         headers: {
           'Authorization': 'Bearer '+ cookies.get('access_token'),
           'Accept' : 'application/json',

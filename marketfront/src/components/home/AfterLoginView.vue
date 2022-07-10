@@ -1,71 +1,61 @@
 <template>
-  <div id="nav">
+  <div id='nav'>
     <div id="header">
-      <router-link id="title" :to="{ name: 'HomePage' }">
+      <router-link id="title" :to="{name: 'HomePage'}">
         오이마켓
       </router-link>
 
-      <div id="nav_list">
-        <router-link id="nav_item" :to="{ name: 'ProductListPage' }">
+      <div id='nav_list'>
+        <router-link id='nav_item' :to="{name: 'ProductListPage'}">
           중고거래
         </router-link>
-        <router-link id="nav_item" :to="{ name: 'CommunityBoardListPage' }">
+        <router-link id='nav_item' :to="{ name: 'CommunityBoardListPage' }">
           동네생활
         </router-link>
-        <router-link id="nav_item" :to="{ name: 'NearPage' }">
+        <router-link id='nav_item' :to="{ name: 'NearPage' }">
           내 근처
         </router-link>
-        <router-link id="nav_item" :to="{ name: 'ChattingListPage' }">
+        <router-link id='nav_item' :to="{ name: 'ChattingListPage' }">
           채팅
         </router-link>
       </div>
 
-      <div id="nav_right">
+      <div id='nav_right'>
         <div id="searchBar">
           <input
-            @keyup.enter="searchStart"
-            class="search"
-            type="text"
-            v-model="keyWord"
-            placeholder="물품이나 동네를 검색해보세요"
+          @keyup.enter="searchStart"
+          class="search"
+          type="text"
+          v-model="keyWord"
+          placeholder="물품이나 동네를 검색해보세요"
           />
         </div>
 
         <div>
           <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                id="my_button"
-                depressed
-                v-if="profileImg === null"
-                v-on="on"
-              >
-                <v-img
-                  width="24"
-                  height="24"
-                  src="@/assets/profile/Tranders_base_profile_img.png"
-                ></v-img
-                >&nbsp;▼
+            <template v-slot:activator="{on}">
+              <v-btn id='my_button' depressed v-if="profileImg === null" v-on="on">
+                <v-img width="24" height="24" src="@/assets/profile/Tranders_base_profile_img.png"></v-img>&nbsp;▼
               </v-btn>
 
-              <v-btn id="my_button" depressed v-else v-on="on">
-                <v-img
-                  width="24"
-                  height="24"
-                  :src="require(`@/assets/profile/${profileImg}`)"
-                ></v-img
-                >&nbsp;▼
+              <v-btn id='my_button' depressed v-else v-on="on">
+                <v-img width="24" height="24" :src="require(`@/assets/profile/${profileImg}`)"></v-img>&nbsp;▼
               </v-btn>
             </template>
 
             <v-list>
               <v-list-item link @click="myPage">
-                <v-list-item-title> 내 정보 </v-list-item-title>
+                <v-list-item-title>
+                  내 정보
+                </v-list-item-title>
               </v-list-item>
 
               <v-list-item link @click="logout">
-                <v-list-item-title> 로그아웃 </v-list-item-title>
+                <v-list-item-title>
+                  로그아웃
+                </v-list-item-title>
               </v-list-item>
+
             </v-list>
           </v-menu>
         </div>
@@ -79,19 +69,20 @@ import { mapActions, mapState } from "vuex";
 import cookies from "vue-cookies";
 import { logout } from "@/views/Util/LoginUtil";
 import axios from "axios";
+
 export default {
   name: "AfterLoginView",
   props: {
     num: {
       type: Number, // 어디서 검색을 하는지
       default: 0,
-    },
+    }
   },
   data() {
     return {
       id: "",
-      keyWord: "",
-    };
+      keyWord: ''
+    }
   },
   methods: {
     ...mapActions(["fetchMemberProfile"]),
@@ -100,34 +91,32 @@ export default {
     },
     logout() {
       logout();
-      this.$router.push({ name: "HomePage" });
+      this.$router.push({name: 'HomePage'})
     },
     test() {
       alert("test");
     },
     searchStart() {
       const keyWord = this.keyWord;
-      if (this.num === 1) {
-        // 중고 물품
-        axios
-          .post("http://localhost:7777/search/product", { keyWord })
-          .then((res) => {
-            console.log("검색성공");
-            console.log(res.data);
-            this.$router.push({
-              name: "ProductSearchListPage",
-              params: { searchList: res.data },
+
+      if(this.num === 1){// 중고 물품
+        axios.post("http://localhost:7777/search/product", { keyWord })
+            .then((res) => {
+              console.log("검색성공");
+              console.log(res.data);
+              this.$router.push({name: "ProductSearchListPage", params: { searchList: res.data }});
             });
-          });
-      } else if (this.num === 3) {
-        // 전체 검색
-        this.$emit("keyWordTest", this.keyWord);
-      } else {
-        // 전체 검색
-        this.$router.push({
-          name: "SearchKeyWordListPage",
-          params: { keyWord: keyWord.toString() },
-        });
+      }else if(this.num === 2){ // 커뮤니티
+        axios.post("http://localhost:7777/search/comm", { keyWord })
+            .then((res) => {
+              console.log("검색성공");
+              console.log(res.data);
+              this.$router.push({name: "ProductSearchListPage", params: { searchList: res.data }});
+            });
+      }else if(this.num === 3){ // 전체 검색
+        this.$emit('keyWordTest', this.keyWord)
+      }else { // 전체 검색
+        this.$router.push({name: 'SearchKeyWordListPage', params: { keyWord: keyWord.toString()}})
       }
     },
   },
@@ -150,7 +139,7 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-#nav {
+#nav{
   background-color: white;
   color: #212124;
   top: 0;
@@ -179,7 +168,7 @@ export default {
   font-family: ONE-Mobile-POP, serif;
   font-size: 26px;
 }
-#nav_list {
+#nav_list{
   display: block;
   width: 100%;
   padding-top: 0;
@@ -187,7 +176,7 @@ export default {
   padding-bottom: 0;
   padding-left: 40px;
 }
-#nav_list .router-link-active,
+#nav_list .router-link-active, 
 #nav_list .router-link-exact-active {
   text-decoration: none;
   line-height: 1.32;
@@ -195,9 +184,9 @@ export default {
   font-weight: 700;
   font-style: normal;
   margin-right: 30px;
-  color: green;
+  color: green
 }
-#nav_item {
+#nav_item{
   text-decoration: none;
   line-height: 1.32;
   font-size: 18px;
@@ -206,7 +195,7 @@ export default {
   margin-right: 30px;
   color: #4d5159;
 }
-#nav_right {
+#nav_right{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,7 +217,7 @@ input {
   border-radius: 6px;
   color: #212124;
 }
-#my_button {
+#my_button{
   line-height: 1.3;
   font-size: 16px;
   letter-spacing: -2%;

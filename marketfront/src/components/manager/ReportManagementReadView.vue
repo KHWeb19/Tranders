@@ -23,7 +23,7 @@
 
         <tr>
           <td>신고</td>
-          <td style="padding: 5px 5px 5px 5px">{{reportRead.toMember}} <v-btn>사용자 제거</v-btn></td>
+          <td style="padding: 5px 5px 5px 5px">{{reportRead.toMember}} <v-btn @click="removeMember(reportRead.toMember)">사용자 제거</v-btn></td>
         </tr>
 
         <tr>
@@ -181,6 +181,9 @@ export default {
     done(){
       let reportNo = this.reportRead.reportNo;
       this.$emit('done', {reportNo})
+    },
+    removeMember(id){
+      this.$emit('removeMember', {id})
     }
   },
   computed: {

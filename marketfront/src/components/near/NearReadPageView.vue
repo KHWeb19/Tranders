@@ -2,10 +2,10 @@
   <div id="my_page_box" style="position: relative">
     <div id="profile_back_img">
       <div style="width: 100%; position: relative;">
-        <div id="img" style="width: 100%; height: 500px; background-color: #a0c5a0"></div>
+        <div id="img" style="width: 100%; height: 400px; background-color: #a0c5a0"></div>
       </div>
 
-      <div style="top: 25px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style="top: 65px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
     </div>
@@ -20,23 +20,19 @@
           {{ near.storeRegion }} ㆍ {{near.category}} ㆍ 단골 0
         </div>
         <div>
-          <v-btn class="white--text" style="font-weight: bold; background-color: #4c7732"> + 단골 맺기</v-btn>
+<!--          <v-btn class="white&#45;&#45;text" style="font-weight: bold; background-color: #4c7732"> + 단골 맺기</v-btn>-->
+          <v-btn depressed color="success" height="40" type="submit" style="font-weight: bold;"><b> + 단골 맺기</b></v-btn>
         </div>
       </div>
     </div>
 
     <div style="display: flex; padding-top: 50px; justify-content: center; align-items: center;" class="pa-4">
-      <div @click="phoneNumDialog = true" style="width: 33%; display: flex; flex-direction: column; align-items: center; border-right: rgba(168,168,168,0.4) solid 1px">
+      <div @click="phoneNumDialog = true" style="width: 50%; display: flex; flex-direction: column; align-items: center; border-right: rgba(168,168,168,0.4) solid 1px">
         <div><v-img style="opacity: 0.7" src="@/assets/icon/cellPhone.png" max-width="80px"></v-img></div>
         <div style="flex-direction: row; flex-wrap: wrap; padding-top: 20px; font-size: 18px">전화문의</div>
       </div>
 
-      <div style="width: 33%; display: flex; flex-direction: column; align-items: center; border-right: rgba(168,168,168,0.4) solid 1px">
-        <div><v-img style="opacity: 0.7" src="@/assets/icon/conversation.png" max-width="80px"></v-img></div>
-        <div style="flex-direction: row; flex-wrap: wrap; padding-top: 20px; font-size: 18px">채팅문의</div>
-      </div>
-
-      <div style="width: 33%; display: flex; flex-direction: column; align-items: center;" @click="reviewDialog = true">
+      <div style="width: 50%; display: flex; flex-direction: column; align-items: center; border-left: rgba(168,168,168,0.4) solid 1px" @click="reviewDialog = true">
         <div><v-img style="opacity: 0.7" src="@/assets/icon/pencil.png" max-width="80px"></v-img></div>
         <div style="flex-direction: row; flex-wrap: wrap; padding-top: 20px; font-size: 18px">후기작성</div>
       </div>
@@ -71,7 +67,7 @@
       <near-read-review-list-view :nearNo="nearNo" @modifyReview="modifyReview" @modifyImgReview="modifyImgReview" @deleteReview="deleteReview"></near-read-review-list-view>
     </div>
 
-    <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; font-size: 15px" class="pa-10">
+    <div style="background-color: rgba(187,187,187,0.23); height: 100px; text-align: center; padding: 40px; font-size: 15px" class="pa-10">
       오이마켓에 등록된 가게의 정보는 가게 관리자가 직접 등록한 것으로 (주)오이마켓은 등록된 내용에 대하여 일체의 책임을 지지 않습니다.
     </div>
 
@@ -311,9 +307,9 @@ export default {
 #my_page_box{
   align-items: center;
   width: 100%;
-  max-width: 1250px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 40px
 }
 #profile {
   padding: 15px 20px 20px 20px;
