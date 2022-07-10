@@ -20,9 +20,9 @@
 <script>
 import ChattingList from '@/components/chatting/ChattingList.vue'
 import { mapState, mapActions } from 'vuex'
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 import Vue from 'vue'
 import cookies from "vue-cookies";
-import AfterLoginView from '../../components/home/AfterLoginView.vue'
 Vue.use(cookies)
 
 export default {

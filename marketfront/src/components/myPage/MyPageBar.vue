@@ -166,7 +166,7 @@ export default {
           this.registerBoss();
           break;
         case 4:
-          this.$router.push({ name: "MyPageGathering" });
+          this.$router.push({ name: "MyFollowBoardList" });
           break;
       }
     },

@@ -3,6 +3,9 @@ import {
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
     FETCH_BUYER_LIST,
+    FETCH_MYFOLLOW_BOARD_LIST,
+    FETCH_MYFOLLOW_LIST,
+    FETCH_ON_FOLLOW,
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
     FETCH_REGISTER_CHAT,
@@ -64,6 +67,24 @@ export default {
         return axios.get(`http://localhost:7777/product/buyerList/${memberNo}`)
             .then((res) => {
                 commit(FETCH_BUYER_LIST, res.data)
+            })
+    },
+    fetchMyFollowBoardList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/follow/boardList/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_MYFOLLOW_BOARD_LIST, res.data)
+            })
+    },
+    fetchMyFollowList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/follow/list/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_MYFOLLOW_LIST, res.data)
+            })
+    },
+    fetchOnFollow({ commit }, {loginNo, memberNo}) {
+        return axios.get(`http://localhost:7777/follow/on/${loginNo}/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ON_FOLLOW, res.data)
             })
     },
     refreshToken ({commit}) {
