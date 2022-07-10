@@ -169,7 +169,6 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
-import axios from "axios";
 
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
