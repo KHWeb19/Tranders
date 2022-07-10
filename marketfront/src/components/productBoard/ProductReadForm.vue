@@ -135,10 +135,10 @@
           {{ productBoard.viewCnt }}
         </p>
 
-        <v-btn
+        <v-btn depressed class="success"
           v-if="login.memberNo != productBoard.member.memberNo"
           @click="onChat"
-          >채팅하기</v-btn
+          ><b>채팅하기</b></v-btn
         >
       </section>
 
@@ -174,6 +174,7 @@ import axios from "axios";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
 import { mapActions, mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "ProductReadPage",
@@ -214,22 +215,33 @@ export default {
     };
   },
   computed: {
+    ...mapState(["myProductLikes"]),
+    ...mapState(['registerChat']),
     ...mapState(["like"]),
   },
   mounted() {
+    this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
     this.fetchLike({
       productNo: this.productBoard.productNo,
       memberNo: this.login.memberNo,
     });
   },
   methods: {
+    ...mapActions(["fetchProductLike"]),
+    ...mapActions(['fetchRegisterChat']),
     ...mapActions(["fetchLike"]),
     onChat() {
-      this.$emit("onChat", {
-        member1No: this.login.memberNo,
-        member2No: this.productBoard.member.memberNo,
-        productNo: this.productBoard.productNo,
-      });
+      axios
+        .post(
+          `http://localhost:7777/chatting/register/${this.login.memberNo}/${this.productBoard.member.memberNo}/${this.productBoard.productNo}`,
+          { member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo, productNo:this.productBoard.productNo })
+        .then(() => {
+          if(!(this.registerChat)){
+          this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+          }
+          this.$emit("onChat", {registerNo: this.registerChat.roomNo})
+        })
+        this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
     },
     closeDialog() {
       this.reportDialog = false;

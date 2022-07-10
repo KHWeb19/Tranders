@@ -1,11 +1,20 @@
 <template>
     <div id='user_profile'>
-        <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}</span></h2>
-        <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
+        <div style="display: flex; justify-content: space-between;">
+        <div>
+            <h2 id='nickname'>{{userInfo.name}}<span id='region_name'>{{userInfo.address}}</span></h2>
+            <div id='profile_detail'>매너온도 {{userInfo.temperature}}°C</div>
+        </div>
+        <div>
+            <follow-button :userInfo="userInfo" :myFollows="myFollows"/>
+        </div>
         
+        </div>
         <div id='profile_image'>
             <v-img id="image" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
         </div>
+
+
     
         <div id='user_filter'>
             <ul>
@@ -18,13 +27,32 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import cookies from "vue-cookies";
+import FollowButton from './FollowButton.vue';
 export default {
+  components: { FollowButton },
     name: 'ProfileTop',
     props: {
         userInfo: {
             type: Object,
         },
     },
+    data() {
+        return {
+            memberNo: cookies.get("memberNo"),
+            follow: '',
+        }
+    },
+    computed: {
+        ...mapState(['myFollows']),
+    },
+    mounted () {
+        this.fetchMyFollowList(this.memberNo)
+    },
+    methods: {
+        ...mapActions(['fetchMyFollowList']),
+    }
 }
 </script>
 
@@ -32,7 +60,7 @@ export default {
 #user_profile{
     display: block;
     position: relative;
-    margin-top: 40px;
+    /* margin-top: 40px; */
     margin-bottom: 40px;
 }
 #nickname{

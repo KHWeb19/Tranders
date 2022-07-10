@@ -143,6 +143,10 @@ export default {
         userInfo: {
             type: Object,
         },
+        memberId: {
+            type: String,
+            required: true
+        }
     },
     data() {
         return {
@@ -210,10 +214,14 @@ export default {
             const { memberId, button, good1, good2, good3, good4, bad1, bad2, bad3, bad4, message } = this
             if (button == -1) {
                 this.sum = (bad1 + bad2 + bad3 + bad4)*button*0.025
-                this.$emit('onSubmit', { memberId, member2Id: this.login.id, good1:0, good2:0, good3:0, good4:0, bad1, bad2, bad3, bad4, sum: this.sum, message })
+                this.$emit('onSubmit', { memberId, member2Id: this.login.id, 
+                    good1:0, good2:0, good3:0, good4:0, bad1, bad2, bad3, bad4, 
+                    sum: this.sum, message })
             } else {
                 this.sum = (good1 + good2 + good3 + good4)*button*0.025
-                this.$emit('onSubmit', { memberId, member2Id: this.login.id, good1, good2, good3, good4, bad1:0, bad2:0, bad3:0, bad4:0, sum: this.sum, message })
+                this.$emit('onSubmit', { memberId, member2Id: this.login.id, 
+                    good1, good2, good3, good4, bad1:0, bad2:0, bad3:0, bad4:0, 
+                    sum: this.sum, message })
             }
             this.$router.push({ name: "MyPageProfile" });
         },

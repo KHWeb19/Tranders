@@ -10,6 +10,11 @@ import {
 
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_BUYER_LIST,
+    FETCH_MYFOLLOW_BOARD_LIST,
+    FETCH_MYFOLLOW_LIST,
+    FETCH_ON_FOLLOW,
+    FETCH_REGISTER_CHAT,
     FETCH_REVIEW_LIST,
     FETCH_MANNER,
     FETCH_LOGIN_TOKEN,
@@ -91,6 +96,21 @@ export default {
     },
     [FETCH_CHATROOM_LIST](state, chatrooms) {
         state.chatrooms = chatrooms
+    },
+    [FETCH_BUYER_LIST] (state, buys) {
+        state.buys = buys
+    },
+    [FETCH_MYFOLLOW_BOARD_LIST] (state, myFollowBoards) {
+        state.myFollowBoards = myFollowBoards
+    },
+    [FETCH_MYFOLLOW_LIST] (state, myFollows) {
+        state.myFollows = myFollows
+    },
+    [FETCH_ON_FOLLOW] (state, onFollow) {
+        state.onFollow = onFollow
+    },
+    [FETCH_REGISTER_CHAT] (state, registerChat) {
+        state.registerChat = registerChat
     },
     [FETCH_REVIEW_LIST](state, reviews) {
         state.reviews = reviews

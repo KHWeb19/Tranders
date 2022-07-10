@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 40px; border-left: 1px solid #e9ecef;">
+  <div style="padding: 40px;">
         <!-- <v-row>
           <v-col v-for="count in 4" :key="count"></v-col>
           <v-col>
