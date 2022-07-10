@@ -26,8 +26,8 @@
       </v-row>
 
       <v-row style="height: 70px; margin-top: 35px">
-        <v-col>
-          <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">오이 마켓 시작하기</v-btn>
+        <v-col style="width: 100%;">
+          <v-btn @click="registerBtn" depressed color="success" width="100%" height="50" type="submit"><b>오이 마켓 시작하기</b></v-btn>
         </v-col>
       </v-row>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 40px">
+  <div style="padding: 40px; border-right: 1px solid #e9ecef;">
     <div>
       <v-row>
         <v-col><h3>프로필</h3></v-col
@@ -48,17 +48,18 @@
           "
         >
           <div>
-            <v-btn
-              fab
-              depressed
-              style="
-                height: 70px;
-                width: 70px;
-                background-color: rgb(202, 227, 164);
-              "
-            >
-              <v-icon style="color: #008807">mdi-shopping</v-icon>
-            </v-btn>
+              <v-btn
+                fab
+                depressed
+                style="
+                  height: 70px;
+                  width: 70px;
+                  background-color: rgb(202, 227, 164);
+                "
+                :to="{ name: 'MyBuyHistoryList' }"
+              >
+                <v-icon style="color: #008807">mdi-shopping</v-icon>
+              </v-btn>
 
             <div class="statementBtn">구매 내역</div>
           </div>
@@ -183,7 +184,7 @@ export default {
           this.registerBoss();
           break;
         case 4:
-          this.$router.push({ name: "MyPageGathering" });
+          this.$router.push({ name: "MyFollowBoardList" });
           break;
         case 5:
           this.$router.push({ name: "MyCouponPage" });

@@ -2,6 +2,10 @@ import {
     FETCH_REFRESH_TOKEN,
     FETCH_PRODUCT_BOARD,
     FETCH_PRODUCT_BOARD_LIST,
+    FETCH_BUYER_LIST,
+    FETCH_MYFOLLOW_BOARD_LIST,
+    FETCH_MYFOLLOW_LIST,
+    FETCH_ON_FOLLOW,
     FETCH_REGION_PRODUCT_BOARD_LIST,
     FETCH_MY_PRODUCT_BOARD_LIST,
 
@@ -11,6 +15,7 @@ import {
 
     FETCH_CHATROOM,
     FETCH_CHATROOM_LIST,
+    FETCH_REGISTER_CHAT,
     FETCH_REVIEW_LIST,
     FETCH_MANNER,
     FETCH_MEMBER_PROFILE,
@@ -63,6 +68,30 @@ export default {
         return axios.get('http://localhost:7777/product/list/')
             .then((res) => {
                 commit(FETCH_PRODUCT_BOARD_LIST, res.data)
+            })
+    },
+    fetchBuyerList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/product/buyerList/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_BUYER_LIST, res.data)
+            })
+    },
+    fetchMyFollowBoardList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/follow/boardList/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_MYFOLLOW_BOARD_LIST, res.data)
+            })
+    },
+    fetchMyFollowList({ commit }, memberNo) {
+        return axios.get(`http://localhost:7777/follow/list/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_MYFOLLOW_LIST, res.data)
+            })
+    },
+    fetchOnFollow({ commit }, {loginNo, memberNo}) {
+        return axios.get(`http://localhost:7777/follow/on/${loginNo}/${memberNo}`)
+            .then((res) => {
+                commit(FETCH_ON_FOLLOW, res.data)
             })
     },
     fetchRegionProductBoardList({ commit }, memberNo) {
@@ -122,6 +151,12 @@ export default {
                 commit(FETCH_CHATROOM_LIST, res.data)
             })
     },
+    fetchRegisterChat ({ commit }, {member1No, member2No}) {
+        return axios.get(`http://localhost:7777/chatting/${member1No}/${member2No}`)
+                .then((res) => {
+                    commit(FETCH_REGISTER_CHAT, res.data)
+                })
+    },
     fetchReviewList({ commit }, id) {
         return axios.get(`http://localhost:7777/review/list/${id}`)
             .then((res) => {
@@ -146,8 +181,8 @@ export default {
                 commit(FETCH_MEMBER_PROFILE, res.data)
             })
     },
-    fetchCommunityBoardList({ commit }) {
-        return axios.get('http://localhost:7777/communityboard/list')
+    fetchCommunityBoardList({ commit },memberNo) {
+        return axios.get(`http://localhost:7777/communityboard/list/${memberNo}`)
             .then((res) => {
                 commit(FETCH_COMMUNITY_BOARD_LIST, res.data)
             })
@@ -212,8 +247,8 @@ export default {
                 commit(FETCH_BOSS_BACK_PROFILE, res.data)
             ])
     },
-    fetchBossMenuList({ commit }, id) {
-        return axios.post(`http://localhost:7777/boss/getMenu/${id}`, {}, {
+    fetchBossMenuList({ commit }, bossNo) {
+        return axios.post(`http://localhost:7777/boss/getMenu/${bossNo}`, {}, {
             headers: {
                 'Authorization': 'Bearer ' + cookies.get('access_token'),
                 'Accept': 'application/json',

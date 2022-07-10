@@ -122,14 +122,15 @@ public class BossController {
         log.info("saveBackProfile");
 
         List<String> fileName = new ArrayList<>();
+        UUID uuid = UUID.randomUUID();
 
         try{
             for(MultipartFile files : imgFile) {
                 log.info("requestUploadFile() - Make file: " + files.getOriginalFilename());
 
-                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/back/" + id + "_" + name +"_" + files.getOriginalFilename());
+                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/back/" + id + "_" + name + "_" + uuid + "_" + files.getOriginalFilename());
 
-                String fileSrc = id + "_" + name +"_" +  files.getOriginalFilename();
+                String fileSrc = id + "_" + name + "_" + uuid +"_" +  files.getOriginalFilename();
 
                 fileName.add(fileSrc);
                 log.info(fileSrc);
@@ -161,11 +162,11 @@ public class BossController {
         bossService.addPrice(bossPrice, bossNo);
     }
 
-    @PostMapping("/getMenu/{id}")
-    public List<BossPriceMenuResponse> getMenu(@PathVariable String id){
+    @PostMapping("/getMenu/{bossNo}")
+    public List<BossPriceMenuResponse> getMenu(@PathVariable Long bossNo){
         log.info("get Menu");
 
-        return bossService.getMenu(id);
+        return bossService.getMenu(bossNo);
     }
 
     @PostMapping("/modifyMenu")
@@ -391,5 +392,50 @@ public class BossController {
         log.info("removeBoss");
 
         bossService.removeBoss(bossNo);
+    }
+
+    @PostMapping("/modifyDeleteBackProfile")
+    public void modifyDeleteBackProfile(@RequestParam("deleteImg") List<String> deleteImg,
+                                        @RequestParam("bossNo") Long bossNo){
+
+        log.info("modifyReview");
+
+        bossService.modifyDeleteBackProfile(deleteImg, bossNo);
+    }
+
+    @PostMapping("/modifyAddBackProfile")
+    public ResponseEntity<Boolean> modifyAddBackProfile(@RequestParam("fileList") List<MultipartFile> imgFile,
+                                                        @RequestParam("id") String id,
+                                                        @RequestParam("bossNo") Long bossNo,
+                                                        @RequestParam("deleteImg") List<String> deleteImg){
+
+        log.info("modifyReview" + deleteImg.get(0));
+
+        List<String> fileName = new ArrayList<>();
+
+        UUID uuid = UUID.randomUUID();
+
+        try{
+            for(MultipartFile files : imgFile) {
+                log.info("requestUploadFile() - Make file: " + files.getOriginalFilename());
+
+                FileOutputStream file = new FileOutputStream("../marketfront/src/assets/bossProfile/back/" + id +"_" + uuid + "_" + files.getOriginalFilename());
+
+                String fileSrc = id + "_" + uuid+ "_" + files.getOriginalFilename();
+
+                fileName.add(fileSrc);
+                log.info(fileSrc);
+                file.write(files.getBytes());
+                file.close();
+            }
+
+            bossService.addBackProfile(fileName, deleteImg, bossNo);
+
+        } catch (Exception e){
+            log.info("에러");
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

@@ -37,7 +37,7 @@
         <div class="kmap" ref="map" style="position: relative; overflow: hidden"></div>
 
         <div style="padding-top: 30px">
-          <span style="font-size: 25px;"><v-icon x-large>mdi-map-marker-outline</v-icon> {{ boss.address }}</span>
+          <span style="font-size: 25px;"><v-icon x-large>mdi-map-marker-outline</v-icon> {{ boss.address }} {{boss.detailAddress}}</span>
         </div>
 
         <div style="padding-top: 15px">
@@ -64,7 +64,7 @@
 
         <div v-else style="padding-top: 30px">
           <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
-            <div v-if="state[index]">
+            <div v-if="!state[index]">
               <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
                 <div style="width: 80%; padding: 5px 10px 5px 15px;">
                   <div style="display: flex; align-items: center">
@@ -139,7 +139,7 @@
           <div style="display: flex">
             <div style="font-size: 25px; width: 20%">{{menu.menuName}}</div>
             <div style="width: 65%; display: flex; align-items: center"><hr style="border: 1px dotted rgba(126,126,126,0.11); width: 100%"/></div>
-            <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{menu.menuPrice}}원</div>
+            <div style="font-size: 25px; font-weight: bold; width: 15%; display: flex; justify-content: end">{{ menu.menuPrice | makeComma }}원</div>
           </div>
 
           <div style="background-color: rgba(197,192,192,0.22); border-radius: 5px; height: 40px; font-size: 20px" class="pa-2">
@@ -268,8 +268,8 @@
             </div>
 
             <div style="display: flex; justify-content: end">
-              <v-btn style="margin-right: 8px" @click="modifyCheck = true">close</v-btn>
-              <v-btn class="light-green lighten-3" @click="modifySave">save</v-btn>
+              <v-btn depressed color="success" height="40" type="submit" style="margin-right: 8px" @click="modifyCheck = true"><b>close</b></v-btn>
+              <v-btn depressed color="success" height="40" type="submit" @click="modifySave"><b>save</b></v-btn>
             </div>
           </div>
         </div>
@@ -286,11 +286,44 @@
 
         <div style="min-height: 400px">
         <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 0 10px 10px 10px">
-          <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+          <div v-if="!state[index]">
+            <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
+              <div style="width: 80%; padding: 5px 10px 5px 15px;">
+                <div style="display: flex; align-items: center">
+                  <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
+                  <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax}}</div>
+                </div>
+
+                <div style="font-weight: bolder; font-size: 30px">
+                  {{coupon.couponName}}
+                </div>
+
+                <div style="font-weight: lighter">
+                  {{coupon.couponDate}}까지
+                </div>
+              </div>
+
+              <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(coupon)">
+                  <v-icon large>mdi-pencil-outline</v-icon>
+                  <div style="font-size: 18px">쿠폰 수정</div>
+                </div>
+              </div>
+            </div>
+
+<!--            <v-divider style="height: 5px; margin-top: 20px"></v-divider>
+
+            <div style="display: flex; flex-direction: row-reverse; padding: 10px 10px 10px 10px;">
+              <div style="padding-right: 40px; font-weight: bolder;" @click="deleteCoupon(coupon)">삭제</div>
+              <div style="padding-right: 40px; font-weight: bolder;" @click="showDetail(coupon)">상세보기</div>
+            </div>-->
+          </div>
+
+          <div v-else style="width: 100%; background-color: rgba(145,145,145,0.37); border-radius: 8px; border: 1px solid black; min-height: 150px; display: flex; align-items: center">
             <div style="width: 80%; padding: 5px 10px 5px 15px;">
               <div style="display: flex; align-items: center">
-                <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
-                <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax}}</div>
+                <v-chip style="margin-right: 20px">발급완료</v-chip>
+                <div style="color: black" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
               </div>
 
               <div style="font-weight: bolder; font-size: 30px">
@@ -302,16 +335,15 @@
               </div>
             </div>
 
-            <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
-              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(coupon)">
-                <v-icon large>mdi-pencil-outline</v-icon>
-                <div style="font-size: 18px">쿠폰 수정</div>
+            <div style="background-color: #b9b9b9; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
+              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px">
+                <v-icon large>mdi-download-outline</v-icon>
+                <div style="font-size: 18px">쿠폰 발급 완료</div>
               </div>
             </div>
           </div>
 
           <v-divider style="height: 5px; margin-top: 20px"></v-divider>
-
           <div style="display: flex; flex-direction: row-reverse; padding: 10px 10px 10px 10px;">
             <div style="padding-right: 40px; font-weight: bolder;" @click="deleteCoupon(coupon)">삭제</div>
             <div style="padding-right: 40px; font-weight: bolder;" @click="showDetail(coupon)">상세보기</div>
@@ -358,8 +390,8 @@
 
           <div>
             <v-radio-group v-model="radioGroup" row>
-              <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
-              <v-radio value="1" label="제한있음" @click="radioCheck">
+              <v-radio :value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
+              <v-radio :value="1" label="제한있음" @click="radioCheck">
               </v-radio>
             </v-radio-group>
 
@@ -410,8 +442,8 @@
 
         <div>
           <v-radio-group v-model="radioModifyGroup" row>
-            <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
-            <v-radio value="1" label="제한있음" @click="radioCheck">
+            <v-radio :value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
+            <v-radio :value="1" label="제한있음" @click="radioCheck">
             </v-radio>
           </v-radio-group>
 
@@ -699,8 +731,8 @@ export default {
       let couponDate = this.dateFormatted;
       let bossNo = this.boss.bossAuthNo;
 
-      alert(couponMax)
-      alert(this.couponMax)
+      //alert(couponMax)
+      //alert(this.couponMax)
       this.$emit('saveCoupon', {bossNo, couponName, couponInfo, couponMax, couponDate})
     },
     formatDate (date) {
@@ -714,7 +746,8 @@ export default {
       this.couponInfo = coupon.couponInfo;
       this.dateFormatted = coupon.couponDate;
       this.radioModifyGroup = coupon.remain_coupon === null ? 0 : 1
-      alert(this.radioModifyGroup)
+      this.radioField = coupon.remain_coupon !== null
+      //alert(this.radioModifyGroup)
       this.couponMax = coupon.couponMax;
       this.couponNo = coupon.couponNo;
       this.modifyCouponDialog = true;
@@ -799,11 +832,11 @@ export default {
         console.log(date[1])
         console.log(date[2])
 
-        if(date[0] - year > 0){
+        if(date[0] - year < 0){
           this.state.push(true)
-        }else if(date[1] - month > 0){
+        }else if(date[1] - month < 0){
           this.state.push(true)
-        }else if(date[2] - day > 0){
+        }else if(date[2] - day < 0){
           this.state.push(true)
         }else{
           this.state.push(false)
@@ -829,7 +862,7 @@ export default {
     },
   },
   async created() {
-    await this.fetchBossMenuList(this.id)
+    await this.fetchBossMenuList(this.boss.bossAuthNo)
     await this.fetchShowCoupon(this.boss.bossAuthNo)
     await this.day()
   }

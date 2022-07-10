@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CommunityBoardService {
     public void register (CommunityBoard board, Near near, @RequestParam(required = false) List<MultipartFile> file) throws Exception;
-    public List<CommunityBoard> list ();
+    public List<CommunityBoard> list(Long memberNo);
     public CommunityBoard read (Integer boardNo);
     public void modify (CommunityBoard board, @RequestParam(required = false) List<MultipartFile> file) throws Exception;
     public void remove (Integer boardNo) throws Exception;

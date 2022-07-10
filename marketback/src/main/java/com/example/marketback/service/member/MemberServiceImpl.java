@@ -180,6 +180,7 @@ public class MemberServiceImpl implements MemberService {
         Member memberEntity = memberRepository.findByMemberId(id);
 
         memberEntity.setSearchRegion(data);
+        memberRepository.save(memberEntity);
 
         System.out.println(data.charAt(data.length() -1));
         if(data.charAt(data.length() -1) == '동'){

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="map_box" style="padding: 40px; border-left: 1px solid #e9ecef;">
+      <div class="map_box" style="padding: 40px;">
         <v-row justify="center">
           <v-card-title style="font-size: 30px;">내 동네 설정</v-card-title>
         </v-row>
@@ -64,9 +64,9 @@ export default {
   methods: {
     ...mapActions(['fetchMyVillageSetting']),
     saveRegion(){
-      console.log(this.model)
+      //alert(this.model)
 
-      let data = this.model === 0 ? data = this.illageInfo.city : this.model === 1 ? data = this.villageInfo.district : data = this.villageInfo.villageName
+      let data = this.model === 0 ? data = this.villageInfo.city : this.model === 1 ? data = this.villageInfo.district : data = this.villageInfo.villageName
 
       this.$emit('saveRegion', {data});
     }

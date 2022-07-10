@@ -6,7 +6,7 @@
           <v-img src="@/assets/bossProfile/back/Tranders_boss_base_backProfile.png" id="img" style="width: 100%; height: 400px;"  @click="backProfileImgDialog = true"></v-img>
         </div>
         <div v-else>
-        <swiper class="swiper" :options="swiperOption" style="height: 500px">
+        <swiper class="swiper" :options="swiperOption" style="height: 400px">
 
           <swiper-slide v-for="(boardImg,index) in backProfileImgs" :key="index">
             <v-img :src="require(`@/assets/bossProfile/back/${boardImg.fileName}`)" id="img"></v-img>
@@ -17,10 +17,10 @@
         </div>
       </div>
 
-      <div style=" top: 65px; padding-left: 5px; position: absolute; z-index: 1">
+      <div style=" top: 25px; padding-left: 5px; position: absolute; z-index: 1">
         <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
       </div>
-      <div style="top: 65px; position: absolute; left: 80%; z-index: 1">
+      <div v-if="backProfileImgs !== ''" style="top: 25px; position: absolute; left: 80%; z-index: 1">
         <v-btn text @click="modify"><v-icon x-large>mdi-camera</v-icon>&nbsp; &nbsp;수정</v-btn>
       </div>
     </div>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div>
-        <v-btn depressed color="success" height="40" type="submit" @click="removeBoss"><b>사장님 프로필 삭제</b></v-btn>
+        <v-btn depressed color="success" height="40" type="submit" @click="bossRemoveDialog = true"><b>사장님 프로필 삭제</b></v-btn>
       </div>
     </div>
 
@@ -66,7 +66,7 @@
 
 
     <div v-if="home">
-      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifyCoupon="modifyCoupon"></boss-home-view>
+      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifySave="modifySave" @modifyCoupon="modifyCoupon"></boss-home-view>
     </div>
 
     <div v-if="comm">
@@ -172,8 +172,78 @@
 
         </div>
       </v-card>
-    </v-dialog> <!-- 뒷 배경 변경 -->
+    </v-dialog>  <!--뒷 배경 변경-->
 
+    <v-dialog v-model="backProfileImgModifyDialog" width="1500px">
+      <v-card width="1500px" height="auto" class="pa-4">
+        <div style="padding: 5px 20px 5px 20px">
+
+          <v-row justify="center">
+            <v-card-title>삭제할 사진을 선택해주세요</v-card-title>
+          </v-row>
+
+          <v-row>
+            <div style="overflow-x: scroll; display: flex">
+              <div v-for="(img, index) in backProfileImgs" :key="img.no">
+                <div style="display: flex;">
+                  <div style="padding: 5px 5px 5px 5px">
+                    <div><v-img min-width="100" min-height="100" style="width: 200px; height: 180px" :src="require(`@/assets/bossProfile/back/${img.fileName}`)"></v-img></div>
+                    <v-checkbox v-model="checkBox" :value="index"></v-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-row>
+
+          <div class="image_upload_box" style="display: flex; padding-top: 40px">
+            <div @click="addImg" style="width: 200px; height: 150px; border: 1px solid black; border-radius: 7px; display: flex; flex-direction: column; justify-content: center; align-items: center ">
+              <div><v-img width="50px" height="50px" src="@/assets/icon/camera.png"></v-img></div>
+              <div><span style="color: #06850e">{{backProfileImgs.length + files.length}}</span> / 10</div>
+            </div>
+            <input type="file" id="file" ref="files" @change="imageUpload" multiple style="display: none"/>
+
+            <div style="display: flex; overflow: scroll">
+              <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
+                <div class="file-close-button" @click="fileDeleteButton" :name="file.number">
+                  x
+                </div>
+                <img :src="file.preview"  alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <v-row justify="end" no-gutters>
+          <v-card-actions>
+            <v-btn depressed height="40" type="submit" width="100" style="padding-right: 8px" @click="backProfileImgDialog = false"><b>취소</b></v-btn>
+            <v-btn depressed color="success" height="40" width="100" type="submit" @click="modifyBackProfile"><b>저장</b></v-btn>
+          </v-card-actions>
+        </v-row>
+
+      </v-card>
+    </v-dialog>
+
+    <v-dialog width="500" style="max-height: 400px" v-model="bossRemoveDialog">
+      <v-card style="width: 500px; position: relative; max-height: 400px">
+        <v-row justify="center" style="width: 500px; padding-top: 30px">
+          <v-card-title>사장님 탈퇴</v-card-title>
+        </v-row>
+
+        <v-row style="width: 500px; height: 100px" justify="center">
+          <div style="width: 450px; justify-content: center; display: flex; align-items: center">
+            경고: 사장님 삭제는 취소할 수 없습니다.<br/>
+            삭제하면 사장 프로필의 모든 정보가 삭제됩니다. 삭제하시겠어요?
+          </div>
+        </v-row>
+
+        <v-row justify="end" no-gutters>
+          <v-card-actions>
+            <v-btn depressed height="40" type="submit" @click="bossRemoveDialog = false"><b>취소</b></v-btn>
+            <v-btn depressed color="red" class="white--text" height="40" type="submit" @click="removeBoss"><b>삭제</b></v-btn>
+          </v-card-actions>
+        </v-row>
+      </v-card>
+    </v-dialog> <!-- 탈퇴 경고 -->
     </div>
 
 </template>
@@ -210,6 +280,8 @@ export default {
       bossNo: '',
       changeImgDialog: false,
       backProfileImgDialog: false,
+      backProfileImgModifyDialog: false,
+      bossRemoveDialog: false,
       itemImageInfo: {
         uploadImages: ''
       },
@@ -228,34 +300,60 @@ export default {
           clickable: true
         }
       },
+      checkBox: [],
 
     }
   },
   methods: {
     ...mapActions(['fetchBossBackProfile']),
+    modifyBackProfile(){
+      let formData = new FormData;
+
+      if(this.checkBox.length !== 0) { // 이미지 삭제하겠다.
+        for (let i = 0; i < this.checkBox.length; i++) {
+          formData.append('deleteImg', this.backProfileImgs[this.checkBox[i]].no);
+        }
+      }else {
+        formData.append('deleteImg', 'noImg')
+      }
+
+      formData.append('bossNo', this.bossNo)
+
+      if(this.files.length > 0) { // 이미지 추가
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('fileList', this.files[i].file)
+        }
+        formData.append('id', this.id)
+        this.$emit('modifyAddBackProfile', formData)
+      }else {
+        this.$emit('modifyADeleteBackProfile', formData)
+      }
+    },
     backPage(){
       this.$router.push({name: 'MyPageProfile'})
     },
     modify(){
-      //alert('사진을 변경하겠다!')
-      this.backProfileImgDialog = true
+      this.backProfileImgModifyDialog = true
     },
     savePrice(payload) {
       this.$emit('savePrice', payload)
     },
     modifySave(payload) {
-      alert('modify')
+      //alert('modify')
       this.$emit('modifySave', payload)
     },
     deletePrice(payload){
       this.$emit('deletePrice', payload)
     },
     changeImg(){
-      alert('changeImg')
+      //alert('changeImg')
       this.changeImgDialog = true;
     },
     onClickFile(){
       this.$refs.uploadItemFile.click()
+    },
+    addImg(){
+      this.$refs.files.click()
     },
     onFileSelected(event){
       let image = event.target;
@@ -375,7 +473,6 @@ export default {
   },
   created() {
     this.bossNo = this.boss.bossAuthNo;
-    alert(this.bossNo)
     this.fetchBossBackProfile(this.boss.bossAuthNo)
   }
 }
@@ -388,7 +485,7 @@ export default {
   max-width: 800px;
   min-width: 800px;
   margin: 0 auto;
-  padding: 40px
+  padding: 0 40px 0 40px;
 }
 #profile {
   padding: 15px 20px 20px 20px;

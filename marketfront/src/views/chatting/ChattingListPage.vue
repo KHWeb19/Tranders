@@ -1,19 +1,28 @@
 <template>
-  <div>
+  <div id='back_page'>
     <after-login-view/>
-    <div id='chat_list'>
-    <chatting-list :chatrooms="chatrooms" @submit="onSubmit"/>
-    </div>
+      <div id='full'>
+          <div id='left'>
+              <div id='image'>
+                  <div>
+                      <div style="border-radius: 50%; overflow: hidden; margin-top: 20px">
+                          <v-img width="44" height="44" src="@/assets/profile.jpg"/>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <chatting-list :chatrooms="chatrooms"/>
+      </div>
+
   </div>
 </template>
 
 <script>
 import ChattingList from '@/components/chatting/ChattingList.vue'
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
+import AfterLoginView from '../../components/home/AfterLoginView.vue'
 import Vue from 'vue'
 import cookies from "vue-cookies";
-import AfterLoginView from '../../components/home/AfterLoginView.vue'
 Vue.use(cookies)
 
 export default {
@@ -40,19 +49,38 @@ export default {
   },
   methods: {
     ...mapActions(['fetchChatroomList']),
-    onSubmit(payload) {
-      console.log(payload)
-      const { message } = payload
-      axios.post('http://localhost:7777/kafka', { message })
+    // onSubmit(payload) {
+    //   console.log(payload)
+    //   const { message } = payload
+    //   axios.post('http://localhost:7777/kafka', { message })
 
-    }    
+    // }    
   }
 }
 </script>
 
 <style scoped>
-#chat_list{
-  background: #f8f9fa;
-  /* padding: 30px 0; */
+#back_page{
+    background: #f8f9fa; 
+    min-height:100vh;
+}
+#full{
+  display: flex;
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  line-height: 24px;
+  background: #fff;
+}
+#left{
+	width: 80px;
+	float: left;	
+}
+#image{
+  background-color: #ededed;
+	width: 80px;
+	height: 100%;
+  display: flex; 
+  justify-content: center;
 }
 </style>

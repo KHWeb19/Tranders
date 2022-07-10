@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<ProductBoard, Long> {
     @Query("select p from ProductBoard p where p.productNo = :productNo")
     ProductBoard findByProductNo(Long productNo);
 
-    @Query("select p from ProductBoard p where p.member.city.villageName = :region and p.content like %:keyWord%")
+    @Query("select p from ProductBoard p where p.member.city.villageName = :region and (p.content like %:keyWord% or p.title like %:keyWord%)")
     List<ProductBoard> findAllByVillageNameContentContain(String keyWord, String region, Pageable pageable);
   
     @Query("select p from ProductBoard p where p.member.city.district = :region and p.content like %:keyWord%")

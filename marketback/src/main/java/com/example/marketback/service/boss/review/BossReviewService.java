@@ -23,5 +23,4 @@ public interface BossReviewService {
     void modifyReview(String content, String state, Long reviewNo, List<String> deleteImg);
 
     void deleteReview(Long reviewNo, String bossNo);
-
 }

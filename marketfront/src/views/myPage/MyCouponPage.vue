@@ -51,6 +51,7 @@ export default {
       axios.post(API_BASE_URL+'/member/couponUse', {couponNo, id}, config)
           .then((res) => {
             console.log(res);
+            this.$router.go();
           })
           .catch(() => {
             alert('에러')

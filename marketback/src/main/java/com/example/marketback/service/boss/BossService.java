@@ -28,7 +28,7 @@ public interface BossService {
 
     void addPrice(BossPrice bossPrice, Long bossNo);
 
-    List<BossPriceMenuResponse> getMenu(String id);
+    List<BossPriceMenuResponse> getMenu(Long id);
 
     void modifyMenu(BossPrice bossPrice);
 
@@ -53,4 +53,8 @@ public interface BossService {
     Integer myCouponTotalPage(String id);
 
     void removeBoss(Long bossNo);
+
+    void modifyDeleteBackProfile(List<String> deleteImg, Long bossNo);
+
+    void addBackProfile(List<String> fileName, List<String> deleteImg, Long bossNo);
 }

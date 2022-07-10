@@ -1,6 +1,6 @@
 <template>
   <div id="manager_page_box" style="position: relative">
-    <v-card style="min-height: 500px; padding: 10px 10px 10px 10px">
+    <v-card style="min-height: 600px; padding: 10px 10px 10px 10px">
       <div id="wrapper">
         <table style="border-collapse: collapse; padding: 5px 20px 5px 20px; width: 100%">
           <tr>
@@ -121,7 +121,7 @@ export default {
   padding: 15px 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
 }
 #wrapper{
-  height: 500px;
+  height: 550px;
   min-height: 100%;
   padding: 50px 25px 30px 25px;
 }

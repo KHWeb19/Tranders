@@ -2,10 +2,6 @@
     <div id='community_read'>
             <v-form enctype="multipart/form-data">
                 <div>
-                    <!-- <v-row wrap>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <v-btn @click="goPage" class="backBtn" color="grey darken-3" style="box-shadow:none" dark fab small><v-icon>mdi-arrow-left</v-icon></v-btn>
-                    </v-row> -->
                     <v-row>
                         <v-carousel hide-delimiters height="auto">
                             <v-carousel-item 
@@ -49,7 +45,7 @@
                                     </div>
                                     <div style="padding: 10px 5px">{{communityBoard.content}}</div>
                                     <div id='read_date_heart'>
-                                        {{communityBoard.createdDate}}
+                                        {{communityBoard.updDate | timeForToday}}
                                         <div>
                                             <v-btn @click=like class="success" depressed fab x-small>
                                             <v-icon>mdi-heart</v-icon>
@@ -60,19 +56,7 @@
                                 </div>
                             </v-col>
                         </v-row>
-                    </div>
-                    
-                    <!-- <div v-if="communityBoard.placeName == ''">
-                    </div> -->
-                        
-                    <!--<v-btn @click=comment color="purple darken-1" style="box-shadow:none" dark fab small>
-                        <v-icon>mdi-comment</v-icon>
-                    </v-btn>
-                     &nbsp;&nbsp;
-                    <div class="Cnt">
-                            {{ communityBoard.commentCnt }}
-                    </div> -->
-                                                 
+                    </div>              
                 </div>
             </v-form>
     </div>
@@ -84,7 +68,6 @@ import cookies from "vue-cookies";
 Vue.use(cookies)
 
 import axios from 'axios'
-// import { mapActions } from 'vuex'
 
 export default {
     name: 'CommunityBoardRead',
@@ -117,7 +100,6 @@ export default {
         onDelete () {
             const { boardNo, fileName1, fileName2, fileName3, fileName4, fileName5,
             fileName6, fileName7, fileName8, fileName9, fileName10 } = this.communityBoard
-            //alert('지우는 게시물 번호: ' + boardNo)
             axios.delete(`http://localhost:7777/communityboard/${boardNo}`, 
             {fileName1,  fileName2, fileName3, fileName4, fileName5, fileName6, fileName7, fileName8, fileName9, fileName10})
                     .then(() => {
@@ -164,7 +146,6 @@ export default {
 </script>
 <style scoped>
 #community_read{
-    /* border-radius: 8px; */
     border-left: 1px solid #e9ecef;
     border-right: 1px solid #e9ecef;
     width: 800px;
@@ -218,9 +199,7 @@ export default {
 }
 #read_title_content{
     padding: 32px 0 0 0;
-
     border-top: 1px solid #eaebee;
-    /* margin: 0 auto; */
 }
 #read_date_heart{
     font-size: 13px;
@@ -246,80 +225,12 @@ p {
   display: block;
   margin: 0px;
 }
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
-.label{
-    margin-right:3%;
-    text-align: center;
-    padding-top: 10px;
-    font-size:18pt;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-table{
-    position: relative;
-    background-color: rgb(191, 246, 201);
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 0.5%;
-    padding-bottom: 2.5%;
-    margin-left:auto;
-    margin-right:auto;
-    zoom:80%;
-}
-hr {
-    height: 1px;
-    background-color: #777777;
-    border: none;
-}
-.label2{
-     font-family: 'Noto Sans KR', sans-serif;
-     margin-top:8px;
-     font-size:20pt;
-}
-.backBtn {
-    margin-top:0%;
-    margin-left:-8%;
-    zoom:1;
-}
-.Cnt {
-    font-size: 20pt;
-    font-family: 'Noto Sans KR', sans-serif;
-     
-}
-.v-combobox, .v-text-field, .v-textarea, #files{
-    font-family: 'Noto Sans KR', sans-serif;
-}
-.writeBtn {
-    position: relative;
-    margin-top:0.5%;
-    margin-left:1%;
-    zoom:1;
-    float:left;
-}
-.writeBtn2 {
-    position: absolute;
-    zoom:1;
-    margin-top:0.5%;
-    margin-left:79%;
-    float:left;
-}
-.titleFloat {
-    float:left;
-    margin-top:-1%;
-    margin-right:3%;
-}
-.subject {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin-right:1.5%;
-    zoom:130%;
-}*/
 .preview {
     position: relative;
     margin-left: auto;
     margin-right:auto;
-    /* max-width:350px;
-    height:350px;  */
+    max-height:500px; 
     width:100%;
-    height: auto;
     border-radius: 8px;
 } 
 </style>

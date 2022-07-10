@@ -45,15 +45,24 @@ public class SearchKeyWordServiceImpl implements SearchKeyWordService{
     @Override
     public List<CommunityBoard> searchAllComm(KeyWordRequest keyWordRequest) {
         Pageable pageable = PageRequest.of(keyWordRequest.getPage(), 3, Sort.Direction.DESC, "createdDate");
+        List<CommunityBoard> communityBoardList;
+
+        List<CommunityBoard> response = new ArrayList<>();
 
         if(keyWordRequest.getRegion().charAt(keyWordRequest.getRegion().length() -1) == '동'){
-            return communityBoardRepository.findAllByVillageNameContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
+            communityBoardList = communityBoardRepository.findAllByVillageNameContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
         }else if(keyWordRequest.getRegion().charAt(keyWordRequest.getRegion().length() -1) == '구'){
-            return communityBoardRepository.findAllByDistrictContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
+            communityBoardList = communityBoardRepository.findAllByDistrictContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
         }else {
-            return communityBoardRepository.findAllByCityContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
+            communityBoardList = communityBoardRepository.findAllByCityContentContain(keyWordRequest.getKeyWord(), keyWordRequest.getRegion(), pageable);
         }
 
+        for(CommunityBoard communityBoard : communityBoardList){
+            communityBoard.setNear(null);
+            response.add(communityBoard);
+        }
+
+        return response;
     }
 
     /*int checkRegion(String region){

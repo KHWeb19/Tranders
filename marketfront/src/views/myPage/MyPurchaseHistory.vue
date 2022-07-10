@@ -68,7 +68,7 @@ export default {
 } */
 #login-wrap {
   background: #f8f9fa;
-  height: 100vh;
+  min-height: 100vh;
 }
 #content {
   display: block;

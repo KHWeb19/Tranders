@@ -39,20 +39,18 @@
             </v-col>
           </v-row>
 
-          <!--        <v-row style="height: 70px">
-                    <v-col cols="10">
-                      <v-text-field solo v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"> </v-text-field>
-                    </v-col>
-                    <v-col cols="2" class="pt-5">
-                      <v-btn style="width: 100%" id="checkDub" @click="checkPhoneNum" outlined>번호 확인</v-btn>
-                    </v-col>
-                  </v-row>-->
-
           <v-row style="height: 80px">
+            <v-col style="display: flex; height: 80px;">
+              <v-text-field v-model="phoneNumber" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="PHONE NUMBER"/>
+              <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="checkPhoneNum" outlined>인증 번호</v-btn></div>
+            </v-col>
+          </v-row>
+
+<!--          <v-row style="height: 80px">
             <v-col>
               <v-text-field id='id' outlined v-model="phoneNumber" style="width: 100%" placeholder="PHONE NUMBER"/>
             </v-col>
-          </v-row>
+          </v-row>-->
 
           <v-row style="height: 80px" v-if="ifCheck">
             <v-col>

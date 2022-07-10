@@ -8,6 +8,7 @@
       @sendReport="sendReport"
       @sendImgReport="sendImgReport"
     />
+
     <div class="delete-modify-button">
       <v-btn
         v-if="login.memberNo == productBoard.member.memberNo"
@@ -24,6 +25,7 @@
         >
       </router-link>
     </div>
+
   </div>
 </template>
 
@@ -36,10 +38,10 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+import axios from "axios";
 import { mapActions, mapState } from "vuex";
 import ProductReadForm from "@/components/productBoard/ProductReadForm.vue";
 import AfterLoginView from "../../components/home/AfterLoginView.vue";
-import axios from "axios";
 import { API_BASE_URL } from "@/constant/login";
 export default {
   name: "ProductReadPage",
@@ -58,6 +60,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return{
+      // registerChat: mapState(['registerChat'])
+    }
   },
   components: {
     ProductReadForm,
@@ -88,19 +95,9 @@ export default {
         });
     },
     onChat(payload) {
-      const { member1No, member2No, productNo } = payload;
-      console.log(member1No, member2No, productNo);
-      axios
-        .post(
-          `http://localhost:7777/chatting/register/${member1No}/${member2No}/${productNo}`,
-          { member1No, member2No, productNo }
-        )
-        .then(() => {
-          this.$router.push({ name: "ChattingListPage" });
-        })
-        .catch(() => {
-          alert("문제 발생!");
-        });
+      const {registerNo} = payload;
+      this.$router.push({ name: "ChattingReadView",
+                          params: { roomNo: registerNo.toString() }})
     },
     sendReport(payload) {
       const {

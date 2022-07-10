@@ -1,19 +1,22 @@
 <template>
     <div id='user_manners'>
-        <ol id='manners_list'>
-            <li id='manner'>
+        <ol v-if="!manner" id='manners_list'>
+            받은 매너가 존재하지 않습니다!
+        </ol>
+        <ol v-else id='manners_list'>
+            <li v-if="manner.good1" id='manner'>
                 <p id='manner_content'>제가 있는 곳까지 와서 거래했어요.</p> 
                 <p id='manner_count'>{{manner.good1}}명</p>
             </li>
-            <li id='manner'>
+            <li v-if="manner.good2" id='manner'>
                 <p id='manner_content'>친절하고 매너가 좋아요.</p> 
                 <p id='manner_count'>{{manner.good2}}명</p>
             </li>
-            <li id='manner'>
+            <li v-if="manner.good3" id='manner'>
                 <p id='manner_content'>시간 약속을 잘 지켜요.</p> 
                 <p id='manner_count'>{{manner.good3}}명</p>
             </li>
-            <li id='manner'>
+            <li v-if="manner.good4" id='manner'>
                 <p id='manner_content'>응답이 빨라요.</p> 
                 <p id='manner_count'>{{manner.good4}}명</p>
             </li>

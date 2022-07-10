@@ -49,11 +49,13 @@ export default {
     saveRegion(payload) {
       const {data} = payload;
       let id = this.id;
+      //alert(data)
 
       axios.post(API_BASE_URL + '/member/saveVillage', {data, id}, config)
           .then((res) => {
             console.log(res);
             cookies.set('region', data, SAVE_COOKIE_ACCESS);
+            alert('동네 설정 변경 완료')
           })
           .catch(() => {
             alert('에러')
