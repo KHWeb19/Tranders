@@ -11,16 +11,17 @@
               <v-col
                 class="none-product"
                 v-if="
-                  !productBoards ||
-                  (Array.isArray(productBoards) && productBoards.length === 0)
+                  !myProductBoards ||
+                  (Array.isArray(myProductBoards) &&
+                    myProductBoards.length === 0)
                 "
               >
                 현재 등록된 상품이 없습니다!
               </v-col>
               <v-col
                 v-else
-                v-for="productBoard in productBoards"
-                :key="productBoard.productNo"
+                v-for="myProductBoard in myProductBoards"
+                :key="myProductBoard.productNo"
                 cols="4"
               >
                 <article class="card-top">
@@ -29,7 +30,7 @@
                     :to="{
                       name: 'ProductReadPage',
                       params: {
-                        productNo: productBoard.productNo.toString(),
+                        productNo: myProductBoard.productNo.toString(),
                       },
                     }"
                   >
@@ -37,27 +38,29 @@
                       <v-img
                         style="height: 150px; width: 250px"
                         :src="
-                          require(`@/assets/pImage/${productBoard.productImage}`)
+                          require(`@/assets/pImage/${myProductBoard.productImage}`)
                         "
                       />
                     </div>
                     <div class="card-desc">
                       <div class="card-process">
-                        {{ productBoard.process }}
+                        {{ myProductBoard.process }}
                       </div>
                       <div class="card-title">
-                        {{ productBoard.title }}
+                        {{ myProductBoard.title }}
                       </div>
 
                       <div class="card-price">
-                        {{ productBoard.price | makeComma }}원
+                        {{ myProductBoard.price | makeComma }}원
                       </div>
                       <div class="card-region-name">
-                        {{ productBoard.member.region }}
+                        {{ myProductBoard.member.region }}
                       </div>
                       <div class="card-counts">
-                        <span> 관심 5 </span>∙ <span> 채팅 6 </span>∙
-                        <span> 조회수 {{ productBoard.viewCnt }}</span>
+                        <span>
+                          관심 {{ myProductBoard.productLike.length }} </span
+                        >∙ <span> 채팅 {{ myProductBoard.chatCnt }} </span>∙
+                        <span> 조회수 {{ myProductBoard.viewCnt }}</span>
                       </div>
                     </div>
                   </router-link>
@@ -83,7 +86,7 @@ export default {
     };
   },
   props: {
-    productBoards: {
+    myProductBoards: {
       type: Array,
     },
   },

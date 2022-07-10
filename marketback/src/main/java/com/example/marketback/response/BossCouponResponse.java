@@ -11,15 +11,16 @@ public class BossCouponResponse {
     private String couponInfo;
     private String couponDate;
     private Integer couponMax;
-
     private Integer giveCoupon;
+    private String couponState;
 
-    public BossCouponResponse(Long couponNo, String couponName, String couponInfo, String couponDate, Integer couponMax, Integer giveCoupon) {
+    public BossCouponResponse(Long couponNo, String couponName, String couponInfo, String couponDate, Integer couponMax, Integer giveCoupon, String couponState) {
         this.couponNo = couponNo;
         this.couponName = couponName;
         this.couponInfo = couponInfo;
         this.couponDate = couponDate;
         this.couponMax = couponMax;
         this.giveCoupon = giveCoupon;
+        this.couponState = couponState;
     }
 }

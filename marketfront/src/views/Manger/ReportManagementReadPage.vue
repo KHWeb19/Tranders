@@ -1,7 +1,7 @@
 <template>
   <div>
     <manager-header-view></manager-header-view>
-    <report-management-read-view :reportNo="reportNo" @deleteBoard="deleteBoard" @done="done"></report-management-read-view>
+    <report-management-read-view :reportNo="reportNo" @deleteBoard="deleteBoard" @done="done" @removeMember="removeMember"></report-management-read-view>
   </div>
 </template>
 
@@ -42,6 +42,18 @@ export default {
       const {reportNo} = payload
 
       axios.post(`http://localhost:7777/manager/done/${reportNo}`, config)
+          .then((res) => {
+            console.log(res)
+            this.$router.go()
+          })
+          .catch(() => {
+            alert('에러')
+          })
+    },
+    removeMember(payload){
+      const {id} = payload;
+      let num = 0;
+      axios.get(`http://localhost:7777/manager/removeMember/${id}/${num}`, config)
           .then((res) => {
             console.log(res)
             this.$router.go()

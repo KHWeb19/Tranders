@@ -17,6 +17,7 @@ import com.example.marketback.response.CommunityBoardListResponse;
 import com.example.marketback.response.ReviewResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,16 +97,16 @@ public class BossReviewServiceImpl implements BossReviewService{
 
         if(num.charAt(0) == '0' && num.charAt(1) == '0') {
             //indTop3ByNameOrderByIdDesc
-            bossReviewEntity = bossReviewRepository.findByNearNoOrderByCreatedDateDesc(Long.valueOf(num));
+            bossReviewEntity = bossReviewRepository.findByNearNoOrderByDateDesc(Long.valueOf(num), Sort.by(Sort.Order.desc("createDate")));
         }else{
-            bossReviewEntity = bossReviewRepository.findByBossAuthNoOrderByCreatedDateAsc(Long.valueOf(num));
+            bossReviewEntity = bossReviewRepository.findByBossAuthNoOrderByIdDesc(Long.valueOf(num), Sort.by(Sort.Order.desc("createDate")));
         }
 
         List<ReviewResponse> response = new ArrayList<>();
 
         if(bossReviewEntity.size() != 0) {
             for (BossReview bossReview : bossReviewEntity) {
-                response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), bossReview.getCreatedDate()));
+                response.add(new ReviewResponse(bossReview.getBossReviewNo(), bossReview.getMember().getId(), bossReview.getMember().getName(), bossReview.getMember().getRegion(), bossReview.getContent(), bossReview.getMember().getProfileImg(), bossReview.getState(), bossReview.getCreateDate()));
             }
             return response;
         }else {
@@ -121,7 +122,7 @@ public class BossReviewServiceImpl implements BossReviewService{
             for (BossReview review : bossReviewEntity) {
                 log.info(review.getBossReviewNo().toString());
 
-                List<BossReviewImage> BossReviewImageList = bossReviewImageRepository.findByNearNo(Long.valueOf(num), review.getBossReviewNo());
+                List<BossReviewImage> BossReviewImageList = bossReviewImageRepository.findBySortNearNo(Long.valueOf(num), review.getBossReviewNo(), Sort.by(Sort.Order.desc("createDate")));
                 List<BossReviewImageResponse> name = new ArrayList<>();
 
                 if(BossReviewImageList.size() != 0) {
@@ -140,7 +141,7 @@ public class BossReviewServiceImpl implements BossReviewService{
             for (BossReview review : bossReviewEntity) {
                 log.info(review.getBossReviewNo() + "no");
 
-                List<BossReviewImage> BossReviewImageList = bossReviewImageRepository.findByBossNo(Long.valueOf(num), review.getBossReviewNo());
+                List<BossReviewImage> BossReviewImageList = bossReviewImageRepository.findBySortBossNo(Long.valueOf(num), review.getBossReviewNo(), Sort.by(Sort.Order.desc("createDate")));
                 List<BossReviewImageResponse> name = new ArrayList<>();
 
                 if(BossReviewImageList.size() != 0) {

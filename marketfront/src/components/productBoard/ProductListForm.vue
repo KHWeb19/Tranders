@@ -2,12 +2,13 @@
   <div>
     <section id="content">
       <h2 class="head-title">중고거래 리스트</h2>
-      <section class="card-wrap">
+      <section class="card-wrap" style="justify-content: left">
         <v-col
           class="none-product"
           v-if="
-            !productBoards ||
-            (Array.isArray(productBoards) && productBoards.length === 0)
+            !regionProductBoards ||
+            (Array.isArray(regionProductBoards) &&
+              regionProductBoards.length === 0)
           "
           style="text-align: center; margin-top: 200px"
         >
@@ -16,8 +17,8 @@
 
         <v-col
           v-else
-          v-for="productBoard in productBoards"
-          :key="productBoard.productNo"
+          v-for="regionProductBoard in regionProductBoards"
+          :key="regionProductBoard.productNo"
           cols="4"
         >
           <article class="card-top">
@@ -25,28 +26,32 @@
               class="product-link"
               :to="{
                 name: 'ProductReadPage',
-                params: { productNo: productBoard.productNo.toString() },
+                params: { productNo: regionProductBoard.productNo.toString() },
               }"
             >
               <div class="card-photo">
                 <v-img
                   style="height: 250px; width: 300px"
-                  :src="require(`@/assets/pImage/${productBoard.productImage}`)"
+                  :src="
+                    require(`@/assets/pImage/${regionProductBoard.productImage}`)
+                  "
                 />
               </div>
               <div class="card-desc">
                 <p class="card-process">
-                  {{ productBoard.process }}
+                  {{ regionProductBoard.process }}
                 </p>
-                <div class="card-title">{{ productBoard.title }}</div>
+                <div class="card-title">{{ regionProductBoard.title }}</div>
                 <div class="card-price">
-                  {{ productBoard.price | makeComma }}원
+                  {{ regionProductBoard.price | makeComma }}원
                 </div>
                 <div class="card-region-name">
-                  {{ productBoard.member.region }}
+                  {{ regionProductBoard.member.region }}
                 </div>
                 <div class="card-counts">
-                  <span> 관심 5 </span>∙ <span> 채팅 6 </span>
+                  <span> 관심 {{ regionProductBoard.productLike.length }}</span
+                  >∙ <span> 채팅 {{ regionProductBoard.chatCnt }} </span>∙
+                  <span> 조회수 {{ regionProductBoard.viewCnt }} </span>
                 </div>
               </div>
             </router-link>
@@ -66,7 +71,7 @@ export default {
   name: "ProductListForm",
   components: {},
   props: {
-    productBoards: {
+    regionProductBoards: {
       type: Array,
     },
   },
@@ -82,16 +87,6 @@ export default {
         access_token: cookies.get("access_token"),
       },
     };
-  },
-  methods: {
-    viewSort() {
-      this.productBoards.sort(function (a, b) {
-        return b.viewCnt - a.viewCnt;
-      });
-    },
-  },
-  mounted() {
-    this.viewSort();
   },
 };
 </script>

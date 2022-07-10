@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.marketback.config.auth.PrincipalDetails;
 import com.example.marketback.config.jwt.JwtProperties;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.request.MemberCouponRequest;
 import com.example.marketback.request.MemberLoginRequest;
 import com.example.marketback.request.MemberModifySnsRequest;
 import com.example.marketback.response.CityVillageInfoResponse;
@@ -227,5 +228,12 @@ public class MemberController {
         log.info("saveVillage" + map.get("id")+", "+map.get("data"));
 
         return memberService.saveVillageSetting(map.get("id"), map.get("data"));
+    }
+
+    @PostMapping("/couponUse")
+    public void couponUse(@RequestBody MemberCouponRequest memberCouponRequest){
+        log.info("couponUse");
+
+        memberService.couponUse(memberCouponRequest);
     }
 }

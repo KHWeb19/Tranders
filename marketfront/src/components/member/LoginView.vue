@@ -109,7 +109,6 @@ export default {
 input{
     width: 100%;
     border: 2px solid #EAEBEE;
-    /* border: 1px solid #d1d3d8; */
     box-sizing: border-box;
     border-radius: 6px;
     font-size: 16px;

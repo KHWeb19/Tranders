@@ -7,19 +7,20 @@ import com.example.marketback.entity.boss.coupon.Coupon;
 import com.example.marketback.entity.boss.coupon.MemberCoupon;
 import com.example.marketback.entity.manager.Report;
 import com.example.marketback.entity.member.Member;
+import com.example.marketback.entity.review.BossReview;
+import com.example.marketback.entity.review.BossReviewImage;
 import com.example.marketback.repository.boss.BossImgRepository;
 import com.example.marketback.repository.boss.BossPriceRepository;
 import com.example.marketback.repository.boss.BossRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewImageRepository;
+import com.example.marketback.repository.boss.bossReview.BossReviewRepository;
 import com.example.marketback.repository.boss.coupon.BossCouponRepository;
 import com.example.marketback.repository.boss.coupon.MemberCouponRepository;
 import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.request.BossCouponRequest;
 import com.example.marketback.request.BossMarketInfoRequest;
 import com.example.marketback.request.MemberCouponRequest;
-import com.example.marketback.response.BossBackProfileImg;
-import com.example.marketback.response.BossCouponMemberResponse;
-import com.example.marketback.response.BossCouponResponse;
-import com.example.marketback.response.BossPriceMenuResponse;
+import com.example.marketback.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,6 +57,12 @@ public class BossServiceImpl implements BossService{
 
     @Autowired
     private MemberCouponRepository memberCouponRepository;
+
+    @Autowired
+    private BossReviewImageRepository bossReviewImageRepository;
+
+    @Autowired
+    private BossReviewRepository bossReviewRepository;
 
     @Override
     public boolean checkBossMember(String id) {
@@ -181,7 +188,7 @@ public class BossServiceImpl implements BossService{
 
         if(bossCoupon.size() > 0) {
             for (Coupon coupon : bossCoupon) {
-                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon()));
+                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon(), coupon.getCouponState().name()));
             }
         }else {
             return null;
@@ -249,6 +256,77 @@ public class BossServiceImpl implements BossService{
 
         memberCouponRepository.deleteAll(memberCouponList);
         bossCouponRepository.delete(coupon);
+    }
+
+    @Override
+    public List<MyCouponResponse> myCouponList(String id, Integer page) {
+        Pageable pageable = PageRequest.of(page,4, Sort.Direction.DESC, "createDate");
+        Page<MemberCoupon> memberCoupon = memberCouponRepository.findPageByMemberId(id, pageable);
+
+        List<MyCouponResponse> memberName = new ArrayList<>();
+
+        for(MemberCoupon member : memberCoupon){
+            memberName.add(new MyCouponResponse(member.getCoupon().getCouponNo(), member.getCoupon().getCouponName(), member.getCoupon().getCouponInfo(), member.getCoupon().getCouponDate(), member.getCoupon().getCouponState().name()));
+        }
+
+        return memberName;
+    }
+
+    @Override
+    public Integer myCouponTotalPage(String id) {
+        Pageable pageable = PageRequest.of(0,4, Sort.Direction.DESC, "createDate");
+        Page<MemberCoupon> reportList = memberCouponRepository.findPageByMemberId(id, pageable);
+        System.out.println("totalPage!!!!!"+reportList.getTotalPages());
+        return reportList.getTotalPages();
+    }
+
+    @Override
+    public void removeBoss(Long bossNo) {
+        Boss boss = bossRepository.findByBossNo(bossNo);
+        Member member = memberRepository.findByMemberNo(boss.getMember().getMemberNo());
+
+        System.out.println("여기까지 들어와!?");
+
+        List<BossImage> bossImages = bossImgRepository.findImgListByBossNo(bossNo);
+        List<BossPrice> bossPrice = bossPriceRepository.findByBossNo(bossNo);
+
+        if (bossImages.size() != 0) {
+            bossImgRepository.deleteAll(bossImages);
+        }
+
+        if (bossImages.size() != 0) {
+            bossPriceRepository.deleteAll(bossPrice);
+        }
+
+        List<MemberCoupon> memberCouponList = memberCouponRepository.findRemoveByBossNo(bossNo);
+                  //필요없음. 발급받으면 생기는 테이블이기때문.
+        if(memberCouponList.size() != 0){
+            memberCouponRepository.deleteAll(memberCouponList);
+        }
+
+        List<Coupon> coupons = bossCouponRepository.findByBossNo(bossNo);
+        System.out.println("여기까지와 1");
+        if(coupons.size() != 0){
+            bossCouponRepository.deleteAll(coupons);
+        }
+
+        System.out.println("여기까지와 2");
+        List<BossReviewImage> bossReviewImages = bossReviewImageRepository.findRemoveByBossNo(bossNo);
+        List<BossReview> bossReviews = bossReviewRepository.findByBossNo(bossNo);
+
+        if(bossReviewImages.size() != 0 ){
+            bossReviewImageRepository.deleteAll(bossReviewImages);
+        }
+
+        if(bossReviews.size() != 0 ){
+            bossReviewRepository.deleteAll(bossReviews);
+        }
+        System.out.println("여기까지와 4");
+        bossRepository.delete(boss);
+
+        member.setBossAuth(Boolean.FALSE);
+        memberRepository.save(member);
+
     }
 
 }

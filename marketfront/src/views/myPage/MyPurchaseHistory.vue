@@ -10,7 +10,7 @@
 
         <v-col cols="8">
           <my-purchase-history-view
-            :productBoards="productBoards"
+            :myProductBoards="myProductBoards"
           ></my-purchase-history-view>
         </v-col>
       </v-row>
@@ -33,18 +33,19 @@ export default {
   data() {
     return {
       memberId: cookies.get("id"),
+      memberNo: cookies.get("memberNo"),
     };
   },
   computed: {
-    ...mapState(["productBoards"]),
+    ...mapState(["myProductBoards"]),
     ...mapState(["userInfo"]),
   },
   mounted() {
-    this.fetchProductBoardList();
+    this.fetchMyProductBoardList(this.memberNo);
     this.fetchMyPage(this.memberId);
   },
   methods: {
-    ...mapActions(["fetchProductBoardList"]),
+    ...mapActions(["fetchMyProductBoardList"]),
     ...mapActions(["fetchMyPage"]),
   },
 };

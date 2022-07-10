@@ -8,6 +8,7 @@ import ProductReadPage from '@/views/productBoard/ProductReadPage'
 import ProductModifyPage from '@/views/productBoard/ProductModifyPage'
 import ProductSearchListPage from '@/views/productBoard/ProductSearchListPage'
 import MyPurchaseHistory from '@/views/myPage/MyPurchaseHistory'
+import MyLikesPage from '@/views/myPage/MyLikesPage'
 
 import CommunityBoardListPage from '@/views/communityBoard/CommunityBoardListPage.vue'
 import CommunityBoardRegisterPage from '@/views/communityBoard/CommunityBoardRegisterPage.vue'
@@ -53,6 +54,8 @@ import ReportManagementPage from "@/views/Manger/ReportManagementPage";
 import ManagerMemberPage from "@/views/Manger/ManagerMemberPage";
 import ReportManagementReadPage from "@/views/Manger/ReportManagementReadPage";
 // import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
+import SearchKeyWordListPage from "@/views/search/SearchKeyWordListPage";
+import MyCouponPage from "@/views/myPage/MyCouponPage";
 
 Vue.use(VueRouter)
 
@@ -111,6 +114,11 @@ const routes = [
     path: '/myFollowBoardList',
     name: 'MyFollowBoardList',
     component: MyFollowBoardList
+  },
+  {
+    path: '/myLikes',
+    name: 'MyLikesPage',
+    component: MyLikesPage
   },
   {
     path: '/productModify/:productNo',
@@ -392,6 +400,21 @@ const routes = [
   //     default: true
   //   }
   // }
+  {
+    path: '/search',
+    name: 'SearchKeyWordListPage',
+    components: {
+      default: SearchKeyWordListPage
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/myCoupon',
+    name: "MyCouponPage",
+    component: MyCouponPage
+  }
 ]
 
 const router = new VueRouter({
@@ -402,8 +425,3 @@ const router = new VueRouter({
 
 
 export default router
-
-
-
-
-

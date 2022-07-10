@@ -18,9 +18,7 @@
     </div>
 
     <div style="padding-top: 30px" class="home_style_btn">
-      <v-btn style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="infoDialog">
-        정보 관리하기
-      </v-btn>
+      <v-btn block depressed color="success" height="50" type="submit" style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="infoDialog"><h3><b>정보 관리하기</b></h3></v-btn>
     </div>
 
     <!--    정보가 있을 경우    -->
@@ -28,7 +26,7 @@
 
     <div style="padding-bottom: 20px" class="home_style" v-else>
       <div style="display: flex">
-        <span style="font-size: 30px; font-weight: bold; width: 30%"> 정보 </span> <span style="width: 70%; display: flex; justify-content: end;"><v-btn @click="modifyMarketInfo">수정</v-btn></span>
+        <span style="font-size: 30px; font-weight: bold; width: 30%"> 정보 </span> <span style="width: 70%; display: flex; justify-content: end;"><v-btn depressed color="success" height="40" type="submit" @click="modifyMarketInfo"><b>수정</b></v-btn></span>
       </div>
       <!--   정보가 없을 경우에     -->
       <div style="margin-top: 20px">
@@ -60,13 +58,13 @@
       <span style="font-size: 30px; font-weight: bold;"> 쿠폰 </span>
       <!--   정보가 없을 경우에     -->
       <div style="margin-top: 20px">
-        <div v-if="!coupon" style="padding-top: 30px">
+        <div v-if="!coupon || (Array.isArray(coupon) && coupon.length === 0)">
           <span style="font-size: 25px; opacity: 0.5;">아직 쿠폰이 없어요.</span>
         </div>
 
         <div v-else style="padding-top: 30px">
           <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 10px 10px 10px 10px">
-            <div v-if="coupon.couponMax - coupon.giveCoupon > 0">
+            <div v-if="state[index]">
               <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
                 <div style="width: 80%; padding: 5px 10px 5px 15px;">
                   <div style="display: flex; align-items: center">
@@ -119,9 +117,7 @@
         </div>
 
         <div style="padding-top: 30px">
-          <v-btn @click="couponDialog=true" style="width: 100%; height: 50px; font-size: 25px; font-weight: bold">
-            쿠폰 관리하기
-          </v-btn>
+          <v-btn block depressed color="success" height="50" type="submit" style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="couponDialog=true"><h3><b>쿠폰 관리하기</b></h3></v-btn>
         </div>
       </div>
 
@@ -132,7 +128,7 @@
     <div style="padding-bottom: 20px" class="home_style">
       <span style="font-size: 30px; font-weight: bold;"> 가격 </span>
       <!--   정보가 없을 경우에     -->
-      <div style="margin-top: 20px" v-if="bossMenu === null">
+      <div v-if="!bossMenu || (Array.isArray(bossMenu) && bossMenu.length === 0)">
         <div style="padding-top: 30px">
           <span style="font-size: 25px; opacity: 0.5;">상품이나 서비의 가격을 추가하고, 이웃의 눈길을 끌어보세요.</span>
         </div>
@@ -153,38 +149,38 @@
       </div>
 
       <div style="padding-top: 30px">
-        <v-btn style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="priceDialog = true">
-          가격 설정
-        </v-btn>
+        <v-btn block depressed color="success" height="50" type="submit" style="width: 100%; height: 50px; font-size: 25px; font-weight: bold" @click="priceDialog = true"><h3><b>가격 설정</b></h3></v-btn>
       </div>
 
 
     </div> <!-- 가격 부분 -->
 
     <v-dialog v-model="priceDialog" width="800px">
-      <v-card width="800px" height=auto class="pa-4">
+      <v-card width="800px" min-height="550px" height=auto class="pa-4">
         <v-row style="padding-bottom: 30px">
-          <v-col align-self="center" style="height: 40px;"> <v-btn @click="priceDialog = false"><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="priceDialog = false" text><v-icon>mdi-chevron-left</v-icon></v-btn></v-col>
           <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">가격 목록</v-card-title></v-col>
-          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"><v-btn @click="modifyPriceDialog = true">수정</v-btn></v-col>
+          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end">
+            <v-btn depressed color="success" height="40" type="submit" @click="modifyPriceDialog = true"><b>수정</b></v-btn>
+          </v-col>
         </v-row>
 
-        <!--    리스트가 보이는 곳    -->
-        <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
-          <div style="font-size: 20px; font-weight: revert">{{menu.menuName}}</div>
-          <div style="font-size: 17px">{{menu.menuInfo}}</div>
-          <div style="font-size: 17px; font-weight: bolder">{{menu.menuPrice}}원</div>
+        <div style="min-height: 400px">
+          <!--    리스트가 보이는 곳    -->
+          <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
+            <div style="font-size: 20px; font-weight: revert">{{menu.menuName}}</div>
+            <div style="font-size: 17px">{{menu.menuInfo}}</div>
+            <div style="font-size: 17px; font-weight: bolder">{{menu.menuPrice}}원</div>
+          </div>
         </div>
-
         <div style="padding-top: 20px; padding-bottom: 10px">
-          <v-btn width="100%" @click="addPriceDialog = true">가격 추가</v-btn>
+          <v-btn block depressed color="success" height="50" type="submit" @click="addPriceDialog = true"><h3><b>가격 추가</b></h3></v-btn>
         </div>
       </v-card>
     </v-dialog> <!-- 가격 추가 1 -->
 
-    <v-dialog v-model="addPriceDialog"  width="800px">
-      <v-card width="800px" class="pa-4">
-
+    <v-dialog v-model="addPriceDialog" width="800px">
+      <v-card width="800px" class="pa-4" min-height="550px">
         <div style="padding: 10px 10px 10px 10px">
           <div style="justify-content: center; display: flex">
             <v-card-title style="font-weight: bold; font-size: 25px">가격 추가</v-card-title>
@@ -212,34 +208,38 @@
             <v-textarea v-model="menuInfo" label="가격에 대한 설명이 필요하다면 적어주세요." solo></v-textarea>
           </div>
 
-          <div style="display: flex; justify-content: end">
-            <v-btn style="margin-right: 8px" @click="addPriceDialog = false">close</v-btn>
-            <v-btn class="light-green lighten-3" @click="savePrice">save</v-btn>
+          <div style="display: flex; justify-content: end; align-items: end; height: 80px">
+            <v-btn depressed height="40" type="submit" style="margin-right: 8px" @click="addPriceDialog = false"><b>close</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="savePrice"><b>save</b></v-btn>
           </div>
         </div>
       </v-card>
     </v-dialog>  <!-- 가격 추가 2 -->
 
     <v-dialog v-model="modifyPriceDialog" width="800px">
-      <v-card width="800px" height=auto class="pa-4">
+      <v-card width="800px" min-height="550px" height=auto class="pa-4">
         <v-row style="padding-bottom: 30px" v-if="modifyCheck">
-          <v-col align-self="center" style="height: 40px;"> <v-btn @click="modifyPriceDialog = false"><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="modifyPriceDialog = false" text><v-icon>mdi-chevron-left</v-icon></v-btn></v-col>
           <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">가격 목록</v-card-title></v-col>
-          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"><v-btn @click="modifyPriceDialog = false">완료</v-btn></v-col>
+          <v-col align-self="center" style="height: 40px; display: flex; justify-content: end">
+            <v-btn depressed color="success" height="40" type="submit" @click="modifyPriceDialog = false"><b>완료</b></v-btn>
+          </v-col>
         </v-row>
 
         <div v-if="modifyCheck">
           <!--    리스트가 보이는 곳    -->
-          <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
-            <div style="font-size: 20px; font-weight: revert; display: flex">
-              <div style="width: 95%" @click="modifyPrice(menu)">{{menu.menuName}}</div>
-              <div style="width: 5%; justify-content: end"><v-btn icon @click="deletePrice(menu.menuNo)"><v-icon>mdi-close</v-icon></v-btn></div>
+          <div style="min-height: 400px;">
+            <div v-for="(menu, index) in bossMenu" :key="index" style="border-bottom: solid 1px rgba(0,0,0,0.24); height: 100px; padding: 10px 10px 10px 10px" >
+              <div style="font-size: 20px; font-weight: revert; display: flex">
+                <div style="width: 95%" @click="modifyPrice(menu)">{{menu.menuName}}</div>
+                <div style="width: 5%; justify-content: end"><v-btn icon @click="deletePrice(menu.menuNo)"><v-icon>mdi-close</v-icon></v-btn></div>
+              </div>
+              <div style="font-size: 17px" @click="modifyPrice(menu)">{{menu.menuInfo}}</div>
+              <div style="font-size: 17px; font-weight: bolder" @click="modifyPrice(menu)">{{menu.menuPrice}}원</div>
             </div>
-            <div style="font-size: 17px" @click="modifyPrice(menu)">{{menu.menuInfo}}</div>
-            <div style="font-size: 17px; font-weight: bolder" @click="modifyPrice(menu)">{{menu.menuPrice}}원</div>
           </div>
           <div style="padding-top: 20px; padding-bottom: 10px">
-            <v-btn width="100%" @click="addPriceDialog = true">가격 추가</v-btn>
+            <v-btn block depressed color="success" height="50" type="submit" @click="addPriceDialog = true"><h3><b>가격 추가</b></h3></v-btn>
           </div>
         </div>
 
@@ -272,19 +272,19 @@
               <v-btn class="light-green lighten-3" @click="modifySave">save</v-btn>
             </div>
           </div>
-
         </div>
       </v-card>
     </v-dialog> <!-- 가격 수정 -->
 
     <v-dialog v-model="couponDialog" width="800px"> <!-- 쿠폰 추가 부분 -->
-      <v-card width="800px" height=auto class="pa-4">
+      <v-card width="800px" min-height="550px" height=auto class="pa-4">
         <v-row style="padding-bottom: 40px">
-          <v-col align-self="center" style="height: 40px;"> <v-btn @click="couponDialog = false" text><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="couponDialog = false" text><v-icon>mdi-chevron-left</v-icon></v-btn></v-col>
           <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">쿠폰 관리</v-card-title></v-col>
           <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"></v-col>
         </v-row>
 
+        <div style="min-height: 400px">
         <div v-for="(coupon, index) in coupon" :key="index" style="width: 100%; padding: 0 10px 10px 10px">
           <div style="width: 100%; border-radius: 8px; border: 1px solid green; min-height: 150px; display: flex; align-items: center">
             <div style="width: 80%; padding: 5px 10px 5px 15px;">
@@ -317,16 +317,16 @@
             <div style="padding-right: 40px; font-weight: bolder;" @click="showDetail(coupon)">상세보기</div>
           </div>
         </div>
-
+        </div>
 
         <div style="padding-top: 20px; padding-bottom: 10px">
-          <v-btn width="100%" @click="addCouponDialog = true">쿠폰 추가</v-btn>
+          <v-btn block depressed color="success" height="50" type="submit" @click="addCouponDialog = true"><h3><b>쿠폰 추가</b></h3></v-btn>
         </div>
       </v-card>
     </v-dialog> <!-- 쿠폰 리스트 -->
 
     <v-dialog v-model="addCouponDialog"  width="800px">
-      <v-card width="800px" class="pa-4">
+      <v-card width="800px" min-height="550px" class="pa-4">
 
         <div style="padding: 10px 10px 10px 10px">
           <div style="justify-content: center; display: flex">
@@ -353,18 +353,18 @@
           </div>
 
           <div>
-            발급 건수 제한
+            발급 건수 제한 <span style="opacity: 0.5; padding-left: 15px"> * 지정한 개수를 초과하면 쿠폰을 받을 수 없어요.</span>
           </div>
 
           <div>
             <v-radio-group v-model="radioGroup" row>
-              <v-radio value="0" label="제한없음" @click="radioCheck"></v-radio>
+              <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
               <v-radio value="1" label="제한있음" @click="radioCheck">
               </v-radio>
             </v-radio-group>
 
             <v-text-field v-if="radioField" v-model="couponMax" solo label="발급 건수를 입력해 주세요"></v-text-field>
-            <div>지정한 개수를 초과하면 쿠폰을 받을 수 없어요.</div>
+
           </div>
 
           <div class="priceTitle">
@@ -376,8 +376,8 @@
           </div>
 
           <div style="display: flex; justify-content: end">
-            <v-btn style="margin-right: 8px" @click="addCouponDialog = false">close</v-btn>
-            <v-btn class="light-green lighten-3" @click="saveCoupon">save</v-btn>
+            <v-btn depressed height="40" type="submit" style="margin-right: 8px" @click="addCouponDialog = false"><b>close</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="saveCoupon"><b>save</b></v-btn>
           </div>
         </div>
       </v-card>
@@ -410,7 +410,7 @@
 
         <div>
           <v-radio-group v-model="radioModifyGroup" row>
-            <v-radio value="0" label="제한없음" @click="radioCheck"></v-radio>
+            <v-radio value="0" label="제한없음" @click="radioCheckNoLimit"></v-radio>
             <v-radio value="1" label="제한있음" @click="radioCheck">
             </v-radio>
           </v-radio-group>
@@ -428,8 +428,8 @@
         </div>
 
         <div style="display: flex; justify-content: end">
-          <v-btn style="margin-right: 8px" @click="addCouponDialog = false">close</v-btn>
-          <v-btn class="light-green lighten-3" @click="modifyCoupon">변경</v-btn>
+          <v-btn depressed height="40" type="submit" style="margin-right: 8px" @click="modifyCouponDialog = false"><b>close</b></v-btn>
+          <v-btn depressed color="success" height="40" type="submit" @click="modifyCoupon"><b>변경</b></v-btn>
         </div>
 
       </v-card>
@@ -438,7 +438,7 @@
     <v-dialog v-model="couponDetailDialog" width="800px"> <!-- 쿠폰 상세보기 부분 -->
       <v-card width="800px" height=auto class="pa-4">
         <v-row style="padding-bottom: 40px">
-          <v-col align-self="center" style="height: 40px;"> <v-btn @click="couponDetailDialog = false" text><v-icon>mdi-arrow-left</v-icon></v-btn></v-col>
+          <v-col align-self="center" style="height: 40px;"> <v-btn @click="couponDetailDialog = false" text><v-icon>mdi-chevron-left</v-icon></v-btn></v-col>
           <v-col><v-card-title style="height: 40px; font-size: 22px; display: flex; justify-content: center">쿠폰 상세</v-card-title></v-col>
           <v-col align-self="center" style="height: 40px; display: flex; justify-content: end"></v-col>
         </v-row>
@@ -578,12 +578,14 @@ export default {
       couponMax: '',
       radioGroup: 0,
       radioField: false,
-      radioModifyGroup: 1,
+      radioModifyGroup: '',
       couponNo: '',
       couponDetailDialog: false,
       couponDetail: [],
       totalPage: '',
       pageNum: 1,
+      nowDay: '',
+      state: []
     }
   },
   methods: {
@@ -662,6 +664,7 @@ export default {
     savePrice(){
       const {menuName, menuPrice, menuInfo} = this
       let bossNo = this.boss.bossAuthNo;
+      //alert('savePrice')
       this.$emit('savePrice', {menuName, menuPrice, menuInfo, bossNo})
       this.addPriceDialog = false;
       this.priceDialog = false;
@@ -685,8 +688,11 @@ export default {
       this.$emit('deletePrice', {menuNo})
       this.modifyCheck = true
     },
+    radioCheckNoLimit(){
+      this.radioField = false;
+    },
     radioCheck(){
-      this.radioField = !this.radioField
+      this.radioField = true;
     },
     saveCoupon(){
       const {couponName, couponInfo, couponMax} = this;
@@ -701,13 +707,14 @@ export default {
       if (!date) return null
 
       const [year, month, day] = date.split('-')
-      return `${year}년 ${month}월 ${day}일`
+      return `${year}/ ${month}/ ${day}`
     },
     modifyCouponData(coupon){
       this.couponName = coupon.couponName;
       this.couponInfo = coupon.couponInfo;
       this.dateFormatted = coupon.couponDate;
-      this.radioModifyGroup = coupon.couponMax === null ? 0 : 1;
+      this.radioModifyGroup = coupon.remain_coupon === null ? 0 : 1
+      alert(this.radioModifyGroup)
       this.couponMax = coupon.couponMax;
       this.couponNo = coupon.couponNo;
       this.modifyCouponDialog = true;
@@ -776,6 +783,36 @@ export default {
           .catch(() => {
             alert('에러')
           })
+    },
+    day(){
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = ('0' + (today.getMonth() + 1)).slice(-2);
+      let day = ('0' + today.getDate()).slice(-2);
+
+      console.log(this.coupon)
+
+      for(let i = 0;  i < this.coupon.length; i++){
+        let date = this.coupon[i].couponDate.split('/');
+        console.log(date[0])
+        console.log(date[1])
+        console.log(date[2])
+
+        if(date[0] - year > 0){
+          this.state.push(true)
+        }else if(date[1] - month > 0){
+          this.state.push(true)
+        }else if(date[2] - day > 0){
+          this.state.push(true)
+        }else{
+          this.state.push(false)
+        }
+
+        console.log(this.state[i])
+      }
+      let dateString = year + '-' + month  + '-' + day;
+      console.log(dateString)
     }
   },
   mounted() {
@@ -789,11 +826,12 @@ export default {
   watch: {
     date () {
       this.dateFormatted = this.formatDate(this.date)
-    }
+    },
   },
-  created() {
-    this.fetchBossMenuList(this.id)
-    this.fetchShowCoupon(this.boss.bossAuthNo)
+  async created() {
+    await this.fetchBossMenuList(this.id)
+    await this.fetchShowCoupon(this.boss.bossAuthNo)
+    await this.day()
   }
 }
 </script>

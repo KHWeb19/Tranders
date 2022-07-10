@@ -18,8 +18,8 @@
           </div>
 
           <div style="display: flex; justify-content: end; width: 50%">
-            <v-btn v-if="id === boss.id" style="margin-right: 10px" @click="modify(boss, index)">수정</v-btn>
-            <v-btn v-if="id === boss.id" @click="deleteReview(boss)">삭제</v-btn>
+            <v-btn v-if="id === boss.id" depressed color="success" height="40" type="submit" style="margin-right: 10px" @click="modify(boss, index)"><b>수정</b></v-btn>
+            <v-btn v-if="id === boss.id" depressed color="success" height="40" type="submit" @click="deleteReview(boss)"><b>삭제</b></v-btn>
           </div>
         </div>
 
@@ -104,8 +104,8 @@
           </div>
 
           <div style="padding-top: 25px; padding-bottom: 10px; display: flex; justify-content: end">
-            <v-btn style="margin-right: 15px" @click="modifyDialog = false">취소</v-btn>
-            <v-btn class="light-green lighten-2" @click="modifyReview" v-bind:disabled="selection.length === 0">저장</v-btn>
+            <v-btn depressed color="success" height="40" type="submit" style="margin-right: 15px" @click="modifyDialog = false"><b>취소</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="modifyReview" v-bind:disabled="selection.length === 0"><b>작성 완료</b></v-btn>
           </div>
         </div>
       </v-card>

@@ -68,7 +68,6 @@
 import { mapActions, mapState } from "vuex";
 import cookies from "vue-cookies";
 import { logout } from "@/views/Util/LoginUtil";
-import axios from "axios";
 
 export default {
   name: "AfterLoginView",
@@ -99,21 +98,7 @@ export default {
     searchStart() {
       const keyWord = this.keyWord;
 
-      if(this.num === 1){// 중고 물품
-        axios.post("http://localhost:7777/search/product", { keyWord })
-            .then((res) => {
-              console.log("검색성공");
-              console.log(res.data);
-              this.$router.push({name: "ProductSearchListPage", params: { searchList: res.data }});
-            });
-      }else if(this.num === 2){ // 커뮤니티
-        axios.post("http://localhost:7777/search/comm", { keyWord })
-            .then((res) => {
-              console.log("검색성공");
-              console.log(res.data);
-              this.$router.push({name: "ProductSearchListPage", params: { searchList: res.data }});
-            });
-      }else if(this.num === 3){ // 전체 검색
+      if(this.num === 3){ // 전체 검색
         this.$emit('keyWordTest', this.keyWord)
       }else { // 전체 검색
         this.$router.push({name: 'SearchKeyWordListPage', params: { keyWord: keyWord.toString()}})
@@ -124,7 +109,7 @@ export default {
     ...mapState(["profileImg"]),
   },
   mounted() {
-    // alert(this.num)
+    //alert(this.num)
     this.id = cookies.get("id");
     this.fetchMemberProfile(this.id);
   },

@@ -4,7 +4,7 @@
         <div id="card_box">
         <v-row no-gutters>
           <v-col cols="1" style="padding-top: 5px">
-            <v-btn icon @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
+            <v-btn text @click="backPage"><v-icon x-large>mdi-chevron-left</v-icon></v-btn>
           </v-col>
           <v-col cols="10">
             <v-card-text style="font-size: 25px;" align="center">사장님 가게 등록</v-card-text>
@@ -52,7 +52,7 @@
 
         <v-row style="height: 70px; margin-top: 35px">
           <v-col>
-            <v-btn @click="registerBoss" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">변경완료</v-btn>
+            <v-btn block depressed color="success" height="50" type="submit" @click="registerBoss"><h3><b>사장님 만들기</b></h3></v-btn>
           </v-col>
         </v-row>
         </div>
@@ -135,9 +135,9 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 1250px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 15px 7px 0 7px; /*위, 오른쪽, 아래, 왼쪽 */
+  padding: 40px; /*위, 오른쪽, 아래, 왼쪽 */
 }
 #card_box{
   padding-right: 20px;

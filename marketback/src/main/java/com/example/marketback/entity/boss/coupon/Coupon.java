@@ -1,6 +1,7 @@
 package com.example.marketback.entity.boss.coupon;
 
 import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.manager.ReportState;
 import com.example.marketback.entity.member.Member;
 import lombok.*;
 
@@ -32,6 +33,9 @@ public class Coupon {
 
     private Integer giveCoupon;
 
+    @Enumerated(EnumType.STRING)
+    private CouponState couponState;
+
     @ManyToOne
     @JoinColumn(name = "BOSS_AUTH_NO")
     private Boss boss;
@@ -43,5 +47,7 @@ public class Coupon {
         this.couponInfo = couponInfo;
         this.giveCoupon = giveCoupon;
         this.boss = boss;
+
+        this.couponState = CouponState.BEFORE_USE;
     }
 }

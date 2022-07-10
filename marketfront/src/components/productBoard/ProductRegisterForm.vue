@@ -35,15 +35,6 @@
       <table>
         <v-row>
           <v-col>
-            <v-col cols="3">
-              <v-select
-                class="checkProcess"
-                v-model="process"
-                :items="selectProcess"
-                label="판매 현황"
-              >
-              </v-select>
-            </v-col>
             <h3>상품명</h3>
           </v-col>
           <v-col cols="12">
@@ -99,7 +90,7 @@
               />
               <swiper class="swiper" :options="swiperOption">
                 <swiper-slide
-                  ><v-img width="300px" height="300px" :src="preview"
+                  ><v-img width="100%" height="100%" :src="preview"
                 /></swiper-slide>
                 <swiper-slide v-if="preview2"
                   ><v-img width="300px" height="300px" :src="preview2"
@@ -140,8 +131,7 @@ export default {
   },
   data() {
     return {
-      selectProcess: ["판매중", "판매완료"],
-      process: "",
+      process: "판매중",
       productImage: "",
       productImage1: null,
       productImage2: null,
@@ -205,7 +195,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -217,7 +206,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               });
             } else {
               const {
@@ -228,7 +216,6 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               } = this;
               this.$emit("submit", {
                 memberNo: this.login.memberNo,
@@ -239,19 +226,11 @@ export default {
                 title,
                 price,
                 content,
-                regDate,
               });
             }
           } else {
-            const {
-              process,
-              productImage,
-              category,
-              title,
-              price,
-              content,
-              regDate,
-            } = this;
+            const { process, productImage, category, title, price, content } =
+              this;
             this.$emit("submit", {
               memberNo: this.login.memberNo,
               process,
@@ -260,7 +239,6 @@ export default {
               title,
               price,
               content,
-              regDate,
             });
           }
         })
@@ -281,8 +259,8 @@ export default {
 }
 .swiper {
   .swiper-slide {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     background-color: white;
     background-position: center;
     background-size: cover;
@@ -340,7 +318,7 @@ textarea {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  max-width: 350px;
+  width: 300px;
   height: 350px;
 }
 </style>

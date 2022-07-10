@@ -102,7 +102,7 @@
 
         <p id="category">
           {{ productBoard.category }} •
-          {{ productBoard.updDate | timeForToday }}
+          {{ productBoard.regDate | timeForToday }}
         </p>
         <p
           id="price"
@@ -119,8 +119,19 @@
           <p>{{ productBoard.content }}</p>
         </div>
 
+        <td v-if="like">
+          <v-btn icon @click="onLikes(productBoard.productNo)">
+            <v-icon color="red"> mdi-cards-heart </v-icon>
+          </v-btn>
+        </td>
+        <td v-else>
+          <v-btn icon @click="onLikes(productBoard.productNo)">
+            <v-icon color="black"> mdi-cards-heart-outline </v-icon>
+          </v-btn>
+        </td>
         <p id="counts">
-          관심 5 ∙ 채팅 {{ productBoard.chatCnt }} ∙ 조회
+          관심 {{ productBoard.productLike.length }}∙ 채팅
+          {{ productBoard.chatCnt }} ∙ 조회
           {{ productBoard.viewCnt }}
         </p>
 
@@ -148,7 +159,7 @@
         @closeDialog="closeDialog"
         @sendReport="sendReport"
         @sendImgReport="sendImgReport"
-        :productNo="this.productBoard.productNo"
+        :productNo="productBoard.productNo"
       ></report-dialog-view>
     </article>
   </div>
@@ -158,6 +169,7 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
+import axios from "axios";
 
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import ReportDialogView from "@/components/productBoard/report/ReportDialogView";
@@ -205,13 +217,19 @@ export default {
   computed: {
     ...mapState(["myProductLikes"]),
     ...mapState(['registerChat']),
+    ...mapState(["like"]),
   },
   mounted() {
     this.fetchRegisterChat({member1No:this.login.memberNo, member2No:this.productBoard.member.memberNo})
+    this.fetchLike({
+      productNo: this.productBoard.productNo,
+      memberNo: this.login.memberNo,
+    });
   },
   methods: {
     ...mapActions(["fetchProductLike"]),
     ...mapActions(['fetchRegisterChat']),
+    ...mapActions(["fetchLike"]),
     onChat() {
       axios
         .post(
@@ -233,6 +251,22 @@ export default {
     },
     sendImgReport(payload) {
       this.$emit("sendImgReport", payload);
+    },
+    onLikes() {
+      axios
+        .post(
+          `http://localhost:7777/productLike/${this.productBoard.productNo}/${this.login.memberNo}`,
+          {
+            productNo: this.productBoard.productNo,
+            memberNo: this.login.memberNo,
+          }
+        )
+        .then(() => {
+          history.go(0);
+        })
+        .catch(() => {
+          alert("문제 발생!");
+        });
     },
   },
 };

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BossImgRepository extends JpaRepository<BossImage, Long> {
 
@@ -16,4 +17,10 @@ public interface BossImgRepository extends JpaRepository<BossImage, Long> {
 
     @Query("select bi from BossImage bi where bi.boss.bossAuthNo = :id")
     List<BossImage> findImgListByBossNo(Long id);
+
+    @Query("select bi from BossImage bi where bi.boss.member.id = :id")
+    Optional<BossImage> findOptByMemberId(String id);
+
+    @Query("select bi from BossImage bi where bi.boss.member.id = :id")
+    List<BossImage> findsOptByMemberId(String id);
 }

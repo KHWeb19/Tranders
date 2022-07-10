@@ -87,6 +87,7 @@ export default {
         toId,
         fromId,
       } = payload;
+
       axios
         .post(
           API_BASE_URL + "/report/saveReport",
@@ -103,6 +104,7 @@ export default {
     },
     sendImgReport(payload) {
       // 이미지가 없을때 안받아지면.. sendReport 를 불러서 처리하자
+
       axios
         .post(API_BASE_URL + "/report/saveImgText", payload, {
           headers: {
@@ -117,6 +119,19 @@ export default {
         })
         .catch(() => {
           alert("에러");
+        });
+    },
+    onLikes(payload) {
+      const { productNo, memberNo } = payload;
+      axios
+        .post(`http://localhost:7777/productLike/${productNo}/${memberNo}`, {
+          productNo,
+        })
+        .then(() => {
+          history.go(0);
+        })
+        .catch(() => {
+          alert("문제 발생!");
         });
     },
   },

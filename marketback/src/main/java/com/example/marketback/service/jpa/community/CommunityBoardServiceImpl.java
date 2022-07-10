@@ -1,7 +1,6 @@
 package com.example.marketback.service.jpa.community;
 
 import com.example.marketback.entity.jpa.community.CommunityBoard;
-import com.example.marketback.entity.jpa.community.CommunityComment;
 import com.example.marketback.entity.member.Member;
 import com.example.marketback.entity.near.Near;
 import com.example.marketback.repository.jpa.community.CommunityBoardRepository;
@@ -9,7 +8,6 @@ import com.example.marketback.repository.member.MemberRepository;
 import com.example.marketback.repository.near.NearRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,7 +90,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
                 near.setCategory(category);
                 near.setAddress(near.getStoreRegion());
-//                near.setStoreRegion(region[2]);
+                near.setStoreRegion(region[2]);
                 near.setMarketHomePage(board.getPlaceUrl());
                 near.setReviewCount(0);
                 near.setCommunityCount(1);
@@ -110,17 +108,26 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     }
 
     @Override
-    public List<CommunityBoard> list() {
-        log.info("list");
+    public List<CommunityBoard> list(Long memberNo) {
+        Member member = memberRepository.findByMemberNo(memberNo);
 
-        List<CommunityBoard> communityBoardList = repository.findAll(Sort.by(Sort.Direction.DESC, "boardNo"));
+        List<CommunityBoard> communityBoardList;
 
         List<CommunityBoard> response = new ArrayList<>();
+
+        if(member.getRegion().charAt(member.getRegion().length() -1) == '동'){
+            communityBoardList = repository.findByVillageNameMemberContain(member.getRegion());
+        }else if(member.getRegion().charAt(member.getRegion().length() -1) == '구'){
+            communityBoardList = repository.findByDistrictMemberContain(member.getRegion());
+        }else {
+            communityBoardList = repository.findByCityMemberContain(member.getRegion());
+        }
 
         for(CommunityBoard communityBoard : communityBoardList){
             communityBoard.setNear(null);
             response.add(communityBoard);
         }
+
         return response;
     }
 
@@ -133,8 +140,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             return null;
         } else {
             CommunityBoard communityBoard = maybeReadBoard.get();
-//            communityBoard.increaseViewCnt();
-            //repository.save(communityBoard);
             communityBoard.setNear(null);
             return communityBoard;
         }
@@ -145,44 +150,42 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         CommunityBoard boardEntity = repository.findByBoardNo(board.getBoardNo());
         boardEntity.setTitle(board.getTitle());
         boardEntity.setContent(board.getContent());
+        try {
+            if (file != null) {
+                for (MultipartFile multipartFile : file) {
+                    UUID uuid = UUID.randomUUID();
+                    String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
 
-//        try {
-//            if (file != null) {
-//                for (MultipartFile multipartFile : file) {
-//                    UUID uuid = UUID.randomUUID();
-//                    String fileName = uuid + "_" + multipartFile.getOriginalFilename();
-//                    FileOutputStream saveFile = new FileOutputStream("../marketfront/src/assets/uploadImg/community/" + fileName);
-//
-//                    saveFile.write(multipartFile.getBytes());
-//                    saveFile.close();
-//
-//                    if (multipartFile == file.get(0)) {
-//                        board.setFileName1(fileName);
-//                    } else if ( multipartFile == file.get(1)){
-//                        board.setFileName2(fileName);
-//                    } else if (multipartFile == file.get(2)) {
-//                        board.setFileName3(fileName);
-//                    } else if (multipartFile == file.get(3)) {
-//                        board.setFileName4(fileName);
-//                    } else if (multipartFile == file.get(4)) {
-//                        board.setFileName5(fileName);
-//                    } else if (multipartFile == file.get(5)) {
-//                        board.setFileName6(fileName);
-//                    } else if (multipartFile == file.get(6)) {
-//                        board.setFileName7(fileName);
-//                    } else if ( multipartFile == file.get(7)){
-//                        board.setFileName8(fileName);
-//                    } else if (multipartFile == file.get(8)) {
-//                        board.setFileName9(fileName);
-//                    } else {
-//                        board.setFileName10(fileName);
-//                    }
-//
-//                }
-//            }
-//        } catch (Exception e) {
-//            log.info("Upload Fail!!!");
-//        }
+                    saveFile.write(multipartFile.getBytes());
+                    saveFile.close();
+                    if (multipartFile == file.get(0)) {
+                        boardEntity.setFileName1(fileName);
+                    } else if ( multipartFile == file.get(1)){
+                        boardEntity.setFileName2(fileName);
+                    } else if (multipartFile == file.get(2)) {
+                        boardEntity.setFileName3(fileName);
+                    } else if (multipartFile == file.get(3)) {
+                        boardEntity.setFileName4(fileName);
+                    } else if (multipartFile == file.get(4)) {
+                        boardEntity.setFileName5(fileName);
+                    } else if (multipartFile == file.get(5)) {
+                        boardEntity.setFileName6(fileName);
+                    } else if (multipartFile == file.get(6)) {
+                        boardEntity.setFileName7(fileName);
+                    } else if ( multipartFile == file.get(7)){
+                        boardEntity.setFileName8(fileName);
+                    } else if (multipartFile == file.get(8)) {
+                        boardEntity.setFileName9(fileName);
+                    } else {
+                        boardEntity.setFileName10(fileName);
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            log.info("Upload Fail!!!");
+        }
         repository.save(boardEntity);
     }
 
@@ -193,9 +196,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     @Override
     public List<CommunityBoard> searchList(String keyWord) {
-        List<CommunityBoard> findSearchList = repository.findByContentContaining(keyWord);
 
-        return findSearchList;
+        return repository.findByContentContaining(keyWord);
     }
-
 }

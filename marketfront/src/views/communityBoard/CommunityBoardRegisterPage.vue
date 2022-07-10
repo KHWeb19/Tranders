@@ -1,9 +1,7 @@
 <template>
         <div id='board_register'>
             <v-container style="padding:0">
-                <!-- <v-row> -->
                 <community-board-register-form @submit="onBoardSubmit"/>
-                <!-- </v-row> -->
             </v-container>
         </div>
 </template>
@@ -11,13 +9,11 @@
 <script>
 import CommunityBoardRegisterForm from '@/components/communityBoard/CommunityBoardRegisterForm.vue'
 import axios from 'axios'
-// import AfterLoginView from '../../components/home/AfterLoginView.vue'
 
 export default {
     name: 'CommunityBoardRegisterPage',
     components: { 
         CommunityBoardRegisterForm, 
-        // AfterLoginView, 
         },
     methods: {
         onBoardSubmit (payload) {

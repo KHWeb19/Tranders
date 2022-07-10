@@ -1,6 +1,12 @@
 export default {
     productBoard: null,
     productBoards: [],
+    regionProductBoards: [],
+    myProductBoards: [],
+
+    like: null,
+    likes: [],
+    myLikes: [],
     accessToken: null,
     refreshToken: null,
     chatroom: null,
@@ -13,7 +19,7 @@ export default {
     reviews: [],
     manner: null,
     profileImg: null,
-    communityBoards:[],
+    communityBoards: [],
     communityBoard: null,
     communityComments: [],
     boss: null,
@@ -43,4 +49,5 @@ export default {
     searchComm: [],
     coupon: [],
     memberCoupon: [],
+    searchAllTotalPage: []
 }

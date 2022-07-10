@@ -1,7 +1,9 @@
 <template>
   <div>
-<!--    <after-login-view></after-login-view> // 없는게 더 괜찮아 보이는데 다른분들은 어떤지 물어보기!-->
-    <div v-if="this.boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
+    <after-login-view></after-login-view>
+    <div v-if="!boss || (Array.isArray(boss) && boss.length === 0)">
+      <v-btn>죄송합니다 다시 시도해주세요</v-btn>
+    </div>
     <boss-page-view v-else :boss="boss"
                     @savePrice="savePrice"
                     @saveBackProfile="saveBackProfile"
@@ -9,12 +11,14 @@
                     @modifySave="modifySave"
                     @deletePrice="deletePrice"
                     @saveCoupon="saveCoupon"
-                    @modifyCoupon="modifyCoupon"></boss-page-view>
+                    @modifyCoupon="modifyCoupon"
+                    @removeBoss="removeBoss"></boss-page-view>
   </div>
 </template>
 
 <script>
 
+import AfterLoginView from "@/components/home/AfterLoginView";
 const config = {
   headers: {
     'Authorization': 'Bearer '+ cookies.get('access_token'),
@@ -30,7 +34,7 @@ import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 export default {
   name: "BossPage",
-  components: {BossPageView},
+  components: {AfterLoginView, BossPageView},
   data() {
     return {
       memberNo: cookies.get('memberNo'),
@@ -76,7 +80,7 @@ export default {
     },
     savePrice(payload){
       const {menuName, menuPrice, menuInfo, bossNo} = payload;
-      alert(bossNo)
+      //alert(bossNo)
       axios.post(`http://localhost:7777/boss/addPrice/${bossNo}`, {menuName, menuPrice, menuInfo}, config)
           .then((res) => {
             console.log(res);
@@ -116,6 +120,7 @@ export default {
       axios.post(API_BASE_URL+'/boss/addCoupon', {bossNo, couponName, couponInfo, couponMax, couponDate}, config)
           .then(() => {
             console.log('성공')
+            this.$router.go()
           })
           .catch(() => {
             alert('쿠폰 생성 에러')
@@ -128,6 +133,18 @@ export default {
           .then(() => {
             console.log('성공')
             this.$router.go();
+          })
+          .catch((res) => {
+            console.log(res)
+          })
+    },
+    removeBoss(payload){
+      const {bossNo} = payload;
+
+      axios.delete(`http://localhost:7777/boss/${bossNo}`, config)
+          .then(() => {
+            console.log('성공')
+            this.$router.push({name: 'MyPageProfile'});
           })
           .catch((res) => {
             console.log(res)

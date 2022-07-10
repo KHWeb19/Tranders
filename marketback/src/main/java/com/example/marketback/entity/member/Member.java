@@ -1,14 +1,14 @@
 package com.example.marketback.entity.member;
 
-import com.example.marketback.entity.boss.Boss;
+import com.example.marketback.entity.productBoard.ProductLike;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.apache.kafka.common.protocol.types.Field;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -66,6 +66,10 @@ public class Member {
     @CreatedDate
     private String createDate = String.valueOf(LocalDateTime.now());
 
+    @ManyToOne
+    @JoinColumn(name = "CITY_NO")
+    private City city;
+
     public final Member memberSetting(Member member){
         member.setTemperature(36.5F);
         member.setBossAuth(Boolean.FALSE);
@@ -74,4 +78,10 @@ public class Member {
 
         return member;
     }
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnoreProperties({"member"})
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private Set<ProductLike> productLike = new HashSet<>();
 }

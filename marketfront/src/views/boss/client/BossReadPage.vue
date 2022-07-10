@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="boss === null"><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
+    <after-login-view></after-login-view>
+    <div v-if="!boss || (Array.isArray(boss) && boss.length === 0)">><v-btn>죄송합니다 다시 시도해주세요</v-btn></div>
     <boss-read-page-view v-else
                          :boss="boss"
                          @saveReview="saveReview"
@@ -21,6 +22,7 @@ import {mapActions, mapState} from "vuex";
 import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 import cookies from "vue-cookies";
+import AfterLoginView from "@/components/home/AfterLoginView";
 
 const config = {
   headers: {
@@ -32,7 +34,7 @@ const config = {
 
 export default {
   name: "BossReadPage",
-  components: {BossReadPageView},
+  components: {AfterLoginView, BossReadPageView},
   data() {
     return {
       bossNo: this.$route.query.bossNo,

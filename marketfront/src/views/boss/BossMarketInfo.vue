@@ -35,7 +35,9 @@ export default {
       axios.post(API_BASE_URL+'/boss/saveMarketInfo',{id, phoneNumber, marketInfo, marketHomePage, startTime, endTime, address, lat, lng}, config)
           .then((res) => {
             console.log(res)
-            this.$router.push({name: 'BossPage'})
+            setTimeout(() => {
+              this.$router.push({name: 'BossPage'})
+            }, 80)
           })
           .catch(() => {
             alert('에러')
