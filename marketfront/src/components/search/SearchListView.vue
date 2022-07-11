@@ -23,7 +23,7 @@
                       {{ product.member.region }}
                     </div>
                     <div class="card-counts">
-                      <span> 관심 {{ product.productLike }}</span
+                      <span> 관심 {{ product.productLike.length }}</span
                       >∙ <span> 채팅 {{ product.chatCnt }} </span>∙
                       <span> 조회수 {{ product.viewCnt }} </span>
                     </div>

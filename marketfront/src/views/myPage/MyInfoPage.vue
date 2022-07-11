@@ -106,7 +106,7 @@ export default {
             if(res.data === false){
               alert('에러 발생')
             }else{
-              this.$router.go()
+              setTimeout(() => {this.$router.go()}, 500);
             }
           })
           .catch(() => {
@@ -136,7 +136,7 @@ export default {
       const {num} = payload;
       console.log(num)
       console.log(this.randomNum)
-      if(num === this.randomNum){
+      if(num.toString() === this.randomNum.toString()){
         alert('ok!')
         this.checkDoublePhoneNum = true;
       } else {

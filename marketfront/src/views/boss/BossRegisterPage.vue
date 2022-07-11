@@ -12,13 +12,13 @@ import BossRegisterView from "@/components/boss/BossRegisterView";
 import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 
-const config = {
+/*const config = {
   headers: {
     'Authorization': 'Bearer '+ cookies.get('access_token'),
     'Accept' : 'application/json',
     'Content-Type': 'multipart/form-data'
   }
-};
+};*/
 
 export default {
   name: "BossRegisterPage",
@@ -32,7 +32,7 @@ export default {
   methods: {
     registerBoss(formData) {
 
-      axios.post(API_BASE_URL+'/boss/register', formData, config)
+      axios.post(API_BASE_URL+'/boss/register', formData)
           .then((res) => {
             console.log(res)
             if(res.data === true){

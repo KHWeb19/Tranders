@@ -15,13 +15,13 @@
 
         <v-row style="height: 70px">
           <v-col>
-            <v-text-field v-model="password" solo placeholder="Password"> </v-text-field>
+            <v-text-field v-model="password" type="password" solo placeholder="Password"> </v-text-field>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px; margin-top: 5px">
           <v-col>
-            <v-btn @click="changePw" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3">비밀번호 변경</v-btn>
+            <v-btn block @click="changePw" depressed color="success" height="50" width="100" type="submit"><h3><b>비밀번호 변경</b></h3></v-btn>
           </v-col>
         </v-row>
       </v-container>
