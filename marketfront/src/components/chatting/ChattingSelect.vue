@@ -6,7 +6,8 @@
                 params: {roomNo: chatroom.roomNo.toString()}}">
                 <div>
                     <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
-                        <v-img src="@/assets/profile.jpg"/>
+                        <v-img v-if="login.memberNo==chatroom.member2.memberNo" :src="require(`@/assets/profile/${chatroom.member1.profileImg}`)"/>
+                        <v-img v-if="login.memberNo==chatroom.member1.memberNo" :src="require(`@/assets/profile/${chatroom.member2.profileImg}`)"/>
                     </div>
                 </div>
                 <div v-if="login.memberNo==chatroom.member2.memberNo" id='name_image'>
