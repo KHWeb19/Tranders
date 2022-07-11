@@ -3,7 +3,7 @@
         <after-login-view/>
         <div id='content'>
             <profile-top :userInfo="userInfo"/>
-            <profile-basic />
+            <profile-basic :myProductBoards="myProductBoards" />
         </div>
     </div>
 </template>
@@ -35,12 +35,15 @@ export default {
     },
     computed: {
         ...mapState(['userInfo']),
+        ...mapState(["myProductBoards"]),
     },
     created() {
         this.fetchMyPage(this.memberId)
+        this.fetchMyProductBoardList(this.userInfo.memberNo);
     },
     methods: {
         ...mapActions(['fetchMyPage']),
+        ...mapActions(["fetchMyProductBoardList"]),
     }
 }
 </script>

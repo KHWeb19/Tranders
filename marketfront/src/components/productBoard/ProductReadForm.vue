@@ -119,28 +119,31 @@
           <p>{{ productBoard.content }}</p>
         </div>
 
-        <span id="counts">
-          <span v-if="like">
-            <v-btn icon @click="onLikes(productBoard.productNo)">
-              <v-icon color="red"> mdi-cards-heart </v-icon>
-            </v-btn>
-          </span>
-          <span v-else>
-            <v-btn icon @click="onLikes(productBoard.productNo)">
-              <v-icon color="black"> mdi-cards-heart-outline </v-icon>
-            </v-btn>
-          </span>
-          <span>관심 {{ productBoard.productLike.length }}</span
-          >∙ <span>채팅 {{ productBoard.chatCnt }}</span
-          >∙
-          <span>조회 {{ productBoard.viewCnt }}</span>
-        </span>
+        <div style="display:flex; justify-content: space-between;">
+          <div id="counts">
+            <span v-if="like">
+              <v-btn icon @click="onLikes(productBoard.productNo)">
+                <v-icon color="red"> mdi-cards-heart </v-icon>
+              </v-btn>
+            </span>
+            <span v-else>
+              <v-btn icon @click="onLikes(productBoard.productNo)">
+                <v-icon color="black"> mdi-cards-heart-outline </v-icon>
+              </v-btn>
+            </span>
+            <span>관심 {{ productBoard.productLike.length }}</span
+            >∙ <span>채팅 {{ productBoard.chatCnt }}</span
+            >∙
+            <span>조회 {{ productBoard.viewCnt }}</span>
+          </div>
 
-        <v-btn depressed class="success"
-          v-if="login.memberNo != productBoard.member.memberNo"
-          @click="onChat"
-          ><b>채팅하기</b></v-btn
-        >
+          <div>
+            <v-btn depressed class="success"
+            v-if="login.memberNo != productBoard.member.memberNo"
+            @click="onChat"
+            ><b>채팅하기</b></v-btn>
+          </div>
+        </div>
       </section>
 
       <section

@@ -61,11 +61,6 @@ export default {
       required: true,
     },
   },
-  data() {
-    return{
-      // registerChat: mapState(['registerChat'])
-    }
-  },
   components: {
     ProductReadForm,
     AfterLoginView,
