@@ -73,9 +73,9 @@ export default {
     },
     certification(payload){
       const {num} = payload;
-      console.log(num)
+      console.log(num.toString())
       console.log(this.randomNum)
-      if(num === this.randomNum){
+      if(num.toString() === this.randomNum.toString()){
         alert('ok!')
         this.checkDoublePhoneNum = true;
       } else {

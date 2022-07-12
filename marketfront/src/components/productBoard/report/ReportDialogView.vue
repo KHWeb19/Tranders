@@ -295,7 +295,7 @@ export default {
           this.dialog = false;
         }else{
           this.memRepoCheck = true;
-          alert(this.memRepoCheck)
+          //alert(this.memRepoCheck)
         }
       }else {
         this.sendForm = false;

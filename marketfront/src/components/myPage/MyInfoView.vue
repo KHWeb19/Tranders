@@ -138,8 +138,8 @@
 
               <v-row justify="end" no-gutters>
                 <v-card-actions>
-                  <v-btn class="light-green lighten-3" @click="saveImg">Save</v-btn>
-                  <v-btn @click="dialogClose">Close</v-btn>
+                  <v-btn depressed height="40" type="submit" @click="dialogClose"><b>Close</b></v-btn>
+                  <v-btn depressed color="success" height="40" type="submit" @click="saveImg"><b>Save</b></v-btn>
                 </v-card-actions>
               </v-row>
             </v-card>
@@ -150,7 +150,7 @@
         <v-dialog width="500" style="max-height: 400px" v-model="memberRemoveDialog">
           <v-card style="width: 500px; position: relative; max-height: 400px">
             <v-row justify="center" style="width: 500px; padding-top: 30px">
-              <v-card-title>사장님 탈퇴</v-card-title>
+              <v-card-title>회원 탈퇴</v-card-title>
             </v-row>
 
             <v-row style="width: 500px; height: 100px" justify="center">

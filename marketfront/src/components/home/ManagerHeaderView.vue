@@ -3,7 +3,7 @@
     <div id="header" style="height: 64px;">
       <div style="width: 60%; display: flex">
         <div id="header-title">
-          <span id="title"> 오이마켓 </span>
+          <router-link id="title" :to="{name: 'ManagerPage'}"> 오이마켓 </router-link>
         </div>
 
         <div>
@@ -42,6 +42,9 @@ import {logout} from "@/views/Util/LoginUtil";
 export default {
   name: "ManagerHeaderView",
   methods: {
+    goHome(){
+      this.$router.push({name: 'ManagerView'})
+    },
     logout() {
       logout();
       this.$router.push({name: 'HomePage'})
@@ -64,6 +67,7 @@ export default {
   margin-right: 16px;
 }
 #title {
+  text-decoration: none;
   color: green;
   font-family: ONE-Mobile-POP, serif;
   font-size: 26px;

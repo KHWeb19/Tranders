@@ -53,13 +53,20 @@
           </v-row>-->
 
           <v-row style="height: 80px" v-if="ifCheck">
+            <v-col style="display: flex; height: 80px;">
+              <v-text-field v-model="checkNum" outlined style="width: 100%; padding-right: 20px; outline-style: none;" placeholder="인증번호"/>
+              <div style="width: 20%; display: flex; align-items: center;"><v-btn id="checkDub" @click="certification" outlined>인증하기</v-btn></div>
+            </v-col>
+          </v-row>
+
+<!--          <v-row style="height: 80px" v-if="ifCheck">
             <v-col>
               <v-text-field id='id' outlined v-model="checkNum" style="width: 100%" placeholder="인증번호"/>
             </v-col>
-            <v-col cols="2" class="pt-5">
+            <v-col cols="3" class="pt-5">
               <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
             </v-col>
-          </v-row>
+          </v-row>-->
 
           <v-row style="height: 80px;">
               <v-col style="display: flex; height: 80px;">
@@ -73,6 +80,12 @@
                       <v-btn @click="registerBtn" style="width: 100%; height: 100%; font-size: 20px; border-radius: 18px" class="light-green lighten-3" :disabled="!(checkDoubleId === true && checkDoublePhoneNum === true)">오이 마켓 시작하기</v-btn>
                     </v-col>
                   </v-row>-->
+
+<!--          <v-row style="height: 80px; padding-top: 12px">
+            <v-col>
+              <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form && checkDoublePhoneNum)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
+            </v-col>
+          </v-row>-->
 
           <v-row style="height: 80px; padding-top: 12px">
             <v-col>

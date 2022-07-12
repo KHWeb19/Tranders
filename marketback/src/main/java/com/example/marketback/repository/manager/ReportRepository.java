@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
+    @Query("select r from Report r where r.reportState='PROCESSING' order by r.createDate desc ")
     List<Report> findTop5ByOrderByCreateDateDesc();
 
 

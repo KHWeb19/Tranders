@@ -35,7 +35,7 @@
         <div v-else style="width: 100%; background-color: rgba(145,145,145,0.37); border-radius: 8px; border: 1px solid black; min-height: 150px; display: flex; align-items: center">
           <div style="width: 80%; padding: 5px 10px 5px 15px;">
             <div style="display: flex; align-items: center">
-              <v-chip style="margin-right: 20px">발급완료</v-chip>
+              <v-chip style="margin-right: 20px; margin-bottom: 10px">사용완료</v-chip>
               <div style="color: black" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
             </div>
 
@@ -51,7 +51,7 @@
           <div style="background-color: #b9b9b9; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px">
               <v-icon large>mdi-download-outline</v-icon>
-              <div style="font-size: 18px">쿠폰 발급 완료</div>
+              <div style="font-size: 18px">사용 완료</div>
             </div>
           </div>
         </div>

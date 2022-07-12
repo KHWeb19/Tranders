@@ -66,7 +66,7 @@
 
 
     <div v-if="home">
-      <boss-home-view :boss="boss" @savePrice="savePrice" @saveCoupon="saveCoupon" @modifySave="modifySave" @modifyCoupon="modifyCoupon"></boss-home-view>
+      <boss-home-view :boss="boss" @savePrice="savePrice" @deletePrice="deletePrice" @saveCoupon="saveCoupon" @modifySave="modifySave" @modifyCoupon="modifyCoupon"></boss-home-view>
     </div>
 
     <div v-if="comm">

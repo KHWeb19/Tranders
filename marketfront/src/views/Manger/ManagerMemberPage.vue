@@ -9,15 +9,6 @@
 import ManagerMemberView from "@/components/manager/ManagerMemberView";
 import ManagerHeaderView from "@/components/home/ManagerHeaderView";
 import axios from "axios";
-import cookies from "vue-cookies";
-
-const config = {
-  headers: {
-    'Authorization': 'Bearer '+ cookies.get('access_token'),
-    'Accept' : 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
 
 export default {
   name: "ManagerMemberPage",
@@ -26,7 +17,7 @@ export default {
     changeRole(payload){
       const {memberNo} = payload;
       //alert(memberNo)
-      axios.post(`http://localhost:7777/manager/changeRole/${memberNo}`, {}, config)
+      axios.post(`http://localhost:7777/manager/changeRole/${memberNo}`, {})
           .then((res) => {
             console.log(res)
             this.$router.go()

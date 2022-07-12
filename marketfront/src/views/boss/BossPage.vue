@@ -94,7 +94,7 @@ export default {
     },
     modifySave(payload){
       const {menuName, menuPrice, menuInfo, bossPriceNo} = payload;
-      alert(bossPriceNo)
+      //alert(bossPriceNo)
       axios.post(API_BASE_URL+'/boss/modifyMenu', {menuName, menuPrice, menuInfo, bossPriceNo}, config)
           .then((res) => {
             console.log(res);

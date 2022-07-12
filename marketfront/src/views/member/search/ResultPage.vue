@@ -5,17 +5,17 @@
       <br/>
       <span></span>
 
-      <v-card style="margin-top: 30px; padding-top: 25px; font-size: 20px; height: 170px">
+      <v-card style="margin-top: 30px; padding-top: 25px; font-size: 20px; height: 200px">
 
         <v-row justify="center">
           <v-card-title>
-            당신의 id는 &nbsp;&nbsp;<span style="font-size: 30px">" {{resultId}} "</span> &nbsp;&nbsp;입니다.
+            당신의 id는<span style="font-size: 30px">" {{resultId}} "</span>
           </v-card-title>
         </v-row>
 
-        <v-row style="height: 70px; margin-top: 15px">
+        <v-row style="height: 70px; margin-top: 15px; padding: 0 10px 0 10px">
           <v-col>
-            <v-btn @click="changePw" depressed color="success" height="50" width="100" type="submit"><b>비밀번호 변경</b></v-btn>
+            <v-btn block @click="changePw" depressed color="success" height="50" width="100" type="submit"><h3><b>비밀번호 변경</b></h3></v-btn>
           </v-col>
         </v-row>
       </v-card>

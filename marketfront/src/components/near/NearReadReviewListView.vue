@@ -13,7 +13,7 @@
             </div>
             <div>
               <div style="font-size: 22px; font-weight: bolder">{{boss.name}}</div>
-              <div> {{boss.region}} ㆍ {{boss.date}}</div>
+              <div> {{boss.region}} ㆍ {{ boss.date | timeForToday }}</div>
             </div>
           </div>
 
@@ -276,7 +276,7 @@ export default {
     await this.fetchBossReview(num);
     setTimeout(() => {
       this.fetchBossReviewImage(num)
-    }, 80)
+    }, 100)
     await this.parsingState();
   }
 }

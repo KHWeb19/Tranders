@@ -9,14 +9,7 @@
 import ReportManagementReadView from "@/components/manager/ReportManagementReadView";
 import ManagerHeaderView from "@/components/home/ManagerHeaderView";
 import axios from "axios";
-import cookies from "vue-cookies";
-const config = {
-  headers: {
-    'Authorization': 'Bearer '+ cookies.get('access_token'),
-    'Accept' : 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
+
 export default {
   name: "ReportManagementReadPage",
   components: {ManagerHeaderView, ReportManagementReadView},
@@ -29,7 +22,7 @@ export default {
     deleteBoard(payload){
       const {reportNo} = payload
 
-      axios.delete(`http://localhost:7777/manager/${reportNo}`, config)
+      axios.delete(`http://localhost:7777/manager/${reportNo}`)
           .then((res) => {
             console.log(res)
             this.$router.go()
@@ -41,7 +34,7 @@ export default {
     done(payload){
       const {reportNo} = payload
 
-      axios.post(`http://localhost:7777/manager/done/${reportNo}`, config)
+      axios.post(`http://localhost:7777/manager/done/${reportNo}`)
           .then((res) => {
             console.log(res)
             this.$router.go()
@@ -53,13 +46,14 @@ export default {
     removeMember(payload){
       const {id} = payload;
       let num = 0;
-      axios.get(`http://localhost:7777/manager/removeMember/${id}/${num}`, config)
+      axios.get(`http://localhost:7777/manager/removeMember/${id}/${num}`)
           .then((res) => {
             console.log(res)
             this.$router.go()
           })
           .catch(() => {
-            alert('에러')
+            //alert('에러')
+            this.$router.go()
           })
     }
   },

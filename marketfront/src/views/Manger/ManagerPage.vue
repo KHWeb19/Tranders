@@ -1,14 +1,13 @@
 <template>
   <div>
     <manager-header-view></manager-header-view>
-    <manager-view :recentReport="recentReport"></manager-view>
+    <manager-view ></manager-view>
   </div>
 </template>
 
 <script>
 import ManagerHeaderView from "@/components/home/ManagerHeaderView";
 import ManagerView from "@/components/manager/ManagerView";
-import {mapActions, mapState} from "vuex";
 export default {
   name: "ManagerPage",
   components: {ManagerView, ManagerHeaderView},
@@ -18,10 +17,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchReportRecent'])
+    //...mapActions(['fetchReportRecent'])
   },
   computed: {
-    ...mapState(['recentReport'])
+    //...mapState(['recentReport'])
   },
   async created() {
     let roles = this.$cookies.get('roles');
@@ -31,7 +30,6 @@ export default {
       await this.$router.push({name: "HomePage"});
     }
 
-    await this.fetchReportRecent()
   }
 }
 </script>
