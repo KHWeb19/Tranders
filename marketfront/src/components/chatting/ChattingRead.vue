@@ -262,7 +262,7 @@
             </div>
             
           </div> 
-          <div v-if="priview" style="display: flex; position:absolute; bottom: 178px; background-color: rgba(128, 128, 128, 0.5); margin-left: 16px">
+          <div v-if="priview" style="display: flex; position:absolute; bottom: 222px; background-color: rgba(128, 128, 128, 0.5); margin-left: 16px">
             <v-img style="margin-left:305px;" width="200px" height="200" :src="priview"/>
             <v-btn @click="deletePriview()" icon style="margin-right:237px;"><v-icon large color="white">mdi-alpha-x-circle-outline</v-icon></v-btn>
           </div>
@@ -421,11 +421,11 @@ export default {
     },
     goProfile() {
       if(this.login.name==this.chatroom.member1.name){
-        this.$router.push({ name: "ProfileBasicPage",
+        this.$router.push({ name: "ReviewListPage",
                             params: { memberId: this.chatroom.member2.id.toString() }})
       }
       if(this.login.name==this.chatroom.member2.name){
-        this.$router.push({ name: "ProfileBasicPage",
+        this.$router.push({ name: "ReviewListPage",
                             params: { memberId: this.chatroom.member1.id.toString() }})
       }
     }

@@ -65,6 +65,9 @@ export default {
     myProductBoards: {
       type: Array,
     },
+    memberId:{
+        type: String
+    }
   },
 };
 </script>
