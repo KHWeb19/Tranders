@@ -45,6 +45,9 @@ public interface BossReviewRepository extends JpaRepository<BossReview, Long> {
 
     @Query("select br from BossReview br where br.near.nearNo = :nearNo")
     List<BossReview> findByNearNoOrderByDateDesc(Long nearNo, Sort createDate);
+
+    @Query("select br from BossReview br where br.member.id = :id")
+    List<BossReview> findByMemberId(String id);
 //    @Query("select br from BossReview br where br.boss.bossAuthNo = :bossNo order by br.createdDate")
 //    List<BossReview> findTop1ByBossNoOrderByIdDesc(Long bossAuthNo);
 }

@@ -33,8 +33,7 @@ public class Coupon {
 
     private Integer giveCoupon;
 
-    @Enumerated(EnumType.STRING)
-    private CouponState couponState;
+
 
     @ManyToOne
     @JoinColumn(name = "BOSS_AUTH_NO")
@@ -47,7 +46,5 @@ public class Coupon {
         this.couponInfo = couponInfo;
         this.giveCoupon = giveCoupon;
         this.boss = boss;
-
-        this.couponState = CouponState.BEFORE_USE;
     }
 }

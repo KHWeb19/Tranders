@@ -39,5 +39,5 @@ public interface MemberService {
     void couponUse(MemberCouponRequest memberCouponRequest);
 
 
-    //String phoneNumCheck(String phoneNumber) throws CoolsmsException;
+    String phoneNumCheck(String phoneNumber) throws CoolsmsException;
 }

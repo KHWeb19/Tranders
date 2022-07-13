@@ -196,18 +196,18 @@ public class MemberServiceImpl implements MemberService {
     public void couponUse(MemberCouponRequest memberCouponRequest) {
         MemberCoupon memberCoupon = memberCouponRepository.findOneByMemberIdAndCouponNo(memberCouponRequest.getId(), memberCouponRequest.getCouponNo());
 
-        memberCoupon.getCoupon().setCouponState(CouponState.USE);
+        memberCoupon.setCouponState(CouponState.USE);
         memberCouponRepository.save(memberCoupon);
     }
 
-    /*@Override
+    @Override
     public String phoneNumCheck(String phoneNumber) throws CoolsmsException {
         Optional<Member> memberEntity = memberRepository.findByPhoneNumb(phoneNumber);
 
         if (memberEntity.isEmpty()) {
 
-            String api_key = "NCSLU6CNDMVJURJO";
-            String api_secret = "SONBUTACVQLQ7URQBDS1XN2A6PISGFYE";
+            String api_key = "key 넣어서 사용하세요";
+            String api_secret = "key 넣어서 사용하세요";
 
             Message coolsms = new Message(api_key, api_secret);
 
@@ -220,7 +220,7 @@ public class MemberServiceImpl implements MemberService {
 
             HashMap<String, String> params = new HashMap<String, String>();
             params.put("to", phoneNumber);
-            params.put("from", "전화번호");
+            params.put("from", "전화번호넣으세요");
             params.put("type", "sms");
             params.put("text", "인증번호는 [" + numStr + "] 입니다.");
 
@@ -231,6 +231,6 @@ public class MemberServiceImpl implements MemberService {
 
             return "error";
         }
-    }*/
+    }
 
 }

@@ -81,17 +81,17 @@
                     </v-col>
                   </v-row>-->
 
-<!--          <v-row style="height: 80px; padding-top: 12px">
+          <v-row style="height: 80px; padding-top: 12px">
             <v-col>
               <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form && checkDoublePhoneNum)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
             </v-col>
-          </v-row>-->
+          </v-row>
 
-          <v-row style="height: 80px; padding-top: 12px">
+<!--          <v-row style="height: 80px; padding-top: 12px">
             <v-col>
               <v-btn @click="registerBtn" block depressed class="success" style="height: 50px" :disabled="!(checkDoubleId && form)"><h3><b>오이 마켓 시작하기</b></h3></v-btn>
             </v-col>
-          </v-row>
+          </v-row>-->
 
         </v-form>
 

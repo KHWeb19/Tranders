@@ -113,7 +113,7 @@
                   </h1>
                   <p id="category">
                     {{ reportBoardRead.category }} •
-                    {{ reportBoardRead.updDate | timeForToday }}
+                    {{ reportBoardRead.regDate | timeForToday }}
                   </p>
                   <p id="price" property="schema:price" content style="font-size: 18px; font-weight: bold">
                     <span class="text-light-gray">{{ reportBoardRead.price | makeComma }}원</span>

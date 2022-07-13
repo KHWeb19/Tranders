@@ -28,11 +28,15 @@ public class MemberCoupon {
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
 
+    @Enumerated(EnumType.STRING)
+    private CouponState couponState;
+
     @CreatedDate
     private String createDate = String.valueOf(LocalDateTime.now());
 
     public MemberCoupon(Coupon coupon, Member member) {
         this.coupon = coupon;
         this.member = member;
+        this.couponState = CouponState.BEFORE_USE;
     }
 }

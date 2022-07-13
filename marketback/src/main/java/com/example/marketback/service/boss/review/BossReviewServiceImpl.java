@@ -94,12 +94,11 @@ public class BossReviewServiceImpl implements BossReviewService{
 
     @Override
     public List<ReviewResponse> getReview(String num) {
-        List<BossReview> bossReviewEntity;
+        List<BossReview> bossReviewEntity = null;
 
-        if(num.charAt(0) == '0' && num.charAt(1) == '0') {
-            //indTop3ByNameOrderByIdDesc
+        if(num.charAt(0) == '0' && num.charAt(1) == '0') {//indTop3ByNameOrderByIdDesc
             bossReviewEntity = bossReviewRepository.findByNearNoOrderByDateDesc(Long.valueOf(num), Sort.by(Sort.Order.desc("createDate")));
-        }else{
+        }else if (num.charAt(0) == '0'){
             bossReviewEntity = bossReviewRepository.findByBossAuthNoOrderByIdDesc(Long.valueOf(num), Sort.by(Sort.Order.desc("createDate")));
         }
 

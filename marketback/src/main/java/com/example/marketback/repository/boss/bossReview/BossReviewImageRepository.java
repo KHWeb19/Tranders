@@ -27,4 +27,7 @@ public interface BossReviewImageRepository extends JpaRepository<BossReviewImage
     List<BossReviewImage> findBySortNearNo(Long nearNo, Long bossReviewNo, Sort createDate);
     @Query("select bri from BossReviewImage bri where bri.review.boss.bossAuthNo = :bossNo and bri.review.bossReviewNo = :bossReviewNo")
     List<BossReviewImage> findBySortBossNo(Long bossNo, Long bossReviewNo, Sort createDate);
+
+    @Query("select bri from BossReviewImage bri where bri.review.member.id = :id")
+    List<BossReviewImage> findByMemberId(String id);
 }
