@@ -189,7 +189,7 @@ public class BossServiceImpl implements BossService{
 
         if(bossCoupon.size() > 0) {
             for (Coupon coupon : bossCoupon) {
-                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon(), coupon.getCouponState().name()));
+                responses.add(new BossCouponResponse(coupon.getCouponNo(), coupon.getCouponName(), coupon.getCouponInfo(), coupon.getCouponDate(), coupon.getCouponMax(), coupon.getGiveCoupon()));
             }
         }else {
             return null;
@@ -267,7 +267,7 @@ public class BossServiceImpl implements BossService{
         List<MyCouponResponse> memberName = new ArrayList<>();
 
         for(MemberCoupon member : memberCoupon){
-            memberName.add(new MyCouponResponse(member.getCoupon().getCouponNo(), member.getCoupon().getCouponName(), member.getCoupon().getCouponInfo(), member.getCoupon().getCouponDate(), member.getCoupon().getCouponState().name()));
+            memberName.add(new MyCouponResponse(member.getCoupon().getCouponNo(), member.getCoupon().getCouponName(), member.getCoupon().getCouponInfo(), member.getCoupon().getCouponDate(), member.getCouponState().name()));
         }
 
         return memberName;

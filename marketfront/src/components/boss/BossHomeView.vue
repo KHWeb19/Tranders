@@ -291,7 +291,7 @@
               <div style="width: 80%; padding: 5px 10px 5px 15px;">
                 <div style="display: flex; align-items: center">
                   <v-chip color="green" style="margin-right: 20px">발급중</v-chip>
-                  <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax}}</div>
+                  <div style="color: green" v-if="coupon.couponMax">남은 쿠폰: {{coupon.couponMax - coupon.giveCoupon}}</div>
                 </div>
 
                 <div style="font-weight: bolder; font-size: 30px">
@@ -493,7 +493,7 @@
             </div>
 
             <div style="background-color: #96cb96; width: 20%; min-height: 150px; border-top-right-radius: 8px; border-bottom-right-radius: 8px">
-              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(coupon)">
+              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 150px" @click="modifyCouponData(couponDetail)">
                 <v-icon large>mdi-pencil-outline</v-icon>
                 <div style="font-size: 18px">쿠폰 수정</div>
               </div>
@@ -849,7 +849,10 @@ export default {
     }
   },
   mounted() {
-    this.initMap();
+    setTimeout(() => {
+      this.initMap();
+    }, 700)
+
   },
   computed: {
     ...mapState(['bossMenu']),

@@ -39,7 +39,8 @@ export default {
                 cookies.set('access_token', res.data.access_token, SAVE_COOKIE_ACCESS);
                 cookies.set('refresh_token', res.data.refresh_token, SAVE_COOKIE_REFRESH);
 
-                ParsingInfo(res.data.access_token);
+                ParsingInfo(res.data.access_token)
+                //setTimeout(() => {ParsingInfo(res.data.access_token)}, 500);
 
                 if(cookies.get('roles').toString() === 'ROLE_MANAGER'){
                   this.$router.push({name: "ManagerPage"})

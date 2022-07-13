@@ -129,6 +129,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             System.out.println("있다");
             board.setBoss(bossEntity);
             bossEntity.setCommunityCount(bossEntity.getCommunityCount()+1);
+            bossRepository.save(bossEntity);
         }
         repository.save(board);
     }

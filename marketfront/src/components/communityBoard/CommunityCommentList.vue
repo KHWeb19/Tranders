@@ -253,9 +253,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
 table {
     position: relative;
-    background-color:rgb(191, 246, 201) ;
+    background-color: white ;
     font-size: 20px;
     color: black;
+    width: 45%;
     padding-left: 0%;
     padding-right: 0%;
     padding-top:0%;

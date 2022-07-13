@@ -95,9 +95,7 @@
                     <div style="opacity: 0.5">('나의 당근 > 설정 > 게시글 미노출 사용자 관리' 에서 취소할 수 있습니다.)</div>
 
                     <div style="padding-top: 20px; display: flex; justify-content: end">
-                      <v-btn class="light-green lighten-3" style="font-weight: bolder" @click="sendReport">
-                        오이마켓팀에게 보내기
-                      </v-btn>
+                      <v-btn depressed color="success" height="40" type="submit" @click="sendReport"><b>오이마켓팀에게 보내기</b></v-btn>
                     </div>
                   </div>
                 </div>
@@ -123,9 +121,7 @@
                       <div style="opacity: 0.5">('나의 당근 > 설정 > 게시글 미노출 사용자 관리' 에서 취소할 수 있습니다.)</div>
 
                       <div style="padding-top: 20px; display: flex; justify-content: end">
-                        <v-btn class="light-green lighten-3" style="font-weight: bolder" @click="sendReport">
-                          오이마켓팀에게 보내기
-                        </v-btn>
+                        <v-btn depressed color="success" height="40" type="submit" @click="sendReport"><b>오이마켓팀에게 보내기</b></v-btn>
                       </div>
                     </div>
                   </div>
@@ -172,9 +168,7 @@
                       <div style="opacity: 0.5">('나의 당근 > 설정 > 게시글 미노출 사용자 관리' 에서 취소할 수 있습니다.)</div>
 
                       <div style="padding-top: 20px; display: flex; justify-content: end">
-                        <v-btn class="light-green lighten-3" style="font-weight: bolder" @click="sendImgReport">
-                          오이마켓팀에게 보내기
-                        </v-btn>
+                        <v-btn depressed color="success" height="40" type="submit" @click="sendImgReport"><b>오이마켓팀에게 보내기</b></v-btn>
                       </div>
                     </div>
                   </div>
@@ -301,7 +295,7 @@ export default {
           this.dialog = false;
         }else{
           this.memRepoCheck = true;
-          alert(this.memRepoCheck)
+          //alert(this.memRepoCheck)
         }
       }else {
         this.sendForm = false;

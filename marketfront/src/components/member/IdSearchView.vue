@@ -24,13 +24,13 @@
 
         <v-row style="height: 70px; margin-top: 15px">
           <v-col>
-            <v-btn @click="searchId" depressed color="success" height="50" type="submit"><b>ID 찾기</b></v-btn>
+            <v-btn block @click="searchId" depressed color="success" height="50" type="submit"><h3><b>ID 찾기</b></h3></v-btn>
           </v-col>
         </v-row>
 
         <v-row style="height: 70px; margin-top: 5px">
           <v-col>
-            <v-btn @click="loginForm" depressed color="success" height="50" type="submit"><b>로그인</b></v-btn>
+            <v-btn block @click="loginForm" depressed color="success" height="50" type="submit"><h3><b>로그인</b></h3></v-btn>
           </v-col>
         </v-row>
       </v-container>

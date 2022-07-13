@@ -29,13 +29,14 @@ export default {
 
     cookies.set('access_token', this.token.access_token, SAVE_COOKIE_ACCESS);
     cookies.set('refresh_token', this.token.refresh_token, SAVE_COOKIE_REFRESH);
-    ParsingInfo(this.token.access_token)
 
-    const promise = new Promise(function (resolve) {
+    setTimeout(() => {ParsingInfo(this.token.access_token)}, 500);
+
+    const promise = new Promise((resolve) => {
       setTimeout(function () {
         console.log(cookies.get('registerStatus'))
         resolve(cookies.get('registerStatus'))
-      }, 200)
+      }, 500)
     })
 
     promise.then((response) => {

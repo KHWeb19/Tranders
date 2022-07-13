@@ -51,12 +51,12 @@ import {mapActions, mapState} from "vuex";
 export default {
   name: "ManagerView",
   props: {
-    recentReport: {
+    /*recentReport: {
       type: Array
-    }
+    }*/
   },
   methods: {
-    ...mapActions(['fetchTodayRegisterMember', 'fetchTodayReport']),
+    ...mapActions(['fetchReportRecent', 'fetchTodayRegisterMember', 'fetchTodayReport']),
     showDetail(repo){
       //alert('goRead')
       this.$router.push({name: 'ReportManagementReadPage', query: {repoNo: repo.reportNo.toString()}})
@@ -67,11 +67,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['todayMember', 'todayReport'])
+    ...mapState(['recentReport','todayMember', 'todayReport'])
+
   },
-  created() {
-    this.fetchTodayRegisterMember()
-    this.fetchTodayReport()
+  async created() {
+    await this.fetchReportRecent()
+    await this.fetchTodayRegisterMember()
+    await this.fetchTodayReport()
   }
 }
 </script>

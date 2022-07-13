@@ -70,7 +70,7 @@ export default {
             }else{
               setTimeout(() => {
                 this.$router.go()
-              }, 30)
+              }, 100)
             }
           })
           .catch(() => {

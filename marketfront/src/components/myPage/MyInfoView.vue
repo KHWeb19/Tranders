@@ -35,7 +35,7 @@
 
         <div v-else>
           <v-row justify="end">
-            <v-btn depressed color="success" height="40" type="submit" @click="memberRemoveDialog = true"><b>작성 완료</b></v-btn>
+            <v-btn depressed color="success" height="40" type="submit" @click="memberRemoveDialog = true"><b>회원 탈퇴</b></v-btn>
           </v-row>
           <v-row>
             <v-col v-for="count in 4" :key="count"></v-col>
@@ -89,22 +89,22 @@
 
             <v-row v-if="providerType === 'undefined'">
               <v-col cols="3">전화번호</v-col>
-              <v-col cols="7">
+              <v-col cols="9">
                 <v-text-field v-model="phoneNumber"  solo style="width: 100%" ></v-text-field>
               </v-col>
-              <v-col cols="2" class="pt-5">
+<!--              <v-col cols="2" class="pt-5">
                 <v-btn depressed color="success" height="40" type="submit" @click="checkPhoneNum"><b>확인</b></v-btn>
-              </v-col>
+              </v-col>-->
             </v-row>
 
-            <v-row style="height: 70px" v-if="ifCheck">
+<!--            <v-row style="height: 70px" v-if="ifCheck">
               <v-col cols="10">
                 <v-text-field solo v-model="checkNum" style="width: 100%" placeholder="인증번호"> </v-text-field>
               </v-col>
               <v-col cols="2" class="pt-5">
                 <v-btn style="width: 100%" id="checkDub" @click="certification" outlined>인증하기</v-btn>
               </v-col>
-            </v-row>
+            </v-row>-->
 
             <v-row style="height: 70px; margin-top: 35px">
               <v-col>
@@ -138,8 +138,8 @@
 
               <v-row justify="end" no-gutters>
                 <v-card-actions>
-                  <v-btn class="light-green lighten-3" @click="saveImg">Save</v-btn>
-                  <v-btn @click="dialogClose">Close</v-btn>
+                  <v-btn depressed height="40" type="submit" @click="dialogClose"><b>Close</b></v-btn>
+                  <v-btn depressed color="success" height="40" type="submit" @click="saveImg"><b>Save</b></v-btn>
                 </v-card-actions>
               </v-row>
             </v-card>
@@ -150,7 +150,7 @@
         <v-dialog width="500" style="max-height: 400px" v-model="memberRemoveDialog">
           <v-card style="width: 500px; position: relative; max-height: 400px">
             <v-row justify="center" style="width: 500px; padding-top: 30px">
-              <v-card-title>사장님 탈퇴</v-card-title>
+              <v-card-title>회원 탈퇴</v-card-title>
             </v-row>
 
             <v-row style="width: 500px; height: 100px" justify="center">
@@ -178,13 +178,13 @@ import axios from "axios";
 import {API_BASE_URL} from "@/constant/login";
 import cookies from "vue-cookies";
 
-const config = {
+/*const config = {
   headers: {
     'Authorization': 'Bearer '+ cookies.get('access_token'),
     'Accept' : 'application/json',
     'Content-Type': 'application/json'
   }
-};
+};*/
 
 export default {
   name: "MyInfoView",
@@ -237,7 +237,7 @@ export default {
     memberCheck() {
       let id = this.userInfo.id;
       let password = this.password
-      axios.post(API_BASE_URL+'/member/myPageCheck', {id, password}, config)
+      axios.post(API_BASE_URL+'/member/myPageCheck', {id, password})
           .then((res) => {
             console.log(res);
             if(res.data === true){
@@ -253,7 +253,7 @@ export default {
           })
     },
     changeImg(){
-      alert('changeImg')
+      //alert('changeImg')
       this.changeImgDialog = true;
     },
     onClickFile(){

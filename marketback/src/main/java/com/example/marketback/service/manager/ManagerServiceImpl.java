@@ -120,7 +120,7 @@ public class ManagerServiceImpl implements ManagerService{
         List<ManagerReportRecentResponse> response = new ArrayList<>();
 
         for(Report report : reportList){
-            response.add(new ManagerReportRecentResponse(report.getReportNo(), report.getReportCategory1(), report.getReportCategory2(), report.getFromMember().getId(), report.getReportState().name()));
+            response.add(new ManagerReportRecentResponse(report.getReportNo(), report.getReportCategory1(), report.getReportCategory2(), report.getFromMember() == null ? null : report.getFromMember().getId(), report.getReportState().name()));
         }
         return response;
     }
@@ -190,6 +190,7 @@ public class ManagerServiceImpl implements ManagerService{
         }
 
         ProductBoard productBoard = reportEntity.getProductBoard();
+
         productRepository.delete(productBoard);
 
     }
@@ -253,6 +254,18 @@ public class ManagerServiceImpl implements ManagerService{
 
         Optional<Boss> ifBoss = bossRepository.findOptByMemberId(id);
         System.out.println("여기까지 들어와!?");
+
+        List<BossReviewImage> bossReviewImageList = bossReviewImageRepository.findByMemberId(member.getId());
+        List<BossReview> bossReviewList = bossReviewRepository.findByMemberId(member.getId());
+
+        if(bossReviewImageList.size() != 0 ){
+            bossReviewImageRepository.deleteAll(bossReviewImageList);
+        }
+
+        if(bossReviewList.size() != 0 ){
+            bossReviewRepository.deleteAll(bossReviewList);
+        }
+
         if(ifBoss.isPresent()) {
             List<BossImage> bossImages = bossImgRepository.findImgListByMemberId(id);
             List<BossPrice> bossPrice = bossPriceRepository.findByMemberId(id);
@@ -291,17 +304,14 @@ public class ManagerServiceImpl implements ManagerService{
             ifBoss.ifPresent(boss -> bossRepository.delete(boss));
         }
 
-        System.out.println("여기까지 들어와!?1");
         List<ChatRoom> chatRoom = chatRoomRepository.findByMemberId(id);
         if(chatRoom.size() != 0) {
             chatRoomRepository.deleteAll(chatRoom);
         }
-        System.out.println("여기까지 들어와!?2");
 
         List<CommunityBoardLike> boardLikes = communityBoardLikeRepository.findByMemberId(id);
         List<CommunityComment> boardComment = communityCommentRepository.findByMemberId(id);
         List<CommunityBoard> boards = communityBoardRepository.findByMemberId(id);
-        System.out.println("여기까지 들어와!?2");
 
         if(boardLikes.size() != 0 ){
             communityBoardLikeRepository.deleteAll(boardLikes);
