@@ -356,16 +356,6 @@ const routes = [
     component: NearPage
   },
   {
-    path: '/bossRead',
-    name: 'BossReadPage',
-    components: {
-      default: BossReadPage
-    },
-    props: {
-      default: true
-    }
-  },
-  {
     path: '/nearRead',
     name: 'NearReadPage',
     components: {

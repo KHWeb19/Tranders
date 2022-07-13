@@ -9,7 +9,7 @@
                     class="none-product"
                     v-if="!myFollowBoards || (Array.isArray(myFollowBoards) && myFollowBoards.length === 0)">
                     현재 모아보기를 할 게시글이 존재하지 않습니다!
-                    * 사용자 프로필에서 [모아보기] 버튼을 눌러 주세요.
+                    <p>* 사용자 프로필에서 [모아보기] 버튼을 눌러 주세요.</p>
                 </v-col>
                 <v-col v-else
                     v-for="productBoard in myFollowBoards" :key="productBoard.productNo"

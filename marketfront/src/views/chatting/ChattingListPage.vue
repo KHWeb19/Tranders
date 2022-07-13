@@ -6,7 +6,7 @@
               <div id='image'>
                   <div>
                       <div style="border-radius: 50%; overflow: hidden; margin-top: 20px">
-                          <v-img width="44" height="44" src="@/assets/profile.jpg"/>
+                          <v-img width="44" height="44" :src="require(`@/assets/profile/${userInfo.profileImg}`)"/>
                       </div>
                   </div>
               </div>
@@ -42,13 +42,15 @@ export default {
     }
   },
   computed: {
+    ...mapState(['userInfo']),
     ...mapState(['chatrooms'])
   },
   mounted () {
     this.fetchChatroomList(this.login.memberNo)
+    this.fetchMyPage(this.login.id)
   },
   methods: {
-    ...mapActions(['fetchChatroomList']),
+    ...mapActions(['fetchMyPage']),
     // onSubmit(payload) {
     //   console.log(payload)
     //   const { message } = payload

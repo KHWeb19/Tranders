@@ -22,7 +22,8 @@
           <div id='right1'>
               <div>
                   <div style="border-radius: 50%; overflow: hidden; margin-right: 12px; width: 40px; height: 40px">
-                      <v-img src="@/assets/profile.jpg"/>
+                      <v-img v-if="login.memberNo==chatroom.member2.memberNo" :src="require(`@/assets/profile/${chatroom.member1.profileImg}`)"/>
+                      <v-img v-if="login.memberNo==chatroom.member1.memberNo" :src="require(`@/assets/profile/${chatroom.member2.profileImg}`)"/>
                   </div>
               </div>
               <span v-if="login.memberNo==chatroom.member2.memberNo">{{chatroom.member1.name}} {{chatroom.member1.temperature}}°C</span>
@@ -248,8 +249,8 @@
                   <div id='message_greenBox' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.message}}</div>
                 </div>
                 <div style="display: flex;" v-else>
-                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo">{{msg.content.message}}</div>
-                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img style="border-radius:10px" width="200px" height="200" :src="msg.content.message"/></div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.message}}</div>
+                  <div id='message_box' v-if="chatroom.roomNo==msg.content.roomNo && msg.content.image"><v-img style="border-radius:10px" width="200px" height="200" :src="require(`@/assets/chatting/${msg.content.message}`)"/></div>
                   <div id='message_date' v-if="chatroom.roomNo==msg.content.roomNo && !msg.content.image">{{msg.content.now}}</div>
                 </div>
               </div>

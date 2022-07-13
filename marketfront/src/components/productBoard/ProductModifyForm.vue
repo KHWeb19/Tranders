@@ -112,7 +112,6 @@
 import Vue from "vue";
 import cookies from "vue-cookies";
 Vue.use(cookies);
-
 export default {
   name: "ProductModifyForm",
   props: {
@@ -218,7 +217,6 @@ textarea {
   padding: 16px;
   resize: none;
 }
-
 .preview {
   position: relative;
   margin-left: auto;
@@ -227,12 +225,4 @@ textarea {
   height: 350px;
 }
 </style>
-
-
-
-
-
-
-
-
 
