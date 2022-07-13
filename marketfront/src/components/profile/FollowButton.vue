@@ -38,7 +38,8 @@ export default {
     methods: {
         ...mapActions(['fetchOnFollow']),
         followRegister() {
-            axios.post(`http://localhost:7777/follow/${this.memberNo}/${this.userInfo.memberNo}`, {loginNo:this.memberNo, memberNo:this.userInfo.memberNo})
+            axios.post(`http://localhost:7777/follow/${this.memberNo}/${this.userInfo.memberNo}`, 
+            {loginNo:this.memberNo, memberNo:this.userInfo.memberNo})
                 .then(() => {
                     history.go(0);
                 })
