@@ -103,12 +103,14 @@ export default {
             const {roomNo} = payload
             axios.delete(`http://localhost:7777/chatting/${roomNo}`)
                 .then(()=> {
-                    alert('삭제 성공')
-                    this.$router.push({name: 'ChattingListPage'})
+                    this.$router.push({name: 'HomePage'})
+
+
                 })
                 .catch(()=> {
                     alert('삭제실패 문제발생')
                 })
+                                    
         },
 
     } 

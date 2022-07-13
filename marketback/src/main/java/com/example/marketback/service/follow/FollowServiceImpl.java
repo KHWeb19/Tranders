@@ -73,3 +73,4 @@ public class FollowServiceImpl implements FollowService {
         return followBoard;
     }
 }
+

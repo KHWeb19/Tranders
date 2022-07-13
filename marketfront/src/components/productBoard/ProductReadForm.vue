@@ -40,7 +40,7 @@
       </section>
       <router-link
         :to="{
-          name: 'ProfileBasicPage',
+          name: 'ReviewListPage',
           params: { memberId: productBoard.member.id.toString() },
         }"
         style="text-decoration: none"
