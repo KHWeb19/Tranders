@@ -229,7 +229,7 @@
               </div>
             </div>
           </div>
-          <div id='chatView' :style="chatroom.appointDate ? 'height:498px': 'height:583px' && chatroom.productBoard ? 'height:582px':'height:654px' "> 
+          <div id='chatView' :style="chatroom.appointDate ? 'height:533px': 'height:618px' && chatroom.productBoard ? 'height:617px':'height:689px' "> 
             <!-- +42px -->
             <div v-if="!chatroom.productBoard" id='' style="padding-bottom:20px">
               <div id='message_box'>
@@ -262,7 +262,7 @@
             </div>
             
           </div> 
-          <div v-if="priview" style="display: flex; position:absolute; bottom: 222px; background-color: rgba(128, 128, 128, 0.5); margin-left: 16px">
+          <div v-if="priview" style="display: flex; position:absolute; bottom: 187px; background-color: rgba(128, 128, 128, 0.5); margin-left: 16px">
             <v-img style="margin-left:305px;" width="200px" height="200" :src="priview"/>
             <v-btn @click="deletePriview()" icon style="margin-right:237px;"><v-icon large color="white">mdi-alpha-x-circle-outline</v-icon></v-btn>
           </div>
